@@ -7,6 +7,29 @@
 <link href="style.css" rel="stylesheet" type="text/css" />
 <meta name="author" content="thedevilsvoice" >
 <meta name="description" content="security bsides Indianapolis indybsides bsidesindy sponsor sponsorship">
+
+    <style>
+        .logoSponsor{
+            width: 50%;
+            padding: 2%;
+            background: white;
+            text-align: center;
+        }
+        .logoSponsor img{
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .foolsLogo{
+            height: 248px !important;
+            width: 90px !important;
+            display: block !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+
+
+        }
+    </style>
 </head>
 
 <body>
@@ -19,35 +42,44 @@
 
 
   <div id="content">
+    <br><br>
+      <!-- Sponsor Thanks -->
+      <h2 style="text-align: center">Thank You to Our Sponsors</h2>
+
+      <table style="width: 100%">
+          <tr>
+              <td class="logoSponsor"><a href="http://www.revics-security.com"><img src="images/revics-logo-cropped.png" alt="RevICS"/></a></td>
+              <td class="logoSponsor"><a href="http://salesforce.com"><img src="images/salesforce-logo.png" alt="Salesforce"/></a></td>
+          </tr>
+          <tr>
+              <td class="logoSponsor"><a href="http://www.cyberark.com"><img src="images/horizontal-logo_RGB_300dpi.png" alt="cyberark"/></a></td>
+              <td class="logoSponsor"><a href="http://www.bloomingtonfools.org/"><img src="images/fools-small.png" alt="Fools"class="foolsLogo"/></a></td>
+          </tr>
+          <tr>
+              <td class="logoSponsor"><a href="https://www.trustedsec.com/"><img src="images/trusted_sec.png" alt="trustedsec"/></a></td>
+              <td class="logoSponsor">Would you like your name here? See below.</td>
+          </tr>
+
+      </table>
+
+
+      <!-- End Sponsor Thanks -->
     <div id="homeText">
-          <p align="left">Thanks to RevICS Security</p><br /><br /><br /><br /><br /><br /><br /><br />
+
           <p align="left">Want to help make BSidesIndy possible?<br />
         We'd love to hear from you!</p>
         <p><a href="mailto:frank378@gmail.com"><strong>Email</strong></a> us. We're happy to answer your questions.<br /></p>
           </p>
     </div>
-    <div id="contentPhoto">
-      <div align="left"><br /><br /><br /><br />
-         <a href="http://www.revics-security.com"><img src="images/revics-logo-cropped.png" alt="RevICS" width="275" /></a></div>
-    </div>
+
     
     <div id="contentPhoto">
       <div align="right"><br /><br /><br /><br />
          <img src="images/BSidesIndy_Logo_lowres.png" alt="flag" width="275" /></div>
     </div>  
+
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+      <br>
 <br />
 <br />
 <br />
@@ -90,7 +122,7 @@
       <tr><td>$500</td><td>Speaker/Staff Gift Sponsor</td><td>Black hoodies were pretty cool last year.</td></tr>
       <tr><td>$1000</td><td>Breakfast Sponsor</td><td>Light breakfast for attendees.</td></tr>
       <tr><td>$500</td><td>Challenge coin sponsor</td><td>100 coins, include sponsor logo.</td></tr>
-      <tr><td>$800</td><td>T-Shirt sponsor</td><td>This would get us about 150 shirts from Denver Screen Print.</td></tr>
+      <tr><td>$800</td><td style="text-decoration: line-through;">T-Shirt sponsor</td><td style="text-decoration: line-through;">This would get us about 150 shirts from Denver Screen Print.</td></tr>
       <tr><td>$2000</td><td>staff/volunteer/keynote room sponsor</td> <td>Hotel rooms for people.</td></tr>
       <tr><td>$3000</td> <td>venue sponsor</td> <td>Help cover the cost of the venue.</td></tr>
       <tr><td>$1000</td> <td>workshop sponsor </td><td>Help cover travel/room cost for the three Friday workshop groups)</td></tr>
