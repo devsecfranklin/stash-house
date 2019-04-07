@@ -1,0 +1,9 @@
+FROM python:3.5
+ADD . /app
+WORKDIR /app
+#EXPOSE 8000
+
+RUN pip install --upgrade pip
+RUN pip install Cython
+RUN pip install -r requirements/requirements.test
+#CMD ["python", "bitsmasher/bitsmasher.py"]
