@@ -4,7 +4,6 @@
 
 <ul>
   <li><a href="https://www.bitsmasher.net/index.php">Home</a></li>
-  <li><a href="https://www.bitsmasher.net/bsidesindy/index.html">BsidesIndy</a></li>
   <li><a href="https://www.bitsmasher.net/sara2001conf/">Radio Astronomy</a></li>
   <li><a href="https://www.bitsmasher.net/projects/">Projects</a></li>
   <li><a href="https://www.bitsmasher.net/netlab/">Netlab</a></li>
