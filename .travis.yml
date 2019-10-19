@@ -1,5 +1,8 @@
-dist: trusty
-sudo: false
+language: python
+python:
+  - "3.5"
+  - "3.6"      # current default Python on Travis CI
+  - "3.7"
 
 env:
   # This environment variable tells Terraform not to prompt for input. This is
@@ -14,6 +17,9 @@ before_install:
   - mv /tmp/terraform ~/bin
   - export PATH="~/bin:$PATH"
 
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
 #script: terraform plan ./terraform
 
 deploy:
