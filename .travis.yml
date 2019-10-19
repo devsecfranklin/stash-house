@@ -23,7 +23,9 @@ script: terraform plan ./terraform
 deploy:
 - provider: script
   skip_cleanup: true
+  # var.do_token
+  #  Enter a value: 
   #script: terraform apply ./terraform
-  script: cd terraform && terraform show
+  script" echo "soon"
   on:
     branch: master
