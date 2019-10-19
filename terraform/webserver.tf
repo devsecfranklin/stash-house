@@ -25,8 +25,6 @@ resource "digitalocean_droplet" "webserver" {
     inline = [
       "export PATH=$PATH:/usr/bin",
       "apt-get update",
-      "apt-get install puppet-agent -y",
-      "echo \"${digitalocean_droplet.webserver.ipv4_address} www www.bitsmasher.net\" >> /etc/hosts",
     ]
   }
 }
