@@ -24,6 +24,6 @@ deploy:
 - provider: script
   skip_cleanup: true
   #script: terraform apply ./terraform
-  script: terraform plan ./terraform
+  script: cd terraform && terraform show
   on:
     branch: master
