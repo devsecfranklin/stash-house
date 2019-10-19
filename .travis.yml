@@ -26,6 +26,6 @@ deploy:
   # var.do_token
   #  Enter a value: 
   #script: terraform apply ./terraform
-  script" echo "soon"
+  script: echo "soon"
   on:
     branch: master
