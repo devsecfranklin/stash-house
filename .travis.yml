@@ -1,15 +1,11 @@
 dist: trusty
 sudo: false
 
-branches:
-  only:
-    - master
-
-  env:
-    # This environment variable tells Terraform not to prompt for input. This is
-    # not required, but if we make a mistake, the Travis builder will hang waiting
-    # for user input, tying up unnecessary resources.
-    - TF_INPUT=false
+env:
+  # This environment variable tells Terraform not to prompt for input. This is
+  # not required, but if we make a mistake, the Travis builder will hang waiting
+  # for user input, tying up unnecessary resources.
+  - TF_INPUT=false
 
 # Install terraform
 before_install:
@@ -27,5 +23,3 @@ deploy:
   #  Enter a value: 
   #script: terraform apply ./terraform
   script: echo "soon"
-  on:
-    branch: master
