@@ -1,0 +1,12 @@
+version: '3'
+services:
+  bitsmasher:
+    hostname: bitsmasher.net
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: bitsmasher
+    ports:
+      - "5000:5000"
+    volumes:
+      - ..:/app

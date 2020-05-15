@@ -13,10 +13,7 @@ export PRINT_HELP_PYSCRIPT
 help: 
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-local: ## run application locally
-	docker-compose up --build bitsmasher
-
-local-dev: ## test application locally
+docker: ## test application locally
 	python3 -m compileall .
-	docker-compose up --build dev_bitsmasher
-	@docker-compose run dev_bitsmasher /bin/bash
+	docker-compose up --build bitsmasher
+	@docker-compose run bitsmasher /bin/bash
