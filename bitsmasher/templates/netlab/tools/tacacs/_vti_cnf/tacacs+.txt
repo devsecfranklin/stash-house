@@ -1,0 +1,12 @@
+vti_encoding:SR|utf8-nl
+vti_timelastmodified:TW|05 Nov 2010 22:01:46 -0000
+vti_author:SR|BadReligion\\franklin
+vti_modifiedby:SR|BadReligion\\franklin
+vti_nexttolasttimemodified:TW|05 Nov 2010 22:01:46 -0000
+vti_timecreated:TR|28 Feb 2013 14:15:00 -0000
+vti_cacheddtm:TX|28 Feb 2013 14:15:00 -0000
+vti_filesize:IR|3257
+vti_extenderversion:SR|12.0.0.0
+vti_backlinkinfo:VX|
+vti_syncwith_209.54.57.17\:22/%2fvar/www/vhosts/bitsmasher.net/httpsdocs:TW|28 Feb 2013 14:15:00 -0000
+vti_syncofs_209.54.57.17\:22/%2fvar/www/vhosts/bitsmasher.net/httpsdocs:TW|05 Nov 2010 22:01:46 -0000
