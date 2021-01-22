@@ -13,9 +13,12 @@ body {
 
 /* Style the top navigation bar */
 .topnav {
-  overflow: hidden;
   background-color: #637394;
-  position: relative;
+  float: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Style the topnav links */
