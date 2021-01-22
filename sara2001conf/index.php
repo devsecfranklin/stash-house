@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en-US" prefix="og: https://ogp.me/ns#">
 <head>
 <meta name="generator" content=
 "HTML Tidy for Linux (vers 25 March 2009), see www.w3.org">
