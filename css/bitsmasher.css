@@ -6,14 +6,34 @@ body {
   background-repeat: repeat;
 }
 
-main {
-  padding-bottom: 10010px;
-  margin-bottom: -10000px;
-  float: left;
-  width: 100%;
+.header {
+  background: #ff0;
+  padding: 10px;
 }
 
-#nav {
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Style the topnav links */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav {
   float: left;
   width: 230px;
   margin-left: -100%;
@@ -22,21 +42,17 @@ main {
   background: #eee;
 }
 
-#wrapper {
+.wrapper {
   overflow: hidden;
 }
 
-#content {
+.content {
   margin-left: 230px; /* Same as 'nav' width */
 }
 
 .innertube {
   margin: 15px; /* Padding for content */
   margin-top: 0;
-}
-
-header {
-  color: #ffff00;
 }
 
 ul {
@@ -72,12 +88,10 @@ li a:hover:not(.active) {
   background-color: #4caf50;
 }
 
-#footer {
-  position: fixed;
-  left: 0px;
-  bottom: 0px;
-  height: 30px;
+.footer {
+  text-align: center;
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
   width: 100%;
-  background: #000;
-  color: white;
 }
