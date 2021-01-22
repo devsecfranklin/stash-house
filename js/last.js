@@ -19,7 +19,6 @@ function GetTime() {
     return CurTime
 }
 
-document.writeln("<p id="legal">Copyright © 2010-2021 All Rights Reserved.</p>")
 document.write("Last updated on ")
 document.write(lastModified() + " @ " + GetTime());
 document.write("");

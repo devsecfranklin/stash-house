@@ -7,14 +7,14 @@ body {
 }
 
 .header {
-  background: #ff0;
+  background: rgb(255, 255, 255);
   padding: 10px;
 }
 
 /* Style the top navigation bar */
 .topnav {
   overflow: hidden;
-  background-color: #333;
+  background-color: rgb(248, 241, 241);
 }
 
 /* Style the topnav links */
