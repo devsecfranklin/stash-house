@@ -3,18 +3,19 @@ body {
   padding: 0;
   font-family: Sans-Serif;
   line-height: 1.5em;
-  background-repeat: repeat;
 }
 
 .header {
   background: #637394;
   padding: 10px;
+  text-align: center;
 }
 
 /* Style the top navigation bar */
 .topnav {
   overflow: hidden;
-  background-color: rgb(248, 241, 241);
+  background-color: #637394;
+  text-align: center;
 }
 
 /* Style the topnav links */
@@ -33,59 +34,35 @@ body {
   color: black;
 }
 
-.nav {
+/* Create three unequal columns that floats next to each other */
+.column {
   float: left;
-  width: 230px;
-  margin-left: -100%;
-  padding-bottom: 10010px;
-  margin-bottom: -10000px;
-  background: #eee;
+  padding: 10px;
 }
 
-.wrapper {
-  overflow: hidden;
+/* Left and right column */
+.column.side {
+  width: 25%;
 }
 
-.content {
-  margin-left: 230px; /* Same as 'nav' width */
+/* Middle column */
+.column.middle {
+  width: 50%;
 }
 
-.innertube {
-  margin: 15px; /* Padding for content */
-  margin-top: 0;
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
-
-li {
-  float: left;
-  border-right: 1px solid #bbb;
-}
-
-li:last-child {
-  border-right: none;
-}
-
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover:not(.active) {
-  background-color: #000;
-}
-
-.active {
-  background-color: #4caf50;
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column.side,
+  .column.middle {
+    width: 100%;
+  }
 }
 
 .footer {
