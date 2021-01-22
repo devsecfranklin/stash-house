@@ -15,7 +15,7 @@ body {
 .topnav {
   overflow: hidden;
   background-color: #637394;
-  text-align: center;
+  position: relative;
 }
 
 /* Style the topnav links */
