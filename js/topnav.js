@@ -1,5 +1,5 @@
-const template = document.createElement('template2');
-template2.innerHTML = `
+const template = document.createElement('template');
+template.innerHTML = `
 <div class="topnav">
 <a href="https://www.bitsmasher.net/bsidesindy/index.html">BSidesIndy</a>
 <a href="https://github.com/thedevilsvoice/homelab">HomeLab</a>
@@ -10,4 +10,4 @@ template2.innerHTML = `
 </div>
 `
 
-document.body.appendChild(template2.content);
+document.body.appendChild(template.content);
