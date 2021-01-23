@@ -8,17 +8,12 @@ body {
 .header {
   background: #637394;
   padding: 10px;
-  text-align: center;
 }
 
 /* Style the top navigation bar */
 .topnav {
+  overflow: hidden;
   background-color: #637394;
-  float: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 /* Style the topnav links */
@@ -69,7 +64,7 @@ body {
 }
 
 .footer {
-  position: fixed;
+  position: relative;
   padding: 10px 10px 0px 10px;
   bottom: 0;
   width: 100%;
