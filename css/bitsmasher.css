@@ -53,7 +53,7 @@ body {
 
 .footer {
   width: 100%;
-  position: fixed;
+  position: relative;
   background: #637394;
   color: #fff;
   padding: 10px 0;
