@@ -8,12 +8,18 @@ body {
 .header {
   background: #637394;
   padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Style the top navigation bar */
 .topnav {
   overflow: hidden;
   background-color: #637394;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Style the topnav links */
@@ -32,20 +38,10 @@ body {
   color: black;
 }
 
-/* Create three unequal columns that floats next to each other */
-.column {
-  float: left;
-  padding: 10px;
-}
-
-/* Left and right column */
-.column.side {
-  width: 25%;
-}
-
-/* Middle column */
-.column.middle {
-  width: 50%;
+.container {
+  width: 80%;
+  margin: 0 auto; /* Center the DIV horizontally */
+  overflow: auto;
 }
 
 /* Clear floats after the columns */
@@ -55,19 +51,16 @@ body {
   clear: both;
 }
 
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .column.side,
-  .column.middle {
-    width: 100%;
-  }
-}
-
 .footer {
-  position: relative;
-  padding: 10px 10px 0px 10px;
-  bottom: 0;
   width: 100%;
+  position: fixed;
+  background: #637394;
+  color: #fff;
+  padding: 10px 0;
   /* Height of the footer*/
-  height: 40px;
+  height: 90px;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
