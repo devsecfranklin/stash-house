@@ -25,73 +25,54 @@
    <meta name="twitter:card" content="summary" />
    <meta name="twitter:url" content="https://www.bitsmasher.net/minecraft/index.html" />
    <meta name="twitter:title" content="minecraft@bitsmasher.net" />
-   <meta name="twitter:description" content="wMinecraft at bitsmasher.net" />
+   <meta name="twitter:description" content="Minecraft at bitsmasher.net" />
    <meta name="twitter:image" content="https://www.bitsmasher.net/images/star5.jpg" />
 
 </head>
 
 <body>
+   <script src="/js/blue_header.js"></script>
+   <main-header></main-header>
 
-   <div class="header">
-      <a href="https://www.bitsmasher.net/index.html"> <img src="/images/bit-logo2.jpg"
-            alt="a blue rectangle with the URI of the website"></a>
+   <div class="container">
+      <h2>Notes For Admins</h2>
+      <p>
+         When a player joins the server, they have almost no permissions. This is to prevent griefing and
+         such. You will have to move them from "default" group to the "player" group once you are sure they
+         are not insane, griefing, etc.
+      </p>
+      The command to change someone to player is:
+      <br />
+      /manuadd &lt;playername&gt; player
+      <br />
+      You can also demote a griefer like so:
+      <br />
+      /manuadd &lt;playername&gt; default
+
+      <h3>Custom Commands</h3>
+
+      You can point players to these custom commands:
+      <br />
+      <table>
+         <tr>
+            <td>Command</td>
+            <td>Description</td>
+         </tr>
+         <tr>
+            <td>/register</td>
+            <td>Explain to the player that they need to contact an admin to get out of DEFAULT group.</td>
+         </tr>
+         <tr>
+            <td>/townhelp</td>
+            <td>Help with towny</td>
+         </tr>
+         <tr>/website</tr>
+         <tr>Website with information about the server.</tr>
+      </table>
    </div>
-   <div class="topnav">
-      <a href="https://www.bitsmasher.net/bsidesindy/index.html">BSidesIndy</a>
-      <a href="https://github.com/thedevilsvoice/homelab">HomeLab</a>
-      <a href="https://www.bitsmasher.net/minecraft/index.html">Minecraft</a>
-      <a href="https://www.bitsmasher.net/netlab/index.html">NetLab</a>
-      <a href="https://www.bitsmasher.net/projects/index.html">Projects</a>
-      <a href="https://www.bitsmasher.net/sara2001conf/index.html">Radio Astronomy</a>
-   </div>
 
-   Download minecraft forge JAR to server.
-   Install it like so:
-   mv forge-1.15.2-31.2.0-installer.jar forge/
-   java -jar forge-1.15.2-31.2.0-installer.jar --installServer
-   move the new forge jar into the forge directory.
-   Start the server with the script forge/minecraft.sh in a screen session.
+   <main-footer></main-footer>
 
-   <a name="admin"></a>
-   <h2>Notes For Admins</h2>
-   <p>
-      When a player joins the server, they have almost no permissions. This is to prevent griefing and
-      such. You will have to move them from "default" group to the "player" group once you are sure they
-      are not insane, griefing, etc.
-   </p>
-   The command to change someone to player is:
-   <br />
-   /manuadd &lt;playername&gt; player
-   <br />
-   You can also demote a griefer like so:
-   <br />
-   /manuadd &lt;playername&gt; default
-
-   <h3>Custom Commands</h3>
-
-   You can point players to these custom commands:
-   <br />
-   <table>
-      <tr>
-         <td>Command</td>
-         <td>Description</td>
-      </tr>
-      <tr>
-         <td>/register</td>
-         <td>Explain to the player that they need to contact an admin to get out of DEFAULT group.</td>
-      </tr>
-      <tr>
-         <td>/townhelp</td>
-         <td>Help with towny</td>
-      </tr>
-      <tr>/website</tr>
-      <tr>Website with information about the server.</tr>
-   </table>
-
-   <div class="footer">
-      Copyright © 2010-2021 All Rights Reserved.<br />
-      <script type="text/javascript" src="/js/last.js"></script>
-   </div>
 </body>
 
 </html>

@@ -1,6 +1,15 @@
-[twitter card validator](https://cards-dev.twitter.com/validator)
+# README.md
 
-        <a href="https://franklin-resume.herokuapp.com/">Resume</a>
-        <a href="https://keybase.io/frankthetank">KeyBase</a>
-        <a href="https://www.youtube.com/channel/UCjo9S3Q_Ml22hZyr5CtiM3A">YouTube</a>
-        <a href="https://github.com/thedevilsvoice">GitHub</a>
+## test web site locally
+
+```bash
+sudo docker pull nginx
+docker build -t nginx-bitsmasher .
+docker run --name docker-nginx-bitsmasher -p 8080:80 -d nginx-bitsmasher
+```
+
+Now navigate to http://http://0.0.0.0:8080/
+
+## test twitter card
+
+[twitter card validator](https://cards-dev.twitter.com/validator)
