@@ -6,11 +6,8 @@ class Header extends HTMLElement {
     </div>
     <div class="topnav">
         <a href="/bsidesindy/index.html">BSidesIndy</a>
-        <a href="https://github.com/thedevilsvoice/homelab">HomeLab</a>
         <a href="/minecraft/index.html">Minecraft</a>
-        <a href="/netlab/index.html">NetLab</a>
-        <a href="/projects/index.html">Projects</a>
-        <a href="/sara2001conf/index.html">Radio Astronomy</a>
+        <a href="/resume/index.html">Resume</a>
     </div>
                         `
     }
@@ -20,11 +17,25 @@ class Header extends HTMLElement {
 
 class Footer extends HTMLElement {
     connectedCallback() {
+        var modiDate = new Date(document.lastModified);
+        var showAs = (modiDate.getMonth() + 1) + "/" + modiDate.getDate() + "/" + modiDate.getFullYear();
+        var modiDate = new Date();
+        var Seconds
+
+        if (modiDate.getSeconds() < 10) {
+            Seconds = "0" + modiDate.getSeconds();
+        } else {
+            Seconds = modiDate.getSeconds();
+        }
+
+        var modiDate = new Date();
+        var CurTime = modiDate.getHours() + ":" + modiDate.getMinutes() + ":" + Seconds
+
         this.innerHTML = `
     <!-- Footer -->
     <div class="footer">
         Copyright © 2010-2021 All Rights Reserved.<br />
-        <script type="text/javascript" src="/js/last.js"></script>
+        Last updated on ` + showAs + ` at ` + CurTime + `
     </div>
     <!-- Footer -->
         `;
@@ -33,3 +44,6 @@ class Footer extends HTMLElement {
 
 customElements.define('main-header', Header);
 customElements.define('main-footer', Footer);
+
+// Add it to page like so:
+// <script type="text/javascript" src="/js/last.js"></script>
