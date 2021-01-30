@@ -1,4 +1,9 @@
 {
+  "assignees": [
+    "@thedevilsvoice"
+  ],
+  "assignAutomerge": false,
+  "automerge": true,
   "extends": [
     "config:base"
   ]
