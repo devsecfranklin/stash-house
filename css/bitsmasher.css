@@ -13,6 +13,20 @@ body {
   align-items: center;
 }
 
+.footer {
+  width: 100%;
+  position: fixed;
+  background: #fff;
+  color: #000;
+  padding: 10px 0;
+  /* Height of the footer*/
+  height: 90px;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Style the top navigation bar */
 .topnav {
   overflow: hidden;
@@ -38,29 +52,20 @@ body {
   color: black;
 }
 
-.container {
-  width: 80%;
-  margin: 0 auto; /* Center the DIV horizontally */
-  overflow: auto;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.footer {
+#container {
   width: 100%;
-  position: fixed;
-  background: #637394;
-  color: #fff;
-  padding: 10px 0;
-  /* Height of the footer*/
-  height: 90px;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  float: left;
+  margin-right: -200px;
+}
+#content {
+  margin-right: 200px;
+  padding: 14px 16px;
+}
+#sidebar {
+  padding: 14px 16px;
+  width: 200px;
+  float: right;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
