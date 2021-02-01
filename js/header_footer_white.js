@@ -1,3 +1,18 @@
+//Header
+class Header extends HTMLElement {
+    connectedCallback() {
+        this.innerHTML = `
+    <div class="header-white">
+        <a href="/index.html"> <img src="/images/bitsmasherflag.gif" alt="The TLD over an American flag."></a>
+    </div>
+    <div class="topnav">
+        <a href="/bsidesindy/index.html">BSidesIndy</a>
+        <a href="/minecraft/index.html">Minecraft</a>
+        <a href="https://franklin-resume.herokuapp.com/">My Resume</a>
+    </div>
+                        `
+    }
+}
 //Footer
 class Footer extends HTMLElement {
     connectedCallback() {
@@ -17,7 +32,7 @@ class Footer extends HTMLElement {
 
         this.innerHTML = `
     <!-- Footer -->
-    <div class="footer">
+    <div class="footer-white">
         Copyright © 2010-2021 All Rights Reserved.<br />
         Last updated on ` + showAs + ` at ` + CurTime + `
     </div>
@@ -27,4 +42,4 @@ class Footer extends HTMLElement {
 }
 
 // customElements.define('main-header', Header);
-customElements.define('white-footer', Footer);
+customElements.define('footer-white', Footer);
