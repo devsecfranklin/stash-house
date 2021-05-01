@@ -7,7 +7,7 @@ class Header extends HTMLElement {
     </div>
     <div class="topnav">
         <a href="/bsidesindy/index.html">BSidesIndy</a>
-        <a href="/minecraft/index.html">Minecraft</a>
+        <a href="https://minecraft.bitsmasher.net/">Minecraft</a>
         <a href="https://franklin-resume.herokuapp.com/">My Resume</a>
     </div>
                         `
