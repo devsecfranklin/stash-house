@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <title>Ansible</title>
+    <meta name="description" content="Ansible @bitsmasher.net">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Bluefish 2.2.5">
+    <meta name="author" content="franklin">
+    <link rel="stylesheet" href="/css/bitsmasher.css">
+
+    <script src="/js/header_footer_blue.js"></script>
+
+<body>
+
+    <main-header></main-header>
+
+    <p>List the nodes:</p>
+    <code>ansible --list-hosts raspi_cluster -i ./hosts</code>
+    <code>ansible --list-hosts nvidia_cluster -i ./hosts</code>
+
+    <p>Run a command on nodes:</p>
+    <code>ansible --list-hosts raspi_cluster -i ./hosts<br />
+        ansible raspi_cluster -m ping -b -i ./hosts
+    </code>
+
+    <main-footer></main-footer>
+
+</body>
+
+</html>

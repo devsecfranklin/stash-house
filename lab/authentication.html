@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <title>Authentication</title>
+    <meta name="description" content="Authentication @bitsmasher.net">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Bluefish 2.2.5">
+    <meta name="author" content="franklin">
+    <link rel="stylesheet" href="/css/bitsmasher.css">
+
+    <script src="/js/header_footer_blue.js"></script>
+
+<body>
+
+    <main-header></main-header>
+
+    <p>SSH Configuration</p>
+
+
+    <p>Start the kadmin tool</p>
+
+    <p><code>kadmin.local -p admin/admin</code></p>
+
+
+    <p>Create the LDAP principal & keytab</p>
+
+    <code>
+
+        addpol -minlength 8 -maxlife 7776000 -history 5 users
+        getpol users
+        ank -policy users franklin
+        listprincs
+    </code>
+
+    <p>Preauth: Put the pem files in /var/lib/krb5kdc since this is read/writeable by the KDC.</p>
+
+    <code>
+        kinit root/admin
+        kadmin -q 'addprinc -randkey WELLKNOWN/ANONYMOUS'
+    </code>
+
+    <p>    Realm is LAB.BITSMASHER.NET<br />
+        Ansible does this part:</p>
+
+
+    <code>
+
+       sudo apt install krb5-user krb5-config libpam-krb5 libpam-ccreds
+       sudo apt install ldap-utils
+    </code>
+
+    <p>Now set up the keytab for the host. Log in to the host to Create
+        /etc/krb5.keytab file in place. Must be done as root user (not sudo)</p>
+
+    <code>
+
+       sudo -i
+       kinit root/admin
+       kadmin
+       # add host and ldap principals
+       addprinc -randkey host/head1.lab.bitsmasher.net
+       addprinc -randkey ldap/head1.lab.bitsmasher.net
+       ktadd host/grimoire.lab.bitsmasher.net ldap/grimoire.lab.bitsmasher.net
+       (quit)
+       klist -ke /etc/krb5.keytab
+    </code>
+
+
+    <code>
+    kinit franklin -X X509_user_identity=FILE:~/.ssh/franklin-cert.pem,~/.ssh/franklin-key.pem
+    KRB5_TRACE=/dev/stdout ssh
+    </code>
+
+    <p>Troubleshoot:</p>
+
+    <ul>
+        <li>Check sudo hostnamectl</li>
+        <li>Check keytab "sudo klist -ke /etc/krb5.keytab"</li>
+        <li>Start sshd in console/debug-mode: mkdir /run/sshd && $(which sshd) -ddd</li>
+    </ul>
+
+    <main-footer></main-footer>
+
+</body>
+
+</html>

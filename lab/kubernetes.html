@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+	<title>Kubernetes</title>
+	<meta name="description" content="Kubernetes @bitsmasher.net">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="generator" content="Bluefish 2.2.5">
+	<meta name="author" content="franklin">
+	<link rel="stylesheet" href="/css/bitsmasher.css">
+
+	<script src="/js/header_footer_blue.js"></script>
+<body>
+
+	<main-header></main-header>
+
+	Setting up the user.
+
+	<code> 
+		mkdir ~/.kube
+		sudo cp /etc/kubernetes/admin.conf ~/.kube/config
+		chown user:grp ~/.kube/config
+	 </code>
+
+	From outside the cluster
+
+	<code>
+		cd workspace/homelab/ansible
+		ssh-add ~/.ssh/id_rsa
+		ansible cluster -m ping --become -e 'ansible_python_interpreter=/usr/bin/python3'
+		for h in node{0..3}; do ssh pi@$h kubeadm version; done
+		for h in node{0..3}; do ssh pi@$h systemctl is-active kubelet; done
+		for h in node{0..3}; do ssh pi@$h sudo apt upgrade -y --allow-change-held-packages kubeadm kubectl kubelet; done
+	</code>
+
+	From the head node
+
+	<code>
+		kubectl cluster-info
+		kubeadm upgrade plan
+		kubectl -n kube-system get cm kubeadm-config -oyaml
+		kubectl describe node node0
+		kubectl taint nodes --all node-role.kubernetes.io/master-
+		kubectl describe node | grep -i taint	 
+	</code>
+    <main-footer></main-footer>
+
+</body>
+
+</html>

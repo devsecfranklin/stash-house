@@ -6,6 +6,7 @@ class Header extends HTMLElement {
     </div>
     <div class="topnav">
         <a href="/bsidesindy/index.html">BSidesIndy</a>
+        <a href="/lab/index.html">Lab</a>
         <a href="https://minecraft.bitsmasher.net/">Minecraft</a>
         <a href="https://franklin-resume.herokuapp.com/">My Resume</a>
     </div>

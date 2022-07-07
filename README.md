@@ -1,9 +1,12 @@
 # README.md
 
+[![DOI](https://zenodo.org/badge/407849291.svg)](https://zenodo.org/badge/latestdoi/407849291)
+
 ## test web site locally
 
 ```bash
-sudo docker pull nginx
+newgrp docker && bash
+docker pull nginx
 docker build -t nginx-bitsmasher .
 docker run --name docker-nginx-bitsmasher -p 8080:80 -d nginx-bitsmasher
 ```
