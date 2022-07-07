@@ -33,7 +33,7 @@ class Footer extends HTMLElement {
         this.innerHTML = `
     <!-- Footer -->
     <div class="footer-white">
-        Copyright © 2010-2021 All Rights Reserved.<br />
+        Copyright © 2010-2022 All Rights Reserved.<br />
         Last updated on ` + showAs + ` at ` + CurTime + `
     </div>
     <!-- Footer -->
