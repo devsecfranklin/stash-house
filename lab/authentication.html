@@ -16,39 +16,22 @@
 
     <main-header></main-header>
 
-    <p>SSH Configuration</p>
+    <h2>SSH Configuration</h2>
 
+<code>Host *.lab.bitsmasher.net<br />
+    GSSAPIAuthentication yes<br />
+    GSSAPIDelegateCredentials yes<br />
+    CanonicalizeHostname yes<br />
+    CanonicalDomains lab.bitsmasher.net<br />
+    CanonicalizeMaxDots 3<br />
+    CanonicalizeFallbackLocal yes<br /></code><br />
 
-    <p>Start the kadmin tool</p>
-
-    <p><code>kadmin.local -p admin/admin</code></p>
-
-
-    <p>Create the LDAP principal & keytab</p>
-
-    <code>
-
-        addpol -minlength 8 -maxlife 7776000 -history 5 users
-        getpol users
-        ank -policy users franklin
-        listprincs
-    </code>
-
-    <p>Preauth: Put the pem files in /var/lib/krb5kdc since this is read/writeable by the KDC.</p>
-
-    <code>
-        kinit root/admin
-        kadmin -q 'addprinc -randkey WELLKNOWN/ANONYMOUS'
-    </code>
-
-    <p>    Realm is LAB.BITSMASHER.NET<br />
-        Ansible does this part:</p>
-
+    <h2>Kerberos Machine Setup</h2>
 
     <code>
 
-       sudo apt install krb5-user krb5-config libpam-krb5 libpam-ccreds
-       sudo apt install ldap-utils
+       sudo apt install krb5-user krb5-config libpam-krb5 libpam-ccreds<br />
+       sudo apt install ldap-utils<br />
     </code>
 
     <p>Now set up the keytab for the host. Log in to the host to Create
@@ -56,21 +39,21 @@
 
     <code>
 
-       sudo -i
-       kinit root/admin
-       kadmin
-       # add host and ldap principals
-       addprinc -randkey host/head1.lab.bitsmasher.net
-       addprinc -randkey ldap/head1.lab.bitsmasher.net
-       ktadd host/grimoire.lab.bitsmasher.net ldap/grimoire.lab.bitsmasher.net
-       (quit)
-       klist -ke /etc/krb5.keytab
+       sudo -i<br />
+       kinit root/admin<br />
+       kadmin<br />
+       # add host and ldap principals<br />
+       addprinc -randkey host/head1.lab.bitsmasher.net<br />
+       addprinc -randkey ldap/head1.lab.bitsmasher.net<br />
+       ktadd host/grimoire.lab.bitsmasher.net ldap/grimoire.lab.bitsmasher.net<br />
+       (quit)<br />
+       klist -ke /etc/krb5.keytab<br />
     </code>
 
 
     <code>
-    kinit franklin -X X509_user_identity=FILE:~/.ssh/franklin-cert.pem,~/.ssh/franklin-key.pem
-    KRB5_TRACE=/dev/stdout ssh
+    kinit franklin -X X509_user_identity=FILE:~/.ssh/franklin-cert.pem,~/.ssh/franklin-key.pem<br />
+    KRB5_TRACE=/dev/stdout ssh<br />
     </code>
 
     <p>Troubleshoot:</p>
@@ -80,6 +63,29 @@
         <li>Check keytab "sudo klist -ke /etc/krb5.keytab"</li>
         <li>Start sshd in console/debug-mode: mkdir /run/sshd && $(which sshd) -ddd</li>
     </ul>
+    <br />
+    <h2>Kerberos User Setup</h2>
+    <p>Start the kadmin tool</p>
+
+    <p><code>kadmin.local -p admin/admin<br /></code></p>
+
+
+    <p>Create the LDAP principal & keytab</p>
+
+    <code>
+
+        addpol -minlength 8 -maxlife 7776000 -history 5 users<br />
+        getpol users<br />
+        ank -policy users franklin<br />
+        listprincs<br />
+    </code>
+
+    <p>Preauth: Put the pem files in /var/lib/krb5kdc since this is read/writeable by the KDC.</p>
+
+    <code>
+        kinit root/admin<br />
+        kadmin -q 'addprinc -randkey WELLKNOWN/ANONYMOUS'<br />
+    </code><br />
 
     <main-footer></main-footer>
 

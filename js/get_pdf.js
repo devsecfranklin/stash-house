@@ -12,7 +12,7 @@ function descargar_pdf() {
         subject: 'resume of a DevSecOps/security infrastructure engineer seeking remote opportunities.',
         author: 'Franklin Diaz',
         keywords: 'programatically generated, javascript, web 2.0, ajax',
-        creator: 'Franklin Diaz, 2021'
+        creator: 'Franklin Diaz, 2022'
     });
 
     var options = {

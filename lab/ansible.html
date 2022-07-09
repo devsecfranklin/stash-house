@@ -17,13 +17,14 @@
     <main-header></main-header>
 
     <p>List the nodes:</p>
-    <code>ansible --list-hosts raspi_cluster -i ./hosts</code>
-    <code>ansible --list-hosts nvidia_cluster -i ./hosts</code>
+    <code>ansible --list-hosts raspi_cluster -i ./hosts</code><br />
+
+    <code>ansible --list-hosts nvidia_cluster -i ./hosts</code><br />
 
     <p>Run a command on nodes:</p>
     <code>ansible --list-hosts raspi_cluster -i ./hosts<br />
         ansible raspi_cluster -m ping -b -i ./hosts
-    </code>
+    </code><br />
 
     <main-footer></main-footer>
 
