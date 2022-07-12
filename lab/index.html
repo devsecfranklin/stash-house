@@ -22,6 +22,15 @@
         <li><a href="/lab/kubernetes.html">Kubernetes</a></li>
     </ul>
 
+    <h2>VNC Connections</h2>
+
+    <ul>
+        <li>enable VNC in raspi-config</li>
+        <li>from the raspi desktop, change from unix auth to VNC auth</li>
+        <li><code>ssh -L 5901:127.0.0.1:5901 -C -N -l pi x.x.x.x</code></li>
+        <li>Once the tunnel is running, use a VNC client to connect to localhost:5901</li>
+    </ul>
+
     <main-footer></main-footer>
 
 </body>

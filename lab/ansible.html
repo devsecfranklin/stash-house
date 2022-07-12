@@ -6,8 +6,9 @@
     <meta name="description" content="Ansible @bitsmasher.net">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="generator" content="Bluefish 2.2.5">
-    <meta name="author" content="franklin">
+    <meta name="generator" content="Bluefish 2.2.12" >
+    <meta name="generator" content="Bluefish 2.2.12" >
+    <meta name="author" content="franklin" >
     <link rel="stylesheet" href="/css/bitsmasher.css">
 
     <script src="/js/header_footer_blue.js"></script>
@@ -26,6 +27,14 @@
         ansible raspi_cluster -m ping -b -i ./hosts
     </code><br />
 
+    <h2>Firewall</h2>
+
+    <code>
+    ansible-galaxy install paloaltonetworks.paloaltonetworks<br />
+    ansible-galaxy collection install paloaltonetworks.panos<br />
+    ansible-galaxy collection install -r collections/requirements.yml<br />
+    ansible-playbook -i firewalls firewalls.yml --ask-vault-pass -e 'ansible_python_interpreter=/usr/bin/python3'<br />
+</code>
     <main-footer></main-footer>
 
 </body>
