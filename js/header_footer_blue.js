@@ -1,6 +1,6 @@
 class Header extends HTMLElement {
-    connectedCallback() {
-        this.innerHTML = `
+  connectedCallback() {
+    this.innerHTML = `
     <div class="header">
         <a href="/index.html"> <img src="/images/bit-logo2.jpg" alt="a blue rectangle with the URI of the website"></a>
     </div>
@@ -10,38 +10,50 @@ class Header extends HTMLElement {
         <a href="https://minecraft.bitsmasher.net/">Minecraft</a>
         <a href="https://franklin-resume.herokuapp.com/">My Resume</a>
     </div>
-                        `
-    }
+                        `;
+  }
 }
 
 //Footer
 
 class Footer extends HTMLElement {
-    connectedCallback() {
-        var modiDate = new Date(document.lastModified);
-        var showAs = (modiDate.getMonth() + 1) + "/" + modiDate.getDate() + "/" + modiDate.getFullYear();
-        var modiDate = new Date();
-        var Seconds
+  connectedCallback() {
+    var modiDate = new Date(document.lastModified);
+    var showAs =
+      modiDate.getMonth() +
+      1 +
+      "/" +
+      modiDate.getDate() +
+      "/" +
+      modiDate.getFullYear();
+    var modiDate = new Date();
+    var Seconds;
 
-        if (modiDate.getSeconds() < 10) {
-            Seconds = "0" + modiDate.getSeconds();
-        } else {
-            Seconds = modiDate.getSeconds();
-        }
+    if (modiDate.getSeconds() < 10) {
+      Seconds = "0" + modiDate.getSeconds();
+    } else {
+      Seconds = modiDate.getSeconds();
+    }
 
-        var modiDate = new Date();
-        var CurTime = modiDate.getHours() + ":" + modiDate.getMinutes() + ":" + Seconds
+    var modiDate = new Date();
+    var CurTime =
+      modiDate.getHours() + ":" + modiDate.getMinutes() + ":" + Seconds;
 
-        this.innerHTML = `
+    this.innerHTML =
+      `
     <!-- Footer -->
     <div class="footer">
         Copyright © 2010-2022 All Rights Reserved.<br />
-        Last updated on ` + showAs + ` at ` + CurTime + `
+        Last updated on ` +
+      showAs +
+      ` at ` +
+      CurTime +
+      `
     </div>
     <!-- Footer -->
         `;
-    }
+  }
 }
 
-customElements.define('main-header', Header);
-customElements.define('main-footer', Footer);
+customElements.define("main-header", Header);
+customElements.define("main-footer", Footer);

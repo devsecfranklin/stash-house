@@ -18,7 +18,7 @@ BODY {
 /* The navbar container */
 .topnav {
     overflow: hidden;
-    background-color: #333;
+    background-color: rgb(28, 53, 99);
 }
 
 /* Navbar links */
@@ -34,12 +34,12 @@ BODY {
 
 /* Links - change color on hover */
 .topnav a:hover {
-    background-color: #ddd;
+    background-color: rgb(56, 153, 243);
     color: black;
 }
 
 .footer {
-    background-color:#333;
+    background-color:rgb(28, 53, 99);
     color:rgb(94, 167, 235);
     padding: 20px;
     font-family: Sans-Serif;
