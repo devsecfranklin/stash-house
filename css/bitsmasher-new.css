@@ -13,12 +13,13 @@ BODY {
     text-align: right;
     padding: 20px;
     font-family: Sans-Serif;
+    background-image: url("/images/stars.jpg");
 }
 
 /* The navbar container */
 .topnav {
     overflow: hidden;
-    background-color: rgb(28, 53, 99);
+    background-color: #333;
 }
 
 /* Navbar links */
@@ -34,27 +35,19 @@ BODY {
 
 /* Links - change color on hover */
 .topnav a:hover {
-    background-color: rgb(56, 153, 243);
+    background-color: #ddd;
     color: black;
 }
 
 .footer {
-    background-color:rgb(28, 53, 99);
+    background-color:#333;
     color:rgb(94, 167, 235);
-    padding: 3px;
+    padding: 20px;
     font-family: Sans-Serif;
     bottom:0;
     text-align:right;
     float: right;
     width: 100%;
-}
-
-.footer table{
-  font-family: Sans-Serif;
-  bottom:0;
-  text-align:right;
-  float: right;
-
 }
 
 /* unvisited link */
