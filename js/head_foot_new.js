@@ -39,16 +39,17 @@ class Footer extends HTMLElement {
 
     this.innerHTML =
       `
-    <!-- Footer -->
     <div class="footer">
+    <table><tr><td>
         Copyright © 2010-2022 All Rights Reserved.<br />
         Last updated on ` +
       showAs +
       ` at ` +
       CurTime +
-      `
-    </div>
-    <!-- Footer -->
+      `</td><td>
+      <a href='http://ipv6-test.com'><img src='http://v4v6.ipv6-test.com/imgtest.php?bl=1' alt='ipv6 test'
+                title='ipv6 test' border='0' /></a></td>
+    </tr></table></div>
         `;
   }
 }
