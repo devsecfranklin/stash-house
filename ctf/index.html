@@ -8,31 +8,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content="Bluefish 2.2.5">
     <meta name="author" content="franklin">
-    <link rel="stylesheet" href="/css/bitsmasher.css">
-    <script src="/js/header_footer_blue.js"></script>
+    <link rel="stylesheet" href="/css/bitsmasher-new.css">
+    <script type="text/javascript" src="/js/head_foot_new.js"></script>
 </head>
+
 <body>
+    <div class="header">
+        <h1>Cloud CTF Resources</h1>
+    </div>
+    
+    <nav-bar />
 
-    <main-header></main-header>
+    <h2>Links</h2>
+    <a href="https://cycode.com/blog/github-actions-vulnerabilities/">CI pipeline vulns</a>
 
-    <ul>
-        <li><a href="/lab/authentication.html">Authentication</a></li>
-        <li><a href="/lab/ansible.html">Ansible</a></li>
-        <li><a href="/lab/kubernetes.html">Kubernetes</a></li>
-        <li><a href="/lab/nodes.html">Kubernetes</a></li>
-    </ul>
-
-    <h2>VNC Connections</h2>
-
+    <h2>K8s Cluster</h2>
     <ul>
         <li>enable VNC in raspi-config</li>
         <li>from the raspi desktop, change from unix auth to VNC auth</li>
         <li><code>ssh -L 5901:127.0.0.1:5901 -C -N -l pi x.x.x.x</code></li>
-        <li>Once the tunnel is running, use a VNC client to connect to localhost:5901</li>
     </ul>
-
-    <main-footer></main-footer>
+    
+    <main-footer />
 
 </body>
-
 </html>

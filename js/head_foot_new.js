@@ -1,16 +1,12 @@
-class Header extends HTMLElement {
+class NavBar extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
-    <div class="header">
-        <a href="/index.html"> <img src="/images/bit-logo2.jpg" alt="a blue rectangle with the URI of the website"></a>
-    </div>
-    <div class="topnav">
-        <a href="/bsidesindy/index.html">BSidesIndy</a>
-        <a href="/lab/index.html">Lab</a>
-        <a href="https://minecraft.bitsmasher.net/">Minecraft</a>
-        <a href="https://franklin-resume.herokuapp.com/">My Resume</a>
-    </div>
-                        `
+        <div class="topnav">
+            <a href="/bsidesindy/index.html">BSidesIndy</a>
+            <a href="/lab/index.html">Lab</a>
+            <a href="https://minecraft.bitsmasher.net/">Minecraft</a>
+            <a href="https://franklin-resume.herokuapp.com/">My Resume</a>
+        </div>`
     }
 }
 
@@ -43,5 +39,6 @@ class Footer extends HTMLElement {
     }
 }
 
-customElements.define('main-header', Header);
+customElements.define('nav-bar', NavBar);
 customElements.define('main-footer', Footer);
+
