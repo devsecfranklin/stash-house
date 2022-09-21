@@ -42,11 +42,10 @@ BODY {
 .footer {
     background-color:#333;
     color:rgb(94, 167, 235);
-    padding: 20px;
+    padding: 10px;
     font-family: Sans-Serif;
     bottom:0;
     text-align:right;
-    float: right;
     width: 100%;
 }
 
@@ -69,4 +68,9 @@ a:link {
   a:active {
     color: blue;
   }
-  
+ 
+  #container {
+    width: 100%;
+    float: left;
+    margin-right: -200px;
+  }

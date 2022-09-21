@@ -79,10 +79,12 @@ body {
   float: left;
   margin-right: -200px;
 }
+
 #content {
   margin-right: 200px;
   padding: 14px 16px;
 }
+
 #sidebar {
   padding: 14px 16px;
   width: 200px;
