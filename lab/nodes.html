@@ -14,37 +14,13 @@
 
 <body>
 
-    <main-header></main-header>
+    <main-header />
 
     <p>Nvidia Jetson nodes</p>
 
     <p>Raspberry Pi Nodes</p>
 
-    <h2>Making console connections</h2>
-
-    <h3>Hardware Setup</h3>
-
-    <a href="https://www.adafruit.com/product/954">USB to TTL Serial Cable - Debug / Console Cable for Raspberry Pi</a>
-
-    <ul>
-        <li>The red lead provides 5V of power at 500mA from the USB port to the Pi</li>
-        <li>The green lead transmits (TX) data from the USB port to the Pi</li>
-        <li>The white lead receives (RX) data into the USB port from the Pi</li>
-        <li>The black lead provides electrical ground to the system</li>
-    </ul>
-
-    <he3>Software Setup</he3>
-
-    <ul>
-        <li>In <code>/boot/config.txt</code> set <code>enable_uart=1</code></li>
-        <li>Install ser2net like so <code>sudo apt install ser2net -y</code></li>
-        <li>Edit the <code>/etc/ser2net.yaml</code> file.</li>
-        <li>Now run <code>systemctl status ser2net</code></li>
-    </ul>
-    
-    You can check the serial attachments with the command <code>dmesg | grep ttyUSB</code>
-
-    <main-footer></main-footer>
+    <main-footer />
 
 </body>
 
