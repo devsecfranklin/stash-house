@@ -8,28 +8,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content="Bluefish 2.2.5">
     <meta name="author" content="franklin">
-    <link rel="stylesheet" href="/css/bitsmasher.css">
-
-    <script src="/js/header_footer_blue.js"></script>
-
+    <link rel="stylesheet" href="/css/bitsmasher-new.css">
+    <script type="text/javascript" src="/js/head_foot_new.js"></script>
+</head>
 <body>
 
-    <main-header></main-header>
+    <div class="header">
+        <h1>Lab Authentication</h1>
+    </div>
 
+    <nav-bar />
+
+    <div class="container">
     <h2>SSH Configuration</h2>
 
-    <code>Host *.lab.bitsmasher.net<br />
-    GSSAPIAuthentication yes<br />
-    GSSAPIDelegateCredentials yes<br />
-    CanonicalizeHostname yes<br />
-    CanonicalDomains lab.bitsmasher.net<br />
-    CanonicalizeMaxDots 3<br />
-    CanonicalizeFallbackLocal yes<br /></code><br />
-
+    <code>
+    Host *.lab.bitsmasher.net
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
+    CanonicalizeHostname yes
+    CanonicalDomains lab.bitsmasher.net
+    CanonicalizeMaxDots 3
+    CanonicalizeFallbackLocal yes
+    </code>
+    </div>
+    <div class="container">
     <h2>Kerberos Machine Setup</h2>
 
     <code>
-
        sudo apt install krb5-user krb5-config libpam-krb5 libpam-ccreds<br />
        sudo apt install ldap-utils<br />
     </code>
@@ -55,7 +61,8 @@
     kinit franklin -X X509_user_identity=FILE:~/.ssh/franklin-cert.pem,~/.ssh/franklin-key.pem<br />
     KRB5_TRACE=/dev/stdout ssh<br />
     </code>
-
+    </div>
+    <div class="container">
     <p>Troubleshoot:</p>
 
     <ul>
@@ -63,7 +70,8 @@
         <li>Check keytab "sudo klist -ke /etc/krb5.keytab"</li>
         <li>Start sshd in console/debug-mode: mkdir /run/sshd && $(which sshd) -ddd</li>
     </ul>
-    <br />
+    </div>
+    <div class="container">
     <h2>Kerberos User Setup</h2>
     <p>Start the kadmin tool</p>
 
@@ -86,8 +94,10 @@
         kinit root/admin<br />
         kadmin -q 'addprinc -randkey WELLKNOWN/ANONYMOUS'<br />
     </code><br />
-
+    </div>
+    <div class="container">
     <h2>Open LDAP Setup</h2>
+    </div>
     <main-footer></main-footer>
 </body>
 </html>
