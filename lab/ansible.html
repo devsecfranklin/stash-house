@@ -9,13 +9,19 @@
     <meta name="generator" content="Bluefish 2.2.12" >
     <meta name="generator" content="Bluefish 2.2.12" >
     <meta name="author" content="franklin" >
-    <link rel="stylesheet" href="/css/bitsmasher.css">
-
-    <script src="/js/header_footer_blue.js"></script>
+    <link rel="stylesheet" href="/css/bitsmasher-new.css">
+    <script type="text/javascript" src="/js/head_foot_new.js"></script>
+</head>
 
 <body>
 
-    <main-header></main-header>
+    <div class="header">
+        <h1>Ansible</h1>
+    </div>
+
+    <nav-bar />
+
+	<div class="container">
 
     https://sahansera.dev/k3s-rapsberrypi-ansible-automation/
     
@@ -37,6 +43,7 @@
     ansible-galaxy collection install -r collections/requirements.yml<br />
     ansible-playbook -i firewalls firewalls.yml --ask-vault-pass -e 'ansible_python_interpreter=/usr/bin/python3'<br />
 </code>
+</div>
     <main-footer></main-footer>
 
 </body>

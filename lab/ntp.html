@@ -8,18 +8,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content="Bluefish 2.2.5">
     <meta name="author" content="franklin">
-    <link rel="stylesheet" href="/css/bitsmasher.css">
-
-    <script src="/js/header_footer_white.js"></script>
+    <link rel="stylesheet" href="/css/bitsmasher-new.css">
+    <script type="text/javascript" src="/js/head_foot_new.js"></script>
+</head>
 
 <body>
 
-    <main-header></main-header>
+    <div class="header">
+        <h1>Network Time</h1>
+    </div>
 
-    Put the NTP server details here. 
+    <nav-bar />
 
-    <main-footer></main-footer>
+    <div class="container">
+        <h2>Configure NTP</h2>
+
+        <code>
+            dpkg-reconfigure tzdata
+        </code>
+    </div>
+
+    
+    <main-footer />
 
 </body>
-
 </html>
