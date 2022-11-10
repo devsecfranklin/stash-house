@@ -19,8 +19,8 @@ Now navigate to [http://0.0.0.0:8080/](http://0.0.0.0:8080/)
 
 ## Linter
 
-```sh
+```fish
 nix-shell shell.nix
 linthtml **/*.html
-html-beautify index.html
+for FILE in **/*.html; html-beautify {$FILE} > {$FILE}.tmp && mv {$FILE}.tmp {$FILE}; end
 ```

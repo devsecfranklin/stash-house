@@ -2,120 +2,123 @@
 <html lang="en-US">
 
 <head>
-	<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3CG2BV7JQ8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CG2BV7JQ8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-3CG2BV7JQ8');
-</script>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="generator" content="Bluefish 2.2.5">
-	<title>Raspberry PI Serial Connection</title>
-	<meta name="description" content="projects@bitsmasher.net">
-	<meta name="author" content="franklin">
-	<link rel="stylesheet" href="/css/bitsmasher-new.css" />
-	<script type="text/javascript" src="/js/head_foot_new.js"></script>
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3CG2BV7JQ8');
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Bluefish 2.2.5">
+    <title>Raspberry PI Serial Connection</title>
+    <meta name="description" content="projects@bitsmasher.net">
+    <meta name="author" content="franklin">
+    <link rel="stylesheet" href="/css/bitsmasher-new.css" />
+    <script type="text/javascript" src="/js/head_foot_new.js"></script>
 </head>
 
 <body>
 
-	<div class="header">
-		<h1>Serial Connection on Raspberry PI/h1>
-	</div>
+    <div class="header">
+        <h1>Serial Connection on Raspberry PI/h1>
+    </div>
 
-	<nav-bar />
+    <nav-bar />
 
-	<div class="container">
+    <div class="container">
 
 
-		<table>
-			<tr>
-				<td>
-					<h3>Pololu USB-to-Serial Adapter</h3>
+        <table>
+            <tr>
+                <td>
+                    <h3>Pololu USB-to-Serial Adapter</h3>
 
-					http://www.pololu.com/catalog/product/391
-					<p>
-						<img alt="Pololu USB-to-Serial" src="/projects/images/0J401.200.jpg" />
-					</p>
-				</td>
-				<td align="right">
-					<h3>R-Pi GPIO</h3>
-					http://elinux.org/RPi_Low-level_peripherals#General_Purpose_Input.2FOutput_.28GPIO.29
-					<p>
-						<img alt="Raspberry PI GPIO" src="/projects/images/GPIOs.png" />
-					</p>
-				</td>
-			</tr>
-		</table>
+                    http://www.pololu.com/catalog/product/391
+                    <p>
+                        <img alt="Pololu USB-to-Serial" src="/projects/images/0J401.200.jpg" />
+                    </p>
+                </td>
+                <td align="right">
+                    <h3>R-Pi GPIO</h3>
+                    http://elinux.org/RPi_Low-level_peripherals#General_Purpose_Input.2FOutput_.28GPIO.29
+                    <p>
+                        <img alt="Raspberry PI GPIO" src="/projects/images/GPIOs.png" />
+                    </p>
+                </td>
+            </tr>
+        </table>
 
-		<h3>Make connections</h3>
+        <h3>Make connections</h3>
 
-		<ul>
-			<li>Connect GND pin from R-PI GPIO to GND pin on Pololu adapter.</li>
-			<li>Connect RX pin on the R-PI GPIO to the TX pin on Pololu adapter.</li>
-			<li>Connect TX pin on the R-PI GPIO to the RX pin on Pololu adapter.</li>
-		</ul>
+        <ul>
+            <li>Connect GND pin from R-PI GPIO to GND pin on Pololu adapter.</li>
+            <li>Connect RX pin on the R-PI GPIO to the TX pin on Pololu adapter.</li>
+            <li>Connect TX pin on the R-PI GPIO to the RX pin on Pololu adapter.</li>
+        </ul>
 
-		<p>dmesg:<br />
-			[339786.706752] usb 1-5.1: USB disconnect, device number 78<br />
-			[339793.816132] usb 1-5.1: new full-speed USB device number 79 using ehci_hcd<br />
-			[339793.909752] usb 1-5.1: New USB device found, idVendor=10c4, idProduct=803b<br />
-			[339793.909756] usb 1-5.1: New USB device strings: Mfr=1, Product=2, SerialNumber=3<br />
-			[339793.909759] usb 1-5.1: Product: Pololu USB01B USB to Serial Adapter<br />
-			[339793.909762] usb 1-5.1: Manufacturer: Silicon Labs<br />
-			[339793.909764] usb 1-5.1: SerialNumber: 0J50374<br />
-			[339794.068050] cp210x 1-5.1:1.0: cp210x converter detected<br />
-			[339794.140151] usb 1-5.1: reset full-speed USB device number 79 using ehci_hcd<br />
-			[339794.232988] usb 1-5.1: cp210x converter now attached to ttyUSB0<br />
-			[339794.233014] usbcore: registered new interface driver cp210x<br />
-			[339794.233016] cp210x: v0.09:Silicon Labs CP210x RS232 serial adaptor driver<br />
-		</p>
-		<p>franklin@nigthshade:~/XINU$ lsmod |grep cp210x<br />
-			cp210x 21155 0<br />
-			usbserial 32061 1 cp210x<br />
-			usbcore 128741 6 ehci_hcd,uhci_hcd,usbserial,cp210x,usbhid<br />
-		</p>
+        <p>dmesg:<br />
+            [339786.706752] usb 1-5.1: USB disconnect, device number 78<br />
+            [339793.816132] usb 1-5.1: new full-speed USB device number 79 using ehci_hcd<br />
+            [339793.909752] usb 1-5.1: New USB device found, idVendor=10c4, idProduct=803b<br />
+            [339793.909756] usb 1-5.1: New USB device strings: Mfr=1, Product=2, SerialNumber=3<br />
+            [339793.909759] usb 1-5.1: Product: Pololu USB01B USB to Serial Adapter<br />
+            [339793.909762] usb 1-5.1: Manufacturer: Silicon Labs<br />
+            [339793.909764] usb 1-5.1: SerialNumber: 0J50374<br />
+            [339794.068050] cp210x 1-5.1:1.0: cp210x converter detected<br />
+            [339794.140151] usb 1-5.1: reset full-speed USB device number 79 using ehci_hcd<br />
+            [339794.232988] usb 1-5.1: cp210x converter now attached to ttyUSB0<br />
+            [339794.233014] usbcore: registered new interface driver cp210x<br />
+            [339794.233016] cp210x: v0.09:Silicon Labs CP210x RS232 serial adaptor driver<br />
+        </p>
+        <p>franklin@nigthshade:~/XINU$ lsmod |grep cp210x<br />
+            cp210x 21155 0<br />
+            usbserial 32061 1 cp210x<br />
+            usbcore 128741 6 ehci_hcd,uhci_hcd,usbserial,cp210x,usbhid<br />
+        </p>
 
-		<h3>Now Configure the /dev/ttyUSB0 port</h3>
+        <h3>Now Configure the /dev/ttyUSB0 port</h3>
 
-		franklin@nigthshade:~/XINU$ sudo chmod a+rw /dev/ttyUSB0<br />
-		franklin@nigthshade:~/XINU$ ls -la /dev/ttyUSB0<br />
-		crw-rw-rwT 1 root dialout 188, 0 Oct 15 16:06 /dev/ttyUSB0<br />
-		franklin@nigthshade:~/XINU$ stty -F /dev/ttyUSB0 9600<br />
-		franklin@nigthshade:~/XINU$ stty -F /dev/ttyUSB0 -a<br />
+        franklin@nigthshade:~/XINU$ sudo chmod a+rw /dev/ttyUSB0<br />
+        franklin@nigthshade:~/XINU$ ls -la /dev/ttyUSB0<br />
+        crw-rw-rwT 1 root dialout 188, 0 Oct 15 16:06 /dev/ttyUSB0<br />
+        franklin@nigthshade:~/XINU$ stty -F /dev/ttyUSB0 9600<br />
+        franklin@nigthshade:~/XINU$ stty -F /dev/ttyUSB0 -a<br />
 
-	</div>
-	<div class="container">
-		<h2>Making console connections</h2>
+    </div>
+    <div class="container">
+        <h2>Making console connections</h2>
 
-		<h3>Hardware Setup</h3>
+        <h3>Hardware Setup</h3>
 
-		<a href="https://www.adafruit.com/product/954">USB to TTL Serial Cable - Debug / Console Cable f
-			or Raspberry Pi</a>
+        <a href="https://www.adafruit.com/product/954">USB to TTL Serial Cable - Debug / Console Cable f
+            or Raspberry Pi</a>
 
-		<ul>
-			<li>The red lead provides 5V of power at 500mA from the USB port to the Pi</li>
-			<li>The green lead transmits (TX) data from the USB port to the Pi</li>
-			<li>The white lead receives (RX) data into the USB port from the Pi</li>
-			<li>The black lead provides electrical ground to the system</li>
-		</ul>
+        <ul>
+            <li>The red lead provides 5V of power at 500mA from the USB port to the Pi</li>
+            <li>The green lead transmits (TX) data from the USB port to the Pi</li>
+            <li>The white lead receives (RX) data into the USB port from the Pi</li>
+            <li>The black lead provides electrical ground to the system</li>
+        </ul>
 
-		<he3>Software Setup</he3>
+        <he3>Software Setup</he3>
 
-		<ul>
-			<li>In <code>/boot/config.txt</code> set <code>enable_uart=1</code></li>
-			<li>Install ser2net like so <code>sudo apt install ser2net -y</code></li>
-			<li>Edit the <code>/etc/ser2net.yaml</code> file.</li>
-			<li>Now run <code>systemctl status ser2net</code></li>
-		</ul>
+        <ul>
+            <li>In <code>/boot/config.txt</code> set <code>enable_uart=1</code></li>
+            <li>Install ser2net like so <code>sudo apt install ser2net -y</code></li>
+            <li>Edit the <code>/etc/ser2net.yaml</code> file.</li>
+            <li>Now run <code>systemctl status ser2net</code></li>
+        </ul>
 
-		You can check the serial attachments with the command <code>dmesg | grep ttyUSB</code>
-	</div>
-	<main-footer />
+        You can check the serial attachments with the command <code>dmesg | grep ttyUSB</code>
+    </div>
+    <main-footer />
 </body>
 
 </html>

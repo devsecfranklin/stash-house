@@ -3,14 +3,17 @@
 
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3CG2BV7JQ8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CG2BV7JQ8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-3CG2BV7JQ8');
-</script>
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3CG2BV7JQ8');
+    </script>
     <title>Storage</title>
     <meta name="description" content="Storage @bitsmasher.net">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -32,8 +35,8 @@
     <div class="container">
         <h2>Configure SSSD</h2>
 
-        <a href=""https://help.univention.com/t/failed-rpc-security-service-for-nfs-server-after-4-3-upgrade/8196/4">from this website</a><br />
-        
+        <a href="" https://help.univention.com/t/failed-rpc-security-service-for-nfs-server-after-4-3-upgrade/8196/4">from this website</a><br />
+
         The package "nfs-kernel-server" is installed by default on all systems.
         Since Debian-Stretch it uses systemd to start all services.
         "rpc-svcgssd.service" is listed as "loaded failed" because
@@ -49,8 +52,9 @@
             cat /lib/systemd/system/rpc-svcgssd.service<br />
             systemctl mask rpc-svcgssd.service<br />
         </code>
-        </div>
+    </div>
 
-<main-footer />
+    <main-footer />
 </body>
+
 </html>

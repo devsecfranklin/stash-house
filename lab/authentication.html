@@ -3,14 +3,17 @@
 
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3CG2BV7JQ8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CG2BV7JQ8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-3CG2BV7JQ8');
-</script>
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3CG2BV7JQ8');
+    </script>
     <title>Authentication</title>
     <meta name="description" content="Authentication @bitsmasher.net">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -33,23 +36,23 @@
         <h2>SSH Configuration</h2>
 
         <code>
-    Host *.lab.bitsmasher.net
-    GSSAPIAuthentication yes
-    GSSAPIDelegateCredentials yes
-    CanonicalizeHostname yes
-    CanonicalDomains lab.bitsmasher.net
-    CanonicalizeMaxDots 3
-    CanonicalizeFallbackLocal yes
-    </code>
+            Host *.lab.bitsmasher.net
+            GSSAPIAuthentication yes
+            GSSAPIDelegateCredentials yes
+            CanonicalizeHostname yes
+            CanonicalDomains lab.bitsmasher.net
+            CanonicalizeMaxDots 3
+            CanonicalizeFallbackLocal yes
+        </code>
     </div>
 
     <div class="container">
         <h2>Kerberos Client Setup</h2>
 
         <code>
-       sudo apt install krb5-user krb5-config libpam-krb5 libpam-ccreds<br />
-       sudo apt install ldap-utils<br />
-    </code>
+            sudo apt install krb5-user krb5-config libpam-krb5 libpam-ccreds<br />
+            sudo apt install ldap-utils<br />
+        </code>
 
         <p>Now set up the keytab for the host. Log in to the host to Create
             /etc/krb5.keytab file in place. Must be done as root user (not sudo)</p>
@@ -67,19 +70,19 @@
        klist -ke /etc/krb5.keytab<br />
     </code>
 
-    <code>
-    kinit franklin -X X509_user_identity=FILE:~/.ssh/franklin-cert.pem,~/.ssh/franklin-key.pem<br />
-    KRB5_TRACE=/dev/stdout ssh<br />
-    </code>
+        <code>
+            kinit franklin -X X509_user_identity=FILE:~/.ssh/franklin-cert.pem,~/.ssh/franklin-key.pem<br />
+            KRB5_TRACE=/dev/stdout ssh<br />
+        </code>
     </div>
 
     <div class="container">
         <p>Troubleshoot KDC</p>
-    <code>
-        kinit -p root/admin
-        klist -ke /etc/krb5.keytab<br />
-        env KRB5_TRACE=/dev/stdout kadmin -p  root/admin@LAB.BITSMASHER.NET<br />
-    </code>
+        <code>
+            kinit -p root/admin
+            klist -ke /etc/krb5.keytab<br />
+            env KRB5_TRACE=/dev/stdout kadmin -p root/admin@LAB.BITSMASHER.NET<br />
+        </code>
     </div>
 
     <div class="container">
@@ -97,8 +100,8 @@
 
         <p>
             <code>
-            kadmin.local -p admin/admin<br />
-            ktutil --keytab=/etc/krb5.keytab list<br />
+                kadmin.local -p admin/admin<br />
+                ktutil --keytab=/etc/krb5.keytab list<br />
             </code>
         </p>
 
@@ -106,18 +109,18 @@
 
         <code>
 
-        addpol -minlength 8 -maxlife 7776000 -history 5 users<br />
-        getpol users<br />
-        ank -policy users franklin<br />
-        listprincs<br />
-    </code>
+            addpol -minlength 8 -maxlife 7776000 -history 5 users<br />
+            getpol users<br />
+            ank -policy users franklin<br />
+            listprincs<br />
+        </code>
 
         <p>Preauth: Put the pem files in /var/lib/krb5kdc since this is read/writeable by the KDC.</p>
 
         <code>
-        kinit root/admin<br />
-        kadmin -q 'addprinc -randkey WELLKNOWN/ANONYMOUS'<br />
-    </code><br />
+            kinit root/admin<br />
+            kadmin -q 'addprinc -randkey WELLKNOWN/ANONYMOUS'<br />
+        </code><br />
     </div>
 
     <div class="container">
@@ -130,4 +133,5 @@
     </div>
     <main-footer />
 </body>
+
 </html>

@@ -2,12 +2,10 @@
 <html lang="en-US">
 
 <head>
-	<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3CG2BV7JQ8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CG2BV7JQ8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
   gtag('config', 'G-3CG2BV7JQ8');
 </script>
@@ -29,6 +27,42 @@
 
 	<nav-bar />
 
+<<<<<<< HEAD
+    <div class="container">
+        Setting up the user.<br />
+
+        <code>
+            mkdir ~/.kube<br />
+            sudo cp /etc/kubernetes/admin.conf ~/.kube/config<br />
+            chown user:grp ~/.kube/config<br />
+        </code>
+
+        From outside the cluster<br />
+
+        <code>
+            cd workspace/homelab/ansible<br />
+            ssh-add ~/.ssh/id_rsa<br />
+            ansible cluster -m ping --become -e 'ansible_python_interpreter=/usr/bin/python3'<br />
+            for h in node{0..3}; do ssh pi@$h kubeadm version; done<br />
+            for h in node{0..3}; do ssh pi@$h systemctl is-active kubelet; done<br />
+            for h in node{0..3}; do ssh pi@$h sudo apt upgrade -y --allow-change-held-packages kubeadm kubectl kubelet; done<br />
+        </code>
+
+        From the head node<br />
+
+        <code>
+            kubectl cluster-info<br />
+            kubeadm upgrade plan<br />
+            kubectl -n kube-system get cm kubeadm-config -oyaml<br />
+            kubectl describe node node0<br />
+            kubectl taint nodes --all node-role.kubernetes.io/master-<br />
+            kubectl describe node | grep -i taint <br />
+        </code>
+
+        https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/
+    </div>
+    <main-footer />
+=======
 	<div class="container">
 		Setting up the user.<br />
 
@@ -71,6 +105,7 @@
 		</div>
 	</div>
 	<main-footer />
+>>>>>>> origin/main
 
 </body>
 
