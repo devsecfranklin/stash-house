@@ -16,3 +16,11 @@ Now navigate to [http://0.0.0.0:8080/](http://0.0.0.0:8080/)
 ## test twitter card
 
 [twitter card validator](https://cards-dev.twitter.com/validator)
+
+## Linter
+
+```sh
+nix-shell shell.nix
+linthtml **/*.html
+html-beautify index.html
+```

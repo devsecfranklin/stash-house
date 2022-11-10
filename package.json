@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@linthtml/linthtml": "^0.9.3"
+  },
+  "dependencies": {
+    "js-beautify": "^1.14.7"
+  }
+}
