@@ -2,6 +2,7 @@
 *.html~
 *.js~
 *.php~
+node_modules/
 
 # autotools
 _build
