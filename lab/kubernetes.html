@@ -17,30 +17,30 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="generator" content="Bluefish 2.2.5">
 	<meta name="author" content="franklin">
-    <link rel="stylesheet" href="/css/bitsmasher-new.css">
-    <script type="text/javascript" src="/js/head_foot_new.js"></script>
+	<link rel="stylesheet" href="/css/bitsmasher-new.css">
+	<script type="text/javascript" src="/js/head_foot_new.js"></script>
 </head>
 
 <body>
 
-    <div class="header">
-        <h1>Kubernetes</h1>
-    </div>
+	<div class="header">
+		<h1>Kubernetes</h1>
+	</div>
 
-    <nav-bar />
+	<nav-bar />
 
 	<div class="container">
-	Setting up the user.<br />
+		Setting up the user.<br />
 
-	<code>
+		<code>
 		mkdir ~/.kube<br />
 		sudo cp /etc/kubernetes/admin.conf ~/.kube/config<br />
 		chown user:grp ~/.kube/config<br />
 	 </code>
 
-	From outside the cluster<br />
+		From outside the cluster<br />
 
-	<code>
+		<code>
 		cd workspace/homelab/ansible<br />
 		ssh-add ~/.ssh/id_rsa<br />
 		ansible cluster -m ping --become -e 'ansible_python_interpreter=/usr/bin/python3'<br />
@@ -49,9 +49,9 @@
 		for h in node{0..3}; do ssh pi@$h sudo apt upgrade -y --allow-change-held-packages kubeadm kubectl kubelet; done<br />
 	</code>
 
-	From the head node<br />
+		From the head node<br />
 
-	<code>
+		<code>
 		kubectl cluster-info<br />
 		kubeadm upgrade plan<br />
 		kubectl -n kube-system get cm kubeadm-config -oyaml<br />
@@ -60,9 +60,18 @@
 		kubectl describe node | grep -i taint	 <br />
 	</code>
 
-	https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/
-</div>
+		https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/
+
+		<div class="container">
+			Using the dashboard<br />
+
+			There is a set up instructions in <a
+				href="https://github.com/devsecfranklin/lab-home/tree/main/yaml/dashboard">the YAML folder</a> along
+			with all the relvant instructions.
+		</div>
+	</div>
 	<main-footer />
 
 </body>
+
 </html>

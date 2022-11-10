@@ -44,7 +44,7 @@
     </div>
 
     <div class="container">
-        <h2>Kerberos KDC Setup</h2>
+        <h2>Kerberos Client Setup</h2>
 
         <code>
        sudo apt install krb5-user krb5-config libpam-krb5 libpam-ccreds<br />
@@ -58,11 +58,11 @@
 
        sudo -i<br />
        kinit root/admin<br />
-       kadmin -p <br />
+       kadmin -p root/admin<br />
        # add host and ldap principals<br />
        addprinc -randkey host/head1.lab.bitsmasher.net<br />
        addprinc -randkey ldap/head1.lab.bitsmasher.net<br />
-       ktadd host/grimoire.lab.bitsmasher.net ldap/grimoire.lab.bitsmasher.net<br />
+       ktadd host/head1.lab.bitsmasher.net ldap/head1.lab.bitsmasher.net<br />
        (quit)<br />
        klist -ke /etc/krb5.keytab<br />
     </code>
