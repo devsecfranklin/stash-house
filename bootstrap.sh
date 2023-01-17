@@ -61,16 +61,20 @@ function run_autopoint() {
 }
 
 function run_libtoolize() {
-  echo "Checking libtoolize version..."
-  libtoolize --version 2>&1 > /dev/null
+  MY_LIBTOOL="libtoolize"
+  if [ "$MY_OS" == "mac" ]; then
+    MY_LIBTOOL="glibtoolize"
+  fi
+  echo "Checking ${MY_LIBTOOL} version..."
+  ${MY_LIBTOOL} --version 2>&1 > /dev/null
   rc=$?
   if test $rc -ne 0 ; then
-      echo "Could not determine the version of libtool on your machine"
-      echo "libtool --version produced:"
-      libtool --version
+      echo "Could not determine the version of ${MY_LIBTOOL} on your machine"
+      echo "${MY_LIBTOOL} --version produced:"
+      ${MY_LIBTOOL} --version
       exit 1
   fi
-  lt_ver=`libtoolize --version | awk '{print $NF; exit}'`
+  lt_ver=`${MY_LIBTOOL} --version | awk '{print $NF; exit}'`
   lt_maj=`echo $lt_ver | sed 's;\..*;;g'`
   lt_min=`echo $lt_ver | sed -e 's;^[0-9]*\.;;g'  -e 's;\..*$;;g'`
   lt_teeny=`echo $lt_ver | sed -e 's;^[0-9]*\.[0-9]*\.;;g'`
@@ -94,11 +98,11 @@ function run_libtoolize() {
 
       *)
           echo "You are running a newer libtool than gerbv has been tested with."
-    echo "It will probably work, but this is a warning that it may not."
+    echo -e "${YELLOW}It will probably work, but this is a warning that it may not.${NC}"
     ;;
   esac
-  echo "Running libtoolize..."
-  libtoolize --force --copy --automake || exit 1
+  echo -e "${CYAN}Running ${MY_LIBTOOL}...${NC}"
+  ${MY_LIBTOOL} --force --copy --automake || exit 1
 }
 
 function run_aclocal() {
@@ -351,7 +355,9 @@ function main() {
   fi
 
   if [ ! -d "aclocal" ]; then mkdir aclocal; fi
+  run_libtoolize
   run_aclocal
+  # run_autoheader
   run_automake
   run_autoconf
   ./configure

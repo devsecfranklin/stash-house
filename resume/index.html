@@ -2,291 +2,139 @@
 <html lang="en-US" prefix="og: https://ogp.me/ns#">
 
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CG2BV7JQ8"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+  <!-- Hello Robots, please have the latest version of this page. No cache. -->
+  <meta name="robots" content="noarchive" />
+  <meta name="googlebot" content="noarchive" />
+  <meta name="googlebot-news" content="noarchive" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new-style.css') }}">
+  <meta name="author" content="Franklin Diaz">
+  <title>Franklin Diaz Resume</title>
+  <meta name="orcid" content="https://orcid.org/0000-0003-4586-8500">
+  <meta name="description" content="Resume of a Principal DevSecOps/security leader seeking remote opportunities." />
+  <meta name="keywords"
+    content="resume, infrastructure, security, engineering, DevOps, DevSecOps, Python, Ansible, Terraform, Puppet, AWS, GCP, OCI, Azure" />
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
+  <!-- OpenGraph https://ogp.me/ -->
+  <meta property="og:title" content="Resume of Franklin Diaz" />
+  <meta property="og:type" content="document" />
+  <meta property="og:url" content="https://franklin-resume.herokuapp.com/" />
+  <meta property="og:image" content="{{ url_for('static', filename='headshot.jpg') }}" />
+  <meta property="og:description" content="Resume of Franklin Diaz" />
 
-        gtag('config', 'G-3CG2BV7JQ8');
-    </script>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/css/resume.css">
-    <meta name="author" content="Franklin Diaz">
-    <title>Franklin Diaz Resume</title>
-    <meta name="description" content="resume of a DevSecOps/security infrastructure engineer seeking remote opportunities." />
-    <meta name="keywords" content="resume, infrastructure, security, engineering, DevOps, DevSecOps, Python, Ansible, Terraform" />
-
-    <!-- OpenGraph https://ogp.me/ -->
-    <meta property="og:title" content="Resume of Franklin Diaz" />
-    <meta property="og:type" content="document" />
-    <meta property="og:url" content="https://www.bitsmasher.net/resume/index.html" />
-    <meta property="og:image" content="/images/headshot.jpg" />
-    <meta property="og:description" content="resume of a DevSecOps/security infrastructure engineer seeking remote opportunities." />
-
-    <!-- Twitter specific -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:url" content="https://www.bitsmasher.net/resume/index.html" />
-    <meta name="twitter:title" content="Franklin Diaz Resume" />
-    <meta name="twitter:description" content="resume of a DevSecOps/security infrastructure engineer seeking remote opportunities." />
-    <meta name="twitter:image" content="/images/headshot.jpg" />
-
+  <!-- Twitter specific -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:url" content="https://franklin-resume.herokuapp.com/" />
+  <meta name="twitter:title" content="Franklin Diaz Resume" />
+  <meta name="twitter:description" content="Resume of Franklin Diaz" />
+  <meta name="twitter:image" content="{{ url_for('static', filename='headshot.jpg') }}" />
 </head>
 
 <body>
-    <div id="html-2-pdfwrapper">
-        <div id="cv" class="instaFade">
-            <div class="mainDetails">
-                <div id="headshot" class="quickFade"><img src="/images/headshot.jpg" alt="mugshot" />
-                </div>
-                <div id="name">
-                    <h1 class="quickFade delayTwo">Franklin Diaz</h1>
-                    <h2 class="quickFade delayThree">Security Infrastructure Engineer</h2>
-                </div>
-                <div id="contactDetails" class="quickFade delayFour">
-                    <ul>
-                        <li>e: <a href="mailto:frank378@gmail.com" target="_blank">frank378@gmail.com</a></li>
-                        <li>w: <a href="https://www.linkedin.com/in/franklin-diaz-b38870164">LinkedIn</a></li>
-                        <li><a href="https://franklin-resume.herokuapp.com/pdf">Download PDF</a></li>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </div>
-            <div id="mainArea" class="quickFade delayFive">
-                <section>
-                    <article>
-                        <div class="sectionTitle">
-                            <h1>Objective</h1>
-                        </div>
-                        <div class="sectionContent">
-                            Seeking Lead DevSecOps role to leverage my experience building tools, infrastucture and pipelines for
-                            development &amp; security teams.
-                        </div>
-                    </article>
-                    <p>&nbsp;</p>
-                    <div class="clear"></div>
-                </section>
-                <p>&nbsp;</p>
-                <section>
-                    <div class="sectionTitle">
-                        <h1>Education</h1>
-                    </div>
-                    <div class="sectionContent">
-                        <article>
-                            <h2>DePaul University</h2>
-                            <p class="subDetails"><a href="https://www.cdm.depaul.edu/academics/Pages/MSinNetworkEngineeringandManagement.aspx">MS Network
-                                    Security/Network Engineering</a></p>
-                            <p>Studied network protocols, network design, focus mostly on lower 4 layers of OSI. About half Network
-                                Security and half Network Engineering courses.</p>
-                        </article>
-                        <article>
-                            <h2>Northwestern University</h2>
-                            <p class="subDetails">MS Computer Info Systems</p>
-                            <p>Agile, OO Methods. Relational Database specialization. Java programming, interactive web apps with
-                                Apache/Tomcat.</p>
-                        </article>
-                        <article>
-                            <h2>Roosevelt University</h2>
-                            <p class="subDetails"><a href="https://www.roosevelt.edu/academics/programs/bachelors-in-computer-science-bs">BS Computer
-                                    Science</a></p>
-                            <p>C++ based cirriculum. Minor mathematics.</p>
-                        </article>
-                    </div>
-                    <div class="clear"></div>
-                </section>
-                <section>
-                    <div class="page-break-before"></div>
-                    <div class="sectionTitle">
-                        <h1>Work Experience</h1>
-                    </div>
-
-                    <div class="sectionContent">
-                        <article>
-                            <h2>Palo Alto Networks</h2>
-                            <p class="subDetails">Consulting Engineer - Jan 2020 to Current</p>
-                            Palo Alto is a cybersecurity company with $3.4B in revenue in FY20. Consulting Engineering is a part of
-                            the
-                            Sales organization that provides subject matter expertise to
-                            System Engineers in the Sales org, and to our customers.
-                            <p>&nbsp;</p>
-                            <ul>
-                                <li>Work with Product Management, Technical Marketing, and R&D to create requirements and product
-                                    features
-                                    for our large customers and provide feedback from customers</li>
-                                <li>Provide design consultation and best-practice guidance for rollout, implementation, and policy
-                                    conversion during the “pre-sales” process for strategic opportunities
-                                <li>Provide product update and enhancement training to SEs</li>
-                                <li>Provide demos for strategic prospects and current accounts in all facets of Palo Alto Networks’
-                                    virtual offerings and integration in existing data center environments</li>
-                                <li>Provide advanced “Partner SE” training for updates in the Palo Alto Networks product suite.</li>
-                            </ul>
-                        </article>
-                        <p>&nbsp;</p>
-                    </div>
-
-                    <div class="sectionContent">
-                        <article>
-                            <h2>Salesforce.com</h2>
-                            <p class="subDetails">Senior Security Engineer - Oct 2014 to Dec 2019</p>
-                            With 30K employees and $21B in assets, Salesforce offers Software as a Service in the form
-                            of an integrated CRM solution. Internally, the company is divided in to several main "clouds".
-                            When <a href="https://en.wikipedia.org/wiki/Salesforce_Marketing_Cloud">Exact Target became the Marketing
-                                Cloud</a>,
-                            I moved to a role in the parent security organization, working as part of the
-                            Security Detection Engineering (SDE) team. My role on this team could be best described as DevSecOps,
-                            or Data Engineering.
-                            <p>&nbsp;</p>
-                            <ul>
-                                <li>Our team designed, built and maintained STEMS, an in-house large scale log collection solution to
-                                    ingest security logs from internal networks, data centers, and acquisitions. At the time, we
-                                    processed over 1 billion security events per day.</li>
-                                <li>Built & maintained Data Science Pipeline. We pushed the security logs through a normalizer into
-                                    a Hadoop cluster. Built and maintaned the Airflow setup to manage and execute our data models.
-                                </li>
-                                <li>Buildout data science pipeline in the FedRamp High GovCloud environment in AWS.</li>
-                                <li>Built out large scale packet capture solution on internal comapny IT networks.</li>
-                                <li>Built and maintained the CI/CD pipeline architecture for the SDE team.</li>
-                            </ul>
-                        </article>
-                        <p>&nbsp;</p>
-                    </div>
-                    <div class="sectionContent">
-                        <article>
-                            <h2>Exact Target</h2>
-                            <p class="subDetails">Senior Deployment Engineer - Jan 2014 to Oct 2014</p>
-                            <a href="https://www.marketingcloud.com/">Exact Target</a> was a leading Cloud based e-mail
-                            marketing solution provider based in Indiapolis, IN that was acquired by Salesforce, Inc.
-                            for $2B in 2014. My job was to be "the Linux guy" in a world of Windows folks. Since Linux hosts
-                            were being used with increasing frequency in customer environments, an important part of this role
-                            was to support rollout of major releases to customer database stacks every 6 weeks.
-                            <p>&nbsp;</p>
-                            <ul>
-                                <li>Create deployment monitoring and administration tools in Linux environments.</li>
-                                <li>Support deployment of custom cloud applications using Chef &amp; Knife.</li>
-                                <li>Wrote Python for the Sledgehammer project, which was an in-house deployment and automation tool.
-                                </li>
-                            </ul>
-                        </article>
-                        <p>&nbsp;</p>
-                    </div>
-                    <div class="sectionContent">
-                        <article>
-                            <h2>Indiana University</h2>
-                            <p class="subDetails">Principal Research Software Engineer - Aug 2012 to Dec 31st, 2013</p>
-                            Test Architect in Software Defined Networking Lab, designed test cases and direct test efforts on
-                            openflow networks.
-                            <p>&nbsp;</p>
-                            <ul>
-                                <li>Wrote web based tools for <a href="http://www.geni.net/">GENI/GEMINI</a> project.</li>
-                                <li>Assistant instructor for undergraduate networking (lead discussions, create and grade homework, and
-                                    proctor exams).</li>
-                                <li>Research very high capacity storage solutions and high speed network connections.</li>
-                            </ul>
-                        </article>
-                        <p>&nbsp;</p>
-                    </div>
-                    <div class="sectionContent">
-                        <article>
-                            <h2>Nokia Siemens Networks</h2>
-                            <p class="subDetails">Senior R &amp; D Engineer - April 2011 to July 2012</p>
-                            In 2010, <a href="https://www.reuters.com/article/us-motorola-nokia-idUSTRE66I24P20100719">Nokia Siemens
-                                bought Motorola Networks dvision</a>. I worked as a member of CDMA Cellular base station product
-                            development.
-                            <p>&nbsp;</p>
-                            <ul>
-                                <li>Develop features and documentation while in Arlington Heights, IL.</li>
-                                <li>Scrum master and lab manager in Finland for the US based dev team.</li>
-                            </ul>
-                        </article>
-                        <p>&nbsp;</p>
-                    </div>
-                    <div class="sectionContent">
-                        <article>
-                            <h2>Motorola</h2>
-                            <p class="subDetails">Senior Software Engineer - Jan 1999 to April 2011</p>
-                            In the mid 90's I worked as a contractor doing analog to digital cellular system overlays. My Linux skills
-                            helped me get up to speed on the back end Solaris systems, and helping engineers get test data from the
-                            backend UNIX systems, test drives and mapping software into other formats. After a few years of working
-                            with
-                            the same folks, they brought me into Motorola as a Field Engineer. Eventually I moved to a team doing
-                            switch
-                            upgrades with custom Linux laptops across the US and Japan. I also worked in System Integration and Test
-                            team before finally moving to the base station development team.
-                            <p>&nbsp;</p>
-                            <ul>
-                                <li>CDMA Cellular base station product development.</li>
-                                <li>Motorola Networks division was acquired by Nokia Siemens</li>
-                            </ul>
-                        </article>
-                        <p>&nbsp;</p>
-                    </div>
-                    <div class="sectionContent">
-                        <article>
-                            <h2>McHenry County College</h2>
-                            <p class="subDetails">Adjunct Faculty - August 2006 to June 2011</p>
-                            Taught information systems courses in the evenings.
-                        </article>
-                        <p>&nbsp;</p>
-                    </div>
-                    <div class="clear"></div>
-                </section>
-
-                <section>
-                    <p style="page-break-before: always;page-break-after:auto;"></p>
-                    <article>
-                        <div class="sectionTitle">
-                            <h1>Talks &amp; Projects</h1>
-                        </div>
-                        <div class="sectionContent">
-                            <ul>
-                                <li>My <a href="https://youtu.be/XX0KX-4Q7es?t=1">Talk on Shifting Left</a> is about realizing security
-                                    and doing
-                                    Dev(Sec)Ops sooner in the software lifecycle.</li>
-                                <li><a href="https://dod.defense.gov/News/Article/Article/1520257/national-guard-conducts-annual-nationwide-cybersecurity-exercise/">Cyber
-                                        Shield 2018</a> - Trainer (Infrastructure) Blue Team Tools & Techniques</li>
-                                <li>Electronic badges, for example, <a href="https://github.com/DEAD10C5/bat_mini">the bat badge</a>
-                                    Here <a href="https://imgur.com/gallery/bK1vn">are some pictures of it</a></li>
-                                <li>I run <a href="https://twitter.com/indybsides">&#64;indybsides security conference</a>. <a href="https://imgur.com/a/w0UnE">Here are some pictures of it.</a></li>
-                                <li>Did
-                                    <a href="https://infosecoasis.com/2020/speakers/franklin_diaz.html">a talk on Radio Astronomy for
-                                        hackers</a> at the first Infosec Oasis VR conference.
-                                </li>
-                            </ul>
-                        </div>
-                    </article>
-                    <p>&nbsp;</p>
-                    <div class="clear"></div>
-                </section>
-
-                <section>
-                    <article>
-                        <div class="sectionTitle">
-                            <h1>Resume Application</h1>
-                        </div>
-                        <div class="sectionContent">
-                            This page is programatically generated by <a href="https://github.com/thedevilsvoice/franklin-resume">a
-                                Python3 Flask application</a>
-                            <p>&nbsp;</p>
-                            <h2><a href="https://franklin-resume.herokuapp.com/pdf">Click here to download latest PDF version.</a>
-                            </h2>
-                        </div>
-                    </article>
-                    <p>&nbsp;</p>
-                    <div class="clear"></div>
-                </section>
-            </div>
-        </div>
-        <a href="https://github.com/thedevilsvoice/franklin-resume">
-            <img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" />
-        </a>
-
-
+  <div id="page-wrap">
+    <div class="noprint">
+      <img class="one" src="{{ url_for('static', filename='headshot.jpg') }}" alt="Photo of Franklin" id="pic" />
     </div>
-</body>
+    <div class="onlyPrint">
+      <img class="one" src="{{ url_for('static', filename='ORCID.png') }}" alt="Franklin ORCID" id="pic" />
+    </div>
+    <div id="contact-info" class="vcard">
+      <h1 class="fn">Franklin Diaz</h1>
+      <div class="noprint">
+      <form action="/pdf" method="GET">
+        <button name="pdfBtn" type="submit">Download PDF</button>
+      </form>
+      </div>
+      <p>
+        Email: <a href="mailto:frank378@gmail.com" target="_blank">frank378@gmail.com</a><br />
+        Web: <a href="https://g.dev/franklin">GDev Page</a><br />
+        LinkedIn: <a href="https://www.linkedin.com/in/franklin-diaz/">LinkedIn</a><br />
+        Latest Version of this Resume: <a href="https://franklin-resume.herokuapp.com/">click here</a>
+      </p>
+    </div>
 
+    <div id="objective">
+      <p>
+        <li>Provide technical championship and automation expertise</li>
+        <li>Improving people, process, and tools.</li>
+        <li>Building secure, modern, cloud-native infrastructure.</li>
+        <li>Helping teams and organizations on their journey to the cloud.</li>
+      </p>
+    </div>
+
+    <div class="clear"></div>
+
+    <dl>
+      <dt>Education</dt>
+      <dd>
+        <h2>Roosevelt University - Chicago, IL</h2>
+        <p><strong>B.S. </strong>Computer Science<br />
+          <strong>Minor: </strong>Mathematics</p>
+      </dd>
+      <dd>
+        <h2>Northwestern University - Evanston, IL</h2>
+        <p><strong>M.S. </strong>Information Systems<br />
+      </dd>
+      <dd>
+        <h2>DePaul University - Chicago, IL</h2>
+        <p><strong>M.S. </strong>Network Security/Network Engineering</p>
+      </dd>
+
+      <dd class="clear"></dd>
+
+      <dt>Publications</dt>
+      <dd>
+        <li>Project paper: <a href="https://github.com/devsecfranklin/paper-cloud-lab/blob/main/cloudlab.pdf">A Cloud
+            Native Security Lab</a> <div class="noprint"><img src="https://img.shields.io/static/v1?label=status&message=released&color=success&style=plastic"> </div></li>
+      </dd>
+      
+      <dd class="clear"></dd>
+
+      <dt>Experience</dt>
+      <dd>
+        <h2>Palo Alto Networks <span>Principal Engineer - Security Infra Automation - 2020-Current</span></h2>
+        <ul>
+          <li>Design, develop, and deploy infrastructure as Code (IaC) for customers in
+            public cloud environments (GCP, OCI, AWS, and Azure) based on best security practices
+            and reference architectures</a>.</li>
+          <li>API automation work.</li>
+        </ul>
+
+        <h2>Salesforce <span>Senior Security Engineer - Bellevue, WA - 2014-2019</span></h2>
+        <ul>
+          <li>Our team designed, built and maintained  an in-house large scale security log collection solution to process over 1B security events per day.</li>
+          <li>Built & maintained Data Science Pipeline. We pushed the security logs through a normalizer into
+            a Hadoop cluster. Built and maintained the Airflow setup to manage and execute our data models.
+          </li>
+          <li>Built out data science pipeline in the FedRamp High GovCloud environment in AWS.</li>
+          <li>Built out large scale packet capture solution on internal company IT networks.</li>
+          <li>Built and maintained the CI/CD pipeline architecture for the SDE team.</li>
+        </ul>
+
+        <h2>Indiana University <span>Principal Research Software Engineer - 2012-2013</span></h2>
+        <ul>
+          <li>Test Architect in Software Defined Networking Lab, designed test cases and directed test efforts on openflow networks.</li>
+        </ul>
+
+        <h2>Nokia Siemens Networks <span>Research &amp; Development Engineer - 2011-2012</span></h2>
+        <ul>
+          <li>Develop features in Arlington Heights, IL. Scrum master/lab manager in Finland for the US based dev team.</li>
+          <li>In 2010, <a href="https://www.reuters.com/article/us-motorola-nokia-idUSTRE66I24P20100719">Nokia Siemens bought Motorola Networks division</a>.</li>
+        </ul>
+
+        <h2>Motorola <span>Senior Staff Engineer - 1995-2011</span></h2>
+        <ul>
+          <li>CDMA Cellular base station product development, test and deployment.</li>
+        </ul>
+      </dd>
+    </dl>
+  </div>
+
+  <div class="noprint">
+    <a href="https://github.com/devsecfranklin/franklin-resume">
+      <img style="position: absolute; top: 0; right: 0; border: 0;"
+        src="{{ url_for('static', filename='forkme_right_darkblue_121621.png') }}" alt="Fork me on GitHub" /></a>
+  </div>
+</body>
 </html>
