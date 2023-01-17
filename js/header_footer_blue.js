@@ -6,9 +6,7 @@ class Header extends HTMLElement {
     </div>
     <div class="topnav">
         <a href="/bsidesindy/index.html">BSidesIndy</a>
-        <a href="/lab/index.html">Lab</a>
         <a href="https://minecraft.bitsmasher.net/">Minecraft</a>
-        <a href="https://franklin-resume.herokuapp.com/">My Resume</a>
     </div>
                         `;
   }
@@ -43,7 +41,7 @@ class Footer extends HTMLElement {
       `
     <!-- Footer -->
     <div class="footer">
-        Copyright © 2010-2022 All Rights Reserved.<br />
+        Copyright © 2010-2023 All Rights Reserved.<br />
         Last updated on ` +
       showAs +
       ` at ` +

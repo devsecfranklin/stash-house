@@ -2,11 +2,9 @@ class NavBar extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
         <div class="topnav">
-            <a href="https://franklin-resume.herokuapp.com/" target="_blank">My Resume</a>
+            <a href="/resume/index.html" target="_blank">My Resume</a>
             <a href="https://minecraft.bitsmasher.net/">Minecraft</a>
-            <a href="/projects/index.html">Projects</a>
-            <a href="/lab/index.html">Lab</a>
-            <a href="/ctf/index.html">Cloud CTF</a>
+            <a href="/bsidesindy/index.html">BSidesIndy</a>
             <a href="/index.html">Home</a>
         </div>`;
   }
@@ -41,7 +39,7 @@ class Footer extends HTMLElement {
       `
     <div class="footer">
     <table><tr><td>
-        Copyright © 2010-2022 All Rights Reserved.<br />
+        Copyright © 2010-2023 All Rights Reserved.<br />
         Last updated on ` +
       showAs +
       ` at ` +
