@@ -6,8 +6,7 @@ class Header extends HTMLElement {
         <a href="/index.html"> <img src="/images/bitsmasherflag.gif" alt="The TLD over an American flag."></a>
     </div>
     <div class="topnav">
-        <a href="/bsidesindy/index.html">BSidesIndy</a>
-        <a href="https://minecraft.bitsmasher.net/">Minecraft</a>
+        <a href="https://www.bitsmasher.net/">Minecraft</a>
     </div>
                         `;
   }

@@ -5,8 +5,7 @@ class Header extends HTMLElement {
         <a href="/index.html"> <img src="/images/bit-logo2.jpg" alt="a blue rectangle with the URI of the website"></a>
     </div>
     <div class="topnav">
-        <a href="/bsidesindy/index.html">BSidesIndy</a>
-        <a href="https://minecraft.bitsmasher.net/">Minecraft</a>
+        <a href="https://www.bitsmasher.net/">Minecraft</a>
     </div>
                         `;
   }

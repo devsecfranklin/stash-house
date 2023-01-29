@@ -4,7 +4,6 @@ class NavBar extends HTMLElement {
         <div class="topnav">
             <a href="/resume/index.html" target="_blank">My Resume</a>
             <a href="https://minecraft.bitsmasher.net/">Minecraft</a>
-            <a href="/bsidesindy/index.html">BSidesIndy</a>
             <a href="/index.html">Home</a>
         </div>`;
   }
