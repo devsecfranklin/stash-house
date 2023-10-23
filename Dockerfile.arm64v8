@@ -1,10 +1,12 @@
-M arm64v8/nginx
+FROM arm64v8/nginx
 
-COPY assets /usr/share/nginx/html/assets
-COPY assets/js/env.arm.js /usr/share/nginx/html/assets/js/env.js
+COPY website/assets /usr/share/nginx/html/assets
+#COPY webstie/assets/js/env.arm.js /usr/share/nginx/html/assets/js/env.js
 COPY package.json /usr/share/nginx/html
 # COPY . /usr/share/nginx/html
-COPY index.html /usr/share/nginx/html/index.html
+COPY website/index.html /usr/share/nginx/html/index.html
+COPY website/404.html /usr/share/nginx/html/404.html
+
 
 CMD ["nginx", "-g", "daemon off;"]
 

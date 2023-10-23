@@ -2,7 +2,7 @@ class NavBar extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
         <div class="topnav">
-            <a href="/resume/index.html" target="_blank">My Resume</a>
+            <a href="https://franklin-resume.herokuapp.com/" target="_blank">My Resume</a>
             <a href="https://www.bitsmasher.net/minecraft">Minecraft</a>
             <a href="/index.html">Home</a>
         </div>`;
