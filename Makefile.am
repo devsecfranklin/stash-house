@@ -2,7 +2,7 @@ CLOCAL_AMFLAGS = -I config/m4 -I aclocal
 ACLOCAL_AMFLAGS = -I config/m4 -I aclocal
 
 clean:
-	@for trash in _build aclocal aclocal.m4 autom4te.cache config config.in config.in~ config.log config.status configure configure~ libtool Makefile Makefile.in docker/cloudbot/Makefile docker/cloudbot/Makefile.in po stamp-h1 terraform-install.sh; do \
+	@for trash in _build aclocal aclocal.m4 autom4te.cache config config.in config.in~ config.log config.status configure configure~ libtool Makefile Makefile.in container/Makefile container/Makefile.in po stamp-h1 terraform-install.sh; do \
 	if [ -f $$trash ] || [ -d $$trash ]; then \
 		echo "Removing $$trash" ;\
 		rm -rf $$trash ;\
