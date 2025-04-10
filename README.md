@@ -24,3 +24,9 @@ nix-shell shell.nix
 linthtml **/*.html
 for FILE in **/*.html; html-beautify {$FILE} > {$FILE}.tmp && mv {$FILE}.tmp {$FILE}; end
 ```
+
+## Shell
+
+```sh
+apt install -y python3-pip screen
+```
