@@ -11,3 +11,8 @@ python3 -m pip install --upgrade pip setuptools wheel
 - A small python script that is used to status MC server
   and return a few stats.
 - This was integraated with the minecraft cog in Feb 2025
+
+## auto mod loader
+
+https://github.com/Rayrsn/Minecraft-Auto-Mod-Downloader
+
