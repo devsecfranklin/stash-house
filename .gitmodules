@@ -1,0 +1,3 @@
+[submodule "sites/www/html/minecraft.bitsmasher.net"]
+	path = sites/www/html/minecraft.bitsmasher.net
+	url = https://github.com/devsecfranklin/minecraft.bitsmasher.net.git
