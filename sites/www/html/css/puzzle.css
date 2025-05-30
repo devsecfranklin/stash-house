@@ -4,7 +4,13 @@
 # SPDX-License-Identifier: MIT
 */
 body {
-background-color: #000000;
-color: #000000;
-font-family: 'Inter', sans-serif;
+    background-color: #000000;
+    color: #000000;
+    font-family: 'Inter', sans-serif;
+}
+
+h2 {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
 }

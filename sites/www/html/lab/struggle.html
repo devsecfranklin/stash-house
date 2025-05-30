@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <!-- www.bitsmasher.net/404.html -->
+    <meta name="generator" content="Bluefish 2.2.12">
+    <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.6.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not found...</title>
+    <meta name="description" content="www.bitsmasher.net/lab/struggle.html">
+    <meta name="author" content="franklin">
+</head>
+
+<body>
+    <form>
+        <label for="textInput">Enter text (max 80 characters):</label><br>
+        <input type="text" id="textInput" name="textInput" maxlength="80"><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { background-color: #f4f4f4; padding: 20px; border-radius: 8px; max-width: 500px; margin: auto; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="email"], textarea, select {
+            width: calc(100% - 22px); padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px;
+        }
+        input[type="radio"] { margin-right: 5px; }
+        input[type="submit"] {
+            background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;
+        }
+        input[type="submit"]:hover { background-color: #45a049; }
+       .error { color: red; background-color: #ffe0e0; border: 1px solid red; padding: 10px; margin-bottom: 20px; border-radius: 4px; }
+       .success { color: green; background-color: #e0ffe0; border: 1px solid green; padding: 10px; margin-bottom: 20px; border-radius: 4px; }
+        ul { list-style-type: disc; margin-left: 20px; padding: 0; }
+        li { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Submit Your Feedback</h1>
+    {{if.Errors}}
+        <div class="error">
+            <p>Please correct the following errors:</p>
+            <ul>
+            {{range.Errors}}
+                <li>{{.}}</li>
+            {{end}}
+            </ul>
+        </div>
+    {{end}}
+    {{if.Success}}
+        <div class="success">
+            <p>{{.Success}}</p>
+        </div>
+    {{end}}
+
+    <form action="/feedback" method="post">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" value="{{.Name}}"><br>
+
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" name="email" value="{{.Email}}"><br>
+
+        <label for="message">Your Message:</label>
+        <textarea id="message" name="message" rows="5" cols="40">{{.Message}}</textarea><br>
+
+        <label>Overall Rating:</label><br>
+        <input type="radio" id="rating5" name="rating" value="5" {{if eq.Rating "5"}}checked{{end}}> <label for="rating5">Excellent</label><br>
+        <input type="radio" id="rating4" name="rating" value="4" {{if eq.Rating "4"}}checked{{end}}> <label for="rating4">Good</label><br>
+        <input type="radio" id="rating3" name="rating" value="3" {{if eq.Rating "3"}}checked{{end}}> <label for="rating3">Average</label><br>
+        <input type="radio" id="rating2" name="rating" value="2" {{if eq.Rating "2"}}checked{{end}}> <label for="rating2">Poor</label><br>
+        <input type="radio" id="rating1" name="rating" value="1" {{if eq.Rating "1"}}checked{{end}}> <label for="rating1">Very Poor</label><br><br>
+
+        <label for="category">Feedback Category:</label>
+        <select id="category" name="category">
+            <option value="">-- Select --</option>
+            <option value="product" {{if eq.Category "product"}}selected{{end}}>Product Feature</option>
+            <option value="support" {{if eq.Category "support"}}selected{{end}}>Customer Support</option>
+            <option value="bug" {{if eq.Category "bug"}}selected{{end}}>Bug Report</option>
+            <option value="other" {{if eq.Category "other"}}selected{{end}}>Other</option>
+        </select><br><br>
+
+        <input type="submit" value="Submit Feedback">
+    </form>
+</body>
+</html>
