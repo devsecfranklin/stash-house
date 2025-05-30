@@ -42,7 +42,7 @@ server {
     root /usr/share/nginx;  # This 'root' combines with the location path
 
     # Add index.php to the list if you are using PHP
-    index index.html index.htm index.nginx-debian.html;
+    index.html;
 
     server_name _;
 
