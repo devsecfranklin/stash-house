@@ -4,27 +4,37 @@
 # SPDX-License-Identifier: MIT
 */
 
-package main
+package www
 
 import (
 	"fmt"
+    "os"
+	"github.com/microcosm-cc/bluemonday"
 	"log"
 	"net/http"
+    "html/template"
 )
 
-func answerHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello from Go App! You requested: %s\n", r.URL.Path)
-	log.Printf("Request received for: %s from %s\n", r.URL.Path, r.RemoteAddr)
-	flag := r.URL.Query().Get("flag")
-	puzzle := r.URL.Query().Get("puzzle")
-	fmt.Fprintf(w, "For %s you submitted: %s\n", puzzle, flag)
-	log.Printf("For %s you submitted: %s\n", puzzle, flag)
+type Answer struct {
+	Flag string
+    Puzzle string
+    Result string
+}
 
-	if(puzzle == "puzzle1") && (flag == "HAHASTRUGGLE") {
-        fmt.Fprintf(w, "Correct answer!\n")
+func answerHandler(w http.ResponseWriter, r *http.Request) {
+
+    data := Answer{Flag: r.URL.Query().Get("flag"), Puzzle: r.URL.Query().Get("puzzle")}
+
+	//fmt.Fprintf(w, "Hello from Go App! You requested: %s\n", r.URL.Path)
+	//log.Printf("Request received for: %s from %s\n", r.URL.Path, r.RemoteAddr)
+	//fmt.Fprintf(w, "For %s you submitted: %s\n", Puzzle, Flag)
+	log.Printf("For %s you submitted: %s\n", data.Puzzle, data.Flag)
+
+	if (data.Puzzle == "puzzle1") && (data.Flag == "HAHASTRUGGLE") {
+		log.Fprintf(w, "Correct answer!\n")
 	} else {
 		fmt.Fprintf(w, "NOPE. Guess the struggle continues!\n")
-    }
+	}
 }
 
 func main() {
@@ -43,4 +53,3 @@ func main() {
 		log.Fatal(err)
 	}
 }
-

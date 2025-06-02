@@ -15,7 +15,7 @@
 # v0.7 04/22/2024 More OpenBSD support
 # v0.8 09/06/2024 Support GCP Linux
 # v0.9 02/18/2025 Updates for Mac
-# v1.0 02/26/2025 Optimize ssome functions using Gemini 2.0 Flash
+# v1.0 02/26/2025 Optimize some functions using Gemini 2.0 Flash
 
 #set -euo pipefail
 
