@@ -29,6 +29,9 @@ func answerHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
+	// Serve static files
+  fs := http.FileServer(http.Dir("./static"))
+  router.Handle("/static/*", http.StripPrefix("/static/", fs))
 	// Register the handler for all paths
 	http.HandleFunc("/", answerHandler)
 
