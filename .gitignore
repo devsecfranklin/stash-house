@@ -16,8 +16,10 @@ aclocal.m4
 autom4te.cache
 compile
 confdefs.h
+conftest
 conftest.c
 conftest.err
+conftest.o
 config.guess
 config.log
 config.status
