@@ -1,17 +1,23 @@
-{{define "indexPage"}}
+{{define "submissionPage"}}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>wrong answer headquarters</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/web/static/css/puzzle.css" />
   </head>
 
   <body>
+
     <div class="container">
+      <audio controls>
+        <source src="horse.ogg" type="audio/ogg">
+        <source src="horse.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
     For {{ .Puzzle }} you submitted {{ .Flag }}.
     </div>
+
+    test
   </body>
 </html>
 {{end}}
