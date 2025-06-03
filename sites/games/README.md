@@ -9,9 +9,8 @@ go mod tidy
 
 ```sh
 go install github.com/kisielk/errcheck@latest
-~/go/bin/errcheck ./...
+$HOME/go/bin/errcheck ./...
 go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 golangci-lint help linters
 golangci-lint run
 ```
-

@@ -6,4 +6,3 @@ This is a golang app to generate dynamic web pages.
 /usr/local/go/bin/go run main.go
 sudo /usr/sbin/nginx -t # validate the nginx config
 ```
-

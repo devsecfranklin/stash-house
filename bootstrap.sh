@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: © 2020-2025 franklin <franklin@bitsmasher.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
 # ChangeLog:
 #
@@ -404,6 +404,11 @@ function main() {
   else
     ./config.status
   fi
+
+  go install github.com/kisielk/errcheck@latest
+  go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+  ~/go/bin/errcheck ./...
+  golangci-lint run
 }
 
 main "$@"
