@@ -10,14 +10,38 @@
 
   <body>
 
+<!--
     <div class="container">
       <audio controls>
         <source src="horse.ogg" type="audio/ogg">
         <source src="horse.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
     For {{ .Puzzle }} you submitted {{ .Flag }}.
     </div>
+-->
+  
 
-    test
+    <div class="container">
+    For {{ .Puzzle }} you submitted {{ .Flag }}.
+    </div>
+    
+    <div class="submit_box">
+    <table border="1">
+        <tr>
+            <td>
+                <form action="https://www.bitsmasher.net:6969/" method="get">
+                    Puzzle: <select name="puzzle" id="puzzle">
+                        <option value="puzzle1">puzzle 1</option>
+                    </select>
+            <td>
+                Flag: <input type="text" name="flag" placeholder="probably-wrong" />
+            </td>
+            <td><input type="submit" value="Submit" /></td>
+            </form>
+            </td>
+        </tr>
+    </table>
+    </div>
+
   </body>
 </html>
 {{end}}

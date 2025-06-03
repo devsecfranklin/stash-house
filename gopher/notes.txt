@@ -1,2 +1,0 @@
-# https://prgmr.com/blog/gopher/2018/11/09/setting-up-gopherserver.html
-

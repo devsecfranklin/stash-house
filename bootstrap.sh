@@ -263,7 +263,7 @@ function install_macos() {
 }
 
 function install_debian() {
-  declare -a Packages=("libonig-dev" "sshpass" "shellcheck" "screen" "make" "gcc" "git" "automake" "libtool" "gawk" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release") # "python3-pygit2" )
+  declare -a Packages=("libonig-dev" "sshpass" "shellcheck" "screen" "make" "gcc" "git" "automake" "libtool" "gawk" "nodejs" "npm" "apt-transport-https" "ca-certificates" "curl" "gnupg" "lsb-release" "sqlite3" "libsqlite3-dev") # "python3-pygit2" )
 
   # Container package installs will fail unless you do an initial update, the upgrade is optional
   if [ "${CONTAINER}" = true ]; then
@@ -409,6 +409,7 @@ function main() {
   go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
   ~/go/bin/errcheck ./...
   golangci-lint run
+  npm install @linthtml/linthtml --save-dev # https://github.com/linthtml/linthtml/blob/develop/doc/docs/user-guide/installation-and-usage.md
 }
 
 main "$@"

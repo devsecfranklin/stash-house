@@ -38,6 +38,7 @@ func main() {
 	http.HandleFunc("/minecraft/", mc)
 	http.HandleFunc("/submission", submission)
 	http.HandleFunc("/puzzle1", puzzle1)
+	http.HandleFunc("/puzzle2", puzzle2)
 
     //  --- Make static files available ------------------------------------------
 	// http.Handle("/static/", http.StripPrefix("/static/", fs)) // "/static/images/my_image.jpg" will look for "images/my_image.jpg" in the "static" directory.

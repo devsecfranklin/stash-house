@@ -3,7 +3,12 @@
 ## Node
 
 ```sh
+npm uninstall htmllint htmllint-cli
+npm install @linthtml/linthtml --save-dev # https://github.com/linthtml/linthtml/blob/develop/doc/docs/user-guide/installation-and-usage.md
+npx linthtml --init
 npm audit fix
+npx linthtml 'yourfile.html' # you can run LintHTML on any file or directory like this
+npx linthtml 'src/**/*.html'
 ```
 
 ### OpenBSD

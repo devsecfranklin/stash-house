@@ -79,7 +79,7 @@ function main() {
   # if [ -f "cmd/www/main.go" ]; then
   #   "${HOME}/go/bin/errcheck" ./...
   # fi
-
+  npx linthtml sites/**/*.html
 }
 
 main "$@"
