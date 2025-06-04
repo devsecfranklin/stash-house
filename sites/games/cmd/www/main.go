@@ -39,6 +39,8 @@ func main() {
 	http.HandleFunc("/submission", submission)
 	http.HandleFunc("/puzzle1", puzzle1)
 	http.HandleFunc("/puzzle2", puzzle2)
+	http.HandleFunc("/puzzle3", puzzle3)
+
 
     //  --- Make static files available ------------------------------------------
 	// http.Handle("/static/", http.StripPrefix("/static/", fs)) // "/static/images/my_image.jpg" will look for "images/my_image.jpg" in the "static" directory.
@@ -88,4 +90,16 @@ func puzzle1(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving puzzle1 page")
 	page := Page{Title: "puzzle1"}
 	index.ExecuteTemplate(w, "puzzle1Page", page)
+}
+
+func puzzle2(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving puzzle2 page")
+	page := Page{Title: "puzzle2"}
+	index.ExecuteTemplate(w, "puzzle2Page", page)
+}
+
+func puzzle3(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving puzzle3 page")
+	page := Page{Title: "puzzle3"}
+	index.ExecuteTemplate(w, "puzzle3Page", page)
 }
