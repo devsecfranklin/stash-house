@@ -4,13 +4,16 @@
 # SPDX-License-Identifier: MIT
 */
 body {
-  /* background-image: url('https://games.bitsmasher.net/web/static/images/background_dead.png'); */
+  background-image: url('https://games.bitsmasher.net/web/static/images/background_dead.png');
   background-repeat: no-repeat; 
   background-attachment: fixed;
   background-position: center;
   font-family: Arial, sans-serif;
   background-color: black;
   color: #333333;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   margin: 20px;
 }
 
@@ -58,25 +61,13 @@ li {
 
 .puzzle {
   margin: auto;
-  text-align: center;
+  text-align:center;
 }
 
-/*
 .footer {
   display: table;
   margin: 0 auto;
   color: 333333;
   text-align: center;
-}
-*/
-
-#footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-#center {
-    width: 500px;
-    margin: 0 auto;
 }
 

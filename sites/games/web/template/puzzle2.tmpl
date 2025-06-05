@@ -3,39 +3,52 @@
 <html lang="en-US">
 
 <head>
-    <meta name="generator" content="Bluefish 2.2.12">
-    <meta name="generator" content=
-    "HTML Tidy for HTML5 for Linux version 5.6.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content=
-    "width=device-width, initial-scale=1.0">
-    <meta name="description" content=
-    "games.bitsmasher.net CTF style puzzle">
+    <meta name="viewport" content= "width=device-width, initial-scale=1.0">
+    <meta name="description" content= "games.bitsmasher.net CTF style puzzle">
     <meta name="author" content="thedevilsvoice">
     <meta name="keywords" content="HTML, CSS, GoLang">
-    <meta name="robots" content=
-    "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
+    <meta name="robots" content= "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
     <title>{{.Title}}</title>
-    <link rel="stylesheet" href=
-    "https://games.bitsmasher.net/web/static/css/puzzle.css">
+    <link rel="stylesheet" href= "https://games.bitsmasher.net/web/static/css/puzzle.css">
 </head>
 
 <body>
 
-    <em>
-    “Indeed, the safest road to Hell is the gradual one—the gentle slope, soft underfoot, without sudden turnings, without milestones, without signposts.” – C. S. Lewis
-    </em>
-    <br />
     <div class="puzzle">
-        <center>
-        <h2>Puzzle Two</h2>
-        <img src="https://games.bitsmasher.net/web/static/images/archie1.jpg" alt="Made with vi on an IBM 8088">
-        </center>
+        <div class="center">
+            <h2>Time to log in to the Network</h2> <br />
+            <img src="https://games.bitsmasher.net/web/static/images/archie1.jpg" alt="Made with vi on an IBM 8088"><br />
+            <em>“Indeed, the safest road to Hell is the gradual one—the gentle slope, soft underfoot, without sudden turnings, without milestones, without signposts.” – C. S. Lewis</em> <br />
+        </div>
+   </div>
 
-        Time to log in to the network.
-    </div>
+    <p>
+
+    <h3>Log in with your SSH key</h3>
+
+    <ul>
+        <li>Your home directory is already mounted with all your files.</li>
+        <li>The public half of your SSH key is already in /home/sly/.ssh/authorized_keys</li>
+        <li>Your first challenge is to log in via SSH to your shell account.</li>
+        <li>The hostname is &quot;node2&quot; and the IPv4 address is &quot;10.10.12.2&quot;</li>
+    </ul>
+
+    It may make sense for you to copy the private half or your SSH keys into ~/.ssh on the network. If you
+    are worried about security, you can make a new key pair solely for lab use. 
+
+
+    <h3>Obtain a Kerboeros ticket</h3>
+
+    Once you are logged in to your shell, you are ready to obtain your Kerberos credentials. This will help you
+    navigate around the network without having to type your password over and over.
+
+
+    <h3>Download git repository</h3>
+
 
     <div class="puzzle">
+        <div class="center">
         <form action="/submission" method="get">
             <table border="1">
                 
@@ -47,7 +60,7 @@
 
                 <tr>
                     <td>May 23, 2025</td>
-                    <td>Puzzle2 <input type="hidden" name="puzzle" value="puzzle2"></td>                
+                    <td>Puzzle2 <input type="hidden" name="puzzle" value="puzzle2-1"></td>                
                     <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
                 </tr>
 
@@ -57,6 +70,9 @@
 
         </form>
     </div>
+</div>
+
+{{template "footer"}}
 
 </body>
 </html>
