@@ -34,13 +34,15 @@ func main() {
 		panic(err)
 	}
 	http.HandleFunc("/", handler)
-	http.HandleFunc("/dst/", dst)
-	http.HandleFunc("/minecraft/", mc)
+	http.HandleFunc("/civilization2", civ2)
+	http.HandleFunc("/dst", dst)
+	http.HandleFunc("/linux_games", lg)
+	http.HandleFunc("/minecraft", mc)
 	http.HandleFunc("/submission", submission)
 	http.HandleFunc("/puzzle1", puzzle1)
 	http.HandleFunc("/puzzle2", puzzle2)
 	http.HandleFunc("/puzzle3", puzzle3)
-
+    http.HandleFunc("/puzzle4", puzzle4)
 
     //  --- Make static files available ------------------------------------------
     // http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -61,10 +63,22 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	index.ExecuteTemplate(w, "indexPage", page)
 }
 
+func civ2(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving civ2 page")
+	page := Page{"Civilization ]["}
+	index.ExecuteTemplate(w, "civ2Page", page)
+}
+
 func dst(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving DST page")
 	page := Page{"Do Not Starve"}
 	index.ExecuteTemplate(w, "dstPage", page)
+}
+
+func lg(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving linux games page")
+	page := Page{"Linux Games"}
+	index.ExecuteTemplate(w, "lgPage", page)
 }
 
 func mc(w http.ResponseWriter, r *http.Request) {
@@ -79,12 +93,21 @@ func submission(w http.ResponseWriter, r *http.Request) {
 
 	if (data.Puzzle == "puzzle1") && (data.Flag == "HAHASTRUGGLE") {
 		log.Println(w, "Correct answer!")
+		log.Println("Serving correct page")
+		index.ExecuteTemplate(w, "correctPage", data)
+	} else if (data.Puzzle == "puzzle2") && (data.Flag == "DELICIOUSTEARS") {
+        log.Println(w, "Correct answer!")
+		log.Println("Serving correct page")
+		index.ExecuteTemplate(w, "correctPage", data)
+	} else if (data.Puzzle == "puzzle3") && (data.Flag == "ENJOYTHEPAIN") {
+        log.Println(w, "Correct answer!")
+		log.Println("Serving correct page")
+		index.ExecuteTemplate(w, "correctPage", data)
 	} else {
 		log.Println(w, "NOPE. Guess the struggle continues!")
+		log.Println("Serving submission page")
+		index.ExecuteTemplate(w, "submissionPage", data)
 	}
-
-	log.Println("Serving submission page")
-	index.ExecuteTemplate(w, "submissionPage", data)
 }
 
 func puzzle1(w http.ResponseWriter, r *http.Request) {
@@ -103,4 +126,10 @@ func puzzle3(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving puzzle3 page")
 	page := Page{Title: "puzzle3"}
 	index.ExecuteTemplate(w, "puzzle3Page", page)
+}
+
+func puzzle4(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving puzzle4 page")
+	page := Page{Title: "puzzle4"}
+	index.ExecuteTemplate(w, "puzzle4Page", page)
 }
