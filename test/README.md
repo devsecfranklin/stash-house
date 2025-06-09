@@ -24,10 +24,22 @@ npm audit fix # fix sec vulns
 
 ## Testing Golang
 
+Errcheck
+
 ```sh
 go install github.com/kisielk/errcheck@latest
 ~/go/bin/errcheck ./...
 go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 golangci-lint help linters
 golangci-lint run
+```
+
+check-golang-templates
+
+```sh
+git clone git@github.com:gosom/check-golang-templates.git
+cd check-golang-template
+go mod download
+go install
+check-golang-templates -folder sites/games/web/templates
 ```

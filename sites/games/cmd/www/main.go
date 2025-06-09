@@ -90,23 +90,29 @@ func mc(w http.ResponseWriter, r *http.Request) {
 func submission(w http.ResponseWriter, r *http.Request) {
 	data := Answer{Title: "wrong answer headquarters", Flag: r.URL.Query().Get("flag"), Puzzle: r.URL.Query().Get("puzzle"), Result: false}
 	log.Printf("For %s you submitted: %s\n", data.Puzzle, data.Flag)
+    page := Page{Title: "SUCCESS"}
 
 	if (data.Puzzle == "puzzle1") && (data.Flag == "HAHASTRUGGLE") {
 		log.Println(w, "Correct answer!")
 		log.Println("Serving correct page")
-		index.ExecuteTemplate(w, "correctPage", data)
-	} else if (data.Puzzle == "puzzle2") && (data.Flag == "DELICIOUSTEARS") {
+		index.ExecuteTemplate(w, "correctPage", page)
+	} else if (data.Puzzle == "puzzle2-1") && (data.Flag == "DELICIOUSTEARS") {
         log.Println(w, "Correct answer!")
 		log.Println("Serving correct page")
-		index.ExecuteTemplate(w, "correctPage", data)
+		index.ExecuteTemplate(w, "correctPage", page)
+	} else if (data.Puzzle == "puzzle2-2") && (data.Flag == "COMPUTERSAREHARD") {
+		log.Println(w, "Correct answer!")
+		log.Println("Serving correct page")
+		index.ExecuteTemplate(w, "correctPage", page)
 	} else if (data.Puzzle == "puzzle3") && (data.Flag == "ENJOYTHEPAIN") {
         log.Println(w, "Correct answer!")
 		log.Println("Serving correct page")
-		index.ExecuteTemplate(w, "correctPage", data)
+		index.ExecuteTemplate(w, "correctPage", page)
 	} else {
 		log.Println(w, "NOPE. Guess the struggle continues!")
 		log.Println("Serving submission page")
-		index.ExecuteTemplate(w, "submissionPage", data)
+		page := Page{Title: "FAILURE"}
+		index.ExecuteTemplate(w, "submissionPage", page)
 	}
 }
 

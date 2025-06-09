@@ -33,3 +33,5 @@ ltmain.sh
 Makefile
 Makefile.in
 missing
+
+.nfs*
