@@ -3,18 +3,14 @@
 {{template "header"}}
 
 <body>
-
-    <div class="puzzle">
-        <div class="center">
-            <h2>Time to log in to the Network</h2> <br />
-            <img src="https://games.bitsmasher.net/web/static/images/Dilbert-Unix-comic.png" alt="Made with vi on an IBM 8088"><br />
-            <em>“Indeed, the safest road to Hell is the gradual one—the gentle slope, soft underfoot, without sudden turnings, without milestones, without signposts.” – C. S. Lewis</em> <br />
-        </div>
-   </div>
+    <h1>Time to log in to the Network</h1> <br />
+    <div class="center">
+        <img src="/web/static/images/Dilbert-Unix-comic.png" alt="Made with vi on an IBM 8088"><br />
+    </div>
 
     <p>
-
-    <h3>Log in with your SSH key</h3>
+    <div class="puzzle" id="puzzle2-1">
+    <h3>Challenge 1: Log in with your SSH key</h3>
 
     <ul>
         <li>Your home directory is already mounted with all your files.</li>
@@ -22,138 +18,109 @@
         <li>Your first challenge is to log in via SSH to your shell account.</li>
         <li>The hostname is &quot;node2&quot; and the IPv4 address is &quot;10.10.12.2&quot;</li>
     </ul>
-
-    It may make sense for you to copy the private half or your SSH keys into ~/.ssh on the network. If you
+    <p>It may make sense for you to copy the private half or your SSH keys into ~/.ssh on the network. If you
     are worried about security, you can make a new key pair solely for lab use. 
+    <p>When you log in and find the first flag, enter it in the box below.
+    <p>Good luck!
 
-    When you log in and find the first flag, enter it in the box below.
+    <form action="/submission" method="get">
+        <table border="1">
+            <tr>
+                <th>Date</th>
+                <th>Puzzle</th>
+                <th>Flag</th>
+            </tr>
 
-    <div class="puzzle">
-        <div class="center">
-            <form action="/submission" method="get">
-                <table border="1">
-                    
-                    <tr>
-                        <th>Date</th>
-                        <th>Puzzle</th>
-                        <th>Flag</th>
-                    </tr>
+            <tr>
+                <td>June 09, 2025</td>
+                <td>Puzzle2 <input type="hidden" name="puzzle" value="puzzle2-1"></td>                
+                <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
+            </tr>
 
-                    <tr>
-                        <td>June 09, 2025</td>
-                        <td>Puzzle2 <input type="hidden" name="puzzle" value="puzzle2-1"></td>                
-                        <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
-                    </tr>
-
-                </table>
-
-                <input type="submit" value="Submit">
-
-            </form>
-        </div>
+        </table>
+        <input type="submit" value="Submit">
+    </form>
     </div>
 
+    <div class="puzzle" id="puzzle2-2">
+    <h3>Challenge 2: Obtain a Kerboeros ticket</h3>
 
-    <h3>Obtain a Kerboeros ticket</h3>
-
+    To help with managing users and credential security, we use <a href="https://web.mit.edu/Kerberos/">a network authentication protocol called Kerberos</a>
+    <p>
     Now that you are logged in to your shell, you are ready to
-    <a href="https://web.mit.edu/Kerberos/krb5-latest/doc/user/tkt_mgmt.html#obtaining-tickets-with-kinit">obtain your Kerberos credentials</a>.
+    <a href="https://web.mit.edu/Kerberos/krb5-latest/doc/user/tkt_mgmt.html#obtaining-tickets-with-kinit">obtain your first set of Kerberos credentials</a>.
     This will help you navigate around the network without having to type your password over and over. A Kerberos ticket is also useful
     when you need to elevate your priviliges on a host.
+    <p>
+    Use the &quot;kinit&quot; command to obtain a ticket. You can check if you did it right by running the tool in your home folder called &quot;check_ticket&quot;
+    <p>
+    <em>HINT: your passwd for user &quot;sly&quot; was set to 123 the other day</em>
 
-    <div class="puzzle">
-        <div class="center">
-            <form action="/submission" method="get">
-                <table border="1">
-                    
-                    <tr>
-                        <th>Date</th>
-                        <th>Puzzle</th>
-                        <th>Flag</th>
-                    </tr>
+    <form action="/submission" method="get">
+        <table border="1">
+            
+            <tr>
+                <th>Date</th>
+                <th>Puzzle</th>
+                <th>Flag</th>
+            </tr>
 
-                    <tr>
-                        <td>June 09, 2025</td>
-                        <td>Puzzle2 <input type="hidden" name="puzzle" value="puzzle2-2"></td>                
-                        <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
-                    </tr>
-
-                </table>
-
-                <input type="submit" value="Submit">
-
-            </form>
-        </div>
+            <tr>
+                <td>June 09, 2025</td>
+                <td>Puzzle2 <input type="hidden" name="puzzle" value="puzzle2-2"></td>                
+                <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit">
+    </form>
     </div>
 
-    Now it's time to check out some of the things on the lab network that you can interact with. 
+    <div class="puzzle" id="puzzle2-3">
+    <h3>Challenge 3: The Gopher server</h3>
 
-    <h3>The Gopher server</h3>
-        <a href="https://www.howtogeek.com/661871/the-web-before-the-web-a-look-back-at-gopher/"></a>
-        </center>
+    Now it's time to check out some of the things on the lab network that you can interact with.
+
+    Have you ever heard of <a href="https://www.howtogeek.com/661871/the-web-before-the-web-a-look-back-at-gopher/">a protocol named Gopher</a>?
+    It was created by some very famous people, <a href="https://www.w3.org/People/Berners-Lee/">including Sir Tim Berners-Lee</a> at
+    <a href="https://home.cern/">CERN in Switzerland</a>.
+
+    <form action="/submission" method="get">
+        <table border="1">
+            <tr>
+                <th>Date</th>
+                <th>Puzzle</th>
+                <th>Flag</th>
+            </tr>
+            <tr>
+                <td>May 23, 2025</td>
+                <td>Puzzle2 <input type="hidden" name="puzzle" value="puzzle2-3"></td>                
+                <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit">
+    </form>
     </div>
 
-    <div class="puzzle">
-        <form action="/submission" method="get">
-            <table border="1">
-                
-                <tr>
-                    <th>Date</th>
-                    <th>Puzzle</th>
-                    <th>Flag</th>
-                </tr>
-
-                    <tr>
-                        <td>May 23, 2025</td>
-                        <td>Puzzle2 <input type="hidden" name="puzzle" value="puzzle2-3"></td>                
-                        <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
-                    </tr>
-
-            </table>
-
-            <input type="submit" value="Submit">
-
+    <div class="puzzle" id="puzzle2-4">
+    <h3>Challenge 4: The Time Server (NTP)</h3>
+    <form action="/submission" method="get">
+        <table border="1">
+            <tr>
+                <th>Date</th>
+                <th>Puzzle</th>
+                <th>Flag</th>
+            </tr>
+            <tr>
+                <td>May 23, 2025</td>
+                <td>Puzzle2 <input type="hidden" name="puzzle" value="puzzle2-4"></td>                
+                <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit">
         </form>
     </div>
 
-    <h3>The Time Server (NTP)</h3>
-        <a href="https://www.howtogeek.com/661871/the-web-before-the-web-a-look-back-at-gopher/"></a>
-        </center>
-    </div>
-
-    <div class="puzzle">
-        <form action="/submission" method="get">
-            <table border="1">
-                
-                <tr>
-                    <th>Date</th>
-                    <th>Puzzle</th>
-                    <th>Flag</th>
-                </tr>
-                    <tr>
-                        <td>May 23, 2025</td>
-                        <td>Puzzle2 <input type="hidden" name="puzzle" value="puzzle2-4"></td>                
-                        <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
-                    </tr>
-
-            </table>
-
-            <input type="submit" value="Submit">
-
-        </form>
-    </div>
-
-
-<div id="footer">
-<footer>
-  <center>
-[ <a href="/">home</a> ] [ <a href="/puzzle1">puzzle1</a> ] [ <a href="https://games.bitsmasher.net/web/static/minecraft/index.html">minecraft</a> ] [ <a href="/dst">dont starve</a> ] [ <a href="https://games.bitsmasher.net/web/static/civilization2.html">civ 2</a> ] <br />
-  <small><small><small>
-  <em>Copyright © 2025 bitsmasher.net. All Rights Reserved.</em>
-  </small></small></small>
-  </center>
-</footer>
-</div>
+{{template "footer"}}
 
 </body>
 </html>

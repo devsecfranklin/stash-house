@@ -1,4 +1,4 @@
-{{define "submissionPage"}}
+{{define "incorrectPage"}}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <title>{{.Title}}</title>
-    <link rel="stylesheet" type="text/css" href="/web/static/css/submission.css" />
+    <link rel="stylesheet" type="text/css" href="/web/static/css/submission-incorrect.css" />
   </head>
 
   <body>
@@ -27,17 +27,7 @@
     For {{ .Puzzle }} you submitted {{ .Flag }} which is just plain WRONG lol. Let the struggle continue!!.
     </div>
 
-
-<div id="footer">
-<footer>
-  <center>
-[ <a href="/">home</a> ] [ <a href="/puzzle1">puzzle1</a> ] [ <a href="https://games.bitsmasher.net/web/static/minecraft/index.html">minecraft</a> ] [ <a href="/dst">dont starve</a> ] [ <a href="https://games.bitsmasher.net/web/static/civilization2.html">civ 2</a> ] <br />
-  <small><small><small>
-  <em>Copyright © 2025 bitsmasher.net. All Rights Reserved.</em>
-  </small></small></small>
-  </center>
-</footer>
-</div>
+{{template "footer"}}
 
   </body>
 </html>

@@ -12,24 +12,25 @@
     <meta name="keywords" content="HTML, CSS, GoLang">
     <meta name="robots" content= "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
     <title>{{.Title}}</title>
-    <link rel="stylesheet" href= "https://games.bitsmasher.net/web/static/css/submission.css">
+    <link rel="stylesheet" href= "/web/static/css/submission-correct.css">
 </head>
 
 <body>
-    <div class="container">
-    For {{ .Puzzle }} you submitted {{ .Flag }} which is just plain WRONG lol. Let the struggle continue!!.
-    </div>
 
-<div id="footer">
-<footer>
+  <div class="container">
+    <audio controls autoplay>
+      <source src="https://games.bitsmasher.net/web/static/success-trumpets.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="puzzle">
   <center>
-[ <a href="/">home</a> ] [ <a href="/puzzle1">puzzle1</a> ] [ <a href="https://games.bitsmasher.net/web/static/minecraft/index.html">minecraft</a> ] [ <a href="/dst">dont starve</a> ] [ <a href="https://games.bitsmasher.net/web/static/civilization2.html">civ 2</a> ] <br />
-  <small><small><small>
-  <em>Copyright © 2025 bitsmasher.net. All Rights Reserved.</em>
-  </small></small></small>
-  </center>
-</footer>
-</div>
+    For {{ .Puzzle }} you submitted {{ .Flag }} which is CORRECT!!.
+    </center>
+  </div>
+
+{{template "footer"}}
 
   </body>
 </html>

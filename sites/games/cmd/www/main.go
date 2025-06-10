@@ -9,7 +9,6 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"sync"
 )
 
 var LayoutDir string = "web/template"
@@ -27,21 +26,6 @@ type Answer struct {
 	Result bool
 }
 
-var (
-    tpl *template.Template
-    loadOnce sync.Once
-    tplErr error
-)
-
-func loadTemplate() {
-    loadOnce.Do(func() {
-        tpl, tplErr = template.ParseGlob("./web/template/*.tmpl")
-        if tplErr != nil {
-            log.Fatalf("Error loading template: %v", tplErr)
-        }
-    })
-}
-
 func main() {
 	var err error
 
@@ -54,17 +38,12 @@ func main() {
 	http.Handle("/web/static/", http.StripPrefix("/web/static/", fs))
 	//http.Handle("/static", fs)
 
-	loadTemplate()
-    if tplErr != nil {
-        http.Error(w, "Error loading template", http.StatusInternalServerError)
-        return
-    }
-
 	index, err = template.ParseGlob(LayoutDir + "/*.tmpl")
 	if err != nil {
 		panic(err)
 	}
 
+	http.HandleFunc("/", handler)
 	http.HandleFunc("/civilization2", civ2)
 	http.HandleFunc("/dst", dst)
 	http.HandleFunc("/linux_games", lg)
@@ -74,138 +53,190 @@ func main() {
 	http.HandleFunc("/puzzle2", puzzle2)
 	http.HandleFunc("/puzzle3", puzzle3)
 	http.HandleFunc("/puzzle4", puzzle4)
-	http.HandleFunc("/", handler)
-
 	http.ListenAndServe(":8080", nil)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving index page")
 
-	// w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-	// w.Header().Set("Pragma", "no-cache")
-	// w.Header().Set("Expires", "0")
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
 
-	loadTemplate()
-    if tplErr != nil {
-        http.Error(w, "Error loading template", http.StatusInternalServerError)
-        return
-    }
 	page := Page{Title: "games.bitsmasher.net"}
-	index.ExecuteTemplate(w, "indexPage", page)
+
+	err := index.ExecuteTemplate(w, "indexPage", page)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
 }
 
 func civ2(w http.ResponseWriter, r *http.Request) {
-	var tmpl = template.Must(template.ParseFiles("./web/template/civilization2.tmpl"))
-
 	log.Println("Serving civ2 page")
 
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	loadTemplate()
-    if tplErr != nil {
-        http.Error(w, "Error loading template", http.StatusInternalServerError)
-        return
-    }
 	page := Page{"Civilization ]["}
 
-	err := tmpl.ExecuteTemplate(w, "civ2Page", page)
+	err := index.ExecuteTemplate(w, "civ2Page", page)
 	if err != nil {
-        log.Println(err)
-		//http.Error(w, err.Error(), http.StatusInternalServerError)
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+
 }
 
 func dst(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving DST page")
+
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
+
 	page := Page{"Do Not Starve"}
-	index.ExecuteTemplate(w, "dstPage", page)
+
+	err := index.ExecuteTemplate(w, "dstPage", page)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
 }
 
 func lg(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving linux games page")
+
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
+
 	page := Page{"Linux Games"}
-	index.ExecuteTemplate(w, "lgPage", page)
+
+	err := index.ExecuteTemplate(w, "lgPage", page)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
 }
 
 func mc(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving Minecraft page")
+
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
+
 	page := Page{"minecraft"}
-	index.ExecuteTemplate(w, "mcPage", page)
+
+	err := index.ExecuteTemplate(w, "mcPage", page)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
 }
 
 func submission(w http.ResponseWriter, r *http.Request) {
 	data := Answer{Title: "wrong answer headquarters", Flag: r.URL.Query().Get("flag"), Puzzle: r.URL.Query().Get("puzzle"), Result: false}
-    var tmpl = template.Must(template.ParseFiles("./web/template/submission.tmpl"))
+	log.Printf("For %s you submitted: %s\n", data.Puzzle, data.Flag)
 
-	// log.Printf("For %s you submitted: %s\n", data.Puzzle, data.Flag)
-
-	// w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-	// w.Header().Set("Pragma", "no-cache")
-	// w.Header().Set("Expires", "0")
-
-	loadTemplate()
-    if tplErr != nil {
-        http.Error(w, "Error loading template", http.StatusInternalServerError)
-        return
-    }
-
-
-	if ((data.Puzzle == "puzzle1") && (data.Flag == "HAHASTRUGGLE")) || ((data.Puzzle == "puzzle2-1") && (data.Flag == "DELICIOUSTEARS")) || ((data.Puzzle == "puzzle2-2") && (data.Flag == "COMPUTERSAREHARD")) || ((data.Puzzle == "puzzle3") && (data.Flag == "ENJOYTHEPAIN")) {
+	if ((data.Puzzle == "puzzle1") && (data.Flag == "HAHASTRUGGLE")) {
 		log.Println(w, "Correct answer!")
 		log.Println("Serving correct page")
-
 		data.Title = "YOU DID IT"
 		data.Result = true
-
-		tmpl = template.Must(template.ParseFiles("./web/template/correct.tmpl"))
-		// index.ExecuteTemplate(w, "correctPage", data)
-		err := tmpl.ExecuteTemplate(w, "correctPage", data)
-		if err != nil {
-			log.Println(err)
-			//http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
-
+	} else if ((data.Puzzle == "puzzle2-1") && (data.Flag == "DELICIOUSTEARS")) {
+		log.Println(w, "Correct answer!")
+		log.Println("Serving correct page")
+		data.Title = "YOU DID IT"
+		data.Result = true
+	} else if 	((data.Puzzle == "puzzle2-2") && (data.Flag == "COMPUTERSAREHARD")) {
+		log.Println(w, "Correct answer!")
+		log.Println("Serving correct page")
+		data.Title = "YOU DID IT"
+		data.Result = true
+	} else if 	((data.Puzzle == "puzzle2-3") && (data.Flag == "ENJOYTHEPAIN")) {
+		log.Println(w, "Correct answer!")
+		log.Println("Serving correct page")
+		data.Title = "YOU DID IT"
+		data.Result = true
+	} else if 	((data.Puzzle == "puzzle2-4") && (data.Flag == "SHAKEJUNT")) {
+		log.Println(w, "Correct answer!")
+		log.Println("Serving correct page")
+		data.Title = "YOU DID IT"
+		data.Result = true
 	} else {
-		
-		log.Println(w, "NOPE. Guess the struggle continues!")
-		log.Println("Serving submission page")
-		data.Title = "NOPE. Guess the struggle continues!"
-
-		//index.ExecuteTemplate(w, "submissionPage", data)
-		err := tmpl.ExecuteTemplate(w, "submissionPage", data)
-		if err != nil {
-			log.Println(err)
-			//http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
+		data.Result = false
 	}
-	
+
+	if data.Result {
+		correct(w, r)
+	} else {
+		incorrect(w, r)
+	}
 }
+
+func correct(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving CORRECT page")
+
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+
+	data := Answer{Title: "CORRECT ANSWER", Flag: r.URL.Query().Get("flag"), Puzzle: r.URL.Query().Get("puzzle"), Result: true}
+	log.Println(w, "Correct answer!")
+	log.Println("Serving correct page")
+
+	data.Title = "YOU DID IT"
+	data.Result = true
+
+	err := index.ExecuteTemplate(w, "correctPage", data)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+}
+
+func incorrect(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving WRONG page")
+	
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+	
+    data := Answer{Title: "WRONG ANSWER", Flag: r.URL.Query().Get("flag"), Puzzle: r.URL.Query().Get("puzzle"), Result: false}
+	log.Println(w, "NOPE. Guess the struggle continues!")
+	log.Println("Serving incorrect page")
+
+	data.Title = "NOPE. Guess the struggle continues!"
+	data.Result = false
+
+	err := index.ExecuteTemplate(w, "incorrectPage", data)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+}
+
 
 func puzzle1(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving puzzle1 page")
-	// w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-	// w.Header().Set("Pragma", "no-cache")
-	// w.Header().Set("Expires", "0")
+
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+
 	page := Page{Title: "puzzle1"}
-	index.ExecuteTemplate(w, "puzzle1Page", page)
+
+	err := index.ExecuteTemplate(w, "puzzle1Page", page)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
 }
 
 func puzzle2(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving puzzle2 page")
-
-	var tmpl = template.Must(template.ParseFiles("./web/template/puzzle2.tmpl"))
 
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
@@ -213,11 +244,13 @@ func puzzle2(w http.ResponseWriter, r *http.Request) {
 
 	page := Page{Title: "puzzle2"}
 
-	err := tmpl.ExecuteTemplate(w, "puzzle2Page", page)
+
+	
+	err := index.ExecuteTemplate(w, "puzzle2Page", page)
 	if err != nil {
-        log.Println(err)
-		//http.Error(w, err.Error(), http.StatusInternalServerError)
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+
 }
 
 func puzzle3(w http.ResponseWriter, r *http.Request) {
@@ -226,14 +259,41 @@ func puzzle3(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 	page := Page{Title: "puzzle3"}
-	index.ExecuteTemplate(w, "puzzle3Page", page)
+	err := index.ExecuteTemplate(w, "puzzle3Page", page)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
 }
 
 func puzzle4(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving puzzle4 page")
+
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
+
 	page := Page{Title: "puzzle4"}
-	index.ExecuteTemplate(w, "puzzle4Page", page)
+
+	err := index.ExecuteTemplate(w, "puzzle4Page", page)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+}
+
+func puzzle5(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving puzzle5 page")
+
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+
+	page := Page{Title: "puzzle5"}
+	
+	err := index.ExecuteTemplate(w, "puzzle5Page", page)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
 }

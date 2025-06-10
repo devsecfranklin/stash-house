@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 */
 body {
-  background-image: url('https://games.bitsmasher.net/web/static/images/background_dead.png');
+  background-image: url('/web/static/images/background_dead.png');
   background-repeat: no-repeat; 
   background-attachment: fixed;
   background-position: center;

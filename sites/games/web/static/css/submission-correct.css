@@ -4,13 +4,17 @@
 # SPDX-License-Identifier: MIT
 */
 body {
-  /* background-image: url('/web/static/images/background_dead.png'); */
+  background-image: url('/web/static/images/battlestation.jpg');
   background-repeat: no-repeat; 
   background-attachment: fixed;
   background-position: center;
   font-family: Arial, sans-serif;
+  font-size: 90px;
   background-color: black;
-  color: #D3D3D3;
+  color: #f01d1d;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   margin: 20px;
 }
 
@@ -56,36 +60,21 @@ li {
   margin-bottom: 5px;
 }
 
-/*
+.puzzle {
+  display: table;
+  margin: 0 auto;
+  color: 333333;
+  text-align: center;
+  font-size: 20px;
+  background-color: black;
+}
+
 .footer {
   display: table;
   margin: 0 auto;
   color: 333333;
   text-align: center;
-}
-*/
-
-#footer {
-    position: bottom;
-    bottom: 0;
-    width: 100%;
-    color: #333333;
+  font-size: 20px;
+  background-color: black;
 }
 
-.center {
-    width: 500px;
-    margin: 0 auto;
-}
-
-.puzzle {
-  margin: auto;
-  text-align: left;
-  width: 1500px;
-  border: 1px solid #2ce52c;
-  padding: 15px;
-  margin: 25px;
-}
-
-h3 {
-  color:  #2ce52c;
-}
