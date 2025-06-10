@@ -1,11 +1,15 @@
 {{define "submissionPage"}}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="orcid" content="https://orcid.org/0000-0003-4586-8500">
-    <title>wrong answer headquarters</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>{{.Title}}</title>
     <link rel="stylesheet" type="text/css" href="/web/static/css/submission.css" />
   </head>
 
@@ -23,8 +27,19 @@
     For {{ .Puzzle }} you submitted {{ .Flag }} which is just plain WRONG lol. Let the struggle continue!!.
     </div>
 
-{{template "footer"}}
+
+<div id="footer">
+<footer>
+  <center>
+[ <a href="/">home</a> ] [ <a href="/puzzle1">puzzle1</a> ] [ <a href="https://games.bitsmasher.net/web/static/minecraft/index.html">minecraft</a> ] [ <a href="/dst">dont starve</a> ] [ <a href="https://games.bitsmasher.net/web/static/civilization2.html">civ 2</a> ] <br />
+  <small><small><small>
+  <em>Copyright © 2025 bitsmasher.net. All Rights Reserved.</em>
+  </small></small></small>
+  </center>
+</footer>
+</div>
 
   </body>
 </html>
+
 {{end}}
