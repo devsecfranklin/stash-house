@@ -160,7 +160,7 @@ func submission(w http.ResponseWriter, r *http.Request) {
 		log.Println("Serving correct page")
 		data.Title = "YOU DID IT"
 		data.Result = true
-	} else if 	((data.Puzzle == "puzzle2-4") && (data.Flag == "SHAKEJUNT")) {
+	} else if 	((data.Puzzle == "puzzle2-4") && (data.Flag == "ANTISOCIALNETWORKING")) {
 		log.Println(w, "Correct answer!")
 		log.Println("Serving correct page")
 		data.Title = "YOU DID IT"

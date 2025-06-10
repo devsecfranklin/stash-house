@@ -79,11 +79,20 @@
     <h3>Challenge 3: The Gopher server</h3>
 
     Now it's time to check out some of the things on the lab network that you can interact with.
-
+    <p>
     Have you ever heard of <a href="https://www.howtogeek.com/661871/the-web-before-the-web-a-look-back-at-gopher/">a protocol named Gopher</a>?
     It was created by some very famous people, <a href="https://www.w3.org/People/Berners-Lee/">including Sir Tim Berners-Lee</a> at
     <a href="https://home.cern/">CERN in Switzerland</a>.
-
+    <p>
+    Try to log in to another host now to run Gopher. 
+    
+    <ol>
+    <li>Use the command <em>&quot;ssh -XK sly node0&quot;</em> to access node0. </li>
+    <li>Become the root user by typing the command &quot;ksu&quot;. Your prompt should change to  a hash mark.</li>
+    <li>Search for the gopher client package &quot;apt-cache search gopher&quot; and install it.</li>
+    <li>Type exit to change back to your regular user. Use the Gopher client to access &quot;gopher://www.bitsmasher.net&quot;</li>
+    </ol>
+    <p>
     <form action="/submission" method="get">
         <table border="1">
             <tr>
@@ -103,6 +112,16 @@
 
     <div class="puzzle" id="puzzle2-4">
     <h3>Challenge 4: The Time Server (NTP)</h3>
+    Having a precise source of time is crucial in a network like ours where computers must work together in a &quot;tightly-coupled&quot; fashion.
+    Software builds, log correlation, cluster message passing and more all rely on a stable and accurate source of time.
+    <p>
+    <ol>
+    <li>Use the &quot;ntpq&quot; command to view the source of time for the host you are on, node0. HINT: You might need to look at the flags for the command.</li>
+    <li>You sould be able to see the name of the time server in the output of the ntpq command.</li>
+    <li>Use &quot;nslookup&quot; or &quot;whois&quot; to determine the IPv4 address of the NTP server.</li>
+    <li>Run the file &quot;check_ip&quot; in your home directory to check your answer.</li>
+    </ol>
+    <p>
     <form action="/submission" method="get">
         <table border="1">
             <tr>
