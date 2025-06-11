@@ -1,0 +1,54 @@
+{{define "puzzle1Page"}}
+
+{{template "header"}}
+
+<body>
+    <h1>DO YOU BELIEVE IN MAGIC??</h1>
+
+    <div class="puzzle">
+      <div class="center">
+        <img src="/static/games/images/wizard1.png" alt="Made with Google AI" width="500" height="600">
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <form action="/submission" method="get">
+        <table border="1">
+            
+            <tr>
+                <th>Date</th>
+                <th>Puzzle</th>
+                <th>Flag</th>
+            </tr>
+
+            <tr>
+                <td>May 23, 2025</td>
+                <td>Puzzle1 <input type="hidden" name="puzzle" value="puzzle1"></td>                
+                <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
+            </tr>
+
+        </table>
+
+        <input type="submit" value="Submit">
+        
+    </form>
+    </div>
+  </div>
+{{template "footer"}}
+
+</body>
+</html>
+
+{{end}}
+
+<!--
+{
+    "name": "puzzle1",
+    "location": "https://games.bitsmasher.net/puzzle1",
+    "flag": "so-close-try-checking-the-image"
+}
+-->

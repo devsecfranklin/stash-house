@@ -1,0 +1,21 @@
+{{define "puzzle0Page"}}
+
+{{template "header"}}
+
+<body>
+
+
+{{template "footer"}}
+
+</body>
+</html>
+
+{{end}}
+
+<!--
+{
+    "name": "puzzle0",
+    "location": "https://games.bitsmasher.net/puzzle0",
+    "flag": "so-close-try-checking-the-image"
+}
+-->

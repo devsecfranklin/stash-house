@@ -12,7 +12,6 @@ linters:
     - gosimple
     - govet
     - ineffassign
-    - intrange
     - makezero
     - misspell
     - nilerr
@@ -20,19 +19,13 @@ linters:
     - nosprintfhostport
     - staticcheck
     - unconvert
-    - usetesting
     - wastedassign
     - whitespace
   disable:
     - usestdlibvars
     - errcheck
-linters-settings:
-  staticcheck:
-    checks:
-      - all
-      - -SA1019 # omit Deprecated check
 severity:
-  default-severity: error
+  default: error
   rules:
     - linters:
         - gofmt

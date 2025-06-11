@@ -13,7 +13,8 @@ npx linthtml 'src/**/*.html'
 
 ### OpenBSD
 
-You can do application testing but there is no `docker` in this build env.
+You can do application testing, but there is no `docker` binary in this build env.
+Docker does not work on OpenBSD.
 
 ```sh
 doas pkg_add node
@@ -24,7 +25,7 @@ npm audit fix # fix sec vulns
 
 ## Testing Golang
 
-Errcheck
+- Errcheck
 
 ```sh
 go install github.com/kisielk/errcheck@latest
@@ -34,7 +35,7 @@ golangci-lint help linters
 golangci-lint run
 ```
 
-check-golang-templates
+- check-golang-templates
 
 ```sh
 git clone git@github.com:gosom/check-golang-templates.git

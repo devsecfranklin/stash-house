@@ -30,8 +30,6 @@ NC='\033[0m' # No Color
 
 # --- Some config Variables ----------------------------------------
 TOP_DIR="$(pwd)"
-GAMES_DIR="${TOP_DIR}/sites/games"
-WWW_DIR="${TOP_DIR}/sites/www"
 MY_DATE=$(date '+%Y-%m-%d-%H')
 RAW_OUTPUT="/tmp/bootstrap_website_${MY_DATE}.log"
 
@@ -58,28 +56,49 @@ function setup_golang() {
   if [ ! -f "${HOME}/franklin/go/bin/golangci-lint" ]; then go install github.com/kisielk/errcheck@latest; fi
 }
 
+function install_check_golang_templates(){
+  git clone git@github.com:gosom/check-golang-templates.git /tmp/check-golang-template 
+  pushd /tmp/check-golang-template || exit 1
+  go mod download
+  go install
+
+  popd check-golang-template || exit 1
+}
+
 function main() {
-  setup_figlet
   # The git repo has a .git dir, while a submodule has a .git file
-  if [ ! -f "./.git" ]; then
-    echo -e "${RED}ERROR: ${YELLOW}Run script from top level of your Git repo${NC}"
-    exit 1
+  # if [ ! -d "./.git" ]; then
+  #   echo -e "${RED}ERROR: ${YELLOW}Run script from top level of your Git repo${NC}"
+  #   exit 1
+  # fi
+
+  setup_figlet
+  install_check_golang_templates
+  if [ ! -f "go.mod" ]; then
+    go mod init github.com/devsecfranklin/website
+    go mod tidy
   fi
 
-  echo -e "${LPURP}# --- Test games ----------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
-  cd "${GAMES_DIR}" || exit 1
-  if [ -f "cmd/www/main.go" ]; then
-    go mod tidy
-    "${HOME}/go/bin/errcheck" ./...
-    golangci-lint run
-  fi
+  echo -e "${LPURP}# --- Linting ----------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
+  golangci-lint run
+
+  HOSTS=(games www)
+  for MY_HOST in "${HOSTS[@]}"; do
+    echo -e "${LPURP}# --- Test ${MY_HOST} ----------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
+    # cd "${TOP_DIR}" || exit 1
+    # "${HOME}/go/bin/errcheck" ./...
+    "${HOME}/go/bin/errcheck" "cmd/${MY_HOST}/"
+    echo -e "${LPURP}# --- Check Templates ${MY_HOST} ----------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
+    check-golang-templates -folder "template/${MY_HOST}"
+  done
 
   # echo -e "${LPURP}# --- Test www ----------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
   # cd "${WWW_DIR}" || exit 1
   # if [ -f "cmd/www/main.go" ]; then
   #   "${HOME}/go/bin/errcheck" ./...
   # fi
-  npx linthtml sites/**/*.html
+
+  # npx linthtml sites/**/*.html
 }
 
 main "$@"

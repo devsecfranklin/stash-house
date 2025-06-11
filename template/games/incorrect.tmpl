@@ -1,0 +1,35 @@
+{{define "incorrectPage"}}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="orcid" content="https://orcid.org/0000-0003-4586-8500">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" type="text/css" href="/static/games/css/submission-incorrect.css" />
+  </head>
+
+  <body>
+
+    <div class="container">
+      <audio controls autoplay>
+        <source src="/static/games/sadtrombone.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  
+
+    <div class="container">
+    For {{ .Puzzle }} you submitted {{ .Flag }} which is just plain WRONG lol. Let the struggle continue!!.
+    </div>
+
+{{template "footer"}}
+
+  </body>
+</html>
+
+{{end}}

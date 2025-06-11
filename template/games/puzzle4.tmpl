@@ -1,0 +1,53 @@
+{{define "puzzle4Page"}}
+
+{{template "header"}}
+
+<body>
+
+<h1>Not that kind of security</h1> <br />
+
+    <div class="puzzle">
+
+        <h2>Puzzle Three</h2>
+
+        gnupg 
+        keybase.io 
+        pass and keychains
+
+
+        find the nodes
+        run commands with clush
+        ollama on head2 - library https://ollama.com/library
+        ollama pull llama2-uncensored
+
+        <form action="/submission" method="get">
+            <table border="1">
+                <tr>
+                    <th>Date</th>
+                    <th>Puzzle</th>
+                    <th>Flag</th>
+                </tr>
+                <tr>
+                    <td>May 23, 2025</td>
+                    <td>Puzzle2 <input type="hidden" name="puzzle" value="puzzle2-3"></td>                
+                    <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
+                </tr>
+            </table>
+            <input type="submit" value="Submit">
+        </form>
+
+    </div>
+
+{{template "footer"}}
+
+</body>
+</html>
+{{ end }} 
+
+<!--
+{
+    "name": "puzzle4",
+    "location": "https://games.bitsmasher.net/puzzle4",
+    "flag": "there totally is one! really!"
+}
+-->
