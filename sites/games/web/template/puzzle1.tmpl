@@ -3,44 +3,46 @@
 {{template "header"}}
 
 <body>
+    <h1>DO YOU BELIEVE IN MAGIC??</h1>
+
     <div class="puzzle">
-        <h2>DO YOU BELIEVE IN MAGIC??</h2>
-        <img src="/web/static/images/wizard1.png" alt="Made with Google AI" width="500"
-            height="600">
-    </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <div class="puzzle">
-        <form action="/submission" method="get">
-            <table border="1">
-                
-                <tr>
-                    <th>Date</th>
-                    <th>Puzzle</th>
-                    <th>Flag</th>
-                </tr>
+      <div class="center">
+        <img src="/web/static/images/wizard1.png" alt="Made with Google AI" width="500" height="600">
 
-                <tr>
-                    <td>May 23, 2025</td>
-                    <td>Puzzle1 <input type="hidden" name="puzzle" value="puzzle1"></td>                
-                    <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
-                </tr>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
 
-            </table>
-
-            <input type="submit" value="Submit">
+    <form action="/submission" method="get">
+        <table border="1">
             
-        </form>
-    </div>
+            <tr>
+                <th>Date</th>
+                <th>Puzzle</th>
+                <th>Flag</th>
+            </tr>
 
+            <tr>
+                <td>May 23, 2025</td>
+                <td>Puzzle1 <input type="hidden" name="puzzle" value="puzzle1"></td>                
+                <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
+            </tr>
+
+        </table>
+
+        <input type="submit" value="Submit">
+        
+    </form>
+    </div>
+  </div>
 {{template "footer"}}
 
 </body>
 </html>
+
 {{end}}
 
 <!--

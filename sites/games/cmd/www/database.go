@@ -13,7 +13,13 @@ import (
 	_ "github.com/mattn/go-sqlite3" // If a package is imported with a blank identifier, the package's init function is called. The driver is registered using this function.
 )
 
-// Book is a placeholder for book
+
+type Table struct {
+	name string
+	db string
+	exist bool
+}
+
 type User struct {
 	id     int
 	name   string
@@ -54,25 +60,26 @@ Perform CRUD Operation using golang sqlite driver
 Create a database table and Read from the Table
 */
 
-func CrudDB() {
-	db, err := sql.Open("sqlite3", "games.db")
+func CrudDB(t *Table) bool {
+	db, err := sql.Open("sqlite3", t.db)
 	if err != nil {
-		log.Println(err)
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
 	// Create table
-	statement, err := db.Prepare("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name VARCHAR(64), email VARCHAR(64) NULL)")
+	statement, err := db.Prepare("CREATE TABLE IF NOT EXISTS " + t.name + " (id INTEGER PRIMARY KEY, name VARCHAR(64), email VARCHAR(64), password VARCHAR(32) NULL)")
 	if err != nil {
 		log.Println("Error in creating table")
+		return false
 	} else {
-		log.Println("Successfully created table games")
+		log.Println("Successfully created table " + t.name + "  in db games")
 	}
 	statement.Exec()
 
 	// Create
-	statement, _ = db.Prepare("INSERT INTO games (name, email) VALUES (?, ?)")
-	statement.Exec("franklin", "frank378@gmail.com")
-	log.Println("Inserted user into database")
+	statement, _ = db.Prepare("INSERT INTO " + t.name + " (name, email, password) VALUES (?, ?, ?)")
+	statement.Exec("franklin", "frank378@gmail.com", "66pickUPstickSS")
+	log.Println("Inserted initial user into database")
 
 	// Read
 	rows, _ := db.Query("SELECT id, name, email FROM games")
@@ -81,6 +88,28 @@ func CrudDB() {
 		rows.Scan(&tempUser.id, &tempUser.name, &tempUser.email)
 		log.Printf("ID:%d, User:%s, email:%s\n", tempUser.id,
 			tempUser.name, tempUser.email)
+	}
+	return true
+}
+
+func check_table_exist(t *Table) bool {
+
+	db, err := sql.Open("sqlite3", t.db)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	table := "users"
+	_, table_check := db.Query("select * from " + table + ";")
+
+    if table_check == nil {
+        fmt.Println("table " + t.name + " is there")
+		log.Println("table " + t.name + " is there")
+		return true
+    } else {
+        fmt.Println("table " + t.name + " is not there")
+		log.Println("table " + t.name + " is not there")
+		return false
 	}
 }
 
