@@ -33,11 +33,11 @@ func main() {
 
 	log.Println("Server starting...")
 
-	table_status := Table{name: "users", db: "games", exist: false}
-	table_status.exist = check_table_exist(&table_status) 
-	if ! table_status.exist {
-		table_status.exist = CrudDB(&table_status)
-	}
+	//table_status := Table{name: "users", db: "games", exist: false}
+	//table_status.exist = check_table_exist(&table_status) 
+	//if ! table_status.exist {
+	//	table_status.exist = CrudDB(&table_status)
+	//}
 	
 	//  --- Make static files available ------------------------------------------
 	// http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -59,8 +59,9 @@ func main() {
 	http.HandleFunc("/submission", submission)
 	http.HandleFunc("/puzzle1", puzzle1)
 	http.HandleFunc("/puzzle2", puzzle2)
-	http.HandleFunc("/puzzle3", puzzle3)
-	http.HandleFunc("/puzzle4", puzzle4)
+	//http.HandleFunc("/puzzle3", puzzle3)
+	//http.HandleFunc("/puzzle4", puzzle4)
+
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -323,7 +324,6 @@ func puzzle5(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
-
 
 /*
 package main

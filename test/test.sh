@@ -57,12 +57,11 @@ function setup_golang() {
 }
 
 function install_check_golang_templates(){
-  git clone git@github.com:gosom/check-golang-templates.git /tmp/check-golang-template 
-  pushd /tmp/check-golang-template || exit 1
+  git clone git@github.com:gosom/check-golang-templates.git /tmp/check-golang-templates 
+  pushd /tmp/check-golang-templates || exit 1
   go mod download
   go install
-
-  popd check-golang-template || exit 1
+  popd check-golang-templates || exit 1
 }
 
 function main() {
@@ -73,7 +72,7 @@ function main() {
   # fi
 
   setup_figlet
-  install_check_golang_templates
+  # install_check_golang_templates
   if [ ! -f "go.mod" ]; then
     go mod init github.com/devsecfranklin/website
     go mod tidy
