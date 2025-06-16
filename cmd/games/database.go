@@ -13,10 +13,9 @@ import (
 	_ "github.com/mattn/go-sqlite3" // If a package is imported with a blank identifier, the package's init function is called. The driver is registered using this function.
 )
 
-
 type Table struct {
 	name string
-	db string
+	db string // database is called games
 	exist bool
 }
 
@@ -24,36 +23,52 @@ type User struct {
 	id     int
 	name   string
 	email  string
+	password string
 }
 
-func ConnectDB() {
-	db, err := sql.Open("sqlite3", ":memory:") // open a database specified by database driver name and a driver-specific data source name
-
+func ConnectDB(t *Table) *sql.DB {
+    // open a database specified by database driver name and a driver-specific data source name
+	db, err := sql.Open("sqlite3", t.db) 
 	if err != nil {
 		log.Fatal(err)
+	} else {
+		log.Println("Successful connection to our databse")
 	}
+	return db
+}
 
+func CheckDB(t *Table) {
+	var db *sql.DB
+    db = ConnectDB(t)
 	defer db.Close() // close the connection
 
 	var version string
-	err = db.QueryRow("SELECT SQLITE_VERSION()").Scan(&version) // executes a query that is expected to return at most one row. The column from the matched row is copied into the version variable by the Scan function
-
+	err := db.QueryRow("SELECT SQLITE_VERSION()").Scan(&version) // executes a query that is expected to return at most one row. The column from the matched row is copied into the version variable by the Scan function
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	fmt.Println(version)
 }
 
-/*
-func ReadDB() {
-	// Method implementation
+func ReadDB(t *Table) {
+	var db *sql.DB
+    db = ConnectDB(t)
+
+	rows, err := db.Query("SELECT id, name, email, password FROM games")
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	var tempUser User
+	for rows.Next() {
+		rows.Scan(&tempUser.id, &tempUser.name, &tempUser.email)
+		log.Printf("ID:%d, User:%s, email:%s, pass: %s\n", tempUser.id, tempUser.name, tempUser.email, tempUser.password)
+	}
 }
 
-func WriteDB() {
-	// Method implementation
-}
-*/
+// func WriteDB(t *Table) {
+// 	var db *sql.DB
+//     db = ConnectDB(t)
+// }
 
 /*
 Perform CRUD Operation using golang sqlite driver
@@ -61,10 +76,8 @@ Create a database table and Read from the Table
 */
 
 func CrudDB(t *Table) bool {
-	db, err := sql.Open("sqlite3", t.db)
-	if err != nil {
-		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+	var db *sql.DB
+    db = ConnectDB(t)
 
 	// Create table
 	statement, err := db.Prepare("CREATE TABLE IF NOT EXISTS " + t.name + " (id INTEGER PRIMARY KEY, name VARCHAR(64), email VARCHAR(64), password VARCHAR(32) NULL)")
@@ -72,42 +85,31 @@ func CrudDB(t *Table) bool {
 		log.Println("Error in creating table")
 		return false
 	} else {
-		log.Println("Successfully created table " + t.name + "  in db games")
+		log.Println("Successfully created table " + t.name + " in db " + t.db )
 	}
 	statement.Exec()
 
-	// Create
+	// Create new user
 	statement, _ = db.Prepare("INSERT INTO " + t.name + " (name, email, password) VALUES (?, ?, ?)")
-	statement.Exec("franklin", "frank378@gmail.com", "66pickUPstickSS")
+	statement.Exec("franklin", "franklin@bitsmasher.net", "66pickUPstickSS")
 	log.Println("Inserted initial user into database")
 
-	// Read
-	rows, _ := db.Query("SELECT id, name, email FROM games")
-	var tempUser User
-	for rows.Next() {
-		rows.Scan(&tempUser.id, &tempUser.name, &tempUser.email)
-		log.Printf("ID:%d, User:%s, email:%s\n", tempUser.id,
-			tempUser.name, tempUser.email)
-	}
 	return true
 }
 
-func check_table_exist(t *Table) bool {
-
-	db, err := sql.Open("sqlite3", t.db)
-	if err != nil {
-		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+func CheckTableDB(t *Table) bool {
+	var db *sql.DB
+    db = ConnectDB(t)
 
 	table := "users"
 	_, table_check := db.Query("select * from " + table + ";")
 
     if table_check == nil {
-        fmt.Println("table " + t.name + " is there")
+        // fmt.Println("table " + t.name + " is there")
 		log.Println("table " + t.name + " is there")
 		return true
     } else {
-        fmt.Println("table " + t.name + " is not there")
+        // fmt.Println("table " + t.name + " is not there")
 		log.Println("table " + t.name + " is not there")
 		return false
 	}

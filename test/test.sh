@@ -61,7 +61,7 @@ function install_check_golang_templates(){
   pushd /tmp/check-golang-templates || exit 1
   go mod download
   go install
-  popd check-golang-templates || exit 1
+  popd /tmp/check-golang-template || exit 1
 }
 
 function main() {

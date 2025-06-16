@@ -9,8 +9,6 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"strings"
-	"regexp"
 )
 
 var LayoutDir string = "template/games"
@@ -72,6 +70,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
+	var cookieStatus bool = getCookie(w, r)
+	if !cookieStatus { setCookie(w, r) }
+	
 	page := Page{Title: "games.bitsmasher.net"}
 
 	err := index.ExecuteTemplate(w, "indexPage", page)
@@ -148,23 +149,6 @@ func mc(w http.ResponseWriter, r *http.Request) {
 func submission(w http.ResponseWriter, r *http.Request) {
 	data := Answer{Title: "wrong answer headquarters", Flag: r.URL.Query().Get("flag"), Puzzle: r.URL.Query().Get("puzzle"), Result: false}
 	log.Printf("For %s you submitted: %s\n", data.Puzzle, data.Flag)
-
-	// --------------- form input validation ---------------
-	if len(strings.TrimSpace(data.Flag)) == 0 {
-		log.Println("User submitted blank value.")
-		incorrect(w, r)
-	}
-
-	if !strings.ContainsAny(data.Flag, `!-_,.@/()=+?`) {
-		log.Println("User submitted special character nonsense.")
-		incorrect(w, r)
-	}
-
-	var emailRegexp = regexp.MustCompile(`^[^@]+@[^@]+\.[^@]+$`)
-	if !emailRegexp.Match([]byte(data.Flag)) {
-		log.Println("User submitted a possible email address.")
-		incorrect(w, r)	
-	}
 
 	// --------------- check the submitted flag  ---------------
 	if ((data.Puzzle == "puzzle1") && (data.Flag == "HAHASTRUGGLE")) {
