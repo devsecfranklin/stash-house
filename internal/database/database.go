@@ -3,11 +3,10 @@ sudo apt-get install sqlite3 libsqlite3-dev gcc
 cd sites/games
 go get github.com/mattn/go-sqlite3
 */
-package main
+package database
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 
 	_ "github.com/mattn/go-sqlite3" // If a package is imported with a blank identifier, the package's init function is called. The driver is registered using this function.
@@ -19,6 +18,7 @@ type Table struct {
 	exist bool
 }
 
+
 type User struct {
 	id     int
 	name   string
@@ -26,9 +26,9 @@ type User struct {
 	password string
 }
 
-func ConnectDB(t *Table) *sql.DB {
+func ConnectDB(t Table) *sql.DB {
     // open a database specified by database driver name and a driver-specific data source name
-	db, err := sql.Open("sqlite3", t.db) 
+	db, err := sql.Open("sqlite3", "database/" + t.db) 
 	if err != nil {
 		log.Fatal(err)
 	} else {
@@ -37,8 +37,12 @@ func ConnectDB(t *Table) *sql.DB {
 	return db
 }
 
-func CheckDB(t *Table) {
+func CheckDB(db_name string, table_name string) bool {
 	var db *sql.DB
+
+	var t Table
+    t = Table{table_name, db_name, false}
+
     db = ConnectDB(t)
 	defer db.Close() // close the connection
 
@@ -47,18 +51,26 @@ func CheckDB(t *Table) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(version)
+	log.Println("Database version: "+ version)
+	return t.exist
 }
 
-func ReadDB(t *Table) {
+func ReadUserDB(table_name string, db_name string, username string, passwd string) {
 	var db *sql.DB
+	var t Table
+    //var u User
+
+	t = Table{table_name, db_name, false}
+	//u = User{0,username,"email",passwd}
     db = ConnectDB(t)
 
-	rows, err := db.Query("SELECT id, name, email, password FROM games")
+	rows, err := db.Query("SELECT id, name, email, password FROM games WHERE name=\""+username+"\"")
+
 	if err != nil {
 		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 	var tempUser User
+
 	for rows.Next() {
 		rows.Scan(&tempUser.id, &tempUser.name, &tempUser.email)
 		log.Printf("ID:%d, User:%s, email:%s, pass: %s\n", tempUser.id, tempUser.name, tempUser.email, tempUser.password)
@@ -75,8 +87,11 @@ Perform CRUD Operation using golang sqlite driver
 Create a database table and Read from the Table
 */
 
-func CrudDB(t *Table) bool {
+func CrudDB() bool {
 	var db *sql.DB
+	var t Table
+
+    t = Table{"games", "users", false}
     db = ConnectDB(t)
 
 	// Create table
@@ -94,10 +109,12 @@ func CrudDB(t *Table) bool {
 	statement.Exec("franklin", "franklin@bitsmasher.net", "66pickUPstickSS")
 	log.Println("Inserted initial user into database")
 
+	db.Close()
+
 	return true
 }
 
-func CheckTableDB(t *Table) bool {
+func CheckTableDB(t Table) bool {
 	var db *sql.DB
     db = ConnectDB(t)
 
