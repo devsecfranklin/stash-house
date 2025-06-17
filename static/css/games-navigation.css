@@ -1,0 +1,139 @@
+/*
+# SPDX-FileCopyrightText: © 2020-2025 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: MIT
+*/
+
+body {
+    /* background-image: url('/web/static/images/background_dead.png'); */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    font-family: Tahoma, Verdana, Arial, sans-serif;
+    background-color: black;
+    color: #D3D3D3;
+    margin: 20px;
+}
+
+form {
+    background-color: black;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 1500px;
+    margin: 0 auto;
+    text-align: center;
+    position: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+    background-color: #ffe0e0;
+    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.success {
+    color: green;
+    background-color: #e0ffe0;
+    border: 1px solid green;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+}
+
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color on hover */
+li a:hover {
+    background-color: #555;
+    color: white;
+}
+
+.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+ul {
+    border: 1px solid #555;
+}
+
+li {
+    text-align: center;
+    border-bottom: 1px solid #555;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+/*
+.footer {
+  display: table;
+  margin: 0 auto;
+  color: 333333;
+  text-align: center;
+}
+*/
+
+#footer {
+    position: bottom;
+    bottom: 0;
+    width: 100%;
+    color: #333333;
+}
+
+.center {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.puzzle {
+    margin: auto;
+    text-align: center;
+    width: 50%;
+    border: 1px solid #e0ffe0;
+    padding: 15px;
+    margin: 25px;
+}
+
+h3 {
+    color: #e0ffe0;
+}
+
+.br img {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+
+.container {
+    display: grid;
+}
+/* 
+table,
+th,
+td {
+    border: 0.005px solid #ffffff;
+} */

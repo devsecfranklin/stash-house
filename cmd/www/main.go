@@ -14,14 +14,14 @@ import (
 )
 
 type Answer struct {
-	Flag string
-    Puzzle string
-    Result string
+	Flag   string
+	Puzzle string
+	Result string
 }
 
 func answerHandler(w http.ResponseWriter, r *http.Request) {
 
-    data := Answer{Flag: r.URL.Query().Get("flag"), Puzzle: r.URL.Query().Get("puzzle")}
+	data := Answer{Flag: r.URL.Query().Get("flag"), Puzzle: r.URL.Query().Get("puzzle")}
 
 	//fmt.Fprintf(w, "Hello from Go App! You requested: %s\n", r.URL.Path)
 	//log.Printf("Request received for: %s from %s\n", r.URL.Path, r.RemoteAddr)
@@ -38,8 +38,8 @@ func answerHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 
 	// Serve static files
-  fs := http.FileServer(http.Dir("./static"))
-  router.Handle("/static/*", http.StripPrefix("/static/", fs))
+	fs := http.FileServer(http.Dir("./static"))
+	router.Handle("/static/*", http.StripPrefix("/static/", fs))
 	// Register the handler for all paths
 	http.HandleFunc("/", answerHandler)
 

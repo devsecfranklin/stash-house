@@ -12,24 +12,26 @@
     <meta name="keywords" content="HTML, CSS, GoLang">
     <meta name="robots" content= "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
     <title>Login Page</title>
-    <link rel="stylesheet" href= "/static/games/css/puzzle.css">
+    <link rel="stylesheet" href= "/static/games/css/games-login.css">
 </head>
 
 <body>
-    <form action="/login" method="post">
-        <table border="1">
-            <tr>
-                <td><label for="usr">Username:</label></td><td><input type="text" id="usr" name="usr"></td>
-            </tr>
-            <tr>
-                <td><label for="pwd">Password:</label></td><td><input type="password" id="pwd" name="pwd"></td>
-            </tr>
-        </table>
-        <input type="submit" value="Submit">  
-    </form>
+    <div class="center" id="center">
+        <form action="/login" method="post">
+            <table border="1">
+                <tr>
+                    <td><label for="usr">Username:</label></td><td><input type="text" id="usr" name="usr"></td>
+                </tr>
+                <tr>
+                    <td><label for="pwd">Password:</label></td><td><input type="password" id="pwd" name="pwd"></td>
+                </tr>
+            </table>
+            <input type="submit" value="Submit">  
+        </form>
 
-    <div class="br">
-        <img src="/static/games/images/pencils.jpg" alt="what are you looking at" width="500" height="600">
+        <div class="br">
+            <img src="/static/games/images/pencils.jpg" alt="what are you looking at" width="500" height="600">
+        </div>
     </div>
 
 {{template "footer"}}

@@ -1,0 +1,22 @@
+version: '3'
+services:
+  amd64:
+    build:
+      context: ..
+      dockerfile: docker/amd64/Dockerfile
+    image: resume-amd64
+    container_name: franklin-resume-amd64
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/workspaces/franklin-resume
+  franklin-resume:
+    build:
+      context: ..
+      dockerfile: docker/python3/Dockerfile
+    image: franklin-resume
+    container_name: franklin-resume
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/workspaces/franklin-resume

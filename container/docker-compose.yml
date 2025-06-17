@@ -1,9 +1,0 @@
-version: '3'
-services:
-  bitsmasher:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    image: bitsmasher.net
-    container_name: bitsmasher.net
-

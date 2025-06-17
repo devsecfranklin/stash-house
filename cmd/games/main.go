@@ -46,7 +46,6 @@ func main() {
 	// "/static/images/my_image.jpg" will look for "images/my_image.jpg" in the "static" directory.
 	fs := http.FileServer(http.Dir("./static/games"))
 	http.Handle("/static/games/", http.StripPrefix("/static/games/", fs))
-	//http.Handle("/static", fs)
 
 	index, err = template.ParseGlob(LayoutDir + "/*.tmpl")
 	if err != nil {
@@ -60,6 +59,7 @@ func main() {
 	http.HandleFunc("/linux_games", lg)
 	http.HandleFunc("/login", LoginPage)
 	http.HandleFunc("/minecraft", mc)
+	http.HandleFunc("/scoreboard", scoreboard)
 	http.HandleFunc("/submission", submission)
 	http.HandleFunc("/puzzle1", puzzle1)
 	http.HandleFunc("/puzzle2", puzzle2)
@@ -202,6 +202,20 @@ func mc(w http.ResponseWriter, r *http.Request) {
 		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
+}
+
+func scoreboard(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving scoreboard games page")
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+
+	page := Page{"minecraft"}
+
+	err := index.ExecuteTemplate(w, "scoreboardPage", page)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func submission(w http.ResponseWriter, r *http.Request) {

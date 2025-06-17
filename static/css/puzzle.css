@@ -3,9 +3,10 @@
 #
 # SPDX-License-Identifier: MIT
 */
+
 body {
   /* background-image: url('/web/static/images/background_dead.png'); */
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
   font-family: Tahoma, Verdana, Arial, sans-serif;
@@ -18,8 +19,10 @@ form {
   background-color: black;
   padding: 20px;
   border-radius: 8px;
-  max-width: 500px;
-
+  max-width: 1500px;
+  margin: 0 auto;
+  text-align: center;
+  position: center;
 }
 
 label {
@@ -66,32 +69,32 @@ li {
 */
 
 #footer {
-    position: bottom;
-    bottom: 0;
-    width: 100%;
-    color: #333333;
+  position: bottom;
+  bottom: 0;
+  width: 100%;
+  color: #333333;
 }
 
 .center {
-    width: 500px;
-    margin: 0 auto;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .puzzle {
   margin: auto;
-  text-align: left;
-  width: 1500px;
-  border: 1px solid #2ce52c;
+  text-align: center;
+  width: 50%;
+  border: 1px solid #e0ffe0;
   padding: 15px;
   margin: 25px;
 }
 
 h3 {
-  color:  #2ce52c;
+  color: #e0ffe0;
 }
 
 .br img {
   position: absolute;
-  right: 0px; 
+  right: 0px;
   bottom: 0px;
 }
