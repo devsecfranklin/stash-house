@@ -35,24 +35,25 @@ func SignupPage(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
-func loginHandler(response http.ResponseWriter, request *http.Request) {
-	name := request.FormValue("name")
-	pass := request.FormValue("password")
-	redirectTarget := "/"
-	if name != "" && pass != "" {
-		// .. check credentials ..
-		setSession(name, response)
-		redirectTarget = "/internal"
-	}
-	http.Redirect(response, request, redirectTarget, 302)
-}
+// func LoginHandler(response http.ResponseWriter, request *http.Request) {
+// 	name := request.FormValue("name")
+// 	pass := request.FormValue("password")
+// 	redirectTarget := "/"
+// 	if name != "" && pass != "" {
+// 		// .. check credentials ..
+// 		setSession(name, response)
+// 		redirectTarget = "/internal"
+// 	}
+// 	http.Redirect(response, request, redirectTarget, 302)
+// }
 
-func logoutHandler(response http.ResponseWriter, request *http.Request) {
+func LogoutHandler(response http.ResponseWriter, request *http.Request) {
 	clearSession(response)
 	http.Redirect(response, request, "/", 302)
 }
 
-func setSession(userName string, response http.ResponseWriter) {
+func SetSession(userName string, response http.ResponseWriter) {
+	log.Println("cookies: SetSession()")
 	value := map[string]string{
 		"name": userName,
 	}
@@ -62,11 +63,12 @@ func setSession(userName string, response http.ResponseWriter) {
 			Value: encoded,
 			Path:  "/",
 		}
+		log.Println("settings cookie....")
 		http.SetCookie(response, cookie)
 	}
 }
 
-func getUserName(request *http.Request) (userName string) {
+func GetUserName(request *http.Request) (userName string) {
 	if cookie, err := request.Cookie("session"); err == nil {
 		cookieValue := make(map[string]string)
 		if err = cookieHandler.Decode("session", cookie.Value, &cookieValue); err == nil {

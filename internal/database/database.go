@@ -18,7 +18,6 @@ type Table struct {
 	exist bool
 }
 
-
 type User struct {
 	id     int
 	name   string
@@ -27,8 +26,9 @@ type User struct {
 }
 
 func ConnectDB(t Table) *sql.DB {
+	log.Printf("Connecting to database to view table: %v", t.name)
     // open a database specified by database driver name and a driver-specific data source name
-	db, err := sql.Open("sqlite3", "database/" + t.db) 
+	db, err := sql.Open("sqlite3", t.db) 
 	if err != nil {
 		log.Fatal(err)
 	} else {
@@ -38,12 +38,9 @@ func ConnectDB(t Table) *sql.DB {
 }
 
 func CheckDB(db_name string, table_name string) bool {
-	var db *sql.DB
-
-	var t Table
-    t = Table{table_name, db_name, false}
-
-    db = ConnectDB(t)
+	//var db *sql.DB
+    t := Table{table_name, db_name, false}
+    db := ConnectDB(t)
 	defer db.Close() // close the connection
 
 	var version string
@@ -51,30 +48,31 @@ func CheckDB(db_name string, table_name string) bool {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Database version: "+ version)
+	log.Println("Database version: " + version)
 	return t.exist
 }
 
-func ReadUserDB(table_name string, db_name string, username string, passwd string) {
+func ReadUserDB(table_name string, db_name string, username string, passwd string) error {
+	log.Printf("Reading database: %v", db_name)
 	var db *sql.DB
-	var t Table
+	//var t Table
     //var u User
 
-	t = Table{table_name, db_name, false}
+	t := Table{table_name, db_name, false}
 	//u = User{0,username,"email",passwd}
     db = ConnectDB(t)
 
-	rows, err := db.Query("SELECT id, name, email, password FROM games WHERE name=\""+username+"\"")
-
+	rows, err := db.Query("SELECT id, name, email, password FROM " + t.name + " WHERE name=\""+username+"\"")
 	if err != nil {
 		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+	} 
+	// log.Printf("%v", rows)
 	var tempUser User
-
 	for rows.Next() {
 		rows.Scan(&tempUser.id, &tempUser.name, &tempUser.email)
 		log.Printf("ID:%d, User:%s, email:%s, pass: %s\n", tempUser.id, tempUser.name, tempUser.email, tempUser.password)
 	}
+	return nil
 }
 
 // func WriteDB(t *Table) {
@@ -89,15 +87,12 @@ Create a database table and Read from the Table
 
 func CrudDB() bool {
 	var db *sql.DB
-	var t Table
-
-    t = Table{"games", "users", false}
+	t := Table{"users", "games", false}
     db = ConnectDB(t)
 
-	// Create table
 	statement, err := db.Prepare("CREATE TABLE IF NOT EXISTS " + t.name + " (id INTEGER PRIMARY KEY, name VARCHAR(64), email VARCHAR(64), password VARCHAR(32) NULL)")
 	if err != nil {
-		log.Println("Error in creating table")
+		log.Println("Error in creating table " +t.name)
 		return false
 	} else {
 		log.Println("Successfully created table " + t.name + " in db " + t.db )
@@ -107,7 +102,7 @@ func CrudDB() bool {
 	// Create new user
 	statement, _ = db.Prepare("INSERT INTO " + t.name + " (name, email, password) VALUES (?, ?, ?)")
 	statement.Exec("franklin", "franklin@bitsmasher.net", "66pickUPstickSS")
-	log.Println("Inserted initial user into database")
+	log.Println("Inserted initial user into table " + t.name)
 
 	db.Close()
 
@@ -115,8 +110,7 @@ func CrudDB() bool {
 }
 
 func CheckTableDB(t Table) bool {
-	var db *sql.DB
-    db = ConnectDB(t)
+    db := ConnectDB(t)
 
 	table := "users"
 	_, table_check := db.Query("select * from " + table + ";")

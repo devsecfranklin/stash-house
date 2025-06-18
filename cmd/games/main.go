@@ -9,6 +9,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"internal/auth"
 	"internal/database"
 )
 
@@ -17,6 +18,7 @@ var index *template.Template
 
 type Page struct {
 	Title string
+	Username string
 }
 
 type Answer struct {
@@ -25,6 +27,13 @@ type Answer struct {
 	Flag   string
 	Puzzle string
 	Result bool
+}
+
+type User struct {
+	id     int
+	name   string
+	email  string
+	password string
 }
 
 func main() {
@@ -38,7 +47,7 @@ func main() {
 	table_name = "users"
 	table_status = database.CheckDB(table_name, db_name)
 	if !table_status {
-		table_status = database.CrudDB()
+		database.CrudDB()
 	}
 
 	//  --- Make static files available ------------------------------------------
@@ -81,7 +90,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	//var cookieStatus bool = cookies.getCookie(w, r)
 	//if !cookieStatus {cookies.setCookie(w, r) }
 
-	page := Page{Title: "games.bitsmasher.net"}
+	username := auth.GetUserName(r)
+	page := Page{"games.bitsmasher.net", username}
 
 	err := index.ExecuteTemplate(w, "indexPage", page)
 	if err != nil {
@@ -90,35 +100,45 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LoginPage(w http.ResponseWriter, r *http.Request) {
+    log.Println("Serving login page")
+
+	var username string
+
+	redirectTemplate := "LoginPage"
+
 	if r.Method == http.MethodPost {
-		username := r.FormValue("usr")
+		username = r.FormValue("usr")
 		password := r.FormValue("pwd")
 
-		// Perform authentication logic here (e.g., check against a database).
-		// For simplicity, we'll just check if the username and password are both "admin".
-		if username == "admin" && password == "admin" {
-			// Successful login, redirect to a welcome page.
-			http.Redirect(w, r, "/welcome", http.StatusSeeOther)
-			return
+		err := database.ReadUserDB("users", "games", username, password) 
+		if err != nil {
+			log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+			redirectTemplate = "FailurePage"
+		} else {	
+			auth.SetSession(username, w) // set session cookie
+			redirectTemplate = "WelcomePage"
 		}
-
-		// Invalid credentials, show the login page with an error message.
-		//log.Println(w, "Invalid credentials. Please try again.")
-        //return
-		http.Redirect(w,r, "/failure", http.StatusSeeOther)
 	}
-
-	err := index.ExecuteTemplate(w, "LoginPage", LoginPage)
+	
+    //page := Page{"games.bitsmasher.net", username}
+	err := index.ExecuteTemplate(w, redirectTemplate, LoginPage)
+	
 	if err != nil {
 		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-
 }
 
-// WelcomePage is the handler for the welcome page.
 func WelcomePage(w http.ResponseWriter, r *http.Request) {
 	//log.Println(w, "Welcome, you have successfully logged in!")
-	err := index.ExecuteTemplate(w, "WelcomePage", WelcomePage)
+
+	username := auth.GetUserName(r)
+
+	log.Println("Serving welcome page for " + username )
+
+	page := Page{"games.bitsmasher.net", username}
+
+	err := index.ExecuteTemplate(w, "WelcomePage", page)
+
 	if err != nil {
 		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -132,7 +152,8 @@ func civ2(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{"Civilization ]["}
+	username := auth.GetUserName(r)
+	page := Page{"Civilization ][", username}
 
 	err := index.ExecuteTemplate(w, "civ2Page", page)
 	if err != nil {
@@ -148,7 +169,8 @@ func dst(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{"Do Not Starve"}
+    username := auth.GetUserName(r)
+	page := Page{"Do Not Starve", username}
 
 	err := index.ExecuteTemplate(w, "dstPage", page)
 	if err != nil {
@@ -164,7 +186,8 @@ func failure(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{"failure"}
+	username := auth.GetUserName(r)
+	page := Page{"failure", username}
 
 	err := index.ExecuteTemplate(w, "FailurePage", page)
 	if err != nil {
@@ -179,7 +202,8 @@ func lg(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{"Linux Games"}
+	username := auth.GetUserName(r)
+	page := Page{"Linux Games", username}
 
 	err := index.ExecuteTemplate(w, "lgPage", page)
 	if err != nil {
@@ -195,7 +219,8 @@ func mc(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{"minecraft"}
+	username := auth.GetUserName(r)
+	page := Page{"minecraft", username}
 
 	err := index.ExecuteTemplate(w, "mcPage", page)
 	if err != nil {
@@ -210,7 +235,8 @@ func scoreboard(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{"minecraft"}
+	username := auth.GetUserName(r)
+	page := Page{"minecraft", username}
 
 	err := index.ExecuteTemplate(w, "scoreboardPage", page)
 	if err != nil {
@@ -308,7 +334,8 @@ func puzzle1(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{Title: "puzzle1"}
+	username := auth.GetUserName(r)
+	page := Page{"puzzle1", username}
 
 	err := index.ExecuteTemplate(w, "puzzle1Page", page)
 	if err != nil {
@@ -324,7 +351,8 @@ func puzzle2(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{Title: "puzzle2"}
+	username := auth.GetUserName(r)
+	page := Page{"puzzle2", username}
 
 	err := index.ExecuteTemplate(w, "puzzle2Page", page)
 	if err != nil {
@@ -335,11 +363,16 @@ func puzzle2(w http.ResponseWriter, r *http.Request) {
 
 func puzzle3(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving puzzle3 page")
+
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
-	page := Page{Title: "puzzle3"}
+
+	username := auth.GetUserName(r)
+	page := Page{"puzzle3", username}
+
 	err := index.ExecuteTemplate(w, "puzzle3Page", page)
+
 	if err != nil {
 		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -353,7 +386,8 @@ func puzzle4(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{Title: "puzzle4"}
+	username := auth.GetUserName(r)
+	page := Page{"puzzle4", username}
 
 	err := index.ExecuteTemplate(w, "puzzle4Page", page)
 	if err != nil {
@@ -369,7 +403,8 @@ func puzzle5(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{Title: "puzzle5"}
+	username := auth.GetUserName(r)
+	page := Page{"puzzle5", username}
 
 	err := index.ExecuteTemplate(w, "puzzle5Page", page)
 	if err != nil {

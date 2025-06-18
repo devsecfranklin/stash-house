@@ -64,6 +64,9 @@ function setup_golang() {
   # test/test.sh
   if [ ! -f "${HOME}/go/bin/errcheck" ]; then go install github.com/kisielk/errcheck@latest; fi
   if [ ! -f "${HOME}/franklin/go/bin/golangci-lint" ]; then go install github.com/kisielk/errcheck@latest; fi
+  go get internal/database
+  go get internal/auth
+  go get internal/cookies
 }
 
 function check_installed() {

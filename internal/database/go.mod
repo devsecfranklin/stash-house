@@ -1,4 +1,4 @@
-module bitsmasher.net/bitsmasher_website
+module bitsmasher.net/database
 
 go 1.24.4
 
