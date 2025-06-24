@@ -17,14 +17,43 @@
 
 <body>
 
-  <div class="dontstarve">
-      <p>To play on the &quot;Dont Starve Together&quot; start the game on Steam, then look for the server named &quot;wonderland&quot;</p>
-      <p>
-      mod list:
+  <h1>Don't Starve Together</h1>
 
-      <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=345692228"> minimap HUD</a>  345692228 <br />
-      <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1185229307"> Epic Health Bar </a> 1185229307 <br />
-      </p>
+  <div class="dontstarve">
+      <p>To play on the <a href="https://store.steampowered.com/app/322330/Dont_Starve_Together/">&quot;Dont Starve Together&quot;</a> server, start the game on Steam, then look for the server named &quot;wonderland&quot;</p>
+    
+      <h2>Client mods</h2>
+
+      <table>
+      <th>Name</th><th>ID</th><th>Notes</th>
+      <tr><td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=345692228">minimap HUD</a></td><td>345692228</td><td>&nbsp;</td></tr>
+      <tr><td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1185229307">Epic Health Bar</td><td>1185229307<tr>&nbsp;</td></tr>
+      </table>
+
+      <h2>Server Mods</h2>
+
+      <tr><td>quick pick</td><td>2923790645</td></tr>
+ServerModSetup("2923790645")
+      ServerModSetup("3138571948")
+ServerModSetup("481765222")
+ServerModSetup("375859599")
+ServerModSetup("1185229307")
+ServerModSetup("3436020204")
+ServerModSetup("398858801")
+
+
+return {
+    ["workshop-3138571948"]={ configuration_options={ }, enabled=true },
+    ["workshop-2923790645"]={ configuration_options={ }, enabled=true },
+    ["workshop-481765222"]={ configuration_options={ }, enabled=true },
+    ["workshop-375859599"]={ configuration_options={ }, enabled=true },
+    ["workshop-1185229307"]={ configuration_options={ }, enabled=true },
+    ["workshop-3436020204"]={ configuration_options={ }, enabled=true },
+    ["workshop-398858801"]={ configuration_options={ }, enabled=true }
+}
+
+
+
   </div>
 
 {{template "footer"}}

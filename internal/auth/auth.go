@@ -75,6 +75,7 @@ func GetUserName(request *http.Request) (userName string) {
 			userName = cookieValue["name"]
 		}
 	}
+	
 	return userName
 }
 
