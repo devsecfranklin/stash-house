@@ -4,13 +4,14 @@
 # SPDX-License-Identifier: MIT
 */
 
-package www
+package main
 
 import (
 	"fmt"
-
+	"html/template"
 	"log"
 	"net/http"
+        "os"
 )
 
 var LayoutDir string = "template/www"
@@ -44,20 +45,47 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	var err error
+	
+	//  --- Make static files available ------------------------------------------
+	// http.Handle("/static/", http.StripPrefix("/static/", fs))
+	// "/static/images/my_image.jpg" will look for "images/my_image.jpg" in the "static" directory.
+	fs := http.FileServer(http.Dir("./static/games"))
+	http.Handle("/static/games/", http.StripPrefix("/static/games/", fs))
 
-	// Serve static files
-	fs := http.FileServer(http.Dir("./static"))
-	router.Handle("/static/*", http.StripPrefix("/static/", fs))
+	index, err = template.ParseGlob(LayoutDir + "/*.tmpl")
+	if err != nil {
+		panic(err)
+	}
+
 	// Register the handler for all paths
-	http.HandleFunc("/", answerHandler)
+	http.HandleFunc("/", handler)
 	http.HandleFunc("/oauth", oauthHandler)
 
 	// http.Handle("/", http.FileServer(http.Dir("../../web/static/"))) // this is to server static web pages
 
 	log_header("Server listening on :8080")
-	err := http.ListenAndServe(":8080", nil)
+	err = http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal(err)
+	}
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving index page")
+
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+
+	//var cookieStatus bool = cookies.getCookie(w, r)
+	//if !cookieStatus {cookies.setCookie(w, r) }
+
+	page := Page{"www.bitsmasher.net"}
+
+	err := index.ExecuteTemplate(w, "indexPage", page)
+	if err != nil {
+		log.Println(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
