@@ -1,3 +1,9 @@
+/*
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: MIT
+*/
+
 package main
 
 import (
@@ -12,6 +18,7 @@ import (
 	"sync"      // For mutex to protect the state map
 	"time"      // For state expiration/cleanup (simple example)
 	"math/rand" // For simple state generation
+
 )
 
 // In a real application, you'd use a more robust random string generator,
@@ -213,16 +220,27 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// Serve static files (ensure your `template/www/static` path is correct)
-	fs := http.FileServer(http.Dir("./static/www"))
-	http.Handle("/static/www/", http.StripPrefix("/static/www/", fs))
+	var err error
+	
+	//  --- Make static files available ------------------------------------------
+	// http.Handle("/static/", http.StripPrefix("/static/", fs))
+	// "/static/images/my_image.jpg" will look for "images/my_image.jpg" in the "static" directory.
+	fs := http.FileServer(http.Dir("./static/games"))
+	http.Handle("/static/games/", http.StripPrefix("/static/games/", fs))
 
-	// Register handlers
+	index, err = template.ParseGlob(LayoutDir + "/*.tmpl")
+	if err != nil {
+		panic(err)
+	}
+
+	// Register the handler for all paths
 	http.HandleFunc("/", handler)
-	http.HandleFunc("/oauth", oauthHandler) // This now handles both initial request and callback
+	http.HandleFunc("/oauth", oauthHandler)
+
+	// http.Handle("/", http.FileServer(http.Dir("../../web/static/"))) // this is to server static web pages
 
 	log_header("Server listening on :8080")
-	err := http.ListenAndServe(":8080", nil)
+	err = http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log_fatal(fmt.Sprintf("Server failed to start: %v", err))
 	}
