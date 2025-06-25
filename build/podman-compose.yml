@@ -1,22 +1,31 @@
-version: '3'
+# Version tag is no longer needed for modern compose specifications.
 services:
   amd64:
     build:
+      # The context is the parent directory (your project root)
       context: ..
       dockerfile: docker/amd64/Dockerfile
-    image: resume-amd64
+    # IMPORTANT: The image name is now the full name used in the Makefile.
+    # This allows `podman-compose build` to tag it correctly.
+    image: ghcr.io/devsecfranklin/franklin-resume-amd64:latest
     container_name: franklin-resume-amd64
     ports:
-      - "5000:5000"
+      # Note: This port conflicts with the other service. See note below.
+      - "5001:5000" # Changed to 5001 to avoid conflict
     volumes:
-      - ./:/workspaces/franklin-resume
+      # Mount the entire project root (..) inside the container, not just the current dir (.).
+      - ../:/workspaces/franklin-resume
+
   franklin-resume:
     build:
+      # The context is the parent directory (your project root)
       context: ..
       dockerfile: docker/python3/Dockerfile
-    image: franklin-resume
+    # IMPORTANT: This image name also matches the Makefile's variables.
+    image: ghcr.io/devsecfranklin/franklin-resume:latest
     container_name: franklin-resume
     ports:
       - "5000:5000"
     volumes:
-      - ./:/workspaces/franklin-resume
+      # Mount the entire project root (..) inside the container.
+      - ../:/workspaces/franklin-resume

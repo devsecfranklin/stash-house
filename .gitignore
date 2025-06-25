@@ -3,36 +3,7 @@
 *.html~
 *.js~
 *.php~
-node_modules/
 
-# autotools
-_build
-AUTHORS
-COPYING
-ChangeLog
-INSTALL
-NEWS
-README
-aclocal.m4
-autom4te.cache
-compile
-confdefs.h
-conftest
-conftest.c
-conftest.err
-conftest.o
-config.guess
-config.log
-config.status
-config.sub
-config/
-configure
-configure~
-install-sh
-libtool
-ltmain.sh
-Makefile
-Makefile.in
-missing
+gopher
 
 .nfs*
