@@ -1,29 +1,28 @@
-{{define "indexPage"}}
+{{define "oauth2Page"}}
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content= "width=device-width, initial-scale=1.0">
-    <meta name="description" content= "www.bitsmasher.net">
-    <meta name="author" content="thedevilsvoice">
-    <meta name="orcid" content="https://orcid.org/0000-0003-4586-8500">
-    <meta name="keywords" content="HTML, CSS, GoLang">
-    <meta name="robots" content= "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
-    <title>{{.Title}}</title>
-    <link rel="stylesheet" href= "/static/css/bitsmasher.css">
-</head>
+{{template "header"}}
 
 <body>
-    Hello.
 
-    {{template "footer"}}
-    </div>
+    <form action="https://id.twitch.tv/oauth2/authorize?response_type=code&client_id={{.ClientID}}&redirect_uri=htps://www.bitsmasher.net/oauth2&scope=channel%3Amanage%3Apolls+channel%3Aread%3Apolls&state={{.StateRand}}" method="get">
+        <table border="1">
+            <tr>
+                <th>clientID</th>
+                <th>state</th>
+            </tr>
+            <tr>
+                <td>Client: <input type="text" name="clientID" id="state" placeholder="sgqa5hmcak4h9sjyoljqk1dtty3x38"></td>                
+                <td><input type="hidden" name="state" id="state" value="{{.StateRand}}">{{.StateRand}}</td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit">
+    </form>
+
+{{template "footer"}}
 
 </body>
 </html>
-{{end}}
+{{ end }} 
 
 <!--
 

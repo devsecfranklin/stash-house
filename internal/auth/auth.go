@@ -3,9 +3,11 @@ package auth
 import (
 	"html/template"
 	"log"
+	"io"
+	"crypto/rand"
+	"encoding/base64"
 	"net/http"
 
-	//"internal/cookies"
 	"github.com/gorilla/securecookie"
 )
 
@@ -87,4 +89,25 @@ func clearSession(response http.ResponseWriter) {
 		MaxAge: -1,
 	}
 	http.SetCookie(response, cookie)
+}
+
+func State(n int) (string, error) {
+    data := make([]byte, n)
+    if _, err := io.ReadFull(rand.Reader, data); err != nil {
+        return "", err
+    }
+    return trimStringToFirstXRunes(base64.StdEncoding.EncodeToString(data), 16), nil
+}
+
+func trimStringToFirstXRunes(s string, x int) string {
+	// Convert the string to a slice of runes
+	runes := []rune(s)
+
+	// If x is greater than or equal to the number of runes, return the original string
+	if x >= len(runes) {
+		return s
+	}
+
+	// Return the string created from the first x runes
+	return string(runes[:x])
 }
