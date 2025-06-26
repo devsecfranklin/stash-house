@@ -4,19 +4,30 @@
 
 <body>
 
-    <form action="https://id.twitch.tv/oauth2/authorize?response_type=code&client_id={{.ClientID}}&redirect_uri=htps://www.bitsmasher.net/oauth2&scope=channel%3Amanage%3Apolls+channel%3Aread%3Apolls&state={{.StateRand}}" method="get">
-        <table border="1">
-            <tr>
-                <th>clientID</th>
-                <th>state</th>
-            </tr>
-            <tr>
-                <td>Client: <input type="text" name="clientID" id="state" placeholder="sgqa5hmcak4h9sjyoljqk1dtty3x38"></td>                
-                <td><input type="hidden" name="state" id="state" value="{{.StateRand}}">{{.StateRand}}</td>
-            </tr>
-        </table>
-        <input type="submit" value="Submit">
-    </form>
+    <div class="container">
+        <!-- The 'with' action checks if user data exists -->
+        {{ with .User.Data }}
+            <!-- The 'range' action loops over the slice (there's only one user in this response) -->
+            {{ range . }}
+                <h1>Welcome, {{ .DisplayName }}!</h1>
+                <img src="{{ .ProfileImageURL }}" alt="Profile Picture" width="150">
+                <p><strong>Login Name:</strong> {{ .Login }}</p>
+                <p><strong>User ID:</strong> {{ .ID }}</p>
+                <p><strong>Email:</strong> {{ .Email }}</p>
+                <p><strong>Description:</strong> {{ .Description }}</p>
+            {{ end }}
+        {{ else }}
+            <h1>Login Successful, but could not fetch user data.</h1>
+        {{ end }}
+
+        <hr>
+        <h2>OAuth Token Details</h2>
+        <p><strong>Note:</strong> Never expose the full access token on a public-facing page in a real application!</p>
+        <pre><code>{{ .Token.AccessToken }}</code></pre>
+        <p>Token expires at: {{ .Token.Expiry.Format "2006-01-02 15:04:05" }}</p>
+
+        <a href="/">Go Home</a>
+    </div>
 
 {{template "footer"}}
 

@@ -9,7 +9,7 @@
         <form action="https://id.twitch.tv/oauth2/authorize" method="get">
             <input type="hidden" name="response_type" value="code">
             <input type="hidden" name="client_id" value="{{.ClientID}}">
-            <input type="hidden" name="redirect_uri" value="https://www.bitsmasher.net/oauth">
+            <input type="hidden" name="redirect_uri" value="https://www.bitsmasher.net/oauth2">
             <input type="hidden" name="scope" value="channel:manage:polls channel:read:polls">
             <input type="hidden" name="state" value="{{.StateRand}}">
 

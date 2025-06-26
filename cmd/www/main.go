@@ -7,17 +7,62 @@
 package main
 
 import (
+	"context"
 	"encoding/json" // For parsing Twitch token response
 	"fmt"
 	"html/template"
 	"io/ioutil" // For reading response body
 	"log"
-	"net/http"
-	"net/url"   // For URL encoding parameters
-	"os"
-	"sync"      // For mutex to protect the state map
-	"time"      // For state expiration/cleanup (simple example)
 	"math/rand" // For simple state generation
+	"net/http"
+	"net/url" // For URL encoding parameters
+	"os"
+	"sync" // For mutex to protect the state map
+	"time" // For state expiration/cleanup (simple example)
+
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/twitch"
+)
+
+// A simple struct to hold the user data we get from Twitch.
+type twitchUser struct {
+	Data []struct {
+		ID              string `json:"id"`
+		Login           string `json:"login"`
+		DisplayName     string `json:"display_name"`
+		Type            string `json:"type"`
+		BroadcasterType string `json:"broadcaster_type"`
+		Description     string `json:"description"`
+		ProfileImageURL string `json:"profile_image_url"`
+		OfflineImageURL string `json:"offline_image_url"`
+		ViewCount       int    `json:"view_count"`
+		Email           string `json:"email"`
+	} `json:"data"`
+}
+
+var (
+	LayoutDir string             = "template/www"
+	tmpls     *template.Template // Renamed from 'index' for clarity when multiple templates are loaded
+
+	// You must obtain a Client ID and secret from the Twitch developer console.
+	// It's best practice to set these as environment variables.
+	twitchOauthConfig = &oauth2.Config{
+		RedirectURL:  "http://localhost:8080/twitch/callback",
+		ClientID:     os.Getenv("TWITCH_CLIENT_ID"),
+		ClientSecret: os.Getenv("TWITCH_CLIENT_SECRET"),
+		Scopes:       []string{"user:read:email"}, // Scopes determine what permissions you're asking for.
+		Endpoint:     twitch.Endpoint,
+	}
+
+	// A random string used to protect against CSRF attacks.
+	// In a real application, you would generate a new random string for each session.
+	oauthStateString = "random-string-for-demonstration"
+
+	// Twitch API Credentials (IMPORTANT: Load from environment variables in production!)
+
+	twitchClientID     string
+	twitchClientSecret string                                      // Needed for code exchange
+	twitchRedirectURI  string = "https://www.bitsmasher.net/oauth" // This MUST match your registered redirect URI
 
 )
 
@@ -32,16 +77,6 @@ func generateRandomState(length int) string {
 	return string(b)
 }
 
-var LayoutDir string = "template/www"
-var tmpls *template.Template // Renamed from 'index' for clarity when multiple templates are loaded
-
-// Twitch API Credentials (IMPORTANT: Load from environment variables in production!)
-var (
-	twitchClientID     string
-	twitchClientSecret string // Needed for code exchange
-	twitchRedirectURI  string = "https://www.bitsmasher.net/oauth" // This MUST match your registered redirect URI
-)
-
 // Temporary storage for OAuth states.
 // In a real application, use a secure, persistent storage (e.g., database, secure session store)
 // and associate it with a user session. This simple map is for demonstration ONLY.
@@ -52,7 +87,7 @@ var oauthStates = struct {
 
 // OauthToken data structure passed to the template
 type OauthToken struct {
-	ClientID string
+	ClientID  string
 	StateRand string
 	Title     string
 }
@@ -71,9 +106,9 @@ func init() {
 	if twitchClientID == "" {
 		log_error("TWITCH_CLIENT_ID environment variable not set. Please set it.")
 	}
-	twitchClientSecret = os.Getenv("TWITCH_TOKEN")
+	twitchClientSecret = os.Getenv("TWITCH_CLIENT_SECRET")
 	if twitchClientSecret == "" {
-		log_error("TWITCH_TOKEN environment variable not set. Please set it.")
+		log_error("TWITCH_CLIENT_SECRET environment variable not set. Please set it.")
 	}
 
 	// Load templates once at startup
@@ -130,7 +165,7 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		// 2. Exchange the authorization code for an access token
 		log_info("Exchanging authorization code for access token...")
 		tokenURL := "https://id.twitch.tv/oauth2/token"
-		
+
 		// Use url.Values to properly encode form data
 		data := url.Values{}
 		data.Set("client_id", twitchClientID)
@@ -162,11 +197,11 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 
 		// Parse the token response
 		var tokenResponse struct {
-			AccessToken  string `json:"access_token"`
-			ExpiresIn    int    `json:"expires_in"`
-			RefreshToken string `json:"refresh_token"`
+			AccessToken  string   `json:"access_token"`
+			ExpiresIn    int      `json:"expires_in"`
+			RefreshToken string   `json:"refresh_token"`
 			Scope        []string `json:"scope"`
-			TokenType    string `json:"token_type"`
+			TokenType    string   `json:"token_type"`
 		}
 		if err := json.Unmarshal(body, &tokenResponse); err != nil {
 			log_error(fmt.Sprintf("Failed to unmarshal token response: %v", err))
@@ -205,7 +240,7 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 
 		// Prepare data for the template
 		data := OauthToken{
-			ClientID: twitchClientID,
+			ClientID:  twitchClientID,
 			StateRand: state,
 			Title:     "Authorize with Twitch",
 		}
@@ -221,14 +256,12 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	var err error
-	
-	//  --- Make static files available ------------------------------------------
-	// http.Handle("/static/", http.StripPrefix("/static/", fs))
-	// "/static/images/my_image.jpg" will look for "images/my_image.jpg" in the "static" directory.
-	fs := http.FileServer(http.Dir("./static/games"))
-	http.Handle("/static/games/", http.StripPrefix("/static/games/", fs))
 
-	index, err = template.ParseGlob(LayoutDir + "/*.tmpl")
+	//  --- Make static files available ------------------------------------------
+	fs := http.FileServer(http.Dir("./static/www"))
+	http.Handle("/static/www/", http.StripPrefix("/static/www/", fs))
+
+	tmpls, err = template.ParseGlob(LayoutDir + "/*.tmpl")
 	if err != nil {
 		panic(err)
 	}
@@ -236,8 +269,7 @@ func main() {
 	// Register the handler for all paths
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/oauth", oauthHandler)
-
-	// http.Handle("/", http.FileServer(http.Dir("../../web/static/"))) // this is to server static web pages
+	http.HandleFunc("/twitch/callback", handleTwitchCallback)
 
 	log_header("Server listening on :8080")
 	err = http.ListenAndServe(":8080", nil)
@@ -246,8 +278,7 @@ func main() {
 	}
 }
 
-// handler for the root path
-func handler(w http.ResponseWriter, r *http.Request) {
+func handler(w http.ResponseWriter, r *http.Request) { // handler for the root path
 	log.Println("Serving index page")
 
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
@@ -263,7 +294,68 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Custom logging functions (kept as is)
+// Handles the callback from Twitch after authorization.
+func handleTwitchCallback(w http.ResponseWriter, r *http.Request) {
+	// 1. Verify the state token
+	state := r.FormValue("state")
+	if state != oauthStateString {
+		log.Printf("Invalid oauth state, expected '%s', got '%s'\n", oauthStateString, state)
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
+	}
+
+	// 2. Exchange the authorization code for an access token
+	code := r.FormValue("code")
+	token, err := twitchOauthConfig.Exchange(context.Background(), code)
+	if err != nil {
+		log.Printf("oauthConf.Exchange() failed with '%s'\n", err)
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
+	}
+
+	// 3. Use the access token to get user data from the Twitch API
+	client := twitchOauthConfig.Client(context.Background(), token)
+
+	// The Twitch Helix API requires the Client-ID header, even for bearer token requests.
+	req, err := http.NewRequest("GET", "https://api.twitch.tv/helix/users", nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	req.Header.Set("Authorization", "Bearer "+token.AccessToken)
+	req.Header.Set("Client-Id", twitchOauthConfig.ClientID)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 4. Decode the user data and render the success page
+	var user twitchUser
+	if err := json.NewDecoder(resp.Body).Decode(&user); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Create a data structure to pass to the template
+	templateData := struct {
+		User  twitchUser
+		Token *oauth2.Token
+	}{
+		User:  user,
+		Token: token,
+	}
+
+	tmpl, err := template.ParseFiles("templates/success.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	tmpl.Execute(w, templateData)
+}
+
 const (
 	LRED   = "\033[1;31m"
 	LGREEN = "\033[1;32m"

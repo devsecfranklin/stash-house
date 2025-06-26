@@ -38,7 +38,7 @@ GO_VERSION="$(go version | cut -d' ' -f3)"
 
 # Check if we are inside a container
 function check_container() {
-  echo -e "\n${LPURP}# --- Check Container Status ------------------------------------------\n${NC}" | tee -a "${RAW_OUTPUT}"
+  echo -e "\n${LPURP}# --- Check Container Status ------------------------------------------\n${NC}" 
   if [ -f /.dockerenv ]; then
     echo -e "${YELLOW}Containerized build environment...${NC}"
     CONTAINER=true
