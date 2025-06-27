@@ -1,35 +1,8 @@
-{{define "oauthPage"}}
+{{define "labPage"}}
 {{template "header"}}
 
 <body>
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <h2 style="text-align: center; color: #6441a5;">Connect to Twitch</h2>
-        <p style="text-align: center; color: #555;">To use our features, please authorize our application with your Twitch account.</p>
 
-
-        <form action="https://id.twitch.tv/oauth2/authorize" method="get">
-            <input type="hidden" name="access_type" value="offline">
-            <input type="hidden" name="response_type" value="code">
-            <input type="hidden" name="client_id" value="{{.ClientID}}">
-            <input type="hidden" name="redirect_uri" value="https://www.bitsmasher.net/twitch/callback">
-            <input type="hidden" name="scope" value="user%3Aread%3Aemail+bits%3Aread+channel%3Aread%3Aredemptions">
-            <input type="hidden" name="state" value="{{.data.StateRand}}">
-
-            <div style="text-align: center; margin-top: 30px;">
-                <button type="submit" style="background-color: #6441a5; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-size: 1.1em; cursor: pointer; transition: background-color 0.2s ease;">
-                    Authorize with Twitch
-                </button>
-            </div>
-        </form>
-
-        <div style="margin-top: 20px; text-align: center; font-size: 0.9em; color: #777;">
-            <p><strong>Note:</strong> You will be redirected to Twitch to log in and approve the necessary permissions.</p>
-            <p>Requested Permissions: <strong>Manage your channel polls, Read your channel polls.</strong></p>
-            <p>Your unique state ID: <strong>{{.data.StateRand}}</strong> (for security verification)</p>
-        </div>
-    </div>
-
-{{template "footer"}}
 </body>
 </html>
 {{ end }}
