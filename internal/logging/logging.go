@@ -1,0 +1,37 @@
+package logging
+
+import (
+	"fmt"
+	"log"
+	"os"
+)
+
+const (
+	LRED   = "\033[1;31m"
+	LGREEN = "\033[1;32m"
+	LBLUE  = "\033[1;34m"
+	LPURP  = "\033[1;35m"
+	NC     = "\033[0m" // No Color
+)
+
+func log_header(msg string) {
+	fmt.Printf("\n%s# --- %s %s\n", LPURP, msg, NC)
+}
+
+func log_info(msg string) {
+	fmt.Printf("%s%s%s\n", LBLUE, msg, NC)
+}
+
+func log_success(msg string) {
+	fmt.Printf("%s%s%s\n", LGREEN, msg, NC)
+}
+
+func log_error(msg string) {
+	fmt.Printf("%sERROR: %s%s\n", LRED, msg, NC)
+	os.Exit(1) // Exit on critical errors during setup
+}
+
+func log_fatal(msg string) { // Added for graceful server shutdown logging
+	fmt.Printf("%sFATAL: %s%s\n", LRED, msg, NC)
+	log.Fatal(msg)
+}

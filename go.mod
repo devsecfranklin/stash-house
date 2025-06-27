@@ -8,6 +8,8 @@ replace internal/cookies => ./internal/cookies
 
 replace internal/database => ./internal/database
 
+replace internal/logging => ./internal/logging
+
 require (
 	github.com/gruntwork-io/terratest v0.50.0
 	github.com/stretchr/testify v1.10.0

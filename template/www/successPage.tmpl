@@ -9,12 +9,11 @@
         {{ with .User.Data }}
             <!-- The 'range' action loops over the slice (there's only one user in this response) -->
             {{ range . }}
-                <h1>Welcome, {{ .DisplayName }}!</h1>
-                <img src="{{ .ProfileImageURL }}" alt="Profile Picture" width="150">
-                <p><strong>Login Name:</strong> {{ .Login }}</p>
-                <p><strong>User ID:</strong> {{ .ID }}</p>
-                <p><strong>Email:</strong> {{ .Email }}</p>
-                <p><strong>Description:</strong> {{ .Description }}</p>
+                <h1>Welcome</h1>
+
+                <p><strong>Refresh Token:</strong> {{ .RefreshToken }}</p>
+                <p><strong>Access Token</strong> {{ .AccessToken }}</p>
+
             {{ end }}
         {{ else }}
             <h1>Login Successful, but could not fetch user data.</h1>
@@ -23,7 +22,7 @@
         <hr>
         <h2>OAuth Token Details</h2>
         <p><strong>Note:</strong> Never expose the full access token on a public-facing page in a real application!</p>
-        <pre><code>{{ .Token.AccessToken }}</code></pre>
+        <pre><code>{{ .AccessToken }}</code></pre>
         <p>Token expires at: {{ .Token.Expiry.Format "2006-01-02 15:04:05" }}</p>
 
         <a href="/">Go Home</a>
