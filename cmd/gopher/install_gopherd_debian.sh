@@ -72,3 +72,5 @@ EOF
   sudo systemctl start gopher-ctf.service
   sudo systemctl status gopher-ctf.service
 }
+
+main "$@"
