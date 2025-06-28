@@ -10,11 +10,11 @@
             <input type="hidden" name="response_type" value="code">
             <input type="hidden" name="client_id" value="{{.ClientID}}">
             <input type="hidden" name="redirect_uri" value="https://www.bitsmasher.net/twitch/callback">
-            <input type="hidden" name="scope" value="user:read:email">
             <input type="hidden" name="state" value="{{.StateRand}}">
+            <input type="hidden" name="scope" value="chat:read">
 
                 <button type="submit" style="background-color: #6441a5; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-size: 1.1em; cursor: pointer; transition: background-color 0.2s ease;">
-                    Authorize with Twitch
+                    Authorize {{.User}}  with Twitch
                 </button>
         </form>
 

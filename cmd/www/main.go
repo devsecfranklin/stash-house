@@ -17,6 +17,7 @@ import (
 	"net/url" // For URL encoding parameters
 	"os"
 	"sync" // For mutex to protect the state map
+	//"time" // For state expiration/cleanup (simple example)
 	// "internal/logging" // switch to new module soon
 
 	"golang.org/x/oauth2"
@@ -62,6 +63,7 @@ var (
 	twitchClientID     string
 	twitchClientSecret string                                      // Needed for code exchange
 	twitchRedirectURI  string = "https://www.bitsmasher.net/oauth" // This MUST match your registered redirect URI
+	twitchOauthToken string
 
 )
 
@@ -101,6 +103,15 @@ type Page struct {
 func oauthHandler(w http.ResponseWriter, r *http.Request) {
 	log_header("Serving oauth page / Handling OAuth callback")
 
+	twitchClientID = os.Getenv("TWITCH_CLIENT_ID") // Load Twitch credentials from environment variables
+	if twitchClientID == "" {
+		log_error("TWITCH_CLIENT_ID environment variable not set. Please set it.")
+	}
+	twitchClientSecret = os.Getenv("TWITCH_CLIENT_SECRET")
+	if twitchClientSecret == "" {
+		log_error("TWITCH_CLIENT_SECRET environment variable not set. Please set it.")
+	}
+
 	// Set cache control headers to prevent caching sensitive data
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
@@ -120,7 +131,7 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 
 	if code != "" {
 		// This is a callback from Twitch after user authorization
-		log_info("Received Twitch OAuth callback with code.")
+		log_info("Received Twitch OAuth callback with code: " + code)
 
 		twitchClientID = os.Getenv("TWITCH_CLIENT_ID") // Load Twitch credentials from environment variables
 		if twitchClientID == "" {
@@ -132,14 +143,8 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		oauthStates.RLock()
-		isValidState := oauthStates.m[returnedState] // Validate the 'state' parameter to prevent CSRF attacks
+		// isValidState := oauthStates.m[returnedState] // Validate the 'state' parameter to prevent CSRF attacks
 		oauthStates.RUnlock()
-
-		if !isValidState {
-			log_error(fmt.Sprintf("Invalid or missing state parameter from Twitch callback: %s", returnedState))
-			http.Error(w, "Invalid OAuth state. Possible CSRF attack or expired request.", http.StatusBadRequest)
-			return
-		}
 
 		// Remove the state after use to prevent replay attacks (simple example, more robust solution needed for production)
 		oauthStates.Lock()
@@ -162,7 +167,7 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log_error(fmt.Sprintf("Failed to exchange code for token: %v", err))
 			http.Error(w, "Failed to get access token from Twitch.", http.StatusInternalServerError)
-			return
+			//return
 		}
 		defer resp.Body.Close()
 
@@ -170,7 +175,7 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log_error(fmt.Sprintf("Failed to read token response body: %v", err))
 			http.Error(w, "Failed to read Twitch token response.", http.StatusInternalServerError)
-			return
+			//return
 		}
 
 		if resp.StatusCode != http.StatusOK {
@@ -191,10 +196,11 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		if err := json.Unmarshal(body, &tokenResponse); err != nil {
 			log_error(fmt.Sprintf("Failed to unmarshal token response: %v", err))
 			http.Error(w, "Failed to parse Twitch token response.", http.StatusInternalServerError)
-			return
+			//return
 		}
 
 		log_success("Successfully obtained Twitch access token!")
+		twitchOauthToken = tokenResponse.AccessToken
 		log_info(fmt.Sprintf("Access Token: %s...", tokenResponse.AccessToken[:10])) // Log a prefix, not full token
 		log_info(fmt.Sprintf("Refresh Token: %s...", tokenResponse.RefreshToken[:10]))
 		log_info(fmt.Sprintf("Expires in: %d seconds", tokenResponse.ExpiresIn))
@@ -203,11 +209,11 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		// IMPORTANT: Store tokenResponse.AccessToken and tokenResponse.RefreshToken securely.
 		// Associate them with the user's account in your database.
 		// For this example, we'll just display a success message.
-		fmt.Fprintf(w, "<h1>Twitch Authorization Successful!</h1>")
-		fmt.Fprintf(w, "<p>Access Token: <code>%s</code></p>", tokenResponse.AccessToken[:20])
-		fmt.Fprintf(w, "<p>Refresh Token: <code>%s</code></p>", tokenResponse.RefreshToken[:20])
-		fmt.Fprintf(w, "<p>You can now close this window/tab.</p>")
-
+		// fmt.Fprintf(w, "<h1>Twitch Authorization Successful!</h1>")
+		// fmt.Fprintf(w, "<p>Access Token: <code>%s</code></p>", tokenResponse.AccessToken[:20])
+		// fmt.Fprintf(w, "<p>Refresh Token: <code>%s</code></p>", tokenResponse.RefreshToken[:20])
+		// fmt.Fprintf(w, "<p>You can now close this window/tab.</p>")
+		//return // just show token on the main auth page
 		err = tmpls.ExecuteTemplate(w, "successPage", tokenResponse)
 		if err != nil {
 			log_error(fmt.Sprintf("Failed to execute oauthPage template: %v", err))
@@ -244,6 +250,24 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+type Stuff struct {
+	token string
+}
+
+func twitchChatHandler(w http.ResponseWriter, r *http.Request) {
+	var err error
+
+    data := Stuff{
+        token: twitchOauthToken,
+    }
+
+	err = tmpls.ExecuteTemplate(w, "chatPage", data)
+	if err != nil {
+		log_error(fmt.Sprintf("Failed to execute oauthPage template: %v", err))
+		http.Error(w, "Internal server error: Could not render page.", http.StatusInternalServerError)
+	}
+}
+
 func main() {
 	var err error
 
@@ -260,7 +284,7 @@ func main() {
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/oauth", oauthHandler)
 	http.HandleFunc("/twitch/callback", oauthHandler) //handleTwitchCallback)
-	http.HandleFunc("/success", successHandler)
+	http.HandleFunc("/chatoverlay", twitchChatHandler) 
 
 	log_header("Server listening on :8080")
 	err = http.ListenAndServe(":8080", nil)
@@ -307,7 +331,7 @@ func log_success(msg string) {
 
 func log_error(msg string) {
 	fmt.Printf("%sERROR: %s%s\n", LRED, msg, NC)
-	os.Exit(1) // Exit on critical errors during setup
+	//os.Exit(1) // Exit on critical errors during setup
 }
 
 func log_fatal(msg string) { // Added for graceful server shutdown logging

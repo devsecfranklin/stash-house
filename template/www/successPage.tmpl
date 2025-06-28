@@ -5,28 +5,14 @@
 <body>
 
     <div class="container">
-        <!-- The 'with' action checks if user data exists -->
-        {{ with .User.Data }}
-            <!-- The 'range' action loops over the slice (there's only one user in this response) -->
-            {{ range . }}
-                <h1>Welcome</h1>
+       <h1>Welcome</h1>
 
-                <p><strong>Refresh Token:</strong> {{ .RefreshToken }}</p>
-                <p><strong>Access Token</strong> {{ .AccessToken }}</p>
+       <p><strong>Refresh Token:</strong> {{ .RefreshToken }}</p>
+       <p><strong>Access Token</strong> {{ .AccessToken }}</p>
 
-            {{ end }}
-        {{ else }}
-            <h1>Login Successful, but could not fetch user data.</h1>
-        {{ end }}
-
-        <hr>
-        <h2>OAuth Token Details</h2>
-        <p><strong>Note:</strong> Never expose the full access token on a public-facing page in a real application!</p>
-        <pre><code>{{ .AccessToken }}</code></pre>
-        <p>Token expires at: {{ .Token.Expiry.Format "2006-01-02 15:04:05" }}</p>
-
-        <a href="/">Go Home</a>
     </div>
+
+    <p><img src="/static/www/images/Gemini_Generated_Image_h2fwkmh2fwkmh2fw.png"></p>
 
 {{template "footer"}}
 
