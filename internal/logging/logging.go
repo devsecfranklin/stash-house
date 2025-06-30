@@ -14,24 +14,30 @@ const (
 	NC     = "\033[0m" // No Color
 )
 
-func log_header(msg string) {
+func Log_header(msg string) {
 	fmt.Printf("\n%s# --- %s %s\n", LPURP, msg, NC)
 }
 
-func log_info(msg string) {
+func Log_info(msg string) {
 	fmt.Printf("%s%s%s\n", LBLUE, msg, NC)
 }
 
-func log_success(msg string) {
+func Log_success(msg string) {
 	fmt.Printf("%s%s%s\n", LGREEN, msg, NC)
 }
 
-func log_error(msg string) {
+func Log_error(msg string) {
 	fmt.Printf("%sERROR: %s%s\n", LRED, msg, NC)
 	os.Exit(1) // Exit on critical errors during setup
 }
 
-func log_fatal(msg string) { // Added for graceful server shutdown logging
+func Log_fatal(msg string) { // Added for graceful server shutdown logging
 	fmt.Printf("%sFATAL: %s%s\n", LRED, msg, NC)
 	log.Fatal(msg)
+}
+
+func CheckError(e error) {
+    if e != nil {
+        panic(e)
+    }
 }

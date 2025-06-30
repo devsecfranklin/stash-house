@@ -12,13 +12,14 @@ import (
 	"html/template"
 	"io/ioutil" // For reading response body
 	"log"
-	"math/rand" // For simple state generation
+
 	"net/http"
 	"net/url" // For URL encoding parameters
 	"os"
 	"sync" // For mutex to protect the state map
 	//"time" // For state expiration/cleanup (simple example)
-	// "internal/logging" // switch to new module soon
+	"internal/auth"
+	"internal/logging" // switch to new module soon
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/twitch"
@@ -65,26 +66,16 @@ var (
 	twitchRedirectURI  string = "https://www.bitsmasher.net/oauth" // This MUST match your registered redirect URI
 	twitchOauthToken string
 
+	// Temporary storage for OAuth states.
+	// In a real application, use a secure, persistent storage (e.g., database, secure session store)
+	// and associate it with a user session. This simple map is for demonstration ONLY.
+	oauthStates = struct {
+		sync.RWMutex
+		m map[string]bool // map[state_string]is_valid
+	}{m: make(map[string]bool)}
+
 )
 
-// In a real application, you'd use a more robust random string generator,
-// potentially from a crypto package. This is a simple example.
-func generateRandomState(length int) string {
-	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-	b := make([]byte, length)
-	for i := range b {
-		b[i] = charset[rand.Intn(len(charset))]
-	}
-	return string(b)
-}
-
-// Temporary storage for OAuth states.
-// In a real application, use a secure, persistent storage (e.g., database, secure session store)
-// and associate it with a user session. This simple map is for demonstration ONLY.
-var oauthStates = struct {
-	sync.RWMutex
-	m map[string]bool // map[state_string]is_valid
-}{m: make(map[string]bool)}
 
 // OauthToken data structure passed to the template
 type OauthToken struct {
@@ -101,15 +92,15 @@ type Page struct {
 // oauthHandler handles both the initial request for the OAuth page
 // and the callback from Twitch after authorization.
 func oauthHandler(w http.ResponseWriter, r *http.Request) {
-	log_header("Serving oauth page / Handling OAuth callback")
+	logging.Log_header("Serving oauth page / Handling OAuth callback")
 
 	twitchClientID = os.Getenv("TWITCH_CLIENT_ID") // Load Twitch credentials from environment variables
 	if twitchClientID == "" {
-		log_error("TWITCH_CLIENT_ID environment variable not set. Please set it.")
+		logging.Log_error("TWITCH_CLIENT_ID environment variable not set. Please set it.")
 	}
 	twitchClientSecret = os.Getenv("TWITCH_CLIENT_SECRET")
 	if twitchClientSecret == "" {
-		log_error("TWITCH_CLIENT_SECRET environment variable not set. Please set it.")
+		logging.Log_error("TWITCH_CLIENT_SECRET environment variable not set. Please set it.")
 	}
 
 	// Set cache control headers to prevent caching sensitive data
@@ -124,22 +115,22 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 	twitchErrorDescription := r.URL.Query().Get("error_description")
 
 	if twitchError != "" {
-		log_info(fmt.Sprintf("Twitch OAuth Error: %s - %s", twitchError, twitchErrorDescription))
+		logging.Log_info(fmt.Sprintf("Twitch OAuth Error: %s - %s", twitchError, twitchErrorDescription))
 		http.Error(w, fmt.Sprintf("Twitch authorization failed: %s", twitchErrorDescription), http.StatusForbidden)
 		return
 	}
 
 	if code != "" {
 		// This is a callback from Twitch after user authorization
-		log_info("Received Twitch OAuth callback with code: " + code)
+		logging.Log_info("Received Twitch OAuth callback with code: " + code)
 
 		twitchClientID = os.Getenv("TWITCH_CLIENT_ID") // Load Twitch credentials from environment variables
 		if twitchClientID == "" {
-			log_error("TWITCH_CLIENT_ID environment variable not set. Please set it.")
+			logging.Log_error("TWITCH_CLIENT_ID environment variable not set. Please set it.")
 		}
 		twitchClientSecret = os.Getenv("TWITCH_CLIENT_SECRET")
 		if twitchClientSecret == "" {
-			log_error("TWITCH_CLIENT_SECRET environment variable not set. Please set it.")
+			logging.Log_error("TWITCH_CLIENT_SECRET environment variable not set. Please set it.")
 		}
 
 		oauthStates.RLock()
@@ -150,10 +141,10 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		oauthStates.Lock()
 		delete(oauthStates.m, returnedState)
 		oauthStates.Unlock()
-		log_success("State parameter validated.")
+		logging.Log_success("State parameter validated.")
 
 		// 2. Exchange the authorization code for an access token
-		log_info("Exchanging authorization code for access token: " + code)
+		logging.Log_info("Exchanging authorization code for access token: " + code)
 		tokenURL := "https://id.twitch.tv/oauth2/token"
 
 		data := url.Values{}
@@ -165,7 +156,7 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 
 		resp, err := http.PostForm(tokenURL, data)
 		if err != nil {
-			log_error(fmt.Sprintf("Failed to exchange code for token: %v", err))
+			logging.Log_error(fmt.Sprintf("Failed to exchange code for token: %v", err))
 			http.Error(w, "Failed to get access token from Twitch.", http.StatusInternalServerError)
 			//return
 		}
@@ -173,13 +164,13 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log_error(fmt.Sprintf("Failed to read token response body: %v", err))
+			logging.Log_error(fmt.Sprintf("Failed to read token response body: %v", err))
 			http.Error(w, "Failed to read Twitch token response.", http.StatusInternalServerError)
 			//return
 		}
 
 		if resp.StatusCode != http.StatusOK {
-			log_error(fmt.Sprintf("Twitch token exchange failed with status %d: %s", resp.StatusCode, string(body)))
+			logging.Log_error(fmt.Sprintf("Twitch token exchange failed with status %d: %s", resp.StatusCode, string(body)))
 			http.Error(w, fmt.Sprintf("Twitch token exchange failed: %s", string(body)), http.StatusInternalServerError)
 			// return
 		}
@@ -194,17 +185,21 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if err := json.Unmarshal(body, &tokenResponse); err != nil {
-			log_error(fmt.Sprintf("Failed to unmarshal token response: %v", err))
+			logging.Log_error(fmt.Sprintf("Failed to unmarshal token response: %v", err))
 			http.Error(w, "Failed to parse Twitch token response.", http.StatusInternalServerError)
 			//return
 		}
 
-		log_success("Successfully obtained Twitch access token!")
+		logging.Log_success("Successfully obtained Twitch access token!")
 		twitchOauthToken = tokenResponse.AccessToken
-		log_info(fmt.Sprintf("Access Token: %s...", tokenResponse.AccessToken[:10])) // Log a prefix, not full token
-		log_info(fmt.Sprintf("Refresh Token: %s...", tokenResponse.RefreshToken[:10]))
-		log_info(fmt.Sprintf("Expires in: %d seconds", tokenResponse.ExpiresIn))
-		log_info(fmt.Sprintf("Scopes: %v", tokenResponse.Scope))
+		f, err := os.Create("private/token-franklin")
+		logging.CheckError(err)
+		defer f.Close()
+
+		logging.Log_info(fmt.Sprintf("Access Token: %s...", tokenResponse.AccessToken[:10])) // Log a prefix, not full token
+		logging.Log_info(fmt.Sprintf("Refresh Token: %s...", tokenResponse.RefreshToken[:10]))
+		logging.Log_info(fmt.Sprintf("Expires in: %d seconds", tokenResponse.ExpiresIn))
+		logging.Log_info(fmt.Sprintf("Scopes: %v", tokenResponse.Scope))
 
 		// IMPORTANT: Store tokenResponse.AccessToken and tokenResponse.RefreshToken securely.
 		// Associate them with the user's account in your database.
@@ -216,23 +211,23 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		//return // just show token on the main auth page
 		err = tmpls.ExecuteTemplate(w, "successPage", tokenResponse)
 		if err != nil {
-			log_error(fmt.Sprintf("Failed to execute oauthPage template: %v", err))
+			logging.Log_error(fmt.Sprintf("Failed to execute oauthPage template: %v", err))
 			http.Error(w, "Internal server error: Could not render page.", http.StatusInternalServerError)
 		}
 
 	} else {
 		// This is an initial request to display the OAuth authorization link
-		log_info("Displaying initial Twitch OAuth authorization page.")
+		logging.Log_info("Displaying initial Twitch OAuth authorization page.")
 
 		// Generate a new unique state string for this request
-		state := generateRandomState(16) // Generate a random string of 32 characters
+		state := auth.GenerateRandomState(16) // Generate a random string of 32 characters
 
 		// Store the state securely (e.g., in a session) before redirecting.
 		// For this simple example, we use a map. In production, ensure this is tied to the user's session.
 		oauthStates.Lock()
 		oauthStates.m[state] = true
 		oauthStates.Unlock()
-		log_info(fmt.Sprintf("Generated and stored new state: %s", state))
+		logging.Log_info(fmt.Sprintf("Generated and stored new state: %s", state))
 
 		// Prepare data for the template
 		data := OauthToken{
@@ -244,7 +239,7 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		// Execute the template to render the page
 		err := tmpls.ExecuteTemplate(w, "oauthPage", data)
 		if err != nil {
-			log_error(fmt.Sprintf("Failed to execute oauthPage template: %v", err))
+			logging.Log_error(fmt.Sprintf("Failed to execute oauthPage template: %v", err))
 			http.Error(w, "Internal server error: Could not render page.", http.StatusInternalServerError)
 		}
 	}
@@ -263,7 +258,7 @@ func twitchChatHandler(w http.ResponseWriter, r *http.Request) {
 
 	err = tmpls.ExecuteTemplate(w, "chatPage", data)
 	if err != nil {
-		log_error(fmt.Sprintf("Failed to execute oauthPage template: %v", err))
+		logging.Log_error(fmt.Sprintf("Failed to execute oauthPage template: %v", err))
 		http.Error(w, "Internal server error: Could not render page.", http.StatusInternalServerError)
 	}
 }
@@ -286,10 +281,10 @@ func main() {
 	http.HandleFunc("/twitch/callback", oauthHandler) //handleTwitchCallback)
 	http.HandleFunc("/chatoverlay", twitchChatHandler) 
 
-	log_header("Server listening on :8080")
+	logging.Log_header("Server listening on :8080")
 	err = http.ListenAndServe(":8080", nil)
 	if err != nil {
-		log_fatal(fmt.Sprintf("Server failed to start: %v", err))
+		logging.Log_fatal(fmt.Sprintf("Server failed to start: %v", err))
 	}
 }
 
@@ -307,34 +302,4 @@ func handler(w http.ResponseWriter, r *http.Request) { // handler for the root p
 		log.Println(err)
 		http.Error(w, "Internal server error: Could not render index page.", http.StatusInternalServerError)
 	}
-}
-
-const (
-	LRED   = "\033[1;31m"
-	LGREEN = "\033[1;32m"
-	LBLUE  = "\033[1;34m"
-	LPURP  = "\033[1;35m"
-	NC     = "\033[0m" // No Color
-)
-
-func log_header(msg string) {
-	fmt.Printf("\n%s# --- %s %s\n", LPURP, msg, NC)
-}
-
-func log_info(msg string) {
-	fmt.Printf("%s%s%s\n", LBLUE, msg, NC)
-}
-
-func log_success(msg string) {
-	fmt.Printf("%s%s%s\n", LGREEN, msg, NC)
-}
-
-func log_error(msg string) {
-	fmt.Printf("%sERROR: %s%s\n", LRED, msg, NC)
-	//os.Exit(1) // Exit on critical errors during setup
-}
-
-func log_fatal(msg string) { // Added for graceful server shutdown logging
-	fmt.Printf("%sFATAL: %s%s\n", LRED, msg, NC)
-	log.Fatal(msg)
 }

@@ -16,6 +16,7 @@ require (
 	golang.org/x/oauth2 v0.30.0
 	internal/auth v0.0.0-00010101000000-000000000000
 	internal/database v0.0.0-00010101000000-000000000000
+	internal/logging v0.0.0-00010101000000-000000000000
 )
 
 require (

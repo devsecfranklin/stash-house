@@ -10,6 +10,7 @@
 # recognizes word boundaries while splitting a sequence of character strings.
 #IFS=$'\n\t'
 
+
 #Black        0;30     Dark Gray     1;30
 #Red          0;31     Light Red     1;31
 #Green        0;32     Light Green   1;32
@@ -71,6 +72,9 @@ function main() {
   #   exit 1
   # fi
 
+go get github.com/stretchr/testify/assert
+go get github.com/stretchr/testify/require
+
   setup_figlet
   # install_check_golang_templates
   if [ ! -f "go.mod" ]; then
@@ -98,6 +102,8 @@ function main() {
   # fi
 
   # npx linthtml sites/**/*.html
+  go test -v main_test.go
+  go test -v gopher_server_test.go
 }
 
 main "$@"
