@@ -4,20 +4,36 @@
 
 <body>
 
+<div class="center">
+    <h2>Time to log in to the Network</h2> <br />
+    <img src="/static/games/images/hot-pizza-torment.png" alt="Made with vi on an IBM 8088"><br />
+    <img src="/static/games/images/271895776-2652456453.jpg" alt="On the Internet, nobody knows youre a dog."><br />
+</div>
+
+<div class="center">
     <div class="puzzle">
-        <div class="center">
-            <h2>Time to log in to the Network</h2> <br />
-            <img src="/static/games/images/archie1.jpg" alt="Made with vi on an IBM 8088"><br />
-            <em>“Indeed, the safest road to Hell is the gradual one—the gentle slope, soft underfoot, without sudden turnings, without milestones, without signposts.” – C. S. Lewis</em> <br />
-        </div>
-   </div>
+    <img src="/static/games/images/eternal-torment.png" alt="Made with vi on an IBM 8088"><br />
+        <h3>Clone the git repository</h3>
+        <a href="https://github.com/devsecfranklin/eternal-torment">clone this repository</a><br />
 
-    <h3>Download git repository</h3>
+        <form action="/submission" method="get">
+            <table border="1">
+                <tr>
+                    <th>Date</th>
+                    <th>Puzzle</th>
+                    <th>Flag</th>
+                </tr>
 
-1. clone the repo
-https://github.com/devsecfranklin/eternal-torment
-
-
+                <tr>
+                    <td>July 01, 2025</td>
+                    <td>Puzzle3 <input type="hidden" name="puzzle" value="puzzle3-1">puzzle 3-1</td>                
+                    <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
+                </tr>
+            </table>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
 
 {{template "footer"}}
 
