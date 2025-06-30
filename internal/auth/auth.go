@@ -1,13 +1,14 @@
 package auth
 
 import (
-	"crypto/rand"
+	"crypto/rand" // Import the cryptographically secure random number generator
+	"fmt"         // Only needed for error formatting, not directly for random generation
+	"math/big"    // Used with crypto/rand for generating numbers within a range
 	"encoding/base64"
 	"html/template"
 	"io"
 	"log"
 	"net/http"
-	"math/rand" // For simple state generation
 
 	"github.com/gorilla/securecookie"
 	"os"
@@ -36,13 +37,22 @@ var (
 	cookieHandler = securecookie.New(securecookie.GenerateRandomKey(64), securecookie.GenerateRandomKey(32))
 )
 
-func GenerateRandomState(length int) string {
+// GenerateRandomState generates a cryptographically secure random string of a given length.
+// It is suitable for use as an OAuth 'state' parameter to prevent CSRF attacks.
+func GenerateRandomState(length int) (string, error) {
 	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	b := make([]byte, length)
-	for i := range b {
-		b[i] = charset[rand.Intn(len(charset))]
+	for i := 0; i < length; i++ {
+		// rand.Int generates a cryptographically secure random number
+		// within the range [0, max).
+		// We need to convert len(charset) to *big.Int for this function.
+		num, err := rand.Int(rand.Reader, big.NewInt(int64(len(charset))))
+		if err != nil {
+			return "", fmt.Errorf("failed to generate random character: %w", err)
+		}
+		b[i] = charset[num.Int64()]
 	}
-	return string(b)
+	return string(b), nil
 }
 
 func SignupPage(w http.ResponseWriter, r *http.Request) {

@@ -36,6 +36,8 @@ log_error() {
 # --- Some config Variables ----------------------------------------
 CONTAINER=false
 GO_VERSION="$(go version | awk '{print $3}')"
+DEB_PKG=(nginx certbot)
+#GO_VERSION="$(go version | cut -d' ' -f3)"
 
 # Check if we are inside a container
 check_container() {
@@ -48,8 +50,11 @@ check_container() {
   fi
 }
 
-setup_golang() {
-  log_info "Go version: ${GO_VERSION}"
+function setup_golang() {
+  #wget https://go.dev/dl/go1.24.4.linux-amd64.tar.gz
+  #rm -rf /usr/local/go && tar -C /usr/local -xzf go1.24.4.linux-amd64.tar.gz
+
+  echo "Go version: ${GO_VERSION}"
 
   if [ ! -f "go.mod" ]; then
     log_info "Initializing go module"
