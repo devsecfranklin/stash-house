@@ -51,8 +51,6 @@ func main() {
 	}
 
 	//  --- Make static files available ------------------------------------------
-	// http.Handle("/static/", http.StripPrefix("/static/", fs))
-	// "/static/images/my_image.jpg" will look for "images/my_image.jpg" in the "static" directory.
 	fs := http.FileServer(http.Dir("./static/games"))
 	http.Handle("/static/games/", http.StripPrefix("/static/games/", fs))
 
@@ -70,10 +68,12 @@ func main() {
 	http.HandleFunc("/minecraft", mc)
 	http.HandleFunc("/scoreboard", scoreboard)
 	http.HandleFunc("/submission", submission)
+	//http.HandleFunc("/puzzle0", puzzle0)
 	http.HandleFunc("/puzzle1", puzzle1)
 	http.HandleFunc("/puzzle2", puzzle2)
 	http.HandleFunc("/puzzle3", puzzle3)
 	//http.HandleFunc("/puzzle4", puzzle4)
+	//http.HandleFunc("/puzzle5", puzzle5)
 	http.HandleFunc("/welcome", WelcomePage)
 
 	logging.Log_info("Use browser to access this host on :8080/")
@@ -381,6 +381,7 @@ func puzzle3(w http.ResponseWriter, r *http.Request) {
 
 }
 
+/*
 func puzzle4(w http.ResponseWriter, r *http.Request) {
 	logging.Log_header("Serving puzzle4 page")
 
@@ -414,3 +415,4 @@ func puzzle5(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+*/

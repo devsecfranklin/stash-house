@@ -10,44 +10,57 @@ import (
 	"encoding/json" // For parsing Twitch token response
 	"fmt"
 	"html/template"
-	"io/ioutil" // For reading response body
+	"internal/auth"
+	"internal/logging" // switch to new module soon
+	"io/ioutil"        // For reading response body
 	"log"
-
 	"net/http"
 	"net/url" // For URL encoding parameters
 	"os"
 	"sync" // For mutex to protect the state map
-	//"time" // For state expiration/cleanup (simple example)
-	"internal/auth"
-	"internal/logging" // switch to new module soon
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/twitch"
 )
 
-// A simple struct to hold the user data we get from Twitch.
-type twitchUser struct {
-	Data []struct {
-		ID              string `json:"id"`
-		Login           string `json:"login"`
-		DisplayName     string `json:"display_name"`
-		Type            string `json:"type"`
-		BroadcasterType string `json:"broadcaster_type"`
-		Description     string `json:"description"`
-		ProfileImageURL string `json:"profile_image_url"`
-		OfflineImageURL string `json:"offline_image_url"`
-		ViewCount       int    `json:"view_count"`
-		Email           string `json:"email"`
-	} `json:"data"`
-}
+type (
+	Stuff struct {
+		token string
+	}
+
+	twitchUser struct { // A simple struct to hold the user data we get from Twitch.
+		Data []struct {
+			ID              string `json:"id"`
+			Login           string `json:"login"`
+			DisplayName     string `json:"display_name"`
+			Type            string `json:"type"`
+			BroadcasterType string `json:"broadcaster_type"`
+			Description     string `json:"description"`
+			ProfileImageURL string `json:"profile_image_url"`
+			OfflineImageURL string `json:"offline_image_url"`
+			ViewCount       int    `json:"view_count"`
+			Email           string `json:"email"`
+		} `json:"data"`
+	}
+
+	OauthToken struct { // OauthToken data structure passed to the template
+		ClientID  string
+		StateRand string
+		Title     string
+	}
+
+	Page struct { // Page data structure for a generic page
+		Title string
+	}
+)
 
 var (
-	LayoutDir string             = "template/www"
-	tmpls     *template.Template // Renamed from 'index' for clarity when multiple templates are loaded
+	err error
 
-	// You must obtain a Client ID and secret from the Twitch developer console.
-	// It's best practice to set these as environment variables.
-	twitchOauthConfig = &oauth2.Config{
+	LayoutDir string = "template/www"
+	tmpls     *template.Template
+
+	twitchOauthConfig = &oauth2.Config{ // It's best practice to set these as environment variables.
 		RedirectURL:  "https://www.bitsmasher.net/twitch/callback",
 		ClientID:     os.Getenv("TWITCH_CLIENT_ID"),
 		ClientSecret: os.Getenv("TWITCH_CLIENT_SECRET"),
@@ -55,42 +68,58 @@ var (
 		Endpoint:     twitch.Endpoint,
 	}
 
-	// A random string used to protect against CSRF attacks.
-	// In a real application, you would generate a new random string for each session.
-	oauthStateString = "random-string-for-demonstration"
+	oauthStateString = "random-string-for-demonstration" // A random string used to protect against CSRF attacks
 
-	// Twitch API Credentials (IMPORTANT: Load from environment variables in production!)
-
-	twitchClientID     string
+	twitchClientID     string                                      // Twitch API Credentials (IMPORTANT: Load from environment variables in production!)
 	twitchClientSecret string                                      // Needed for code exchange
 	twitchRedirectURI  string = "https://www.bitsmasher.net/oauth" // This MUST match your registered redirect URI
-	twitchOauthToken string
-
-	// Temporary storage for OAuth states.
-	// In a real application, use a secure, persistent storage (e.g., database, secure session store)
-	// and associate it with a user session. This simple map is for demonstration ONLY.
-	oauthStates = struct {
+	twitchOauthToken   string
+	oauthStates        = struct { // Temporary storage for OAuth states. Move into database
 		sync.RWMutex
 		m map[string]bool // map[state_string]is_valid
 	}{m: make(map[string]bool)}
-
 )
 
+func main() {
+	//  --- Make static files available ------------------------------------------
+	fs := http.FileServer(http.Dir("./static/www"))
+	http.Handle("/static/www/", http.StripPrefix("/static/www/", fs))
 
-// OauthToken data structure passed to the template
-type OauthToken struct {
-	ClientID  string
-	StateRand string
-	Title     string
+	tmpls, err = template.ParseGlob(LayoutDir + "/*.tmpl")
+	if err != nil {
+		panic(err)
+	}
+
+	// Register the handler for all paths
+	http.HandleFunc("/", handler)
+	http.HandleFunc("/oauth", oauthHandler)
+	http.HandleFunc("/twitch/callback", oauthHandler) //handleTwitchCallback)
+	http.HandleFunc("/chatoverlay", twitchChatHandler)
+	http.HandleFunc("/lab", labPageHandler)
+
+	logging.Log_header("Server listening on :8080")
+	err = http.ListenAndServe(":8080", nil)
+	if err != nil {
+		logging.Log_fatal(fmt.Sprintf("Server failed to start: %v", err))
+	}
 }
 
-// Page data structure for a generic page
-type Page struct {
-	Title string
+func handler(w http.ResponseWriter, r *http.Request) { // handler for the root path
+	log.Println("Serving index page")
+
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+
+	page := Page{"www.bitsmasher.net"}
+
+	err := tmpls.ExecuteTemplate(w, "indexPage", page) // Assuming you have an "indexPage" template
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error: Could not render index page.", http.StatusInternalServerError)
+	}
 }
 
-// oauthHandler handles both the initial request for the OAuth page
-// and the callback from Twitch after authorization.
 func oauthHandler(w http.ResponseWriter, r *http.Request) {
 	logging.Log_header("Serving oauth page / Handling OAuth callback")
 
@@ -137,14 +166,12 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		// isValidState := oauthStates.m[returnedState] // Validate the 'state' parameter to prevent CSRF attacks
 		oauthStates.RUnlock()
 
-		// Remove the state after use to prevent replay attacks (simple example, more robust solution needed for production)
 		oauthStates.Lock()
 		delete(oauthStates.m, returnedState)
-		oauthStates.Unlock()
+		oauthStates.Unlock() // Remove the state after use to prevent replay attacks (simple example, more robust solution needed for production)
 		logging.Log_success("State parameter validated.")
 
-		// 2. Exchange the authorization code for an access token
-		logging.Log_info("Exchanging authorization code for access token: " + code)
+		logging.Log_info("Exchanging authorization code for access token: " + code) // Exchange the authorization code for an access token
 		tokenURL := "https://id.twitch.tv/oauth2/token"
 
 		data := url.Values{}
@@ -220,7 +247,12 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		logging.Log_info("Displaying initial Twitch OAuth authorization page.")
 
 		// Generate a new unique state string for this request
-		state := auth.GenerateRandomState(16) // Generate a random string of 32 characters
+		state, err := auth.GenerateRandomState(16) // Generate a random string of 32 characters
+
+		if err != nil {
+			logging.Log_error(fmt.Sprintf("Failed to generate random state: %v", err))
+			http.Error(w, "Internal server error: Failed to generate random state.", http.StatusInternalServerError)
+		}
 
 		// Store the state securely (e.g., in a session) before redirecting.
 		// For this simple example, we use a map. In production, ensure this is tied to the user's session.
@@ -237,7 +269,7 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Execute the template to render the page
-		err := tmpls.ExecuteTemplate(w, "oauthPage", data)
+		err = tmpls.ExecuteTemplate(w, "oauthPage", data)
 		if err != nil {
 			logging.Log_error(fmt.Sprintf("Failed to execute oauthPage template: %v", err))
 			http.Error(w, "Internal server error: Could not render page.", http.StatusInternalServerError)
@@ -245,17 +277,10 @@ func oauthHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-type Stuff struct {
-	token string
-}
-
 func twitchChatHandler(w http.ResponseWriter, r *http.Request) {
-	var err error
-
-    data := Stuff{
-        token: twitchOauthToken,
-    }
-
+	data := Stuff{
+		token: twitchOauthToken,
+	}
 	err = tmpls.ExecuteTemplate(w, "chatPage", data)
 	if err != nil {
 		logging.Log_error(fmt.Sprintf("Failed to execute oauthPage template: %v", err))
@@ -263,41 +288,16 @@ func twitchChatHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func main() {
-	var err error
-
-	//  --- Make static files available ------------------------------------------
-	fs := http.FileServer(http.Dir("./static/www"))
-	http.Handle("/static/www/", http.StripPrefix("/static/www/", fs))
-
-	tmpls, err = template.ParseGlob(LayoutDir + "/*.tmpl")
-	if err != nil {
-		panic(err)
-	}
-
-	// Register the handler for all paths
-	http.HandleFunc("/", handler)
-	http.HandleFunc("/oauth", oauthHandler)
-	http.HandleFunc("/twitch/callback", oauthHandler) //handleTwitchCallback)
-	http.HandleFunc("/chatoverlay", twitchChatHandler) 
-
-	logging.Log_header("Server listening on :8080")
-	err = http.ListenAndServe(":8080", nil)
-	if err != nil {
-		logging.Log_fatal(fmt.Sprintf("Server failed to start: %v", err))
-	}
-}
-
-func handler(w http.ResponseWriter, r *http.Request) { // handler for the root path
-	log.Println("Serving index page")
+func labPageHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving lab page")
 
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{"www.bitsmasher.net"}
+	page := Page{"www.bitsmasher.net/lab"}
 
-	err := tmpls.ExecuteTemplate(w, "indexPage", page) // Assuming you have an "indexPage" template
+	err := tmpls.ExecuteTemplate(w, "labPage", page)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Internal server error: Could not render index page.", http.StatusInternalServerError)

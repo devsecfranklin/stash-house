@@ -36,6 +36,7 @@ func Log_fatal(msg string) { // Added for graceful server shutdown logging
 	log.Fatal(msg)
 }
 
+// should this be removed since it doesn't match
 func CheckError(e error) {
     if e != nil {
         panic(e)
