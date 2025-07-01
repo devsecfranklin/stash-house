@@ -1,45 +1,40 @@
 {{define "puzzle3Page"}}
-
 {{template "header"}}
 
 <body>
 
-<div class="center">
-    <h2>Time to log in to the Network</h2> <br />
-    <img src="/static/games/images/hot-pizza-torment.png" alt="Made with vi on an IBM 8088"><br />
-    <img src="/static/games/images/271895776-2652456453.jpg" alt="On the Internet, nobody knows youre a dog."><br />
-</div>
+    <div class="container">
 
-<div class="center">
-    <div class="puzzle">
-    <img src="/static/games/images/eternal-torment.png" alt="Made with vi on an IBM 8088"><br />
-        <h3>Clone the git repository</h3>
-        <a href="https://github.com/devsecfranklin/eternal-torment">clone this repository</a><br />
+        <div class="puzzle">
+            <img src="/static/games/images/hot-pizza-torment.png" alt="Made with vi on an IBM 8088"><br />
+            <img src="/static/games/images/271895776-2652456453.jpg" width="750" height="475" alt="On the Internet, nobody knows youre a dog."><br />
 
-        <form action="/submission" method="get">
-            <table border="1">
-                <tr>
-                    <th>Date</th>
-                    <th>Puzzle</th>
-                    <th>Flag</th>
-                </tr>
 
-                <tr>
-                    <td>July 01, 2025</td>
-                    <td>Puzzle3 <input type="hidden" name="puzzle" value="puzzle3-1">puzzle 3-1</td>                
-                    <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
-                </tr>
-            </table>
-            <input type="submit" value="Submit">
-        </form>
+            <center><img src="/static/games/images/eternal-torment.png" alt="seriously did you think it would be this easy"><br />
+            <a href="https://github.com/devsecfranklin/eternal-torment">FORK this repository</a> if you try to cheat I will know and you will be severely tormented!! I don;t just mean the usual torment that everyone else get shtat was arleady mentioned I mean NEw, ADDIITIONAL torment. You really should consider these words carefully!<br />
+	    </center>
+            <form action="/submission" method="get">
+                <table border="1">
+                    <tr>
+                        <th>Date</th>
+                        <th>Puzzle</th>
+                        <th>Flag</th>
+                    </tr>
+                    <tr>
+                        <td>July 01, 2025</td>
+                        <td>Puzzle3 <input type="hidden" name="puzzle" value="puzzle3-1">puzzle 3-1</td>
+                        <td>Flag: <input type="text" name="flag" placeholder="probably-wrong"></td>
+                    </tr>
+                </table>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
     </div>
-</div>
 
 {{template "footer"}}
 
 </body>
 </html>
-
 {{end}}
 
 <!--

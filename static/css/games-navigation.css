@@ -11,7 +11,7 @@ body {
     background-position: center;
     font-family: Tahoma, Verdana, Arial, sans-serif;
     background-color: black;
-    color: #D3D3D3;
+    color: #000000;
     margin: 20px;
 }
 
@@ -54,14 +54,15 @@ ul {
     margin: 0;
     padding: 0;
     width: 200px;
-    background-color: #f1f1f1;
+    background-color: #000000;
 }
 
 li a {
     display: block;
-    color: #000;
+    color: #fff;
     padding: 8px 16px;
     text-decoration: none;
+    background-color: #000;
 }
 
 /* Change the link color on hover */
@@ -71,7 +72,7 @@ li a:hover {
 }
 
 .active {
-    background-color: #04AA6D;
+    background-color: #000000; /* #04AA6D; */
     color: white;
 }
 
@@ -81,7 +82,8 @@ ul {
 
 li {
     text-align: center;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid #fff;
+    color: #fff;
 }
 
 li:last-child {
