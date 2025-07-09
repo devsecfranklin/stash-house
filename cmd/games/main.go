@@ -120,7 +120,7 @@ func LoginPage(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	
-    //page := Page{"games.bitsmasher.net", username}
+        //page := Page{"games.bitsmasher.net", username}
 	err := index.ExecuteTemplate(w, redirectTemplate, LoginPage)
 	
 	if err != nil {
