@@ -96,6 +96,8 @@ func main() {
 	http.HandleFunc("/twitch/callback", oauthHandler) //handleTwitchCallback)
 	http.HandleFunc("/chatoverlay", twitchChatHandler)
 	http.HandleFunc("/lab", labPageHandler)
+    http.HandleFunc("/labAnsiblePage", labAnsiblePageHandler)
+	http.HandleFunc("/labAuthPage", labAuthPageHandler)
 
 	logging.Log_header("Server listening on :8080")
 	err = http.ListenAndServe(":8080", nil)
@@ -301,5 +303,37 @@ func labPageHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Internal server error: Could not render index page.", http.StatusInternalServerError)
+	}
+}
+
+func labAnsiblePageHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving lab Ansible page")
+
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+
+	page := Page{"www.bitsmasher.net/labAnsiblePage"}
+
+	err := tmpls.ExecuteTemplate(w, "labAnsiblePage", page)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error: Could not render lab Ansible page.", http.StatusInternalServerError)
+	}
+}
+
+func labAuthPageHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Serving lab auth page")
+
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+
+	page := Page{"www.bitsmasher.net/labAuthPage"}
+
+	err := tmpls.ExecuteTemplate(w, "labAuthPage", page)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Internal server error: Could not render lab auth page.", http.StatusInternalServerError)
 	}
 }

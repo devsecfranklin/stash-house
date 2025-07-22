@@ -1,63 +1,15 @@
-{{define "labPage"}}
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content= "width=device-width, initial-scale=1.0">
-    <meta name="description" content= "games.bitsmasher.net CTF style puzzle">
-    <meta name="author" content="thedevilsvoice">
-    <meta name="orcid" content="https://orcid.org/0000-0003-4586-8500">
-    <meta name="keywords" content="HTML, CSS, GoLang">
-    <meta name="robots" content= "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
-    <title>lab@bitsmasher.net</title>
-    <link rel="stylesheet" href= "/static/games/css/games-navigation.css">
-</head>
-
-<body>
-
-  <div clas="container">
-      <div class="center">
-
-        <div class="header" id="header">
-                <h2>The Lab</h2>
-                    <p>The diagram shows some of the important hosts in the network. The colored boxes indicate different subnetworks.</p>
-                    
-        </div>
-
-        <table style="width:100%">
-            <tr>
-                <th style="width:15%"></th>
-                <th style="width:85%"></th>
-            </tr>
-            <tr>
-                <td>
-                    {{template "navigation"}}
-                </td>
-                <td>
-                    <img src="/static/www/images/lab_diagram.png" alt="please do not eat the crayons" width="720" height="480"> <br />
-                </td>
-            </tr>
-        </table>
-
-        </div>
-    </div>
+{{define "labAuthPage"}}
 
     <h2>authenticaion</h2>
 
-    <ul>
-    <li>The kerberos tickets work, it can be a bit flaky sometimes when moving between hosts since the installed packages and updates get out of sync sometimes.</li>
-    </ul>
 
 
-
+    
     {{template "footer"}}
 
 </body>
 </html>
-
-{{ end }}
+{{end}}
 
 <!--
 
