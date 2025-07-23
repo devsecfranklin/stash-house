@@ -23,6 +23,59 @@ There is a shell script `/home/minecraft/bin/unmined.sh` that can be used to gen
 It writes output to `/var/www/html/` unless you change the default.
 </p>
 
+<h2 id="usage">Usage</h2>
+<pre><code>unmined-cli &lt;module&gt; &lt;verb&gt; [options]</code></pre>
+<p>Available modules: image, web</p>
+<p>Show module verbs:</p>
+<pre><code>unmined-cli &lt;module&gt; help</code></pre>
+<p>Show verb options:</p>
+<pre><code>unmined-cli &lt;module&gt; help &lt;verb&gt;</code></pre>
+<h2 id="examples">Examples</h2>
+<p>Show available options for verb “render” in module “image”:</p>
+<pre><code>unmined-cli image help render</code></pre>
+<p>Render a single image file at zoom level -3 (1 pixel = 2^3 = 8
+blocks):</p>
+<pre><code>unmined-cli image render --zoom=-3 --trim --world=&quot;%APPDATA%\.minecraft\saves\My World&quot; --output=&quot;%USERPROFILE%\Desktop\MyMap.png&quot;</code></pre>
+<p>Render a web map:</p>
+<pre><code>unmined-cli web render --world=&quot;%APPDATA%\.minecraft\saves\My World&quot; --output=&quot;%USERPROFILE%\Desktop\MyMap&quot;</code></pre>
+<h2 id="parameters">Parameters</h2>
+<h3 id="area">–area</h3>
+<p>Syntax of the –area parameter:</p>
+<p>Selecting a rectangle using x,z coordinates and width/height:</p>
+<pre><code>--area=r(x,z,width,height)
+--area=c(x,z,width,height)
+--area=b(x,z,width,height)</code></pre>
+<p>Selecting a rectangle using x1,z1 and x2,z2 coordinates:</p>
+<pre><code>--area=r((x1,z1),(x2,z2))
+--area=c((x1,z1),(x2,z2))
+--area=b((x1,z1),(x2,z2))</code></pre>
+<p>Meaning of the first character:</p>
+<ul>
+<li>r = region coordinates</li>
+<li>c = chunk coordinates</li>
+<li>b = block coordinates</li>
+</ul>
+<p>Coordinate math:</p>
+<ul>
+<li>(x1,z1) and (x2,z2) points are inclusive (inside the rectangle)</li>
+<li>width = x2 - x1</li>
+<li>height = z2 - z1</li>
+<li>1 chunk = 16 blocks</li>
+<li>1 region = 32 chunks = 512 blocks</li>
+</ul>
+<h4 id="examples-1">Examples:</h4>
+<p>Select 100x50 blocks area at x=2000, z=2000:</p>
+<pre><code>--area=b(2000,2000,100,50)
+--area=b((2000,2000),(2101,2051))</code></pre>
+<p>Select one region at x=2, z=2 (r.2.2.mca):</p>
+<pre><code>--area=r(2,2,1,1)
+--area=c(64,64,32,32)
+--area=b(1024,1024,512,512)
+
+--area=r((2,2),(3,3))
+--area=c((64,64),(97,97))
+--area=b((1024,1024),(1537,1537))</code></pre>
+
 <h1>AI stuff</h1>
 
 {{template "footer"}}
