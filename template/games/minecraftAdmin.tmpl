@@ -1,0 +1,32 @@
+{{define "mcAdminPage"}}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.6.0">
+    <meta name="orcid" content="https://orcid.org/0000-0003-4586-8500">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" type="text/css" href="/web/css/puzzle.css" />
+</head>
+
+<body>
+
+<a href="https://github.com/devsecfranklin/game-server-minecraft">This is the Github repo where the game files are stored.</a>
+
+<h1>Mapping</h1>
+
+We use the &quot;Unmined&quot; software to map the explored areas of the server.
+
+<p>
+There is a shell script `/home/minecraft/bin/unmined.sh` that can be used to generate the map files.<br />
+It writes output to `/var/www/html/` unless you change the default.
+</p>
+
+<h1>AI stuff</h1>
+
+{{template "footer"}}
+
+</body>
+</html>
+{{end}}

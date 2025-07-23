@@ -1,0 +1,33 @@
+{
+  "DO_NOT_CHANGE_IT": 1,
+  "modpackName": "wonderland",
+  "modpackHost": true,
+  "generateModpackOnStart": true,
+  "syncedFiles": [
+    "/mods/*.jar",
+    "!/mods/server-*.jar"
+  ],
+  "allowEditsInFiles": [
+    "/options.txt",
+    "/config/*",
+    "server.properties",
+    "!/config/excludeThisFile"
+  ],
+  "autoExcludeUnnecessaryFiles": false,
+  "requireAutoModpackOnClient": false,
+  "nagUnModdedClients": true,
+  "nagMessage": "This server provides dedicated modpack through AutoModpack!",
+  "nagClickableMessage": "Click here to get the AutoModpack!",
+  "nagClickableLink": "https://modrinth.com/project/automodpack",
+  "autoExcludeServerSideMods": true,
+  "hostModpackOnMinecraftPort": true,
+  "hostIp": "137.184.177.152",
+  "hostLocalIp": "137.184.177.152",
+  "updateIpsOnEveryStart": true,
+  "hostPort": 25565,
+  "reverseProxy": false,
+  "selfUpdater": true,
+  "acceptedLoaders": [
+    "forge"
+  ]
+}

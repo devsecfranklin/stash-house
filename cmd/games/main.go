@@ -66,6 +66,8 @@ func main() {
 	http.HandleFunc("/linux_games", lg)
 	http.HandleFunc("/login", LoginPage)
 	http.HandleFunc("/minecraft", mc)
+	http.HandleFunc("/mcadmin", mcAdmin)
+	http.HandleFunc("/mchistory", mcHist)
 	http.HandleFunc("/scoreboard", scoreboard)
 	http.HandleFunc("/submission", submission)
 	//http.HandleFunc("/puzzle0", puzzle0)
@@ -213,20 +215,42 @@ func lg(w http.ResponseWriter, r *http.Request) {
 }
 
 func mc(w http.ResponseWriter, r *http.Request) {
-	logging.Log_header("Serving Minecraft page")
-
+	logging.Log_header("Serving minecraft page")
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
-
 	username := auth.GetUserName(r)
-	page := Page{"minecraft", username}
-
-	err := index.ExecuteTemplate(w, "mcPage", page)
+	page := Page{"minecraft.bitsmasher.net", username}
+	err := index.ExecuteTemplate(w, "mc", page)
 	if err != nil {
 		logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+}
 
+func mcAdmin(w http.ResponseWriter, r *http.Request) {
+	logging.Log_header("Serving minecraft admin page")
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+	username := auth.GetUserName(r)
+	page := Page{"minecraft admin", username}
+	err := index.ExecuteTemplate(w, "mcAdmin", page)
+	if err != nil {
+		logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func mcHist(w http.ResponseWriter, r *http.Request) {
+	logging.Log_header("Serving minecraft history page")
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+	username := auth.GetUserName(r)
+	page := Page{"minecraft history", username}
+	err := index.ExecuteTemplate(w, "mcHistory", page)
+	if err != nil {
+		logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func scoreboard(w http.ResponseWriter, r *http.Request) {
