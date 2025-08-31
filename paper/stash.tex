@@ -1,7 +1,7 @@
 %Template for PhD reports By: Roberto Contreras
 %Comment out two column if need two column writing
 
-\documentclass[11pt]{article}
+\documentclass[11pt]{report}
 %\documentclass[11pt, twocolumn]{report}
 
 \usepackage{lipsum} %Package to generate latin text (Only for testing)
@@ -37,7 +37,7 @@
 	
 	\begin{titlepage}
 		\begin{center}
-			\includegraphics[scale=0.75]{../images/new_logo.jpeg}\\
+			\includegraphics[scale=0.75]{../static/images/new_logo.jpeg}\\
 			% \huge{\textbf{\myOrg}} \\
 			[0.25in] 
 			
@@ -89,22 +89,22 @@
 	%Start your text here
 	\pagenumbering{arabic}
 	
-	\section{Introduction}
+	\chapter{Introduction}
 	\lipsum[1]
 	
 	\section{Setting Up}
 	
-	\lipsum[1]
+	The same repo where this paper can be downloaded has the tools described in this and future chapters.
 	
-	\section{Finding Secrets on Local Machine}
-	
-	\lipsum[1]
-	
-	\section{Storing Secrets}
+	\chapter{Finding Secrets on Local Machine}
 	
 	\lipsum[1]
 	
-	\section{Using Secrets}
+	\chapter{Storing Secrets}
+	
+	\lipsum[1]
+	
+	\chapter{Using Secrets}
 	
 	\lipsum[1]
 	

@@ -2,8 +2,8 @@
 
 # https://steflan-security.com/linux-privilege-escalation-credentials-harvesting/
 
-set -euo pipefail
-IFS=$'\n\t'
+#set -euo pipefail
+#IFS=$'\n\t'
 
 
 grep -rnw / -ie “PASSWORD\|PASSWD”
