@@ -8,4 +8,3 @@ export CR_PAT=(pass show ghcr)
 echo $CR_PAT | docker login ghcr.io -u devsecfranklin --password-stdin
 docker build -t ghcr.io/devsecfranklin/stash .
 ```
-
