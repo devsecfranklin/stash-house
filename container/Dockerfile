@@ -1,6 +1,10 @@
 # syntax=docker/dockerfile:1
 
+<<<<<<< HEAD
 FROM rust:1.87.0 AS build
+=======
+FROM rust:1.89.0 AS build
+>>>>>>> main
 
 WORKDIR /usr/src
 

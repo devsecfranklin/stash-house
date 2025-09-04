@@ -1,0 +1,91 @@
+% Template for PhD reports
+% By: Roberto Contreras
+% This document has been cleaned up for better readability and structure.
+
+\documentclass[11pt]{article}
+
+% --- LaTeX Packages ---
+\usepackage{lipsum} % For generating placeholder text
+\usepackage{amsmath, amsfonts, amssymb} % AMS packages for mathematical symbols
+\usepackage{graphicx} % To include pictures and images
+\usepackage[margin=1in, includefoot, includehead]{geometry} % To set up page layout
+\usepackage[hidelinks]{hyperref} % Uses hyperlinks in PDF (optional)
+\usepackage{fancyhdr} % For custom headers and footers
+
+% --- Document Variables ---
+\newcommand{\myTitle}{Stash}
+\newcommand{\myName}{Enter Name}
+\newcommand{\myClass}{Enter Name}
+\newcommand{\myTecher}{Enter Name}
+\newcommand{\myDate}{December 28, 2022}
+
+% --- Header and Footer Setup ---
+\pagestyle{fancy}
+\fancyhead{} % Clear header
+\fancyfoot{} % Clear footer
+\fancyhead[R]{\myTitle}
+\fancyfoot[L]{Stash: Credential Management Tooling}
+\fancyfoot[R]{\thepage}
+\renewcommand{\footrulewidth}{1pt}
+
+% --- Document Start ---
+\begin{document}
+	
+	% --- Title Page ---
+	\begin{titlepage}
+		\begin{center}
+			\includegraphics[scale=0.75]{../images/new_logo.jpeg}\\
+			\huge{\textbf{DE:AD:10:C5}} \\
+			[0.25in]
+			
+			\textbf{\Large{Instituto de Ingeniería y Tecnología}}\\
+			\Large{Departamento de Ingeniería Industrial y Manufactura}\\
+			\Large{Doctorado en Tecnología}\\
+			[1in]
+			
+			\line(1,0){400}\\
+			[2mm]
+			\textsc{\Large{\myTitle}} \\
+			\line(1,0){400} \\
+			[1in]
+		\end{center}
+		\begin{center}
+			\textsc{\Large \myName} \\
+			\myClass\\
+			\myTecher\\
+			[1in]
+			\myDate
+		\end{center}
+	\end{titlepage}
+	
+	% --- Summary Section ---
+	\pagenumbering{roman}
+	\section*{Summary}
+	\addcontentsline{toc}{section}{\numberline{}Summary}
+	
+	[cite_start]In this project paper, we will consider the issue of a "dirty" local development environment, and precisely what to do about it[cite: 40]. [cite_start]Using freely available Open Source tools and a few easy-to-remember patterns, we can work in a much more efficient and secure manner[cite: 41].
+	
+	\begin{itemize}
+		[cite_start]\item First, we look at how to set up a workable solution for storing credentials[cite: 42].
+		[cite_start]\item Next, we do some local search and cleanup to get our systems in order[cite: 43].
+		[cite_start]\item Finally, we will see how we can still easily use these credentials though they remain encrypted at rest and in transit to our "vault" from now on[cite: 44].
+	\end{itemize}
+	
+	\cleardoublepage
+	
+	% --- Table of Contents ---
+	\tableofcontents
+	\thispagestyle{empty}
+	\cleardoublepage
+	\setcounter{page}{1}
+	\pagenumbering{arabic}
+	
+	% --- Main Body Sections ---
+	\section{Introduction}
+	\lipsum[1]
+	\section{Setting Up}
+	\section{Finding Secrets on Local Machine}
+	\section{Storing Secrets}
+	\section{Using Secrets}
+	
+\end{document}
