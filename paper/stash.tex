@@ -1,5 +1,8 @@
-%Template for PhD reports By: Roberto Contreras
-%Comment out two column if need two column writing
+% !TeX TS-program =
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_US
+% !TeX root = stash.tex
+
 
 \documentclass[11pt]{report}
 %\documentclass[11pt, twocolumn]{report}
@@ -27,24 +30,24 @@
 \fancyfoot[R]{\thepage}
 \renewcommand{\footrulewidth}{1pt}
 
-% Document Variables 
+% Document Variables
 \newcommand{\myTitle}{Aegis}
 \newcommand{\myName}{franklin}
 \newcommand{\myOrg}{pale shadow}
 \newcommand{\myDate}{August 28, 2025}
 
 \begin{document}
-	
+
 	\begin{titlepage}
 		\begin{center}
 			\includegraphics[scale=0.75]{../static/images/new_logo.jpeg}\\
 			% \huge{\textbf{\myOrg}} \\
-			[0.25in] 
-			
+			[0.25in]
+
 			\textbf{\Large{\myOrg}}\\
-			\Large{Cyber Security Research Team}\\
+			\Large{cybersecurity research team}\\
 			[1in]
-			
+
 			\line(1,0){400}\\
 			[2mm]
 			\textsc{\Large{\myTitle}} \\
@@ -58,15 +61,14 @@
 			\myDate
 		\end{center}
 	\end{titlepage}
-	
+
 	%If need adding sections, please uncomment next lines
 	%Before TOC
 	\pagenumbering{roman}
 	\section*{Summary}
 	\addcontentsline{toc}{section}{\numberline{}Summary}
     In this project paper we will consider the issue of a "dirty" local development
-    environment, where credentials for lab and dev environments may be handled with less care than other elements of the network.
-    Then we will discuss precisely what to do about it. Using freely available
+    environment, and precisely what to do about it. Using freely available
     Open Source tools and a few easy to remember patterns we can work in a
     much more efficient and secure manner.
 
@@ -76,38 +78,37 @@
 		\item Finally, we will see how we can still easily use these credentials though
 			they remain encrypted at rest and in transit to our "vault" from now on.
     \end{itemize}
-      
+
 	\cleardoublepage
-	
-	
+
+
 	%If need table of contents, please uncomment next lines
 	%Table of contents
 	\tableofcontents
 	\thispagestyle{empty}
 	\cleardoublepage
 	\setcounter{page}{1}
-	
+
 	%Start your text here
 	\pagenumbering{arabic}
-	
+
 	\chapter{Introduction}
-	
-	
-	
+	\lipsum[1]
+
 	\section{Setting Up}
-	
+
 	The same repo where this paper can be downloaded has the tools described in this and future chapters.
-	
+
 	\chapter{Finding Secrets on Local Machine}
-	
+
 	\lipsum[1]
-	
+
 	\chapter{Storing Secrets}
-	
+
 	\lipsum[1]
-	
+
 	\chapter{Using Secrets}
-	
+
 	\lipsum[1]
-	
+
 \end{document}
