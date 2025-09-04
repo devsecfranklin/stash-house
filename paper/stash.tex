@@ -1,7 +1,8 @@
-% !TeX TS-program =
 % !TeX encoding = UTF-8
 % !TeX spellcheck = en_US
 % !TeX root = stash.tex
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+% https://orcid.org/0000-0003-4586-8500
 
 
 \documentclass[11pt]{report}
@@ -16,7 +17,7 @@
 \usepackage{graphicx} %package to include pictures and images
 \usepackage[margin=1in, includefoot, includehead]{geometry} %Package to setup page layout
 
-
+\usepackage{minted} % code blocks
 % \usepackage[hidelinks]{hyperref} %Uses hyperlinks in PDF (optional)
 \usepackage{hyperref}
 
@@ -93,17 +94,28 @@
 	\pagenumbering{arabic}
 
 	\chapter{Introduction}
-	\lipsum[1]
+
+    \lipsum[1]
 
 	\section{Setting Up}
 
 	The same repo where this paper can be downloaded has the tools described in this and future chapters.
 
-	\chapter{Finding Secrets on Local Machine}
+\chapter{Finding Secrets on Local Machine}
 
-	\lipsum[1]
+There is a BASH shells script that can be used to scan the local files for
+unsecured credentials that may be a candidate for encryption and safe storage.
 
-	\chapter{Storing Secrets}
+\begin{minted}{cpp}
+    #include <iostream>
+
+    int main() {
+        std::cout << "Hello, C++!" << std::endl;
+        return 0;
+    }
+\end{minted}
+
+\chapter{Storing Secrets}
 
 	\lipsum[1]
 
