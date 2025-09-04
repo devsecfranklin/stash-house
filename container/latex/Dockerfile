@@ -1,10 +1,4 @@
-# syntax=docker/dockerfile:1
-
-<<<<<<< HEAD
-FROM python:3.13.5-bullseye
-=======
 FROM python:3.13.6-bullseye
->>>>>>> main
 
 #####################
 # Add some packages #
