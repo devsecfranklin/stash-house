@@ -29,7 +29,7 @@ jobs:
         run: doxygen Doxyfile # Assuming Doxyfile is in the root
 
       - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: 'html' # This should match the OUTPUT_DIRECTORY in your Doxyfile, e.g., 'docs/doxygen_html' if you set it that way
 
