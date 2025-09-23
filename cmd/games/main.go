@@ -219,9 +219,11 @@ func mc(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
+
 	username := auth.GetUserName(r)
 	page := Page{"minecraft.bitsmasher.net", username}
-	err := index.ExecuteTemplate(w, "mc", page)
+
+	err := index.ExecuteTemplate(w, "mcPage", page)
 	if err != nil {
 		logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
