@@ -1,0 +1,4 @@
+openvpn 
+
+needs a static ip (could we do ipv6 only?)
+https://github.com/ddclient/ddclient dyn dns with cloudflare

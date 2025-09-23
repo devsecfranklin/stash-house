@@ -1,0 +1,38 @@
+name: Generate and Deploy Documentation
+
+on:
+  push:
+    branches:
+      - main # Or your default branch (e.g., master)
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to push generated documentation
+      pages: write    # Required for GitHub Pages deployment
+      id-token: write # Required for GitHub Pages deployment
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetches all history for comprehensive documentation
+
+      - name: Install Doxygen
+        run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
+
+      - name: Generate Doxygen documentation
+        run: doxygen Doxyfile # Assuming Doxyfile is in the root
+
+      - name: Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'html' # This should match the OUTPUT_DIRECTORY in your Doxyfile, e.g., 'docs/doxygen_html' if you set it that way
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

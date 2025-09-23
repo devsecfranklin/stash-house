@@ -1,6 +1,6 @@
 # README.md
 
-[![DOI](https://zenodo.org/badge/407849291.svg)](https://zenodo.org/badge/latestdoi/407849291) [![Go Report Card](https://goreportcard.com/badge/github.com/golang-standards/project-layout?style=flat-square)](https://goreportcard.com/report/github.com/golang-standards/project-layout)
+[![DOI](https://zenodo.org/badge/407849291.svg)](https://zenodo.org/badge/latestdoi/407849291) [![Go Report Card](https://goreportcard.com/badge/github.com/golang-standards/project-layout?style=flat-square)](https://goreportcard.com/report/github.com/golang-standards/project-layout) [![Documentation](https://github.com/devsecfranklin/website/actions/workflows/generate-docs.yml/badge.svg)](https://github.com/devsecfranklin/website/actions/workflows/generate-docs.yml)
 
 ## Golang
 
