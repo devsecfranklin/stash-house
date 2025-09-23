@@ -1,3 +1,9 @@
+/*
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
+#
+# SPDX-License-Identifier: MIT
+*/
+
 package logging
 
 import (
