@@ -13,7 +13,7 @@ clean:
 
 slides: 
 	latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash
-	bibtex kerberos
+	bibtex stash
 	latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash
 
 .PHONY: src
