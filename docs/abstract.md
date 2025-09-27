@@ -6,14 +6,15 @@
 
 ## Introduction and objectives
 
-In this talk we will consider the issue of a "dirty" local development
+In this project we consider the issue of a "dirty" local development
 environment, and precisely what to do about it. Using freely available
 Open Source tools and a few easy to remember patterns we can work in a
 much more efficient and secure manner.
 
 * First we look at how to set up a workable solution for storing credentials.
 * Next we do some local search and cleanup to get our systems in order.
-* Finally, we will see how we can still easily use these credentials, though they remain encrypted at rest and in transit to our "vault" from now on.
+* Finally, we will see how we can still easily use these credentials, though
+  they remain encrypted at rest and in transit to our "vault" from now on.
 
 ## The methodology
 
