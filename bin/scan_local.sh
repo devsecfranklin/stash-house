@@ -6,9 +6,9 @@
 #IFS=$'\n\t'
 
 
-grep -rnw / -ie “PASSWORD\|PASSWD”
+grep -rnw / -ie "PASSWORD\|PASSWD"
 
-find . -type f -exec grep -i -I “PASSWORD\|PASSWD” {} /dev/null \;
+find . -type f -exec grep -i -I "PASSWORD\|PASSWD" {} /dev/null \;
 
 # history files
 find / -name *_history -xdev
