@@ -1,8 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
+# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
+#
+# SPDX-License-Identifier: MIT
 
+# ChangeLog:
+#
 # v0.1 11/18/2022 first version
-
-# Author:      Franklin D. <devsecfranklin@duck.com>
 
 #set -eu
 
@@ -47,44 +51,12 @@ function check_installed() {
   fi
 }
 
-# These are known packages we need on Debian
-function install_debian() {
-  declare -a Packages=( "gnupg" "pass" "git")
-  
-  # Container package installs will fail unless you do an initial update, the upgrade is optional
-  if [ "${CONTAINER}" = true ]; then
-    apt-get update && apt-get upgrade -y
-  fi
-  
-  for i in ${Packages[@]};
-  do
-    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${i}|grep "install ok installed") &> /dev/null
-    # echo -e "${LBLUE}Checking for ${i}: ${PKG_OK}${NC}"
-    if [ "" = "${PKG_OK}" ]; then
-      echo -e "${CYAN}Installing ${i} since it is not found.${NC}"
-      
-      # If we are in a container there is no sudo in Debian
-      if [ "${CONTAINER}" = true ]; then
-        apt-get --yes install ${i}
-      else
-        sudo apt-get install ${i} -y
-      fi
-    fi
-  done
-}
-
 function make_directories() {
-  DIRS=("~/.password-store" "~/.password-store/documents")
-  for i in ${DIRS[@]};
+  DIRS=("${HOME}/.password-store" "${HOME}/.password-store/documents")
+  for i in "${DIRS[@]}";
   do
-    if [ ! -d "${i}" ]; then mkdir -p ${i}; fi
+    if [ ! -d "${i}" ]; then mkdir -p "${i}"; fi
   done
-}
-
-# Rustlang app
-function build_application() {
-  cargo run stash
-  target/debug/stash
 }
 
 function detect_os() {

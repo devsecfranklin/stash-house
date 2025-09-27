@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
+#
+# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
+#
+# SPDX-License-Identifier: MIT
 
+# ChangeLog:
+#
 # v0.1 02/25/2022 Maintainer script
 # v0.2 09/24/2022 Update this script
 # v0.3 10/19/2022 Add tool functions
 # v0.4 11/10/2022 Add automake check
 # v0.5 11/15/2022 Handle Docker container builds
-
-# Author:  devsecfranklin@duck.com
 
 set -euo pipefail
 IFS=$'\n\t'

@@ -1,13 +1,26 @@
-\begin{frame}
-    \frametitle{Project Goals}
-    \begin{itemize}
-        \item Locate unprotected credentials on the local host
-        \item Encrypt and safely store these credentials and other secrets.
-        \item Access to credential store from multiple locations.
-    \end{itemize}
 
-    \note[item]{Clean up the ones we know about}
-    \note[item]{Of course there will always be gaps and edge cases, just try to improve over time}
-    \note[item]{What prior art is out there}
+\sectionsubtitle{The Lost Art of Keeping a Secret}
+\section{Introduction}
+
+\begin{frame}
+    \frametitle{Step One: Admit That You Have a Problem}
+
+    \begin{columns}
+        \column{0.5\textwidth}
+
+        Most of us have a (reasonable?) expectation of trust for the files on our local machine. And so, we leave things like saved passwords and other credentials and secrets pasted into text files for quick access.
+        \column{0.5\textwidth}
+
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.77\textwidth]{../static/images/problem.jpg}
+            \caption{You}
+            \label{fig:question}
+        \end{figure}
+
+    \end{columns}
+
+    \note[item]{Yes you do this}
+    \note[item]{No it's not good}
 
 \end{frame}
