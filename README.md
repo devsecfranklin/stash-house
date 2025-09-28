@@ -1,6 +1,4 @@
-# Aegis
-
-aka "project stash house"
+# Project Stash House
 
 [![markdown](https://github.com/devsecfranklin/stash/actions/workflows/markdown.yml/badge.svg)](https://github.com/devsecfranklin/stash/actions/workflows/markdown.yml)
 
