@@ -7,11 +7,25 @@
 # ChangeLog:
 #
 
+# SCRIPT_DIR="${0%/*}"
+if [ -f "bin/common.sh" ]; then
+  source "bin/common.sh"
+else
+    log_error "can not find common.sh"
+fi
+
+function scan_aws_creds() {
+  log_info "scan for AWS credentials"
+  # scan home directory for AWS credentials
+  # ~/.aws
+  ls -la "${HOME}/.aws"
+}
+
+function main(){
 # https://steflan-security.com/linux-privilege-escalation-credentials-harvesting/
+scan_aws_creds
 
-#set -euo pipefail
-#IFS=$'\n\t'
-
+exit 1
 
 grep -rnw / -ie "PASSWORD\|PASSWD"
 
@@ -40,3 +54,6 @@ locate user.keystore
 #john –wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
 
 #MimiPenguin and the post/linux/gather/gnome_keyring_dump Metasploit module can also be used to perform this task.
+}
+
+main "$@"
