@@ -8,10 +8,11 @@
 #
 
 # SCRIPT_DIR="${0%/*}"
-if [ -f "bin/common.sh" ]; then
-  source "bin/common.sh"
+if [ -f "/mnt/storage1/workspace/stash-house/bin/common.sh" ]; then
+  source "/mnt/storage1/workspace/stash-house/bin/common.sh"
 else
-    log_error "can not find common.sh"
+  echo "can not find common.sh"
+  exit 1
 fi
 
 function scan_aws_creds() {
