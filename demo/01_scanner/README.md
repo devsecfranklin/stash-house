@@ -1,4 +1,1 @@
-# scanner
-
-A scanner to find local credentials. 
-
+# find local credentials
