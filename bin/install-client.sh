@@ -16,7 +16,7 @@ LOCAL_STASH="${HOME}/.stash-house"
 if [ -f "./common.sh" ]; then
   source "./common.sh"
 else
-  echo "can not find common.sh"
+  echo -e "${LRED}can not find common.sh, run this script from the bin/ directory.${NC}"
   exit 1
 fi
 
