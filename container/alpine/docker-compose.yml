@@ -1,0 +1,8 @@
+version: '3'
+services:
+  stash:
+    build:
+      context: ../..
+      dockerfile: container/alpine/Dockerfile
+    image: stash 
+    container_name: stash-house.lab.bitsmasher.net

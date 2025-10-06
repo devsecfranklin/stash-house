@@ -101,3 +101,39 @@ function install_debian() {
     log_warn "Updating the dircolors configuration."
   fi
 }
+
+function check_python_version() {
+  log_header "Check Python Version -------------------------------------------"
+  if command -v python &>/dev/null; then
+    PYTHON_VERSION=$(python -c 'import sys; print(sys.version_info.major)')
+    if [[ "$PYTHON_VERSION" -eq 3 ]]; then
+      log_success "The 'python' command points to Python 3.$"
+      PYTHON_CMD="python"
+    elif [[ "$PYTHON_VERSION" -eq 2 ]]; then
+      log_warn "The 'python' command points to Python 2.$"
+
+      if command -v python3 &>/dev/null; then # Decide what to do: try python3, or exit
+        log_warn "Using 'python3' instead."
+        PYTHON_CMD="python3"
+      else
+        log_error "Error: Python 3 not found. Exiting."
+        exit 1
+      fi
+    else
+      log_warn "The 'python' command points to an unknown Python version ($PYTHON_VERSION)."
+      if command -v python3 &>/dev/null; then
+        log_info "Attempting to use 'python3' instead."
+        PYTHON_CMD="python3"
+      else
+        log_error "Error: Python 3 not found. Exiting."
+      fi
+    fi
+  elif command -v python3 &>/dev/null; then
+    log_info "'python' command not found, using 'python3'."
+    PYTHON_CMD="python3"
+  else
+    log_error "Neither 'python' nor 'python3' found. Please install Python 3. Exiting."
+  fi
+
+  log_success "Using Python command: ${PYTHON_CMD}"
+}
