@@ -4,7 +4,6 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y pass && \
     apt-get clean -y && \
     apt-get autoremove -y && \
     apt-get autoclean -y && \
