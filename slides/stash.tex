@@ -7,7 +7,7 @@
 
 % Other possible values are: 1610, 149, 54, 43 and 32.
 % By default, it is to 128mm by 96mm(4:3)
-\documentclass[aspectratio=169]{beamer} 
+\documentclass[aspectratio=169]{beamer}
 %\setbeamertemplate{headline navigation symbols}{} 	% no navigation symbols
 \usetheme{Warsaw}
 \usecolortheme{seahorse}
@@ -16,12 +16,11 @@
 
 %Information to be included in the title page:
 \title{Stash House}
-\subtitle{Collect and Hide Local Secrets}
+\subtitle{A Toolkit to Collect and Hide Local Secrets}
 \author{Franklin D.}
-\institute{pale shadow}
-\date{2023}
+\date{2025}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SECTION 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SECTION
 
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -61,8 +60,8 @@
 			\coordinate[yshift=-10mm] (rectsoutheast) at (current page.north east);
 			\fill[white] (current page.north west) rectangle (rectsoutheast);
 			\shade [left color=gray,right color=white] (rectsouthwest) rectangle +(\paperwidth,-0.02);
-			\node[section,anchor=center] at (current page.center) (title) {\fontsize{20}{20}\selectfont\insertsectionhead}; 
-			\node[subsection,below=5mm of title]  (subtitle) {\@sectionsubtitle}; 
+			\node[section,anchor=center] at (current page.center) (title) {\fontsize{20}{20}\selectfont\insertsectionhead};
+			\node[subsection,below=5mm of title]  (subtitle) {\@sectionsubtitle};
 		\end{tikzpicture}
 	\end{frame}
 	\gdef\@sectionsubtitle{}
@@ -82,7 +81,7 @@
 
 % To give a presentation with the Skim reader (http://skim-app.sourceforge.net) on OSX so
 % that you see the notes on your laptop and the slides on the projector, do the following:
-% 
+%
 % 1. Generate just the presentation (hide notes) and save to slides.pdf
 % 2. Generate onlt the notes (show only nodes) and save to notes.pdf
 % 3. With Skim open both slides.pdf and notes.pdf
@@ -113,7 +112,7 @@
 \setbeamercolor{caption name}{fg=black}
 
 \begin{document}
-	
+
 {
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/Gemini\_Generated\_Image\_57v54w57v54w57v5.png}}%
 \begin{frame}
@@ -131,8 +130,10 @@
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/field.jpg}}
 %\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../images/landscape.jpg}}
 %\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../images/tree.jpg}}
+
 \sectionsubtitle{The Lost Art of Keeping a Secret}
 \section{Introduction}
+
 \begin{frame}
     \frametitle{Step One: Admit That You Have a Problem}
 
@@ -154,7 +155,9 @@
     \note[item]{Yes you do this}
     \note[item]{No it's not good}
 
-\end{frame}\begin{frame}
+\end{frame}
+
+\begin{frame}
     \frametitle{Project Goals}
     \begin{itemize}
         \item Locate unprotected credentials on the local host
@@ -166,8 +169,31 @@
     \note[item]{Of course there will always be gaps and edge cases, just try to improve over time}
     \note[item]{What prior art is out there}
 
-\end{frame}\sectionsubtitle{What is it you want to protect?}
-\section{Finding Those Creds}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Setting Up your Haunted Stash House}
+    These are the basic setup steps so you have a place to hide your secrets.
+    \begin{itemize}
+        \item Create a repository on GitHub or other revision control system.
+        \item Install the framework (demo soon).
+        \item Set up your GPG key.
+        \item Add items to DB, remove plain text tokens and secrets.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Demo Script: Setup}
+    \begin{itemize}
+        \item \href{ https://github.com/devsecfranklin/stash-house/blob/main/bin/install-client.sh }{Here is a stash-house setup tool that you can use/modify for your system. }
+    \end{itemize}
+    \note[item] {Do a small demo here}
+\end{frame}
+
+
+\sectionsubtitle{What is it you want to protect?}
+\section{Finding and Protecting Secrets}
+
 \begin{frame}
 	\frametitle{What Do We Mean by Secrets, Exactly}
 	\begin{itemize}
@@ -175,10 +201,12 @@
 		\item Text files that are used as keys.
 	\end{itemize}
 
-    \note[item]In my case I had a whole folder of text files that I'd collected of some time.
+    \note[item]{In my case I had a whole folder of text files that I'd collected of some time.}
+
 \end{frame}
+
 \begin{frame}
-	\frametitle{Finding Tokens}
+	\frametitle{The Process of Finding Secrets}
 	\begin{itemize}
 		\item Look around your local machines for tokens and credentials.
 		\item Use some automation to help you find them.
@@ -186,44 +214,52 @@
 	\note[item]{There are some known places we can look}
 	\note[item]{Clean up the ones we know about}
 \end{frame}
+
 \begin{frame}
-	\frametitle{Demo Script}
+	\frametitle{Demo Script: Scanning Your Local System}
 	\begin{itemize}
-		\item Here is a small tool that you can use/modify for your system
+        \item\href{ https://github.com/devsecfranklin/stash-house/tree/main/demo/01_scanner}{Here is a small tool that you can use/modify for your system}
 	\end{itemize}
 	\note[item]{Do a small demo here}
 \end{frame}
+
 \sectionsubtitle{We found the secrets, now what?}
 \section{Hide Your Goodies}
+
+\begin{frame}
+    \frametitle{Setting up GnuPG}
+    \begin{itemize}
+        \item Install GnuPG in your shell so you can encrypt things.
+    \end{itemize}
+    \note[item]{test}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Storing Tokens at Rest}
+    We will use a tool called pass in combination with out GnuPG key to encrypt the secrets we found.
+	\begin{itemize}
+        \item Okay we found some, now what?
+		\item Encrypt the tokens and push them into a Revision Control System.
+        \item Could be a ``private repo'' but it doesn't have to.
+	\end{itemize}
+\end{frame}
+
 \begin{frame}
 	\frametitle{Saving Simple Tokens}
 	\begin{itemize}
-		\item Encrypt the tokens and push them into RCS.
+		\item Use the pass tool to encrypt the tokens and push them into Revision Control.
 	\end{itemize}
+    \note[item]{test}
 \end{frame}
-\begin{frame}
-	\frametitle{Setting Up the Stash House}
-	\begin{itemize}
-		\item Create a repository on GitHub or other revision control system.
-		\item Install the framework with shell script.
-		\item Set up your GPG key.
-		\item Add items to DB, remove plain text tokens and secrets.
-	\end{itemize}
-\end{frame}
-\begin{frame}
-	\frametitle{Saving Simple Tokens}
-	\begin{itemize}
-		\item Encrypt the tokens and push them into RCS.
-	\end{itemize}
-    \note[item]The first kind of secret we want to save is a ``simple'' password, basically a string.
-\end{frame}
+
 \begin{frame}
 	\frametitle{Saving Multi-line Tokens}
 	\begin{itemize}
-		\item Encrypt the tokens and push them into RCS.
+		\item Use pass to encrypt a multi-line secret and push it into Revision Control.
 	\end{itemize}
-    \note[item]We can also save multi-line secrets, GCloud JSON for example.
+    \note[item]{We can also save multi-line secrets, GCloud JSON for example.}
 \end{frame}
+
 \begin{frame}
 	\frametitle{Backing up Tokens to RCS}
 	\begin{itemize}
@@ -231,14 +267,17 @@
 		\item Push everything into revision control.
 	\end{itemize}
 \end{frame}
+
 \sectionsubtitle{How to Use What You Built}
 \section{Using Your Stashed Tokens}
+
 \begin{frame}
 	\frametitle{Using Tokens}
 	\begin{itemize}
 		\item Now you can use the secrets in your project without exposing them.
 	\end{itemize}
 \end{frame}
+
 \begin{frame}
 	\frametitle{Considerations}
 	\begin{itemize}
@@ -246,4 +285,34 @@
 	\end{itemize}
 \note[item]{Don't be lazy, you still have to use a password manager}
 \end{frame}
+
+\sectionsubtitle{Where is all this going?}
+\section{Other Cool Stuff}
+
+\begin{frame}
+    \frametitle{Keyringer}
+    \begin{itemize}
+        \item I discovered this other cool tool.
+        \item I will incorporate it into this ...toolkit?
+    \end{itemize}
+    \note[item]{Try and include this tool before presentation}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Nostr}
+    \begin{itemize}
+        \item Been experimenting with the decentralized ideas from the coin mining world.
+        \item There are all sorts of apps and clients out there.
+    \end{itemize}
+    \note[item]{Try and include an update before presentation}
+\end{frame}
+
+\begin{frame}
+    \frametitle{demo container}
+    \begin{itemize}
+        \item There is a container file in the project repo.
+    \end{itemize}
+    \note[item]{Try and include this tool before presentation}
+\end{frame}
+
 \end{document}
