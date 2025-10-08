@@ -1,6 +1,6 @@
 all:
 # docker image build -t stash/alpine .
-        docker compose build stash
+        docker-compose build stash
         @echo "Size of image: $(shell docker image ls| grep ^mmmbot | awk -F '  +' '{print $$5}')"
         @echo "Tagging image:  $(shell docker image ls| grep ^mmmbot | awk -F '  +' '{print $$3}')"
 
