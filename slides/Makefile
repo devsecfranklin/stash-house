@@ -1,3 +1,5 @@
+all: slides
+
 clean:
 	@find . -name '*.pyc' | xargs rm -rf
 	@find . -name '__pycache__' | xargs rm -rf
@@ -16,5 +18,5 @@ slides:
 	done
 	cat end.tex >> stash.tex
 	latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash
-	bibtex stash
+# bibtex stash
 	latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash
