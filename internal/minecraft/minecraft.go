@@ -1,3 +1,9 @@
+/*
+# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
+#
+# SPDX-License-Identifier: MIT
+*/
+
 // check for mc install, capture location
 
 // show some cool shit on the screen
@@ -52,4 +58,3 @@ func Check_Minecraft_Install() {
 		fmt.Println("Found a file named '.minecraft', but it's not a directory.")
 	}
 }
-

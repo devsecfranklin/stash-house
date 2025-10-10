@@ -1,5 +1,5 @@
 /*
-# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
 #
 # SPDX-License-Identifier: MIT
 */
@@ -68,37 +68,33 @@ var (
 		Endpoint:     twitch.Endpoint,
 	}
 
-	oauthStateString = "random-string-for-demonstration" // A random string used to protect against CSRF attacks
+	oauthStateString = "random-string-for-demonstration"           // A random string used to protect against CSRF attacks
 
 	twitchClientID     string                                      // Twitch API Credentials (IMPORTANT: Load from environment variables in production!)
 	twitchClientSecret string                                      // Needed for code exchange
 	twitchRedirectURI  string = "https://www.bitsmasher.net/oauth" // This MUST match your registered redirect URI
 	twitchOauthToken   string
-	oauthStates        = struct { // Temporary storage for OAuth states. Move into database
+	oauthStates        = struct {                                  // Temporary storage for OAuth states. Move into database
 		sync.RWMutex
 		m map[string]bool // map[state_string]is_valid
 	}{m: make(map[string]bool)}
 )
 
 func main() {
-	//  --- Make static files available ------------------------------------------
-//        http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./public"))))
 	fs := http.FileServer(http.Dir("./static/www"))
-	// http.Handle("/static/www/*", http.StripPrefix("/static/www/", fs))
-
+	http.Handle("/static/www/", http.StripPrefix("/static/www/", fs))
 
 	tmpls, err = template.ParseGlob(LayoutDir + "/*.tmpl")
 	if err != nil {
 		panic(err)
 	}
 
-	// Register the handler for all paths
-	http.Handle("/", fs)
+	http.HandleFunc("/", handler)
 	http.HandleFunc("/oauth", oauthHandler)
 	http.HandleFunc("/twitch/callback", oauthHandler) //handleTwitchCallback)
 	http.HandleFunc("/chatoverlay", twitchChatHandler)
 	http.HandleFunc("/lab", labPageHandler)
-    http.HandleFunc("/labAnsiblePage", labAnsiblePageHandler)
+	http.HandleFunc("/labAnsiblePage", labAnsiblePageHandler)
 	http.HandleFunc("/labAuthPage", labAuthPageHandler)
 
 	logging.Log_header("Server listening on :8080")
@@ -108,16 +104,16 @@ func main() {
 	}
 }
 
-func handler(w http.ResponseWriter, r *http.Request) { // handler for the root path
-	log.Println("Serving index page")
+func handler(w http.ResponseWriter, r *http.Request) {
+	log.Println("default index handler")
 
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{"www.bitsmasher.net"}
+	page := Page{"bitsmasher.net"}
 
-	err := tmpls.ExecuteTemplate(w, "indexPage", page) // Assuming you have an "indexPage" template
+	err := tmpls.ExecuteTemplate(w, "indexPage", page)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Internal server error: Could not render index page.", http.StatusInternalServerError)

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: © 2022-2025 franklin <franklin@bitsmasher.net>
+# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
 #
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 
-#set -euo pipefail
+# set -euo pipefail
 
 # The special shell variable IFS determines how Bash
 # recognizes word boundaries while splitting a sequence of character strings.

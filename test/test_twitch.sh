@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
+#
+# SPDX-License-Identifier: MIT
+
 curl -X POST https://id.twitch.tv/oauth2/authorize?client_id=${TWITCH_CLIENT_ID}&redirect_uri=https://www.bitsmasher.net/twitch/callback&response_type=code&scope=user%3Aread%3Aemail+channel%3Aread%3Asubscriptions&state=somerandomstringXhere
 
 exit 0

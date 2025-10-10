@@ -1,4 +1,8 @@
 /*
+# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
+#
+# SPDX-License-Identifier: MIT
+
 sudo apt-get install sqlite3 libsqlite3-dev gcc
 cd sites/games
 go get github.com/mattn/go-sqlite3
