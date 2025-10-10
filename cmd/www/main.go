@@ -82,8 +82,10 @@ var (
 
 func main() {
 	//  --- Make static files available ------------------------------------------
+//        http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./public"))))
 	fs := http.FileServer(http.Dir("./static/www"))
-	http.Handle("/static/www/", http.StripPrefix("/static/www/", fs))
+	// http.Handle("/static/www/*", http.StripPrefix("/static/www/", fs))
+
 
 	tmpls, err = template.ParseGlob(LayoutDir + "/*.tmpl")
 	if err != nil {
@@ -91,7 +93,7 @@ func main() {
 	}
 
 	// Register the handler for all paths
-	http.HandleFunc("/", handler)
+	http.Handle("/", fs)
 	http.HandleFunc("/oauth", oauthHandler)
 	http.HandleFunc("/twitch/callback", oauthHandler) //handleTwitchCallback)
 	http.HandleFunc("/chatoverlay", twitchChatHandler)
