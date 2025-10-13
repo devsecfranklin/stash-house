@@ -42,6 +42,14 @@ function scan_aws_creds() {
   fi
 }
 
+function scan_gcp_creds() {
+  log_info "scan for GCP creds"
+
+    if [ -d "${HOME}/.config/gcloud" ]; then 
+      log_info "found GCP folder"
+    fi
+}
+
 function scan_gnome_keyring() {
   log_header "Scan Gnome keyring"
   # GNOME Keyring is a software application designed to store security
@@ -52,33 +60,37 @@ function scan_gnome_keyring() {
   locate user.keystore
 }
 
-function main(){
-  # https://steflan-security.com/linux-privilege-escalation-credentials-harvesting/
-  scan_aws_creds
-  scan_gnome_keyring
-
-  log_info "Scan for the string PASSWORD"
+function scan_other() {
+    log_info "Scan for the string PASSWORD"
   grep -rnw / -ie "PASSWORD\|PASSWD"
   find . -type f -exec grep -i -I "PASSWORD\|PASSWD" {} /dev/null \;
 
   log_info "Search for history files..."
-  find / -name "*_history" -xdev
+  find / -name "*_history" -xdev 2>/dev/null
 
   log_info "Search for recent files..."
   find / -mmin -30 -xdev 2>/dev/null
 
-  # the JSON files for Google CLoud in ~/.config/gcloud
-
   # strings /dev/mem -n10 | grep -ie “PASSWORD|PASSWD” –color=always
+}
 
-
-
-  # John the Ripper can then be used to extract and crack the hashes and reveal the actual password:
+function crack_hash() {
+    # John the Ripper can then be used to extract and crack the hashes and reveal the actual password:
   #/usr/share/john/keyring2john.py login.keyring > hashes.txt
   #/usr/share/john/keystore2john.py user.keystore
   #john –wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
 
   #MimiPenguin and the post/linux/gather/gnome_keyring_dump Metasploit module can also be used to perform this task.
+  pass
+}
+
+function main(){
+  log_header "tool to show how local credential scanning works"
+  # https://steflan-security.com/linux-privilege-escalation-credentials-harvesting/
+  scan_aws_creds
+  scan_gcp_creds # the JSON files for Google Cloud in ~/.config/gcloud
+  # scan_gnome_keyring
+
 }
 
 main "$@"
