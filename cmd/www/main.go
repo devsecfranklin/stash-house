@@ -1,5 +1,5 @@
 /*
-# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
+# SPDX-FileCopyrightText: ©2025 franklin <smoooth.y62wj@passmail.net>
 #
 # SPDX-License-Identifier: MIT
 */
@@ -28,21 +28,7 @@ type (
 		token string
 	}
 
-	twitchUser struct { // A simple struct to hold the user data we get from Twitch.
-		Data []struct {
-			ID              string `json:"id"`
-			Login           string `json:"login"`
-			DisplayName     string `json:"display_name"`
-			Type            string `json:"type"`
-			BroadcasterType string `json:"broadcaster_type"`
-			Description     string `json:"description"`
-			ProfileImageURL string `json:"profile_image_url"`
-			OfflineImageURL string `json:"offline_image_url"`
-			ViewCount       int    `json:"view_count"`
-			Email           string `json:"email"`
-		} `json:"data"`
-	}
-
+	twitchUser struct { // A simple struct to ht
 	OauthToken struct { // OauthToken data structure passed to the template
 		ClientID  string
 		StateRand string
@@ -68,13 +54,13 @@ var (
 		Endpoint:     twitch.Endpoint,
 	}
 
-	oauthStateString = "random-string-for-demonstration"           // A random string used to protect against CSRF attacks
+	oauthStateString = "random-string-for-demonstration" // A random string used to protect against CSRF attacks
 
 	twitchClientID     string                                      // Twitch API Credentials (IMPORTANT: Load from environment variables in production!)
 	twitchClientSecret string                                      // Needed for code exchange
 	twitchRedirectURI  string = "https://www.bitsmasher.net/oauth" // This MUST match your registered redirect URI
 	twitchOauthToken   string
-	oauthStates        = struct {                                  // Temporary storage for OAuth states. Move into database
+	oauthStates        = struct { // Temporary storage for OAuth states. Move into database
 		sync.RWMutex
 		m map[string]bool // map[state_string]is_valid
 	}{m: make(map[string]bool)}
@@ -89,12 +75,13 @@ func main() {
 		panic(err)
 	}
 
+	// Register the handler for all paths
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/oauth", oauthHandler)
 	http.HandleFunc("/twitch/callback", oauthHandler) //handleTwitchCallback)
 	http.HandleFunc("/chatoverlay", twitchChatHandler)
 	http.HandleFunc("/lab", labPageHandler)
-	http.HandleFunc("/labAnsiblePage", labAnsiblePageHandler)
+    http.HandleFunc("/labAnsiblePage", labAnsiblePageHandler)
 	http.HandleFunc("/labAuthPage", labAuthPageHandler)
 
 	logging.Log_header("Server listening on :8080")
@@ -104,16 +91,16 @@ func main() {
 	}
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	log.Println("default index handler")
+func handler(w http.ResponseWriter, r *http.Request) { // handler for the root path
+	log.Println("Serving index page")
 
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-	page := Page{"bitsmasher.net"}
+	page := Page{"www.bitsmasher.net"}
 
-	err := tmpls.ExecuteTemplate(w, "indexPage", page)
+	err := tmpls.ExecuteTemplate(w, "indexPage", page) // Assuming you have an "indexPage" template
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Internal server error: Could not render index page.", http.StatusInternalServerError)

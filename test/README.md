@@ -1,5 +1,11 @@
 # Testing
 
+## local test
+
+```sh
+autoreconf -i
+```
+
 ## Node
 
 ```sh

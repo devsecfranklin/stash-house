@@ -1,9 +1,266 @@
-# web dev stuff
-*.drawio.bkp
-*.html~
-*.js~
-*.php~
+################################
+# 1. TEMPORARY & BACKUP FILES
+################################
 
-gopher
-
+# Standard editor/OS backups, temporary, and metadata files
+*~
+*.bak
+*.bkp
+*.orig
+*.rej
+*.swp
+*.lock
+.DS_Store
+.Trashes
+.fuse_hidden*
+*#
+.#*
+Thumbs.db
 .nfs*
+*.dtmp
+
+################################
+# 2. BUILD ARTIFACTS & COMPILER OUTPUT
+################################
+
+# General Build & Object Files
+*.o
+*.ko
+*.obj
+*.elf
+*.exe
+*.out
+*.app
+*.hex
+*.mod
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+*.slo
+*.lai
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Directory-based build artifacts
+build/
+_build/
+_test/
+_security/
+.build
+.buildlog
+__pycache__
+.tox/
+DerivedData/
+
+# Autotools/Configure artifacts (often generated)
+aclocal.m4
+autom4te.cache/
+compile
+confdefs.h
+config.guess
+config.h
+config.h.in*
+config.log
+config.status
+config.sub
+configure
+configure~
+configure.lineno
+conftest*
+install-sh
+libtool
+ltmain.sh
+missing
+stamp-h1
+*.mk
+
+# CMake artifacts
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+
+################################
+# 3. ENVIRONMENT, LOGS, & SECRETS
+################################
+
+# Environment and Secrets
+.env
+.cloudflare.ini
+key
+credentials.json
+cred.json
+.boto
+.netrc
+ansible/roles/**/firewall-secrets.yml
+ansible/roles/**/panorama-secrets.yml
+
+# Logs and Plan Files
+*.log
+crash.log
+*.plan
+*_check_results_*.txt
+
+# Python Specific
+gopher # Assuming this is a generated file or directory
+
+################################
+# 4. DEPENDENCY & PACKAGE MANAGEMENT
+################################
+
+# Node.js
+node_modules/
+
+# Python/Virtual Environments
+.venv/ # Standard
+# .tox/ is already in Build Artifacts
+
+# Ansible
+ansible/galaxy_cache/
+ansible/tmp/
+ansible/venv_molecule/
+ansible/collections/*
+
+################################
+# 5. TERRAFORM & INFRASTRUCTURE
+################################
+
+# Core Terraform Files
+.terraform/
+**/.terraform/*
+.terraformrc
+.terraform.d
+.terraform.tfstate.lock.info
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.auto.tfvars
+*.auto.tfvars.json
+tfplan.json
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
+terraform.rc
+*.plan
+
+# Terraform Tools
+.sentinel
+.terrascan
+
+################################
+# 6. IDE & EDITOR SPECIFIC
+################################
+
+# IDEs (General)
+.idea/
+.vscode/ # Common for VS Code, add if needed
+.cache
+.config
+.local
+
+# Xcode (Apple/macOS)
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+*~.nib
+.kdev4/
+*.kdev4
+*.kdevelop*
+*.kdevses
+
+# Other Editors
+.texpadtmp
+*.lyx~
+*.backup # Kile
+.*.swp # gummi, also covered by *.swp at top
+*~[0-9]* # KBibTeX
+*.tps # TeXnicCenter
+./auto/* # Emacs/Auctex
+*.el
+
+################################
+# 7. LATEX / PDF GENERATION
+################################
+# Consolidated from your massive list.
+
+# Core Auxiliary Files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.cb
+*.cb2
+*.fls
+*.fmt
+*.fot
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+*.run.xml
+*.dvi
+*.xdv
+*.synctex*
+*.pdfsync
+*-converted-to.*
+.pdf
+*.fdb_latexmk
+latex.out/
+
+# Indexing, Glossaries, and Specific Packages
+*.acn
+*.acr
+*.alg
+*.bcf
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.idx
+*.ilg
+*.ind
+*.loa
+*.lox
+*.lzo
+*.lzs
+*.nlg
+*.nlo
+*.nls
+*.thm
+_minted*/
+*.pyg
+*.sout
+*.sympy
+pythontex-files-*/
+sympy-plots-for-*.tex/
+
+# Beamer/TikZ/Other
+*.nav
+*.pre
+*.snm
+*.vrb
+*.dpth
+*.md5
+*.auxlock
+*.tdo
+*.xcp
+*.upa
+*.upb
+*.mf
+*.mp
+*.t[0-9]*
+
+################################
+# 8. MISCELLANEOUS (Explicit Files)
+################################

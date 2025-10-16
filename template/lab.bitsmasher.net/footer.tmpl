@@ -1,0 +1,18 @@
+{{define "footer"}}
+
+<p>
+<div class="footer" id="footer">
+	<footer data-testid="footerTemplate">
+<center>
+  [ <a href="/">home</a> ]
+    <br />
+    <small><small><small>
+    <em>“The greater the obstacle, the more glory in overcoming it.” Moliere</em> <br />
+		<div>&copy; {%= fmt.Sprintf("%d", time.Now().Year()) %}</div>
+    </small></small></small>
+</center>
+</footer>
+</div>
+<p>&nbsp;<p>&nbsp;<p>
+
+{{end}}

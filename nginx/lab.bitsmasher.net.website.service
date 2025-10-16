@@ -1,0 +1,12 @@
+    [Unit]
+    Description=website - lab.bitsmasher.net
+    After=network.target
+
+    [Service]
+    User=franklin # Replace with your actual username
+    WorkingDirectory=/mnt/storage1/workspace/website
+    ExecStart=/usr/local/go/bin/go run /mnt/storage1/workspace/website/cmd/lab/main.go
+    Restart=always
+
+    [Install]
+    WantedBy=multi-user.target

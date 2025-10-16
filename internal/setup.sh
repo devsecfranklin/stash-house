@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
+# SPDX-FileCopyrightText: ©2025 franklin <smoooth.y62wj@passmail.net>
 #
 # SPDX-License-Identifier: MIT
-
 
 # --- Color and Logging Functions ---
 # Use tput for compatibility and to check if the terminal supports color.

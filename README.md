@@ -9,7 +9,6 @@ go mod init github.com/devsecfranklin/website
 go mod tidy # create/update go.mod
 go mod verify # create go.sum
 go run cmd/games/*.go # run the application on port 8080
-go run cmd/www/*.go 
 ```
 
 ## Certbot

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
-# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
+# SPDX-FileCopyrightText: ©2021-2025 franklin <franklin@bitsmasher.net>
 #
 # SPDX-License-Identifier: MIT
-#
+
 # ChangeLog:
 #
 # v0.1 06/11/2025 GoLang Project Maintainer script
@@ -35,9 +35,9 @@ log_error() {
 
 # --- Some config Variables ----------------------------------------
 CONTAINER=false
-GO_VERSION="$(/usr/local/go/bin/go version | awk '{print $3}')"
+GO_VERSION="$(go version | awk '{print $3}')"
 DEB_PKG=(nginx certbot)
-#GO_VERSION="$(/usr/local/go/bin/go version | cut -d' ' -f3)"
+#GO_VERSION="$(go version | cut -d' ' -f3)"
 
 # Check if we are inside a container
 check_container() {
@@ -58,25 +58,25 @@ function setup_golang() {
 
   if [ ! -f "go.mod" ]; then
     log_info "Initializing go module"
-    /usr/local/go/bin/go mod init github.com/devsecfranklin/website
+    go mod init github.com/devsecfranklin/website
   fi
 
   log_info "Tidying up Go modules"
-  /usr/local/go/bin/go mod tidy
+  go mod tidy
 
   log_info "Installing Go tools"
-  /usr/local/go/bin/go install github.com/mattn/go-sqlite3
-  /usr/local/go/bin/go install github.com/kisielk/errcheck@latest
-  /usr/local/go/bin/go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+  go install github.com/mattn/go-sqlite3
+  go install github.com/kisielk/errcheck@latest
+  go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
   # test/test.sh  <-- What is this for? Is this a comment or needed?
 
   # Consolidate errcheck installation. No need to do it multiple times.
   if ! command -v errcheck &>/dev/null; then
-      /usr/local/go/bin/go install github.com/kisielk/errcheck@latest
+      go install github.com/kisielk/errcheck@latest
   fi
   # Correct the path for golangci-lint check
   if ! command -v golangci-lint &>/dev/null; then
-      /usr/local/go/bin/go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+      go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
   fi
   
   # go get is deprecated, consider `go mod tidy` or `go install` where applicable
