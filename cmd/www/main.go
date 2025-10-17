@@ -28,7 +28,7 @@ type (
 		token string
 	}
 
-	twitchUser struct { // A simple struct to ht
+	// twitchUser struct { // A simple struct to ht
 	OauthToken struct { // OauthToken data structure passed to the template
 		ClientID  string
 		StateRand string

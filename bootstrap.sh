@@ -35,9 +35,9 @@ log_error() {
 
 # --- Some config Variables ----------------------------------------
 CONTAINER=false
-GO_VERSION="$(go version | awk '{print $3}')"
+GO_VERSION="$(/usr/local/go/bin/go version | awk '{print $3}')"
 DEB_PKG=(nginx certbot)
-#GO_VERSION="$(go version | cut -d' ' -f3)"
+#GO_VERSION="$(/usr/local/go/bin/go version | cut -d' ' -f3)"
 
 # Check if we are inside a container
 check_container() {
@@ -58,25 +58,25 @@ function setup_golang() {
 
   if [ ! -f "go.mod" ]; then
     log_info "Initializing go module"
-    go mod init github.com/devsecfranklin/website
+    /usr/local/go/bin/go mod init github.com/devsecfranklin/website
   fi
 
   log_info "Tidying up Go modules"
-  go mod tidy
+  /usr/local/go/bin/go mod tidy
 
   log_info "Installing Go tools"
-  go install github.com/mattn/go-sqlite3
-  go install github.com/kisielk/errcheck@latest
-  go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+  /usr/local/go/bin/go install github.com/mattn/go-sqlite3
+  /usr/local/go/bin/go install github.com/kisielk/errcheck@latest
+  /usr/local/go/bin/go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
   # test/test.sh  <-- What is this for? Is this a comment or needed?
 
   # Consolidate errcheck installation. No need to do it multiple times.
   if ! command -v errcheck &>/dev/null; then
-      go install github.com/kisielk/errcheck@latest
+      /usr/local/go/bin/go install github.com/kisielk/errcheck@latest
   fi
   # Correct the path for golangci-lint check
   if ! command -v golangci-lint &>/dev/null; then
-      go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+      /usr/local/go/bin/go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
   fi
   
   # go get is deprecated, consider `go mod tidy` or `go install` where applicable

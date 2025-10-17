@@ -1,13 +1,18 @@
-body {background-color:black;color:white;}
 
+body {
+  background-color: #000;
+  color: #fff;
+}
 
-// <weight>: Use a value from 100 to 900
-// <uniquifier>: Use a unique and descriptive class name
-.archivo-four-hunge {
+/* Use a value from 100 to 900 for font-weight.
+   Use a unique and descriptive class name. */
+.archivo-400 {
   font-family: "Archivo", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+  /* If you intend to use variable font axes, set valid axis and numeric values.
+     Example: width ("wdth") typically ranges > 0 — 100 is unusual; use a sensible value
+     for your variable font or remove if not applicable. */
+  font-variation-settings: "wdth" 100;
 }

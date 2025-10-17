@@ -65,7 +65,7 @@ func main() {
 	http.HandleFunc("/failure", failure)
 	http.HandleFunc("/linux_games", lg)
 	http.HandleFunc("/login", LoginPage)
-	http.HandleFunc("/minecraft", mc)
+	// http.HandleFunc("/minecraft", mc)
 	http.HandleFunc("/scoreboard", scoreboard)
 	http.HandleFunc("/submission", submission)
 	//http.HandleFunc("/puzzle0", puzzle0)
@@ -206,23 +206,6 @@ func lg(w http.ResponseWriter, r *http.Request) {
 	page := Page{"Linux Games", username}
 
 	err := index.ExecuteTemplate(w, "lgPage", page)
-	if err != nil {
-		logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-
-}
-
-func mc(w http.ResponseWriter, r *http.Request) {
-	logging.Log_header("Serving Minecraft page")
-
-	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-	w.Header().Set("Pragma", "no-cache")
-	w.Header().Set("Expires", "0")
-
-	username := auth.GetUserName(r)
-	page := Page{"minecraft", username}
-
-	err := index.ExecuteTemplate(w, "mcPage", page)
 	if err != nil {
 		logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
