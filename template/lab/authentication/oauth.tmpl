@@ -1,53 +1,33 @@
-{{define "labPage"}}
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content= "width=device-width, initial-scale=1.0">
-    <meta name="description" content= "games.bitsmasher.net CTF style puzzle">
-    <meta name="author" content="thedevilsvoice">
-    <meta name="orcid" content="https://orcid.org/0000-0003-4586-8500">
-    <meta name="keywords" content="HTML, CSS, GoLang">
-    <meta name="robots" content= "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
-    <title>lab@bitsmasher.net</title>
-    <link rel="stylesheet" href= "/static/lab/css/dark.css">
-</head>
-
+{{define "oauthPage"}}
+{{template "header"}}
 <body>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="text-align: center; color: #6441a5;">Connect to Twitch</h2>
+        <p style="text-align: center; color: #555;">To use our features, please authorize our application with your Twitch account.</p>
 
-  <div clas="container">
-      <div class="center">
+        <form action="https://id.twitch.tv/oauth2/authorize" method="get">
+            <input type="hidden" name="access_type" value="offline">
+            <input type="hidden" name="response_type" value="code">
+            <input type="hidden" name="client_id" value="{{.ClientID}}">
+            <input type="hidden" name="redirect_uri" value="https://www.bitsmasher.net/twitch/callback">
+            <input type="hidden" name="state" value="{{.StateRand}}">
+            <input type="hidden" name="scope" value="chat:read">
 
-        <div class="header" id="header">
-                <h2>The Lab</h2>
-                    <p>The diagram shows some of the important hosts in the network. The colored boxes indicate different subnetworks.</p>
-                    
-        </div>
+                <button type="submit" style="background-color: #6441a5; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-size: 1.1em; cursor: pointer; transition: background-color 0.2s ease;">
+                    Authorize {{.User}}  with Twitch
+                </button>
+        </form>
 
-        <table style="width:100%">
-            <tr>
-                <th style="width:15%"></th>
-                <th style="width:85%"></th>
-            </tr>
-            <tr>
-                <td>
-                    {{template "navigation"}}
-                </td>
-                <td>
-                    <img src="/static/lab/images/lab_diagram.png" alt="please do not eat the crayons" width="720" height="480"> <br />
-                </td>
-            </tr>
-        </table>
-
+        <div style="margin-top: 20px; text-align: center; font-size: 0.9em; color: #777;">
+            <p><strong>Note:</strong> You will be redirected to Twitch to log in and approve the necessary permissions.</p>
+            <p>Requested Permissions: <strong>Manage your channel polls, Read your channel polls.</strong></p>
+            <p>Your unique state ID: <strong>{{.StateRand}}</strong> (for security verification)</p>
         </div>
     </div>
-    {{template "footer"}}
 
+{{template "footer"}}
 </body>
 </html>
-
 {{ end }}
 
 <!--

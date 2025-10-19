@@ -1,0 +1,91 @@
+{{define "artworkPage"}}
+{{template "header"}}
+<body>
+    <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h1 style="text-align: center; color: #6441a5;">Artwork</h1>
+        <p style="text-align: center; color: #555;">What you need to know about getting artwork from an image file into a shape and silkscreen on a PCB.</p>
+
+        <h2 style="color: #6441a5; margin-top: 30px;">Layers on a PCB</h2>
+        <ul style="list-style-type: disc; margin-left: 20px; color: #555;">
+            <li style="margin-bottom: 8px;">The <a href="https://www.pcbway.com/pcb_prototype/PCB_Silkscreen.html" style="color: #007bff; text-decoration: none;"><strong>silkscreen is a layer of ink trace</strong></a> used to identify the PCB components, marks, logos, symbols, and so on.</li>
+            <li style="margin-bottom: 8px;">The <a href="https://en.wikipedia.org/wiki/Solder_mask" style="color: #007bff; text-decoration: none;"><strong>solder mask is a colored layer</strong></a> of polymer that goes over the copper traces.
+                <ul style="list-style-type: circle; margin-left: 20px;">
+                    <li style="margin-bottom: 8px;"><a href="https://www.pcbway.com/pcb_prototype/PCB_Solder_mask.html#:~:text=PCB%20Solder%20mask,between%20closely%20spaced%20solder%20pads." style="color: #007bff; text-decoration: none;">PCB Solder mask</a></li>
+                </ul>
+            </li>
+        </ul>
+        <p style="color: #555;">When an artist provides artwork for a badge there are limits on what can be shown on the silkscreen layer. In other words, an 8-bit black and white graphic would look closer to the original artwork. Full color graphics with lots of lines and shading would not be reproduced well on the silkscreen layer.</p>
+
+        <h2 style="color: #6441a5; margin-top: 30px;">Convert the Image to Plain SVG</h2>
+        <ul style="list-style-type: disc; margin-left: 20px; color: #555;">
+            <li style="margin-bottom: 8px;"><a href="https://inkscape.org/release/inkscape-1.3.2/" style="color: #007bff; text-decoration: none;"><strong>Install Inkscape</strong></a></li>
+            <li style="margin-bottom: 8px;">Import the jpg/png graphics file to Inkscape.</li>
+            <li style="margin-bottom: 8px;">Do not save as Inkscape SVG. Save the graphic as a "plain SVG".</li>
+            <li style="margin-bottom: 8px;">Now "clip" the image to the desired size.
+                <ul style="list-style-type: circle; margin-left: 20px;">
+                    <li style="margin-bottom: 8px;">Sometimes it is easier to do this with <a href="https://www.gimp.org/downloads/" style="color: #007bff; text-decoration: none;">gimp</a></li>
+                    <li style="margin-bottom: 8px;">place a shape such as a rectangle on top of the image in the area you wish to crop, and select both the image and shape</li>
+                    <li style="margin-bottom: 8px;">Note that the clipping shape or object always goes on top of the image to be clipped.</li>
+                    <li style="margin-bottom: 8px;">Now, go to Object &gt; Clip &gt; Set to apply clipping and crop the image.</li>
+                    <li style="margin-bottom: 8px;">The image is now cropped according to the shapes you use to clip</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2 style="color: #6441a5; margin-top: 30px;">Convert the Graphic to Bitmap</h2>
+        <ul style="list-style-type: disc; margin-left: 20px; color: #555;">
+            <li style="margin-bottom: 8px;"><a href="https://www.gimp.org/downloads/" style="color: #007bff; text-decoration: none;"><strong>Download/install gimp</strong></a> on your computer.</li>
+            <li style="margin-bottom: 8px;">Open the <code>.svg</code> file from the last step in Gimp.
+                <ul style="list-style-type: circle; margin-left: 20px;">
+                    <li style="margin-bottom: 8px;">Choose all the defaults in the dialogs.</li>
+                    <li style="margin-bottom: 8px;">You can change the scale at this time.</li>
+                    <li style="margin-bottom: 8px;">Recommend to do everything in metric units to avoid conversion mistakes.</li>
+                </ul>
+            </li>
+            <li style="margin-bottom: 8px;">Select <code>file -&gt; Export as</code> and uncheck the box that says "Select file type by Extension"</li>
+            <li style="margin-bottom: 8px;">Now export as windows 24 bit BMP.
+                <ul style="list-style-type: circle; margin-left: 20px;">
+                    <li style="margin-bottom: 8px;">Check the box for "do not write color space information" under the "compatibility options" menu.</li>
+                    <li style="margin-bottom: 8px;">Under advanced options select 24 bit color.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2 style="color: #6441a5; margin-top: 30px;">Import the Bitmap to KiCad, Export Footprint</h2>
+        <ul style="list-style-type: disc; margin-left: 20px; color: #555;">
+            <li style="margin-bottom: 8px;">From the top level of the kicad project, select the Image Converter tool.</li>
+            <li style="margin-bottom: 8px;">Now load in the bitmap from the previous step.</li>
+            <li style="margin-bottom: 8px;">Export this as a footprint to the <code>kicad/footprints</code> directory using the "export to file" button.</li>
+        </ul>
+
+        <h2 style="color: #6441a5; margin-top: 30px;">Create a New Library, add Footprint</h2>
+        <ul style="list-style-type: disc; margin-left: 20px; color: #555;">
+            <li style="margin-bottom: 8px;">From top level of KiCad project, select the "Footprint Editor"</li>
+            <li style="margin-bottom: 8px;">Create a new library in <code>kicad/libraries</code>. Usual name we use is <code>dead10c5</code></li>
+            <li style="margin-bottom: 8px;">Make sure you are on the "edge cuts" layer (select from dropdown).</li>
+            <li style="margin-bottom: 8px;">Import the <code>.mod</code> footprint file you created, save it in the new library.</li>
+        </ul>
+
+        <h2 style="color: #6441a5; margin-top: 30px;">Add Outline to PCB</h2>
+        <ul style="list-style-type: disc; margin-left: 20px; color: #555;">
+            <li style="margin-bottom: 8px;">Add a PCB to the project.</li>
+            <li style="margin-bottom: 8px;">Make sure you are on the "edge cuts" layer (select from dropdown).</li>
+            <li style="margin-bottom: 8px;">Click on <code>Place</code> and <code>add footprint</code></li>
+            <li style="margin-bottom: 8px;">Click on the new outline with the selection tool and go into properties.</li>
+            <li style="margin-bottom: 8px;">Uncheck the "reference designator" box.</li>
+            <li style="margin-bottom: 8px;">Select the <code>*.kicad_mod</code> file you created.</li>
+            <li style="margin-bottom: 8px;">Scale it</li>
+            <li style="margin-bottom: 8px;">Import the graphics to the silkscreen layer with <code>File -&gt; import graphics</code></li>
+        </ul>
+
+        <h2 style="color: #6441a5; margin-top: 30px;">Extra links</h2>
+        <ul style="list-style-type: disc; margin-left: 20px; color: #555;">
+            <li style="margin-bottom: 8px;"><a href="https://www.re-innovation.co.uk/docs/adding-logo-to-kicad/" style="color: #007bff; text-decoration: none;">Adding a logo to your KiCAD PCB</a></li>
+            <li style="margin-bottom: 8px;"><a href="https://acoptex.com/wp/how-to-add-logo-or-image-on-the-pcb-board-silkscreen-layer-in-kicad-v5/" style="color: #007bff; text-decoration: none;">How to add logo or image on the PCB board silkscreen layer in KiCad v5</a></li>
+        </ul>
+    </div>
+
+{{template "footer"}}
+</body>
+</html>
+{{ end }}

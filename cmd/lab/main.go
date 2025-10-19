@@ -26,8 +26,6 @@ type (
 )
 
 func main() {
-	//fs := http.FileServer(http.Dir("./static"))
-	//http.Handle("/static/*", http.StripPrefix("/static/", fs))
     fs := http.FileServer(http.Dir("./static/lab"))
     http.Handle("/static/lab/", http.StripPrefix("/static/lab/", fs))
 
