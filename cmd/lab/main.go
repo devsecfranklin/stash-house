@@ -26,25 +26,26 @@ type (
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("./static"))
-	http.Handle("/static/*", http.StripPrefix("/static/", fs))
+	//fs := http.FileServer(http.Dir("./static"))
+	//http.Handle("/static/*", http.StripPrefix("/static/", fs))
+    fs := http.FileServer(http.Dir("./static/lab"))
+    http.Handle("/static/lab/", http.StripPrefix("/static/lab/", fs))
 
-	tmpls, err = template.ParseGlob(LayoutDir + "/*.tmpl")
-	if err != nil {
-		logging.Log_info(err.Error())
-		panic(err)
-	}
+    tmpls, err = template.ParseGlob(LayoutDir + "/*.tmpl")
+    if err != nil {
+        logging.Log_info(err.Error())
+	panic(err)
+    }
 
-	http.HandleFunc("/", handler)
-        // http.HandleFunc("/lab", labHandler)
-        http.HandleFunc("/minecraft", minecraftPageHandler)
-
-
-	logging.Log_header("Server listening on :8080")
-	err = http.ListenAndServe(":8080", nil)
-	if err != nil {
-		logging.Log_fatal(fmt.Sprintf("Server failed to start: %v", err))
-	}
+    http.HandleFunc("/", handler)
+    http.HandleFunc("/lab", labPageHandler)
+    http.HandleFunc("/minecraft", minecraftPageHandler)
+    http.HandleFunc("/auth", authPageHandler)
+    logging.Log_header("Server listening on :8080")
+    err = http.ListenAndServe(":8080", nil)
+    if err != nil {
+        logging.Log_fatal(fmt.Sprintf("Server failed to start: %v", err))
+    }
 }
 
 func handler(w http.ResponseWriter, r *http.Request) { // handler for the root path
@@ -58,8 +59,8 @@ func handler(w http.ResponseWriter, r *http.Request) { // handler for the root p
 
 	err := tmpls.ExecuteTemplate(w, "indexPage", page) // Assuming you have an "indexPage" template
 	if err != nil {
-		logging.Log_info(err.Error())
-		http.Error(w, "Internal server error: Could not render index page.", http.StatusInternalServerError)
+          logging.Log_info(err.Error())
+	  http.Error(w, "Internal server error: Could not render index page.", http.StatusInternalServerError)
 	}
 }
 
@@ -73,11 +74,44 @@ func minecraftPageHandler(w http.ResponseWriter, r *http.Request) {
         
         //username := auth.GetUserName(r)
         page := Page{"minecraft"}
-        
-        err := index.ExecuteTemplate(w, "mcPage", page)
+        err := tmpls.ExecuteTemplate(w, "mcPage", page)
         if err != nil {
-                // logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
-		logging.Log_info(err.Error())
-		http.Error(w, "Internal server error: Could not render lab auth page.", http.StatusInternalServerError)
+          // logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	  logging.Log_info(err.Error())
+	  http.Error(w, "Internal server error: Could not render minecraft page.", http.StatusInternalServerError)
 	}
+}
+
+func labPageHandler(w http.ResponseWriter, r *http.Request) {
+        logging.Log_header("Serving Lab page")
+        
+        w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+        w.Header().Set("Pragma", "no-cache")
+        w.Header().Set("Expires", "0")
+        
+        //username := auth.GetUserName(r)
+        page := Page{"lab"}
+        
+        err := tmpls.ExecuteTemplate(w, "labPage", page)
+        if err != nil {
+          logging.Log_info(err.Error())
+          http.Error(w, "Internal server error: Could not render lab page.", http.StatusInternalServerError)                                                                                             
+        }
+}
+
+func authPageHandler(w http.ResponseWriter, r *http.Request) {
+        logging.Log_header("Serving auth page")
+        
+        w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+        w.Header().Set("Pragma", "no-cache")
+        w.Header().Set("Expires", "0")
+        
+        //username := auth.GetUserName(r)
+        page := Page{"auth"}
+        
+        err := tmpls.ExecuteTemplate(w, "authPage", page)
+        if err != nil {
+          logging.Log_info(err.Error())
+          http.Error(w, "Internal server error: Could not render auth page.", http.StatusInternalServerError)                                                                                             
+        }
 }
