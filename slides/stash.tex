@@ -9,15 +9,16 @@
 % By default, it is to 128mm by 96mm(4:3)
 \documentclass[aspectratio=169]{beamer}
 %\setbeamertemplate{headline navigation symbols}{} 	% no navigation symbols
-\usetheme{Warsaw}
-\usecolortheme{seahorse}
-\usepackage[absolute,overlay]{textpos} % Text positioning
+% \usetheme{Warsaw}
+% \usecolortheme{seahorse}
+% \usepackage[absolute,overlay]{textpos} % Text positioning
 
 
 %Information to be included in the title page:
 \title{Stash House}
 \subtitle{A Toolkit to Collect and Hide Local Secrets}
 \author{Franklin D.}
+% \institute{pale shadow}
 \date{2025}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SECTION
@@ -126,14 +127,26 @@
 %	\tableofcontents
 %\end{frame}
 
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/evil-dead-cabin.jpg}}
+\begin{frame}
+	\frametitle{Requisite Bio Slide}
+	\begin{itemize}
+		\item I discovered
+		\item I will incorporate 
+	\end{itemize}
+	\note[item]{link to socials or something}
+\end{frame}
+}
+
 % you can uncomment one of these for the whole doc, or add at the start of each section as desired
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/field.jpg}}
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/evil-dead-cabin.jpg}}
 %\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../images/landscape.jpg}}
 %\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../images/tree.jpg}}
-
 \sectionsubtitle{The Lost Art of Keeping a Secret}
 \section{Introduction}
 
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/landscape.jpg}}
 \begin{frame}
     \frametitle{Step One: Admit That You Have a Problem}
 
@@ -157,12 +170,14 @@
 
 \end{frame}
 
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/landscape.jpg}}
 \begin{frame}
     \frametitle{Project Goals}
     \begin{itemize}
         \item Locate unprotected credentials on the local host
         \item Encrypt and safely store these credentials and other secrets.
         \item Access to credential store from multiple locations.
+        \item We gain the ability to use our encrypted secrets in our applications.
     \end{itemize}
 
     \note[item]{Clean up the ones we know about}
@@ -180,20 +195,24 @@
         \item Set up your GPG key.
         \item Add items to DB, remove plain text tokens and secrets.
     \end{itemize}
+    In the following slides we will break each of these items down.
 \end{frame}
 
 \begin{frame}
     \frametitle{Demo Script: Setup}
     \begin{itemize}
         \item \href{ https://github.com/devsecfranklin/stash-house/blob/main/bin/install-client.sh }{Here is a stash-house setup tool that you can use/modify for your system. }
+        \item ``https://github.com/devsecfranklin/stash-house''
     \end{itemize}
-    \note[item] {Do a small demo here}
+    \note[item]{Do a small demo here}
+    \note[item]{May want to have a video ready just in case}
 \end{frame}
 
-
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/halloween1.jpg}}
 \sectionsubtitle{What is it you want to protect?}
 \section{Finding and Protecting Secrets}
 
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/landscape.jpg}}
 \begin{frame}
 	\frametitle{What Do We Mean by Secrets, Exactly}
 	\begin{itemize}
@@ -205,6 +224,7 @@
 
 \end{frame}
 
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/landscape.jpg}}
 \begin{frame}
 	\frametitle{The Process of Finding Secrets}
 	\begin{itemize}
