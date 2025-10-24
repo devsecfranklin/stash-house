@@ -1,0 +1,17 @@
+name: Build LaTeX document
+on:
+  - pull_request
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: stash.tex
+          args: '-pdf -file-line-error -interaction=nonstopmode -shell-escape'
+          working_directory: slides
+

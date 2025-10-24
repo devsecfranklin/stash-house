@@ -1,6 +1,6 @@
 # Project Stash House
 
-[![markdown](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml)
+[![markdown](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml) [![Build PDF](https://github.com/devsecfranklin/stash-house/actions/workflows/latex.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/latex.yml)
 
 In this project we consider the issue of a "dirty" local development
 environment, and precisely what to do about it. Using freely available
