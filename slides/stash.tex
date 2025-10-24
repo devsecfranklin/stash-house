@@ -13,15 +13,13 @@
 % \usecolortheme{seahorse}
 % \usepackage[absolute,overlay]{textpos} % Text positioning
 
+\usepackage{xcolor}
 
-%Information to be included in the title page:
 \title{Stash House}
 \subtitle{A Toolkit to Collect and Hide Local Secrets}
 \author{Franklin D.}
-% \institute{pale shadow}
+\institute{Recreational Computing Institute}
 \date{2025}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SECTION
 
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -50,7 +48,7 @@
 
 \makeatletter
 \def\sectionsubtitle#1{\gdef\@sectionsubtitle{#1}}
-\AtBeginSection[]{%
+\AtBeginSection[]{
 	\begingroup
 	% Lighter, beamer native version
 	\setbeamercolor{background canvas}{bg=gray!30}
@@ -109,8 +107,8 @@
 % customize the caption on figures
 \setbeamertemplate{caption}[numbered]
 \setbeamerfont{caption}{size=\large}
-\setbeamercolor{caption}{fg=black}
-\setbeamercolor{caption name}{fg=black}
+\setbeamercolor{caption}{fg=white}
+\setbeamercolor{caption name}{fg=white}
 
 \begin{document}
 
@@ -130,10 +128,12 @@
 {
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/evil-dead-cabin.jpg}}
 \begin{frame}
-	\frametitle{Requisite Bio Slide}
+	\frametitle{\textcolor{white}{Requisite Bio Slide}}
 	\begin{itemize}
-		\item I discovered
-		\item I will incorporate 
+		\item \textcolor{white}{I have been doing things to computers for a long time.}
+		\item \textcolor{white}{During the day I am a computer security consultant at a big company.}
+		\item \textcolor{white}{I teach in the afternoons.}
+		\item \textcolor{white}{\href{https://g.dev/franklin}{Some of my background is at this link https://g.dev/franklin}}
 	\end{itemize}
 	\note[item]{link to socials or something}
 \end{frame}
@@ -146,14 +146,15 @@
 \sectionsubtitle{The Lost Art of Keeping a Secret}
 \section{Introduction}
 
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/landscape.jpg}}
+{
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/Gemini\_Generated\_Image\_57v54w57v54w57v5.png}}%
 \begin{frame}
-    \frametitle{Step One: Admit That You Have a Problem}
+    \frametitle{\textcolor{white}{Step One: Admit That You Have a Problem}}
 
     \begin{columns}
         \column{0.5\textwidth}
 
-        Most of us have a (reasonable?) expectation of trust for the files on our local machine. And so, we leave things like saved passwords and other credentials and secrets pasted into text files for quick access.
+        \textcolor{white}{Most of us have a (reasonable?) expectation of trust for the files on our local machine. And so, we leave things like saved passwords and other credentials and secrets pasted into text files for quick access.}
         \column{0.5\textwidth}
 
         \begin{figure}
@@ -169,8 +170,10 @@
     \note[item]{No it's not good}
 
 \end{frame}
+}
 
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/landscape.jpg}}
+{
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/Gemini\_Generated\_Image\_57v54w57v54w57v5.png}}%
 \begin{frame}
     \frametitle{Project Goals}
     \begin{itemize}
@@ -185,6 +188,7 @@
     \note[item]{What prior art is out there}
 
 \end{frame}
+}
 
 \begin{frame}
     \frametitle{Setting Up your Haunted Stash House}
@@ -208,11 +212,13 @@
     \note[item]{May want to have a video ready just in case}
 \end{frame}
 
+
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/halloween1.jpg}}
 \sectionsubtitle{What is it you want to protect?}
 \section{Finding and Protecting Secrets}
 
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/landscape.jpg}}
+{
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/Gemini\_Generated\_Image\_57v54w57v54w57v5.png}}%
 \begin{frame}
 	\frametitle{What Do We Mean by Secrets, Exactly}
 	\begin{itemize}
@@ -223,8 +229,9 @@
     \note[item]{In my case I had a whole folder of text files that I'd collected of some time.}
 
 \end{frame}
+}
 
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/landscape.jpg}}
+{
 \begin{frame}
 	\frametitle{The Process of Finding Secrets}
 	\begin{itemize}
@@ -234,6 +241,7 @@
 	\note[item]{There are some known places we can look}
 	\note[item]{Clean up the ones we know about}
 \end{frame}
+}
 
 \begin{frame}
 	\frametitle{Demo Script: Scanning Your Local System}
@@ -333,6 +341,33 @@
         \item There is a container file in the project repo.
     \end{itemize}
     \note[item]{Try and include this tool before presentation}
+\end{frame}
+
+\begin{frame}
+	\frametitle{SSH Key Setup}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+	\note[item]{We will use the same repository as this slide deck is stored in for demonstration purposes.}
+	\note[item]{May want to have a video ready just in case}
+\end{frame}
+
+\begin{frame}
+	\frametitle{GnuPG Setup}
+	\begin{itemize}
+		\item \href{https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key}{GPG key setup.}
+		\item 
+	\end{itemize}
+	\note[item]{\href{https://devhints.io/gnupg}{There is a cheat sheet here.}}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Github Setup}
+	\begin{itemize}
+		\item 
+	\end{itemize}
+	\note[item]{We will use the same repository as this slide deck is stored in for demonstration purposes.}
+	\note[item]{May want to have a video ready just in case}
 \end{frame}
 
 \end{document}

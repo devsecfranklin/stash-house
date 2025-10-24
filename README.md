@@ -1,6 +1,6 @@
 # Project Stash House
 
-[![markdown](https://github.com/devsecfranklin/stash/actions/workflows/markdown.yml/badge.svg)](https://github.com/devsecfranklin/stash/actions/workflows/markdown.yml)
+[![markdown](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml)
 
 In this project we consider the issue of a "dirty" local development
 environment, and precisely what to do about it. Using freely available
@@ -11,4 +11,5 @@ much more efficient and secure manner.
 * Next we do some local search and cleanup to get our systems in order.
 * Finally, we will see how we can still easily use these credentials, though
   they remain encrypted at rest and in transit to our "vault" from now on.
-  
+
+![stash house](https://github.com/devsecfranklin/stash-house/blob/main/static/images/COD-PLAY-MAPS-CORE-STASH-HOUSE-TOUT.jpg)<br>*Stash House*
