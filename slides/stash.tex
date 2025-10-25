@@ -213,12 +213,14 @@
 \end{frame}
 
 
+{
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
-\sectionsubtitle{What is it you want to protect?}
+\sectionsubtitle{\textcolor{black}{What is it you want to protect?}}
 \section{Finding and Protecting Secrets}
+}
 
 {
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/Gemini\_Generated\_Image\_57v54w57v54w57v5.png}}%
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%%
 \begin{frame}
 	\frametitle{What Do We Mean by Secrets, Exactly}
 	\begin{itemize}
@@ -232,6 +234,7 @@
 }
 
 {
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
 \begin{frame}
 	\frametitle{The Process of Finding Secrets}
 	\begin{itemize}
@@ -243,6 +246,7 @@
 \end{frame}
 }
 
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
 \begin{frame}
 	\frametitle{Demo Script: Scanning Your Local System}
 	\begin{itemize}
@@ -251,15 +255,20 @@
 	\note[item]{Do a small demo here}
 \end{frame}
 
-\sectionsubtitle{We found the secrets, now what?}
-\section{Hide Your Goodies}
+{
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
+	\sectionsubtitle{We found the secrets, now what?}
+	\section{Hide Your Goodies}
+}
+
 
 \begin{frame}
     \frametitle{Setting up GnuPG}
-    \begin{itemize}
-        \item Install GnuPG in your shell so you can encrypt things.
-    \end{itemize}
-    \note[item]{test}
+	\begin{itemize}
+	\item \href{https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key}{GPG key setup.}
+	\item 
+\end{itemize}
+\note[item]{\href{https://devhints.io/gnupg}{There is a cheat sheet here.}}
 \end{frame}
 
 \begin{frame}
@@ -296,9 +305,13 @@
 	\end{itemize}
 \end{frame}
 
-\sectionsubtitle{How to Use What You Built}
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
+\sectionsubtitle{\textcolor{black}{How to Use What You Built}}
 \section{Using Your Stashed Tokens}
+}
 
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
 \begin{frame}
 	\frametitle{Using Tokens}
 	\begin{itemize}
@@ -314,16 +327,22 @@
 \note[item]{Don't be lazy, you still have to use a password manager}
 \end{frame}
 
-\sectionsubtitle{Where is all this going?}
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
+\sectionsubtitle{\textcolor{black}{Where is all this going?}}
 \section{Other Cool Stuff}
+}
 
 \begin{frame}
     \frametitle{Keyringer}
     \begin{itemize}
-        \item I discovered this other cool tool.
+        \item I found a tool called ``keyringer'' that is supposed to do all this already.
+        \item ``Keyringer lets you manage and share secrets using GnuPG and Git in a distributed fashion.''
         \item I will incorporate it into this ...toolkit?
     \end{itemize}
-    \note[item]{Try and include this tool before presentation}
+    \note[item]{It has custom commands to encrypt, decrypt and recrypt secrets as well as create key pairs and supports encryption to multiple recipients and groups of different recipients to ensure the same repository can be shared with a workgroup but allowing to keep some secrets available just to subsets of that group.
+    	
+    OpenSSL is needed to generate X.509 certificates and keys and xdg-utils are needed to open and edit encrypted secrets according to their file types. }
 \end{frame}
 
 \begin{frame}
@@ -333,6 +352,15 @@
         \item There are all sorts of apps and clients out there.
     \end{itemize}
     \note[item]{Try and include an update before presentation}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Kerberos and OpenLDAP}
+	\begin{itemize}
+		\item Research if there is any possible overlap.
+		\item Integration with Kerberos on a LAN?
+	\end{itemize}
+	\note[item]{Research if there is any possible overlap.}
 \end{frame}
 
 \begin{frame}
@@ -350,15 +378,6 @@
 	\end{itemize}
 	\note[item]{We will use the same repository as this slide deck is stored in for demonstration purposes.}
 	\note[item]{May want to have a video ready just in case}
-\end{frame}
-
-\begin{frame}
-	\frametitle{GnuPG Setup}
-	\begin{itemize}
-		\item \href{https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key}{GPG key setup.}
-		\item 
-	\end{itemize}
-	\note[item]{\href{https://devhints.io/gnupg}{There is a cheat sheet here.}}
 \end{frame}
 
 \begin{frame}
