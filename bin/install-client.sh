@@ -11,6 +11,7 @@
 DEB_PKG=(git gnupg keyringer pass)
 LOCAL_STASH="${HOME}/.stash-house"
 #SCRIPT_DIR="${0%/*}" # echo "$SCRIPT_DIR"
+LRED=$(tput setaf 1)
 
 if [ -f "./common.sh" ]; then
 	source "./common.sh"
