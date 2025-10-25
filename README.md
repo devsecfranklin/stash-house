@@ -12,4 +12,6 @@ much more efficient and secure manner.
 * Finally, we will see how we can still easily use these credentials, though
   they remain encrypted at rest and in transit to our "vault" from now on.
 
+* [Click here to download a PDF of the slide deck.](https://github.com/devsecfranklin/stash-house/blob/main/slides/stash.pdf)
+
 ![stash house](https://github.com/devsecfranklin/stash-house/blob/main/static/images/COD-PLAY-MAPS-CORE-STASH-HOUSE-TOUT.jpg)<br>*Stash House*
