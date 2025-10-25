@@ -1,6 +1,6 @@
 # Project Stash House
 
-[![markdown](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml) [![Build PDF](https://github.com/devsecfranklin/stash-house/actions/workflows/latex.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/latex.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17442786.svg)](https://doi.org/10.5281/zenodo.17442786) [![markdown](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml) [![Build PDF](https://github.com/devsecfranklin/stash-house/actions/workflows/latex.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/latex.yml)
 
 In this project we consider the issue of a "dirty" local development
 environment, and precisely what to do about it. Using freely available
@@ -12,6 +12,6 @@ much more efficient and secure manner.
 * Finally, we will see how we can still easily use these credentials, though
   they remain encrypted at rest and in transit to our "vault" from now on.
 
-* [Click here to download a PDF of the slide deck.](https://github.com/devsecfranklin/stash-house/blob/main/slides/stash.pdf)
+* [Click here for the presentation PDF](https://zenodo.org/records/17442786)
 
 ![stash house](https://github.com/devsecfranklin/stash-house/blob/main/static/images/COD-PLAY-MAPS-CORE-STASH-HOUSE-TOUT.jpg)<br>*Stash House*
