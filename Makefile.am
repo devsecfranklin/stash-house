@@ -30,3 +30,6 @@ endif
 
 dist-clean: clean
 	rm -rf _build
+
+lint:
+	lacheck slides/stash.tex

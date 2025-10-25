@@ -112,32 +112,20 @@
 
 \begin{document}
 
-%{
-%\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/technology-presentation.jpg}}%
-%\begin{frame}
-%	\titlepage
-%    \note[item]{https://www.youtube.com/watch?v=DYDT165LGBY}
-%\end{frame}
-%}
+{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/technology-presentation.jpg}}%
+\begin{frame}
+	% \titlepagestash apply
+    \note[item]{https://www.youtube.com/watch?v=DYDT165LGBY}
+\end{frame}
+}
 
 %\begin{frame}
 %	\frametitle{Table of Contents}
 %	\tableofcontents
 %\end{frame}
 
-{
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-back.jpg}}%
-\begin{frame}
-	\frametitle{\textcolor{black}{Requisite Bio Slide}}
-	\begin{itemize}
-		\item {I have been doing things to computers for a long time.}
-		\item {During the day I am a computer security consultant at a big company.}
-		\item {I teach in the afternoons.}
-		\item {\href{https://g.dev/franklin}{Some of my background is at this link https://g.dev/franklin}}
-	\end{itemize}
-	\note[item]{link to socials or something}
-\end{frame}
-}
+
 
 % you can uncomment one of these for the whole doc, or add at the start of each section as desired
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
@@ -148,16 +136,13 @@
 
 {
 	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
-\begin{frame}
-    \frametitle{Step One: Admit That You Have a Problem}
-
-    \begin{columns}
-        \column{0.5\textwidth}
-
-        Most of us have a (reasonable?) expectation of trust for the files on our local machine. And so, we leave things like saved passwords and other credentials and secrets pasted into text files for quick access.
-        \column{0.5\textwidth}
-
-        \begin{figure}
+	\begin{frame}
+	\frametitle{Step One: Admit That You Have a Problem}
+	\begin{columns}
+		\column{0.5\textwidth}
+		Most of us have a (reasonable?) expectation of trust for the files on our local machine. And so, we leave things like saved passwords and other credentials and secrets pasted into text files for quick access.
+		\column{0.5\textwidth}
+		\begin{figure}
             \centering
             \includegraphics[width=0.77\textwidth]{../static/images/problem.jpg}
             \caption{You}
@@ -165,13 +150,26 @@
         \end{figure}
 
     \end{columns}
-
     \note[item]{Yes you do this}
-    \note[item]{No it's not good}
+\note[item]{No it's not good}
+
 
 \end{frame}
 }
 
+{
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-back.jpg}}%
+	\begin{frame}
+		\frametitle{\textcolor{black}{Requisite Bio Slide}}
+		\begin{itemize}
+			\item {I have been doing things to computers for a long time.}
+			\item {During the day I am a computer security consultant at a big company.}
+			\item {I teach in the afternoons.}
+			\item {\href{https://g.dev/franklin}{Some of my background is at this link https://g.dev/franklin}}
+		\end{itemize}
+		\note[item]{link to socials or something}
+	\end{frame}
+}
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-back.jpg}}
 \begin{frame}
@@ -205,7 +203,9 @@
 \begin{frame}
     \frametitle{Demo Script: Setup}
     \begin{itemize}
-        \item \href{ https://github.com/devsecfranklin/stash-house/blob/main/bin/install-client.sh }{Here is a stash-house setup tool that you can use/modify for your system. }
+        \item \href{ https://github.com/devsecfranklin/stash-house/blob/main/bin/install-client.sh }{Here is a stash-house setup tool that you can use/modify for your system. }    \note[item]{Yes you do this}
+        \note[item]{No it's not good}
+        
         \item ``https://github.com/devsecfranklin/stash-house''
     \end{itemize}
     \note[item]{Do a small demo here}
@@ -338,9 +338,9 @@
     \begin{itemize}
         \item I found a tool called ``keyringer'' that is supposed to do all this already.
         \item ``Keyringer lets you manage and share secrets using GnuPG and Git in a distributed fashion.''
-        \item I will incorporate it into this ...toolkit?
+        \item I will incorporate it into this tool set if that makes sense.
     \end{itemize}
-    \note[item]{It has custom commands to encrypt, decrypt and recrypt secrets as well as create key pairs and supports encryption to multiple recipients and groups of different recipients to ensure the same repository can be shared with a workgroup but allowing to keep some secrets available just to subsets of that group.
+    \note[item]{It has custom commands to encrypt, decrypt and re-crypt secrets as well as create key pairs and supports encryption to multiple recipients and groups of different recipients to ensure the same repository can be shared with a work group but allowing to keep some secrets available just to subsets of that group.
     	
     OpenSSL is needed to generate X.509 certificates and keys and xdg-utils are needed to open and edit encrypted secrets according to their file types. }
 \end{frame}
