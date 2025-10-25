@@ -6,6 +6,7 @@
 
 # ChangeLog:
 #
+# v0.1 02/25/2025 initial version
 
 # --- Script Configuration ---
 # Exit immediately if a command exits with a non-zero status.
