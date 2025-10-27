@@ -9,6 +9,7 @@
 # v0.1 02/25/2025 initial version
 
 DEB_PKG=(curl git gnupg2 keyringer make pass podman-compose)
+LRED=$(tput setaf 1)
 #SCRIPT_DIR="${0%/*}" # echo "$SCRIPT_DIR"
 
 if [ -f "./common.sh" ]; then

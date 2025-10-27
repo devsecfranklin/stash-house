@@ -20,7 +20,11 @@ endif
 	find . -name '*.pyc' | xargs rm -rf
 	find . -name '__pycache__' | xargs rm -rf
 	for trash in AUTHORS ChangeLog aclocal.m4 autom4te.cache config config.log \
-		config.status configure configure~ config.h.in~ libtool Makefile Makefile.in NEWS; \
+		config.status configure configure~ config.h.in~ libtool Makefile Makefile.in NEWS \
+		slides/*.aux slides/*.bbl slides/*.blg slides/*.lof slides/*.log slides/*.lot \
+		slides/*.out slides/*.pdf slides/*.synctex.gz slides/*.toc \
+		paper/*.aux paper/*.bbl paper/*.blg paper/*.lof paper/*.log \
+		paper/*.lot paper/*.out paper/*.pdf paper/*.synctex.gz paper/*.toc ;\
 	do \
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\
@@ -33,3 +37,10 @@ dist-clean: clean
 
 lint:
 	lacheck slides/stash.tex
+
+.PHONY: slides
+slides: 
+	cd slides && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && cd -
+# bibtex stash
+	cd slides && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && cd -
+
