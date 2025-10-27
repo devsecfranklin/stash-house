@@ -6,7 +6,13 @@
 
 # ChangeLog:
 
+DEB_PKG=(libpcsclite-dev)
 LRED=$(tput setaf 1)
+
+function setup_foks() {
+  log_header "setup foks"
+  /usr/local/go/bin/go install github.com/foks-proj/go-foks/client/foks@latest
+}
 
 if [ -f "./bin/common.sh" ]; then
   source "./bin/common.sh"
@@ -16,11 +22,18 @@ else
   exit 1
 fi
 
-FILES=(AUTHORS ChangeLog INSTALL NEWS)
-for i in "${FILES[@]}"; do
-  touch "${i}"
-done
+function create_files() {
+  log_header "Create files for gnu compiler"
+  FILES=(AUTHORS ChangeLog INSTALL NEWS)
+  for i in "${FILES[@]}"; do
+    touch "${i}"
+  done
+} 
 
+function main() {
+  install_debian
+  create_files
+  setup_foks
 if [ ! -d "aclocal" ]; then
   log_info "create aclocal dir"
   mkdir -p aclocal
@@ -46,3 +59,7 @@ if [ -f "./configure" ]; then
 fi
 
 log_success "Complete!"
+ }
+
+
+main "$@"

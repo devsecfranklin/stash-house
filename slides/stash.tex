@@ -22,6 +22,8 @@
 \institute{University of Colorado}
 \date{2025}
 
+\usepackage{graphicx}
+\usepackage{multimedia}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{tikz}
@@ -112,7 +114,6 @@
 \setbeamercolor{caption name}{fg=white}
 
 \begin{document}
-
 {
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/technology-presentation.jpg}}%
 \begin{frame}
@@ -121,19 +122,31 @@
 \end{frame}
 }
 
-%\begin{frame}
-%	\frametitle{Table of Contents}
-%	\tableofcontents
-%\end{frame}
+{
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
+    \sectionsubtitle{\textcolor{black}{The Lost Art of Keeping a Secret}}
+    \section{Introduction}
+}
 
+{
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-back.jpg}}%
+    \begin{frame}
+        \frametitle{\textcolor{black}{Requisite Bio Slide}}
 
-
-% you can uncomment one of these for the whole doc, or add at the start of each section as desired
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
-%\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../images/landscape.jpg}}
-%\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../images/tree.jpg}}
-\sectionsubtitle{\textcolor{black}{The Lost Art of Keeping a Secret}}
-\section{Introduction}
+        \begin{columns}
+            \column{0.8\textwidth}
+            \begin{itemize}
+                \item {I have been doing things to computers for a long time.}
+                \item {During the day I am a computer security consultant at a big company.}
+                \item {I teach in the afternoons.}
+                \item {\href{https://g.dev/franklin}{Some of my background is at this link https://g.dev/franklin}}
+            \end{itemize}
+            \column{0.2\textwidth}
+            \includegraphics[width=0.75\textwidth]{../static/images/new_logo.png}
+        \end{columns}
+        \note[item]{link to socials or something}
+    \end{frame}
+}
 
 {
 	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
@@ -146,8 +159,8 @@
 		\begin{figure}
             \centering
             \includegraphics[width=0.77\textwidth]{../static/images/problem.jpg}
-            \caption{You}
-            \label{fig:question}
+            \caption{\textcolor{black}{Figure 1: You}}
+            %\label{fig:question}
         \end{figure}
 
     \end{columns}
@@ -156,20 +169,6 @@
 
 
 \end{frame}
-}
-
-{
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-back.jpg}}%
-	\begin{frame}
-		\frametitle{\textcolor{black}{Requisite Bio Slide}}
-		\begin{itemize}
-			\item {I have been doing things to computers for a long time.}
-			\item {During the day I am a computer security consultant at a big company.}
-			\item {I teach in the afternoons.}
-			\item {\href{https://g.dev/franklin}{Some of my background is at this link https://g.dev/franklin}}
-		\end{itemize}
-		\note[item]{link to socials or something}
-	\end{frame}
 }
 
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-back.jpg}}
@@ -190,15 +189,35 @@
 
 
 \begin{frame}
-    \frametitle{Setting Up your Haunted Stash House}
+    \frametitle{Setting Up your Stash}
+
+    \begin{columns}
+        \column{0.8\textwidth}
     These are the basic setup steps so you have a place to hide your secrets.
     \begin{itemize}
-        \item Create a repository on GitHub or other revision control system.
-        \item Install the framework (demo soon).
+        \item Create a repository on FOKS or other revision control system.
+        \item Install the framework (demo coming up).
         \item Set up your GPG key.
         \item Add items to DB, remove plain text tokens and secrets.
     \end{itemize}
     In the following slides we will break each of these items down.
+
+            \column{0.2\textwidth}
+    \includegraphics[width=0.75\textwidth]{../static/images/new_logo.png}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{FOKS Backend}
+    \begin{columns}
+    \column{0.8\textwidth}
+    \begin{itemize}
+        \item The backend revision control system for this project is Federated Open Key Service.
+    \end{itemize}
+        \column{0.2\textwidth}
+        \includegraphics[width=0.75\textwidth]{../static/images/foks.png}
+    \end{columns}
+    \note[item]{May want to have a video ready just in case}
 \end{frame}
 
 \begin{frame}
@@ -206,13 +225,40 @@
     \begin{itemize}
         \item \href{ https://github.com/devsecfranklin/stash-house/blob/main/bin/install-client.sh }{Here is a stash-house setup tool that you can use/modify for your system. }    \note[item]{Yes you do this}
         \note[item]{No it's not good}
-        
+
         \item ``https://github.com/devsecfranklin/stash-house''
     \end{itemize}
     \note[item]{Do a small demo here}
     \note[item]{May want to have a video ready just in case}
 \end{frame}
 
+{
+    \begin{frame}{movie}
+        \frametitle{Video: Setup}
+        \begin{figure}[h!]
+
+            \centering
+            \movie[label=show3\textwidth,poster
+            ,autostart,showcontrols,loop]
+            {\includegraphics[width=0.25\textwidth]{../static/images/play.png}}{../static/video/bootstrap.sh.mp4}
+            \caption{\textcolor{black}{Video: Setup}}
+        \end{figure}
+    \end{frame}
+}
+
+{
+    \begin{frame}{movie}
+        \frametitle{Video: Install Client}
+        \begin{figure}[h!]
+
+            \centering
+            \movie[label=show3\textwidth,poster
+            ,autostart,showcontrols,loop]
+            {\includegraphics[width=0.25\textwidth]{../static/images/play.png}}{../static/video/install\_client.sh.mp4}
+            \caption{\textcolor{black}{Local Client Installation}}
+        \end{figure}
+    \end{frame}
+}
 
 {
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
@@ -221,117 +267,157 @@
 }
 
 {
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%%
-\begin{frame}
-	\frametitle{What Do We Mean by Secrets, Exactly}
-	\begin{itemize}
-		\item Credentials for example a username/password for that lab host that you only need for a couple weeks.
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%%
+    \begin{frame}
+        \frametitle{What Do We Mean by Secrets, Exactly}
+    \begin{itemize}
+        \item Credentials for example a username/password for that lab host that you only need for a couple weeks.
 		\item Text files that are used as keys.
-	\end{itemize}
+    \end{itemize}
 
-    \note[item]{In my case I had a whole folder of text files that I'd collected of some time.}
-
-\end{frame}
+        \note[item]{In my case I had a whole folder of text files that I'd collected of some time.}
+    \end{frame}
 }
 
 {
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
-\begin{frame}
-	\frametitle{The Process of Finding Secrets}
-	\begin{itemize}
-		\item Look around your local machines for tokens and credentials.
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
+    \begin{frame}
+    \frametitle{The Process of Finding Secrets}
+    \begin{itemize}
+        \item Look around your local machines for tokens and credentials.
 		\item Use some automation to help you find them.
-	\end{itemize}
-	\note[item]{There are some known places we can look}
-	\note[item]{Clean up the ones we know about}
-\end{frame}
+    \end{itemize}
+    \note[item]{There are some known places we can look}
+    \note[item]{Clean up the ones we know about}
+    \end{frame}
 }
 
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
-\begin{frame}
+{
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
+    \begin{frame}
 	\frametitle{Demo Script: Scanning Your Local System}
+            \begin{columns}
+        \column{0.8\textwidth}
 	\begin{itemize}
         \item\href{ https://github.com/devsecfranklin/stash-house/tree/main/demo/01_scanner}{Here is a small tool that you can use/modify for your system}
 	\end{itemize}
+                \column{0.2\textwidth}
+    \includegraphics[width=0.75\textwidth]{../static/images/new_logo.png}
+    \end{columns}
+
 	\note[item]{Do a small demo here}
-\end{frame}
+    \end{frame}
+}
+
+{
+    \begin{frame}{movie}
+        \frametitle{Demo Script: Scan Local System}
+        \begin{figure}[h!]
+
+            \centering
+            \movie[label=show3\textwidth,poster
+            ,autostart,showcontrols,loop]
+            {\includegraphics[width=0.25\textwidth]{../static/images/play.png}}{../static/video/install\_client.sh.mp4}
+            \caption{\textcolor{black}{Setup Video Two}}
+        \end{figure}
+    \end{frame}
+}
 
 {
 	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
-	\sectionsubtitle{We found the secrets, now what?}
+	\sectionsubtitle{\textcolor{black}{We found the secrets, now what?}}
 	\section{Hide Your Goodies}
 }
 
 
-\begin{frame}
-    \frametitle{Setting up GnuPG}
+{
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
+    \begin{frame}
+        \frametitle{Setting up GnuPG}
 	\begin{itemize}
-	\item \href{https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key}{GPG key setup.}
-	\item 
-\end{itemize}
-\note[item]{\href{https://devhints.io/gnupg}{There is a cheat sheet here.}}
-\end{frame}
+    	\item \href{https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key}{GPG key setup.}
+    \end{itemize}
+        \note[item]{\href{https://devhints.io/gnupg}{There is a cheat sheet here.}}
+    \end{frame}
+}
 
-\begin{frame}
-	\frametitle{Storing Tokens at Rest}
-    We will use a tool called pass in combination with out GnuPG key to encrypt the secrets we found.
-	\begin{itemize}
-        \item Okay we found some, now what?
-		\item Encrypt the tokens and push them into a Revision Control System.
-        \item Could be a ``private repo'' but it doesn't have to.
-	\end{itemize}
-\end{frame}
+{
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
+    \begin{frame}
+	   \frametitle{Storing Tokens at Rest}
+        We will use a tool called pass in combination with out GnuPG key to encrypt the secrets we found.
+        \begin{itemize}
+            \item Okay we found some, now what?
+		    \item Encrypt the tokens and push them into a Revision Control System.
+            \item Could be a ``private repo'' but it doesn't have to.
+	   \end{itemize}
+    \end{frame}
+}
 
-\begin{frame}
-	\frametitle{Saving Simple Tokens}
-	\begin{itemize}
-		\item Use the pass tool to encrypt the tokens and push them into Revision Control.
-	\end{itemize}
-    \note[item]{test}
-\end{frame}
+{
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
+    \begin{frame}
+    	\frametitle{Saving Simple Tokens}
+    	\begin{itemize}
+    		\item Use the pass tool to encrypt the tokens and push them into Revision Control.
+    	\end{itemize}
+        \note[item]{test}
+    \end{frame}
+    }
 
-\begin{frame}
-	\frametitle{Saving Multi-line Tokens}
+{
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
+    \begin{frame}
+	   \frametitle{Saving Multi-line Tokens}
 	\begin{itemize}
 		\item Use pass to encrypt a multi-line secret and push it into Revision Control.
 	\end{itemize}
-    \note[item]{We can also save multi-line secrets, GCloud JSON for example.}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Backing up Tokens to RCS}
-	\begin{itemize}
-		\item Encrypt the tokens and secrets
-		\item Push everything into revision control.
-	\end{itemize}
-\end{frame}
-
-{
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
-\sectionsubtitle{\textcolor{black}{How to Use What You Built}}
-\section{Using Your Stashed Tokens}
+        \note[item]{We can also save multi-line secrets, GCloud JSON for example.}
+    \end{frame}
 }
 
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
-\begin{frame}
-	\frametitle{Using Tokens}
+{
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
+    \begin{frame}
+	   \frametitle{Backing up Tokens to RCS}
+	   \begin{itemize}
+	       \item Encrypt the tokens and secrets
+	       \item Push everything into revision control.
+	   \end{itemize}
+    \end{frame}
+}
+
+{
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
+    \sectionsubtitle{\textcolor{black}{How to Use What You Built}}
+    \section{Using Your Stashed Tokens}
+}
+
+{
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
+    \begin{frame}
+	   \frametitle{Using Tokens}
 	\begin{itemize}
 		\item Now you can use the secrets in your project without exposing them.
 	\end{itemize}
-\end{frame}
+    \end{frame}
+}
 
-\begin{frame}
-	\frametitle{Considerations}
+{
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/tech-white.jpg}}%
+    \begin{frame}
+	   \frametitle{Considerations}
 	\begin{itemize}
 		\item You need your GPG key on the local machine to encrypt, decrypt, and use the secrets.
 	\end{itemize}
-\note[item]{Don't be lazy, you still have to use a password manager}
-\end{frame}
+        \note[item]{Don't be lazy, you still have to use a password manager}
+    \end{frame}
+}
 
 {
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
-\sectionsubtitle{\textcolor{black}{Where is all this going?}}
-\section{Other Cool Stuff}
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{../static/images/section.jpg}}
+    \sectionsubtitle{\textcolor{black}{Where is all this going?}}
+    \section{Other Cool Stuff}
 }
 
 \begin{frame}
@@ -342,7 +428,7 @@
         \item I will incorporate it into this tool set if that makes sense.
     \end{itemize}
     \note[item]{It has custom commands to encrypt, decrypt and re-crypt secrets as well as create key pairs and supports encryption to multiple recipients and groups of different recipients to ensure the same repository can be shared with a work group but allowing to keep some secrets available just to subsets of that group.
-    	
+
     OpenSSL is needed to generate X.509 certificates and keys and xdg-utils are needed to open and edit encrypted secrets according to their file types. }
 \end{frame}
 
@@ -375,19 +461,12 @@
 \begin{frame}
 	\frametitle{SSH Key Setup}
 	\begin{itemize}
-		\item 
+		\item
 	\end{itemize}
 	\note[item]{We will use the same repository as this slide deck is stored in for demonstration purposes.}
 	\note[item]{May want to have a video ready just in case}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Github Setup}
-	\begin{itemize}
-		\item 
-	\end{itemize}
-	\note[item]{We will use the same repository as this slide deck is stored in for demonstration purposes.}
-	\note[item]{May want to have a video ready just in case}
-\end{frame}
+
 
 \end{document}
