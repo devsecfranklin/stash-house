@@ -7,19 +7,14 @@
 
 \documentclass[11pt]{report}
 %\documentclass[11pt, twocolumn]{report}
-
-\usepackage{lipsum} %Package to generate latin text (Only for testing)
-
-\usepackage{amsmath} %AMS packages for mathematical symbols
-\usepackage{amsfonts}
-\usepackage{amssymb}
+\usepackage{cite} % optional but helps in formatting citations
+\bibliographystyle{plain}
+% \usepackage{minted} % code blocks
+% \usepackage[hidelinks]{hyperref} % Uses hyperlinks in PDF (optional)
+\usepackage{hyperref}
 
 \usepackage{graphicx} %package to include pictures and images
 \usepackage[margin=1in, includefoot, includehead]{geometry} %Package to setup page layout
-
-\usepackage{minted} % code blocks
-% \usepackage[hidelinks]{hyperref} %Uses hyperlinks in PDF (optional)
-\usepackage{hyperref}
 
 %Header and Footer Stuff
 \usepackage{fancyhdr}
@@ -33,8 +28,8 @@
 
 % Document Variables
 \newcommand{\myTitle}{Stash House}
-\newcommand{\myName}{franklin d.}
-\newcommand{\myOrg}{pale shadow}
+\newcommand{\myName}{Franklin Diaz}
+\newcommand{\myOrg}{University of Colorado}
 \newcommand{\myDate}{September 25th, 2025}
 
 \begin{document}
@@ -46,7 +41,7 @@
 			[0.25in]
 
 			\textbf{\Large{\myOrg}}\\
-			\Large{recreational computing enthusiasts}\\
+			
 			[1in]
 
 			\line(1,0){400}\\
@@ -114,4 +109,5 @@ unsecured credentials that may be a candidate for encryption and safe storage.
 
 	\lipsum[1]
 
+	\bibliography{references}
 \end{document}
