@@ -38,9 +38,16 @@ dist-clean: clean
 lint:
 	lacheck slides/stash.tex
 
+.PHONY: paper
+paper: 
+	pushd paper || (echo "cant fid dir" && exit 1)
+	latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash-house
+	bibtex stash-house
+	latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash-house
+	popd  || (echo "cant fid dir" && exit 1)
+
 .PHONY: slides
 slides: 
-	cd slides && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && cd -
-# bibtex stash
-	cd slides && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && cd -
-
+	pushd slides || (echo "cant fid dir" && exit 1)
+	latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash
+	popd  || (echo "cant fid dir" && exit 1)

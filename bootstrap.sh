@@ -6,21 +6,15 @@
 
 # ChangeLog:
 
-DEB_PKG=(libpcsclite-dev)
+DEB_PKG=(lacheck libpcsclite-dev)
 LRED=$(tput setaf 1)
+
+
 
 function setup_foks() {
   log_header "setup foks"
   /usr/local/go/bin/go install github.com/foks-proj/go-foks/client/foks@latest
 }
-
-if [ -f "./bin/common.sh" ]; then
-  source "./bin/common.sh"
-  log_success "Source common routines: bin/common.sh"
-else
-  echo -e "${LRED}can not find common.sh, run this script from the bin/ directory.${NC}"
-  exit 1
-fi
 
 function create_files() {
   log_header "Create files for gnu compiler"
@@ -31,6 +25,14 @@ function create_files() {
 } 
 
 function main() {
+  if [ -f "./bin/common.sh" ]; then
+  source "./bin/common.sh"
+  log_success "Source common routines: bin/common.sh"
+else
+  echo -e "${LRED}can not find common.sh, run this script from the bin/ directory.${NC}"
+  exit 1
+fi
+
   install_debian
   create_files
   setup_foks
