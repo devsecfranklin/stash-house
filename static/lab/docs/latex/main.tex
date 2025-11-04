@@ -1,0 +1,55 @@
+% !TeX encoding = UTF-8
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+% !TeX TXS-program:bibliography = bibtex
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_US
+% !TeX root = main.tex
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+
+% ORC-ID https://orcid.org/0000-0003-4586-8500
+
+\documentclass[a4paper,12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+\begin{document}
+
+\author{franklin}
+\title{bitsmasher.net primer}
+\date{Fall 2025}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+
+\chapter{Introduction}
+
+\include{ch00/sec01} % history
+\include{ch00/sec02} % code storage
+
+\chapter{infrastructure}
+
+\include{ch01/sec01} % network time
+\include{ch01/sec02} % DNS
+\include{ch01/sec03} % ansible
+
+\chapter{Storage}
+
+This is one of the most important elements of the network. These servers must be up before the other since there are several
+important NFS mounts.
+
+\include{ch02/sec01} % nfs mounts
+\include{ch02/sec02}
+
+\chapter{Development Environment}
+
+\include{ch03/sec01} % direnv 
+\include{ch03/sec02} % clustershell
+
+
+\backmatter
+% bibliography, glossary and index would go here.
+
+\end{document}

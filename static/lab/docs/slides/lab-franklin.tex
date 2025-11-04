@@ -1,0 +1,53 @@
+% !TeX root = ps-devsecops-infra.tex
+
+\documentclass[aspectratio=169]{beamer} % Other possible values are: 1610, 149, 54, 43 and 32.
+By default, it is to 128mm by 96mm(4:3)
+
+\include{preamble}
+
+% Table of Contents at Section start
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{\bfseries\Huge\textcolor{white}{Table of Contents}}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\begin{document}
+
+%%% Title Slide %%%
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../images/title_bg.png}}
+\begin{frame}
+    \setlength{\TPHorizModule}{\textwidth}
+    \setlength{\TPVertModule}{\textwidth}
+    \begin{textblock}{0.5}(0.05,0.25)
+        \bfseries\Huge{Python Project Template}
+    \end{textblock}
+    \begin{textblock}{0.5}(0.06,0.6)
+        \bfseries\textcolor{white}{Franklin Diaz, Principal Engineer}
+    \end{textblock}
+\end{frame}
+
+% Intro Section
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../images/section.png}}
+\section{Introduction}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{../images/blank_slide.png}}
+\begin{frame}{}
+    \setlength{\TPHorizModule}{\textwidth}
+    \setlength{\TPVertModule}{\textwidth}
+    % Slide title in upper left
+    \begin{textblock}{0.74}(0.05,0.05)
+        \bfseries\large\normalcolor{Goals}
+    \end{textblock}
+    % main body bullet points
+    \begin{itemize}
+        \item Use and extend PANW Python modules
+        \item Reduce cycle time to develop, test and deploy
+        \item Standardize testing methodology
+        \item Adhere to and extend Best Security Practices
+       \end{itemize}
+\end{frame}
+
+\end{document}

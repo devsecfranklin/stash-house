@@ -1,0 +1,19 @@
+% Set the document font https://tug.org/FontCatalogue/montserratregular/
+\usepackage[defaultfam,tabular,lining]{montserrat} %% Option 'defaultfam'
+\usepackage[T1]{fontenc}
+\renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}}
+
+% no navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% Text positioning
+\usepackage[absolute,overlay]{textpos}
+
+% https://hartwork.org/beamer-theme-matrix/
+\definecolor{bulletcolor}{RGB}{250,88,45} % RGB model is defined with values between 0 and 255
+\setbeamercolor{local structure}{fg=bulletcolor}
+\setbeamertemplate{itemize items}[circle]
+
+% make the hyperlinks blue
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue}

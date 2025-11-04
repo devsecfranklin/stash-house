@@ -107,7 +107,7 @@ func authPageHandler(w http.ResponseWriter, r *http.Request) {
         //username := auth.GetUserName(r)
         page := Page{"auth"}
         
-        err := tmpls.ExecuteTemplate(w, "authPage", page)
+        err := tmpls.ExecuteTemplate(w, "labAuthPage", page)
         if err != nil {
           logging.Log_info(err.Error())
           http.Error(w, "Internal server error: Could not render auth page.", http.StatusInternalServerError)                                                                                             

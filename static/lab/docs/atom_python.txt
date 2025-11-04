@@ -1,0 +1,5 @@
+
+```bash
+bash -c "$(wget -q -O - https://linux.kite.com/dls/linux/current)"
+apm install kite
+```

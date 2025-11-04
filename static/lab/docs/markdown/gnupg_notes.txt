@@ -1,0 +1,86 @@
+[franklin@lanparty .gnupg]$  gpg --list-keys
+/home/franklin/.gnupg/pubring.gpg
+---------------------------------
+pub   2048R/1D7FB820 2012-08-16
+uid                  Franklin E. Diaz <fediaz@incntre.iu.edu>
+sub   2048R/54638082 2012-08-16
+
+pub   1024D/1D7FB820 2001-05-22
+uid                  jose carretero <jose.carretero@admsp.com>
+sub   2048g/6B1F0A3B 2001-05-22
+
+pub   1024D/493D1494 2005-12-23 [expired: 2006-12-23]
+uid                  Franklin Diaz <frank@bitsmasher.net>
+
+pub   1024D/574D622F 2006-11-21 [expired: 2011-11-20]
+uid                  Franklin Diaz <franklin@bitsmasher.net>
+
+[franklin@lanparty .gnupg]$  gpg --edit-key 1D7FB820
+gpg (GnuPG) 1.4.11; Copyright (C) 2010 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Secret key is available.
+
+pub  2048R/1D7FB820  created: 2012-08-16  expires: never       usage: SC
+                     trust: unknown       validity: unknown
+sub  2048R/54638082  created: 2012-08-16  expires: never       usage: E
+[ unknown] (1). Franklin E. Diaz <fediaz@incntre.iu.edu>
+
+gpg> list
+
+pub  2048R/1D7FB820  created: 2012-08-16  expires: never       usage: SC
+                     trust: unknown       validity: unknown
+sub  2048R/54638082  created: 2012-08-16  expires: never       usage: E
+[ unknown] (1). Franklin E. Diaz <fediaz@incntre.iu.edu>
+
+gpg>
+
+      <n>y = key expires in n years
+Key is valid for? (0) 1
+Key expires at Mon 29 Apr 2013 12:27:56 PM CDT
+Is this correct? (y/N) y
+
+You need a passphrase to unlock the secret key for
+user: "Franklin E. Diaz <fediaz@incntre.iu.edu>"
+2048-bit RSA key, ID 1D7FB820, created 2012-08-16
+
+
+pub  2048R/1D7FB820  created: 2012-08-16  expires: 2013-04-29  usage: SC
+                     trust: unknown       validity: unknown
+sub  2048R/54638082  created: 2012-08-16  expires: never       usage: E
+[ unknown] (1). Franklin E. Diaz <fediaz@incntre.iu.edu>
+
+gpg> key 1
+
+pub  2048R/1D7FB820  created: 2012-08-16  expires: 2013-04-29  usage: SC
+                     trust: unknown       validity: unknown
+sub* 2048R/54638082  created: 2012-08-16  expires: never       usage: E
+[ unknown] (1). Franklin E. Diaz <fediaz@incntre.iu.edu>
+
+gpg> expire
+Changing expiration time for a subkey.
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 1
+Key expires at Mon 29 Apr 2013 12:28:35 PM CDT
+Is this correct? (y/N) y
+
+You need a passphrase to unlock the secret key for
+user: "Franklin E. Diaz <fediaz@incntre.iu.edu>"
+2048-bit RSA key, ID 1D7FB820, created 2012-08-16
+
+
+pub  2048R/1D7FB820  created: 2012-08-16  expires: 2013-04-29  usage: SC
+                     trust: unknown       validity: unknown
+sub* 2048R/54638082  created: 2012-08-16  expires: 2013-04-29  usage: E
+[ unknown] (1). Franklin E. Diaz <fediaz@incntre.iu.edu>
+
+gpg> quit
+Save changes? (y/N) y
+
+ gpg --keyserver pgp.mit.edu --send-keys 1D7FB820
