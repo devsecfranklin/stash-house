@@ -403,14 +403,13 @@
     		\item Now you can use the secrets in your project without exposing them.
     	\end{itemize}
 
-       \begin{spverbatim}
+       \begin{verbatim}
         pass show aws-secret-access-key
-        export AWS_ACCESS_KEY_ID=$(pass aws-access-key-id)
-        export AWS_SECRET_ACCESS_KEY=$(pass aws-secret-access-key)
+
         terraform plan
         terraform plan -out franklin.plan
         terraform show -json franklin.plan > tfplan.json
-        \end{spverbatim}
+        \end{verbatim}
     \end{frame}
 }
 
