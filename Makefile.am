@@ -51,3 +51,10 @@ slides:
 # bibtex stash
 	cd slides && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && cd -
 
+.PHONY: paper
+paper: 
+	pushd paper || exit 1
+	latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash
+	bibtex stash
+	latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash
+	popd || exit 1
