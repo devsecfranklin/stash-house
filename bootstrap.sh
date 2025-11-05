@@ -6,7 +6,11 @@
 
 # ChangeLog:
 
+<<<<<<< HEAD
+DEB_PKG=(libpcsclite-dev texlive-pictures texlive-latex-extra)
+=======
 DEB_PKG=(libpcsclite-dev)
+>>>>>>> origin/main
 LRED=$(tput setaf 1)
 
 function setup_foks() {
@@ -60,6 +64,5 @@ fi
 
 log_success "Complete!"
  }
-
 
 main "$@"
