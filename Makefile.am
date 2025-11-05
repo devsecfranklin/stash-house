@@ -35,7 +35,14 @@ endif
 dist-clean: clean
 	rm -rf _build
 
+latex:
+	mkdir -p ~/texmf/tex/latex
+	tlmgr init-usertree
+	tlmgr install pgf
+	tlmgr install lipsum
+	
 lint:
+	latexmk -c
 	lacheck slides/stash.tex
 
 .PHONY: slides

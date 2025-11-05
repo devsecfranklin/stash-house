@@ -6,7 +6,7 @@
 
 # ChangeLog:
 
-DEB_PKG=(libpcsclite-dev)
+DEB_PKG=(libpcsclite-dev texlive-pictures texlive-latex-extra)
 LRED=$(tput setaf 1)
 
 function setup_foks() {
