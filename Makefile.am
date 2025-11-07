@@ -47,14 +47,10 @@ lint:
 
 .PHONY: slides
 slides: 
-	cd slides && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && cd -
-# bibtex stash
-	cd slides && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && cd -
+	pushd "${PWD}/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
+	pushd "${PWD}/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
 
 .PHONY: paper
 paper: 
-	pushd paper || exit 1
-	latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash
-	bibtex stash
-	latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash
-	popd || exit 1
+	pushd "${PWD}/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
+	pushd "${PWD}/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
