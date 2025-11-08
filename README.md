@@ -14,4 +14,4 @@ much more efficient and secure manner.
 
 * [Click here for the presentation PDF](https://zenodo.org/records/17442786)
 
-![stash house](https://github.com/devsecfranklin/stash-house/blob/main/static/images/COD-PLAY-MAPS-CORE-STASH-HOUSE-TOUT.jpg)<br>*Stash House*
+![stash house](https://github.com/devsecfranklin/stash-house/blob/main/static/images/cod-stash-haus.jpg)<br>*Stash House*

@@ -7,30 +7,30 @@
 # ChangeLog:
 #
 
-# SCRIPT_DIR="${0%/*}"
+LRED=$(tput setaf 1)
+
 if [ -f "../../bin/common.sh" ]; then
   source "../../bin/common.sh"
 else
-  echo "can not find common.sh"
+  echo -e "${LRED}can not find common.sh${NC}"
   exit 1
 fi
 
 function scan_aws_creds() {
   log_info "scan for AWS credentials"
 
-  if [ -d "${HOME}/.aws" ]; then 
-    while IFS=' = ' read -r key value
-    do
-        if [[ $key == \[*] ]]; then
-            section=$key
-        elif [[ $value ]] && [[ $section == '[default]' ]]; then
-            if [[ $key == 'aws_access_key_id' ]]; then
-                MY_AWS_ACCESS_KEY_ID=$value
-            elif [[ $key == 'aws_secret_access_key' ]]; then
-                MY_AWS_SECRET_ACCESS_KEY=$value
-            fi
+  if [ -d "${HOME}/.aws" ]; then
+    while IFS=' = ' read -r key value; do
+      if [[ $key == \[*] ]]; then
+        section=$key
+      elif [[ $value ]] && [[ $section == '[default]' ]]; then
+        if [[ $key == 'aws_access_key_id' ]]; then
+          MY_AWS_ACCESS_KEY_ID=$value
+        elif [[ $key == 'aws_secret_access_key' ]]; then
+          MY_AWS_SECRET_ACCESS_KEY=$value
         fi
-    done < "${HOME}/.aws/credentials"
+      fi
+    done <"${HOME}/.aws/credentials"
 
     if [ ! -z "${MY_AWS_ACCESS_KEY_ID}" ] || [ ! -z "${MY_AWS_SECRET_ACCESS_KEY}" ]; then
       # echo -e "\n"
@@ -45,9 +45,9 @@ function scan_aws_creds() {
 function scan_gcp_creds() {
   log_info "scan for GCP creds"
 
-    if [ -d "${HOME}/.config/gcloud" ]; then 
-      log_info "found GCP folder"
-    fi
+  if [ -d "${HOME}/.config/gcloud" ]; then
+    log_info "found GCP folder"
+  fi
 }
 
 function scan_gnome_keyring() {
@@ -61,7 +61,7 @@ function scan_gnome_keyring() {
 }
 
 function scan_other() {
-    log_info "Scan for the string PASSWORD"
+  log_info "Scan for the string PASSWORD"
   grep -rnw / -ie "PASSWORD\|PASSWD"
   find . -type f -exec grep -i -I "PASSWORD\|PASSWD" {} /dev/null \;
 
@@ -75,7 +75,7 @@ function scan_other() {
 }
 
 function crack_hash() {
-    # John the Ripper can then be used to extract and crack the hashes and reveal the actual password:
+  # John the Ripper can then be used to extract and crack the hashes and reveal the actual password:
   #/usr/share/john/keyring2john.py login.keyring > hashes.txt
   #/usr/share/john/keystore2john.py user.keystore
   #john –wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
@@ -84,7 +84,7 @@ function crack_hash() {
   pass
 }
 
-function main(){
+function main() {
   log_header "tool to show how local credential scanning works"
   # https://steflan-security.com/linux-privilege-escalation-credentials-harvesting/
   scan_aws_creds

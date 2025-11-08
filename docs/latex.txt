@@ -7,3 +7,6 @@ tlmgr list --installed
 latexmk -c
 ls -lart
 latexmk -pdf stash.tex
+
+
+https://www.cu.edu/brand-and-identity-guidelines

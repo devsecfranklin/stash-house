@@ -42,12 +42,19 @@ latex:
 	tlmgr install lipsum
 	
 lint:
-	latexmk -c
-	lacheck slides/stash.tex
+	shfmt -i 2 -l -w demo/00_setup/gpg-tool.sh
+	shfmt -i 2 -l -w demo/00_setup/install-client.sh
+	shfmt -i 2 -l -w demo/01_locate/scan_local.sh
+	
+	pushd "${PWD}/slides" &&  latexmk -c && popd
+	pushd "${PWD}/slides" &&  lacheck stash.tex && popd
 
 .PHONY: slides
 slides: 
-	cd slides && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && cd -
-# bibtex stash
-	cd slides && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && cd -
+	pushd "${PWD}/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
+	pushd "${PWD}/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
 
+.PHONY: paper
+paper: 
+	pushd "${PWD}/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
+	pushd "${PWD}/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
