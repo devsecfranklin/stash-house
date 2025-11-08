@@ -42,8 +42,12 @@ latex:
 	tlmgr install lipsum
 	
 lint:
-	latexmk -c
-	lacheck slides/stash.tex
+	shfmt -i 2 -l -w demo/00_setup/gpg-tool.sh
+	shfmt -i 2 -l -w demo/00_setup/install-client.sh
+	shfmt -i 2 -l -w demo/01_locate/scan_local.sh
+	
+	pushd "${PWD}/slides" &&  latexmk -c && popd
+	pushd "${PWD}/slides" &&  lacheck stash.tex && popd
 
 .PHONY: slides
 slides: 
