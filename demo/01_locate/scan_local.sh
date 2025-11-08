@@ -7,12 +7,13 @@
 # ChangeLog:
 #
 
-# SCRIPT_DIR="${0%/*}"
+LRED=$(tput setaf 1)
+
 if [ -f "../../bin/common.sh" ]; then
-  source "../../bin/common.sh"
+	source "../../bin/common.sh"
 else
-  echo "can not find common.sh"
-  exit 1
+	echo -e "${LRED}can not find common.sh${NC}"
+	exit 1
 fi
 
 function scan_aws_creds() {
