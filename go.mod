@@ -14,7 +14,7 @@ require (
 	github.com/PuerkitoBio/goquery v1.10.3
 	github.com/gruntwork-io/terratest v0.52.0
 	github.com/stretchr/testify v1.11.1
-	golang.org/x/oauth2 v0.32.0
+	golang.org/x/oauth2 v0.33.0
 	internal/auth v0.0.0-00010101000000-000000000000
 	internal/database v0.0.0-00010101000000-000000000000
 	internal/logging v0.0.0-00010101000000-000000000000
