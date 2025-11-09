@@ -39,6 +39,8 @@ func main() {
     http.HandleFunc("/lab", labPageHandler)
     http.HandleFunc("/minecraft", minecraftPageHandler)
     http.HandleFunc("/auth", authPageHandler)
+	http.HandleFunc("/dst", dst)
+// 	http.HandleFunc("/civilization2", civ2)
     logging.Log_header("Server listening on :8080")
     err = http.ListenAndServe(":8080", nil)
     if err != nil {
@@ -112,4 +114,21 @@ func authPageHandler(w http.ResponseWriter, r *http.Request) {
           logging.Log_info(err.Error())
           http.Error(w, "Internal server error: Could not render auth page.", http.StatusInternalServerError)                                                                                             
         }
+}
+
+func dst(w http.ResponseWriter, r *http.Request) {
+	logging.Log_header("Serving DST page")
+
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+
+    username := auth.GetUserName(r)
+	page := Page{"Do Not Starve", username}
+
+	err := index.ExecuteTemplate(w, "dstPage", page)
+	if err != nil {
+		logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
 }

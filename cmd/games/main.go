@@ -60,8 +60,7 @@ func main() {
 	}
 
 	http.HandleFunc("/", handler)
-	http.HandleFunc("/civilization2", civ2)
-	http.HandleFunc("/dst", dst)
+
 	http.HandleFunc("/failure", failure)
 	http.HandleFunc("/linux_games", lg)
 	http.HandleFunc("/login", LoginPage)
@@ -156,23 +155,6 @@ func civ2(w http.ResponseWriter, r *http.Request) {
 	page := Page{"Civilization ][", username}
 
 	err := index.ExecuteTemplate(w, "civ2Page", page)
-	if err != nil {
-		logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-
-}
-
-func dst(w http.ResponseWriter, r *http.Request) {
-	logging.Log_header("Serving DST page")
-
-	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-	w.Header().Set("Pragma", "no-cache")
-	w.Header().Set("Expires", "0")
-
-    username := auth.GetUserName(r)
-	page := Page{"Do Not Starve", username}
-
-	err := index.ExecuteTemplate(w, "dstPage", page)
 	if err != nil {
 		logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
