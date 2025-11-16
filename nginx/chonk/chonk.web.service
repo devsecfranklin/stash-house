@@ -1,0 +1,12 @@
+    [Unit]
+    Description=website - chonk.lab.bitsmasher.net
+    After=network.target
+
+    [Service]
+    User=franklin # Replace with your actual username
+    WorkingDirectory=/hom/franklin/workspace/website
+    ExecStart=/usr/local/go/bin/go run /mnt/clusterfs2/workspace/website/cmd/chonk/main.go
+    Restart=always
+
+    [Install]
+    WantedBy=multi-user.target
