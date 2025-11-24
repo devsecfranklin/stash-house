@@ -12,7 +12,7 @@ replace internal/logging => ./internal/logging
 
 require (
 	github.com/PuerkitoBio/goquery v1.11.0
-	github.com/gruntwork-io/terratest v0.53.0
+	github.com/gruntwork-io/terratest v0.54.0
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/oauth2 v0.33.0
 	internal/auth v0.0.0-00010101000000-000000000000
@@ -47,7 +47,7 @@ require (
 	github.com/tmccombs/hcl2json v0.6.4 // indirect
 	github.com/ulikunitz/xz v0.5.10 // indirect
 	github.com/zclconf/go-cty v1.15.0 // indirect
-	golang.org/x/crypto v0.44.0 // indirect
+	golang.org/x/crypto v0.45.0 // indirect
 	golang.org/x/mod v0.29.0 // indirect
 	golang.org/x/net v0.47.0 // indirect
 	golang.org/x/sync v0.18.0 // indirect
