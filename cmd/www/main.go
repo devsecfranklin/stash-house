@@ -11,8 +11,8 @@ import (
 	"fmt"
 	"html/template"
 	"internal/auth"
-	"internal/logging" // switch to new module soon
-	"io/ioutil"        // For reading response body
+	"internal/logging"
+	// "io/ioutil"        // For reading response body
 	"log"
 	"net/http"
 	"net/url" // For URL encoding parameters

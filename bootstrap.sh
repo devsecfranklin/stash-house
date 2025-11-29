@@ -8,8 +8,8 @@
 #
 # v0.1 06/11/2025 GoLang Project Maintainer script
 
-set -euo pipefail # Exit on error, exit on unset variables, fail if any command in a pipe fails.
-IFS=$'\n\t'        # Preserve newlines and tabs in word splitting.
+#set -euo pipefail # Exit on error, exit on unset variables, fail if any command in a pipe fails.
+#IFS=$'\n\t'        # Preserve newlines and tabs in word splitting.
 
 # --- Terminal Colors ---
 LRED='\033[1;31m'
