@@ -1,4 +1,4 @@
-FROM alpine:3.22 AS build
+FROM alpine:3.23 AS build
 
 ENV PATH /usr/local/go/bin:$PATH
 
@@ -102,7 +102,7 @@ drwxr-xr-x  2 franklin engr 4096 Jun 17 11:21 files
 drwxr-xr-x  3 franklin engr 4096 Jun 17 11:21 .
 drwxr-xr-x 13 franklin engr 4096 Jun 17 11:21 ..
  /m/s/w/franklin-resume   dev390-20250617 ~$  container  more Dockerfile                                                                        Tue 17 Jun 2025 11:36:39 AM MDT
-FROM alpine:3.22 AS build
+FROM alpine:3.23 AS build
 
 ENV PATH /usr/local/go/bin:$PATH
 
@@ -211,7 +211,7 @@ we want
         [ "$SOURCE_DATE_EPOCH" = "$epoch" ]; \
         find /target -newer /target/usr/local/go -exec sh -c 'ls -ld "$@" && exit "$#"' -- '{}' +
 
-FROM alpine:3.22
+FROM alpine:3.23
 
 RUN apk add --no-cache ca-certificates
 
