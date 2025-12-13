@@ -144,23 +144,6 @@ func WelcomePage(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func civ2(w http.ResponseWriter, r *http.Request) {
-	logging.Log_header("Serving civ2 page")
-
-	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-	w.Header().Set("Pragma", "no-cache")
-	w.Header().Set("Expires", "0")
-
-	username := auth.GetUserName(r)
-	page := Page{"Civilization ][", username}
-
-	err := index.ExecuteTemplate(w, "civ2Page", page)
-	if err != nil {
-		logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-
-}
-
 func failure(w http.ResponseWriter, r *http.Request) {
 	logging.Log_header("Serving failure page")
 

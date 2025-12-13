@@ -39,8 +39,8 @@ func main() {
     http.HandleFunc("/lab", labPageHandler)
     http.HandleFunc("/minecraft", minecraftPageHandler)
     http.HandleFunc("/auth", authPageHandler)
-	http.HandleFunc("/dst", dst)
-// 	http.HandleFunc("/civilization2", civ2)
+    http.HandleFunc("/dst", dst)
+    http.HandleFunc("/civilization2", civ2)
     logging.Log_header("Server listening on :8080")
     err = http.ListenAndServe(":8080", nil)
     if err != nil {
@@ -64,7 +64,12 @@ func handler(w http.ResponseWriter, r *http.Request) { // handler for the root p
 	}
 }
 
-        
+/*
+func formatDate(t time.Time) string {
+    return t.Format("2006-01-02")
+}
+*/
+ 
 func minecraftPageHandler(w http.ResponseWriter, r *http.Request) {
         logging.Log_header("Serving Minecraft page")
         
@@ -116,6 +121,23 @@ func authPageHandler(w http.ResponseWriter, r *http.Request) {
         }
 }
 
+func civ2(w http.ResponseWriter, r *http.Request) {
+        logging.Log_header("Serving civ2 page")
+
+        w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+        w.Header().Set("Pragma", "no-cache")
+        w.Header().Set("Expires", "0")
+
+        page := Page{"Civilization ]["}
+
+        err := tmpls.ExecuteTemplate(w, "civ2Page", page)
+        if err != nil {
+          logging.Log_info(err.Error())
+          http.Error(w, "Internal server error: Could not render civ page.", http.StatusInternalServerError)                                 
+        }
+
+}
+
 func dst(w http.ResponseWriter, r *http.Request) {
 	logging.Log_header("Serving DST page")
 
@@ -123,12 +145,12 @@ func dst(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Pragma", "no-cache")
 	w.Header().Set("Expires", "0")
 
-    username := auth.GetUserName(r)
-	page := Page{"Do Not Starve", username}
+	page := Page{"Do Not Starve"}
 
-	err := index.ExecuteTemplate(w, "dstPage", page)
-	if err != nil {
-		logging.CheckError(err) // http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+	err := tmpls.ExecuteTemplate(w, "dstPage", page)
+        if err != nil {
+          logging.Log_info(err.Error())
+          http.Error(w, "Internal server error: Could not render dst page.", http.StatusInternalServerError)                                 
+        }
 
 }
