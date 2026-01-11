@@ -1,10 +1,7 @@
 # 00 Setup
 
 * In this step we run the setup tool to prepare the local environment.
-
-##  config.yml
-
-This YAML is meant to ease the setup concerns on the end user.
+* The `config.yaml` is meant to ease the setup concerns on the end user.
 
 ## Backends
 
