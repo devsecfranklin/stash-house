@@ -3,4 +3,5 @@ app:
   port: 8080
 namespace: "stash-house"
 owner: "franklin"
+stash-dir: "/home/franklin/.stash-house"
 backend: "github"
