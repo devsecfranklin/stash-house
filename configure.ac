@@ -21,6 +21,7 @@ dnl LDFLAGS="$LDFLAGS -l$PY39"
 AC_SUBST(PY39, python$PYTHON_VERSION)
 
 AM_CONDITIONAL(HAS_DOCKER, [test "docker" = "found"])
-AM_CONDITIONAL(HAS_DOCKER, [test "gcloud" = "found"])
+AC_CHECK_PROG(HAVE_GCLOUD, [gcloud], [found], [not-found])
+AC_CHECK_PROG(HAVE_GCLOUD, [direnv], [found], [not-found])
 
 AC_OUTPUT
