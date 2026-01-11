@@ -2,7 +2,7 @@
 
 * In this step we run the setup tool to prepare the local environment.
 
-##  `config.yml`
+##  config.yml
 
 This YAML is meant to ease the setup concerns on the end user.
 
@@ -21,7 +21,6 @@ You can use GH or other git related revision control system.
 ```sh
 sudo apt install npm
 npm install -g @google/gemini-cli
-
 
 # Creates a simulated folder by uploading a 0-byte object
 gcloud storage cp /dev/null gs://lab-franklin/stash-house/
