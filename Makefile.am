@@ -21,10 +21,8 @@ endif
 	find . -name '__pycache__' | xargs rm -rf
 	for trash in AUTHORS ChangeLog aclocal.m4 autom4te.cache config config.log \
 		config.status configure configure~ config.h.in~ libtool Makefile Makefile.in NEWS \
-		slides/*.aux slides/*.bbl slides/*.blg slides/*.lof slides/*.log slides/*.lot \
-		slides/*.out slides/*.pdf slides/*.synctex.gz slides/*.toc \
-		paper/*.aux paper/*.bbl paper/*.blg paper/*.lof paper/*.log \
-		paper/*.lot paper/*.out paper/*.pdf paper/*.synctex.gz paper/*.toc ;\
+		docs/*/*.aux docs/*/*.bbl docs/*/*.blg docs/*/*.lof docs/*/*.log docs/*/*.lot \
+		docs/*/*.out docs/*/*.pdf docs/*/*.synctex.gz docs/*/*.toc \
 	do \
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\
@@ -46,15 +44,15 @@ lint:
 	shfmt -i 2 -l -w demo/00_setup/install-client.sh
 	shfmt -i 2 -l -w demo/01_locate/scan_local.sh
 	
-	pushd "${PWD}/slides" &&  latexmk -c && popd
-	pushd "${PWD}/slides" &&  lacheck stash.tex && popd
+	pushd "${PWD}/docs/slides" &&  latexmk -c && popd
+	pushd "${PWD}docs//slides" &&  lacheck stash.tex && popd
 
 .PHONY: slides
 slides: 
-	pushd "${PWD}/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
-	pushd "${PWD}/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
+	pushd "${PWD}/docs/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
+	pushd "${PWD}docs/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
 
 .PHONY: paper
 paper: 
-	pushd "${PWD}/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
-	pushd "${PWD}/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
+	pushd "${PWD}/docs/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
+	pushd "${PWD}/docs/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
