@@ -28,37 +28,39 @@ function create_files() {
   for i in "${FILES[@]}"; do
     touch "${i}"
   done
-} 
+}
 
 function main() {
   install_debian
   create_files
-  setup_foks
-if [ ! -d "aclocal" ]; then
-  log_info "create aclocal dir"
-  mkdir -p aclocal
-fi
+  if [ ! -d "aclocal" ]; then
+    log_info "create aclocal dir"
+    mkdir -p aclocal
+  fi
 
-if [ ! -d "config/m4" ]; then
-  log_info "create congif/m4 dir"
-  mkdir -p config/m4
-fi
+  if [ ! -d "config/m4" ]; then
+    log_info "create congif/m4 dir"
+    mkdir -p config/m4
+  fi
 
-if [ ! -f "Makefile.in" ] && [ -f "./config.status" ]; then
-  log_info "remove config.status"
-  rm config.status # if Makefile.in is missing, then erase stale config.status
-fi
+  if [ ! -f "Makefile.in" ] && [ -f "./config.status" ]; then
+    log_info "remove config.status"
+    rm config.status # if Makefile.in is missing, then erase stale config.status
+  fi
 
-log_info "Create the Makefiles"
-aclocal -Iaclocal/latex-m4 || exit 1
-autoreconf -i
-automake -a -c --add-missing || exit 1
-if [ -f "./configure" ]; then 
-  log_info "Running configure..."
-  ./configure
-fi
+  log_info "Create the Makefiles"
+  aclocal -Iaclocal/latex-m4 || exit 1
+  autoreconf -i
+  automake -a -c --add-missing || exit 1
+  if [ -f "./configure" ]; then
+    log_info "Running configure..."
+    ./configure
+  fi
 
-log_success "Complete!"
- }
+  go get github.com/spf13/viper
+
+  # setup_foks
+  log_success "Complete!"
+}
 
 main "$@"

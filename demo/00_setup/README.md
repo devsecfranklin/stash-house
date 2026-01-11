@@ -2,6 +2,10 @@
 
 * In this step we run the setup tool to prepare the local environment.
 
+##  `config.yml`
+
+This YAML is meant to ease the setup concerns on the end user.
+
 ## Backends
 
 These are some options for storing your credentials once they have been encrypted.
