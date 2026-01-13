@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
 	"strings"
-
 	"github.com/spf13/viper"
 )
 
