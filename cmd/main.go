@@ -68,4 +68,16 @@ func main() {
 
 	// Output the configuration values
 	fmt.Printf("Config: %v\n", config)
+
+    // ingerprint the OS
+
+	// create ~/.stash-house
+
+	// locate gpg keys
+
+	// install pass and keyringer
+
+	// setup foks, backends
+
+
 }
