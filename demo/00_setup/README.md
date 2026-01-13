@@ -41,3 +41,7 @@ Authorize: gcloud auth application-default login
 Create Mount Point: mkdir ~/my_bucket_mount
 Mount: gcsfuse YOUR_BUCKET_NAME ~/my_bucket_mount
 ```
+
+### FOKS
+
+* Federated Open Key Service

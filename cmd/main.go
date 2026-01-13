@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
+
 	"strings"
 
 	"github.com/spf13/viper"
@@ -68,4 +70,18 @@ func main() {
 
 	// Output the configuration values
 	fmt.Printf("Config: %v\n", config)
+
+	http.HandleFunc("/", handler)
+	log.Fatal(http.ListenAndServe(":8080", nil))
+
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
+}
+
+func configHandler(w http.ResponseWriter, r *http.Request) {
+	title := r.URL.Path[len("/config/"):]
+	p, _ := loadPage(title)
+	fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
 }

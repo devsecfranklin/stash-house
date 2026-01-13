@@ -24,7 +24,7 @@ fi
 
 function create_files() {
   log_header "Setup:: GNU Compiler/GNU Autotools"
-  FILES=(AUTHORS ChangeLog INSTALL NEWS)
+  FILES=(README AUTHORS ChangeLog INSTALL NEWS)
   for i in "${FILES[@]}"; do
     touch "${i}"
   done
@@ -63,20 +63,19 @@ function main() {
   log_header "Setup:: Go"
   if [ ! -f "go.mod" ]; then
     log_warn "creating go.mod"
-
-    go mod init github.com/devsecfranklin/stash-house
+    /usr/local/go/bin/go mod init github.com/devsecfranklin/stash-house
   else
     log_info "Found go.mod. Nice."
   fi
 
   log_info "Update all dependencies"
-  go get -u ./...
+  /usr/local/go/bin/go get -u ./...
 
   log_info "remove unused deps"
-  go mod tidy
+  /usr/local/go/bin/go mod tidy
 
   log_info "viper module for config files"
-  go get github.com/spf13/viper
+  /usr/local/go/bin/go get github.com/spf13/viper
 
   # setup_foks
   log_success "Complete!"
