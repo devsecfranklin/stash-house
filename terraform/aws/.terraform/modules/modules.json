@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"ec2","Source":"../modules/ec2","Dir":""},{"Key":"internet_gateway","Source":"../modules/internet-gateway","Dir":""},{"Key":"public_subnet","Source":"../modules/public-subnet","Dir":""},{"Key":"route_table","Source":"../modules/route-table","Dir":""},{"Key":"vpc","Source":"../modules/vpc","Dir":""}]}

@@ -2,12 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/spf13/viper"
 	"log"
 	"net/http"
-
 	"strings"
-
-	"github.com/spf13/viper"
 )
 
 type AppConfig struct {
@@ -79,6 +77,8 @@ func main() {
 func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
+
+func loadPage(url) { /* ... */ }
 
 func configHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/config/"):]
