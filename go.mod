@@ -1,6 +1,6 @@
 module bitsmasher.net/website
 
-go 1.24.4
+go 1.25.0
 
 replace internal/auth => ./internal/auth
 
@@ -12,7 +12,7 @@ replace internal/logging => ./internal/logging
 
 require (
 	github.com/PuerkitoBio/goquery v1.11.0
-	github.com/gruntwork-io/terratest v0.54.0
+	github.com/gruntwork-io/terratest v0.55.0
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/oauth2 v0.34.0
 	internal/auth v0.0.0-00010101000000-000000000000
@@ -38,7 +38,7 @@ require (
 	github.com/jinzhu/copier v0.0.0-20190924061706-b57f9002281a // indirect
 	github.com/klauspost/compress v1.16.5 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
-	github.com/mattn/go-sqlite3 v1.14.32 // indirect
+	github.com/mattn/go-sqlite3 v1.14.33 // indirect
 	github.com/mattn/go-zglob v0.0.2-0.20190814121620-e3c945676326 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/go-testing-interface v1.14.1 // indirect
