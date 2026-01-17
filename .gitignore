@@ -318,3 +318,26 @@ libtool
 NEWS
 ChangeLog
 README
+
+################################
+# 5. TERRAFORM & INFRASTRUCTURE
+################################
+.terraform/
+**/.terraform/*
+.terraformrc
+.terraform.d
+.terraform.tfstate.lock.info
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.auto.tfvars
+*.auto.tfvars.json
+tfplan.json
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
+terraform.rc
+*.plan
+
+.sentinel
+.terrascan
