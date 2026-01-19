@@ -1,7 +1,5 @@
-variable "profile" {
-  description = "AWS Profile"
-  type        = string
-  default     = "terraform"
+variable "project_name" {
+  default = "lab-franklin"
 }
 
 variable "region" {
@@ -19,5 +17,9 @@ variable "ec2_ssh_key_name" {
 variable "ec2_ssh_public_key_path" {
   description = "The local path to the SSH Public Key"
   type        = string
-  default     = "${HOME}/.ssh/google_compute_engine.pub"
+  default     = "~/.ssh/google_compute_engine.pub"
+}
+
+variable "vpc_cidr" {
+  default = "172.29.0.0/22"
 }
