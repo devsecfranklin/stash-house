@@ -77,6 +77,10 @@ function main() {
   log_info "viper module for config files"
   /usr/local/go/bin/go get github.com/spf13/viper
 
+  # gorm is to connect to amriadb
+  go get -u gorm.io/gorm
+  go get -u gorm.io/driver/mysql 
+
   # setup_foks
   log_success "Complete!"
 }
