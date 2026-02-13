@@ -48,7 +48,8 @@ func main() {
 
 	// Register the handler for all paths
 	http.HandleFunc("/", handler)
-	http.HandleFunc("/lab", labPageHandler)
+	http.HandleFunc("/lab", lab)
+	http.HandleFunc("/resume", resume)
 
 	logging.Log_header("Server listening on :8080")
 	err = http.ListenAndServe(":8080", nil)
@@ -73,7 +74,7 @@ func handler(w http.ResponseWriter, r *http.Request) { // handler for the root p
 	}
 }
 
-func labPageHandler(w http.ResponseWriter, r *http.Request) {
+func lab(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving lab page")
 
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
@@ -86,5 +87,21 @@ func labPageHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Internal server error: Could not render index page.", http.StatusInternalServerError)
+	}
+}
+
+func resume(w http.ResponseWriter, r *http.Request) {
+	logging.Log_header("Serving resume page")
+
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+
+	page := Page{"resume"}
+
+	err := tmpls.ExecuteTemplate(w, "resumePage", page)
+	if err != nil {
+		logging.Log_error(err.Error())
+		http.Error(w, "Internal server error: Could not render resume page.", http.StatusInternalServerError)
 	}
 }
