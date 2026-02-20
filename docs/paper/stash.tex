@@ -4,7 +4,6 @@
 % !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
 % https://orcid.org/0000-0003-4586-8500
 
-
 \documentclass[11pt]{report}
 %\documentclass[11pt, twocolumn]{report}
 
@@ -32,10 +31,13 @@
 \fancyfoot[R]{\includegraphics[scale=0.50]{../../static/images/ucd-wide.jpg}}
 \renewcommand{\footrulewidth}{1pt}
 
-\usepackage{biblatex}
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
 \addbibresource{bib.bib}
 
-% Document Variables
 \newcommand{\myTitle}{Stash House}
 \newcommand{\myName}{Franklin Diaz}
 \newcommand{\myOrg}{University of Colorado}
@@ -78,6 +80,7 @@ Open Source tools and a few easy to remember patterns we can work in a much more
 
 \chapter{Introduction}
 
+
 While working as a developer, the need frequently arises to work in a ``sandbox'' type environment, where security
 controls are often skipped in favor of speed and efficiency. During the course of the software development life cycle,
 the need arises to give access to sensitive credentials including databases, cloud accounts, certificates, and many more.
@@ -90,10 +93,13 @@ we approach the question of how to meet our storage goal.
 \section{Local Back End Storage}
 
 While the tool chain set forth in this paper will use the \href{https://gnupg.org/}{GNU Privacy Guard} to encrypt
-user secrets for safe storage, an additional security safeguard can be implemented by simply storing your data in a ``local'' fashion. That is to say, the encrypted data stays within the Enterprise Network or Administrative Domain, with the goal of reducing it's accessibility those who are unauthorized.
+user secrets for safe storage, an additional security safeguard can be implemented by simply storing your data in a ``local'' fashion.
+That is to say, the encrypted data stays within the Enterprise Network or Administrative Domain, with the goal of reducing it's accessibility those who are unauthorized.
 
 \section{Distributed Back End Storage}
-journal paper \cite{foks} 
+
+The Federated Open Key Service\cite{foks}
+
 \printbibliography
 
 \end{document}

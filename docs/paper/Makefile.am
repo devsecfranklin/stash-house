@@ -4,12 +4,6 @@
 
 clean:
 if HAS_DOCKER
-	docker system prune -f
+        docker system prune -f
 endif
-	for trash in *.aux \
-	do \
-		if [ -f $$trash ] || [ -d $$trash ]; then \
-			echo "Removing $$trash" ;\
-			rm -rf $$trash ;\
-		fi ; \
-	done
+	rm *.aux *.bbl
