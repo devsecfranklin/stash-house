@@ -7,16 +7,16 @@ Here is a list of the trainings required by the Office of Grants & Contracts (
 
 The courses are available in SkillSoft. To access SkillSoft, use your University credentials to
 log into the University of Colorado Denver Access Portal. Under the CU Resources Home dropdown,
-select “Training” and click the “SkillSoft” tile. This will take you to the SkillSoft catalog. 
+select “Training” and click the “SkillSoft” tile. This will take you to the SkillSoft catalog.
 On the home page of Skillsoft, go to “Library” and then click “CU Denver” and then go to
 “Grants and Contracts”.
- 
+
 You’ll also want to complete your Conflict of Interest within the eRA system:
 Conflict of Interest Disclosure form in the eRA/InfoEd system here at the University.  
 
 If you will please follow the link below and then complete the following steps:
 
-1.        [Login into Info Ed](https://era.cu.edu) 
+1.        [Login into Info Ed](https://era.cu.edu)
 2.        [https://era.cu.edu](https://era.cu.edu)
 3.        You need to choose the “Denver” campus when logging in
 4.        Select the tab on the left labeled, “Conflict of interest”
