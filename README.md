@@ -14,4 +14,4 @@ much more efficient and secure manner.
 
 * [Click here for the presentation PDF](https://zenodo.org/records/17442786)
 
-![stash house](https://github.com/devsecfranklin/stash-house/blob/main/static/images/ucd-tall.jpg)<br>*Stash House*
+![UCD](https://github.com/devsecfranklin/stash-house/blob/main/static/images/ucd-wide.jpg)
