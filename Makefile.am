@@ -20,9 +20,6 @@ endif
 	find . -name '*.pyc' | xargs rm -rf
 	find . -name '__pycache__' | xargs rm -rf
 	for trash in README AUTHORS ChangeLog aclocal.m4 autom4te.cache config config.log \
-		config.status configure configure~ config.h.in~ libtool Makefile Makefile.in NEWS \
-		docs/*/*.aux docs/*/*.bbl docs/*/*.blg docs/*/*.lof docs/*/*.log docs/*/*.lot \
-		docs/*/*.out docs/*/*.pdf docs/*/*.synctex.gz docs/*/*.toc \
 	do \
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\
