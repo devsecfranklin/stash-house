@@ -9,9 +9,11 @@
 DEB_PKG=(libpcsclite-dev texlive-pictures texlive-latex-extra)
 LRED=$(tput setaf 1)
 
+GOBIN="${GOROOT}/bin"
+
 function setup_foks() {
   log_header "setup foks"
-  /usr/local/go/bin/go install github.com/foks-proj/go-foks/client/foks@latest
+  ${GOBIN}/go install github.com/foks-proj/go-foks/client/foks@latest
 }
 
 if [ -f "./bin/common.sh" ]; then
@@ -63,23 +65,23 @@ function main() {
   log_header "Setup:: Go"
   if [ ! -f "go.mod" ]; then
     log_warn "creating go.mod"
-    /usr/local/go/bin/go mod init github.com/devsecfranklin/stash-house
+    ${GOBIN}/go mod init github.com/devsecfranklin/stash-house
   else
     log_info "Found go.mod. Nice."
   fi
 
   log_info "Update all dependencies"
-  /usr/local/go/bin/go get -u ./...
+  ${GOBIN}/go get -u ./...
 
   log_info "remove unused deps"
-  /usr/local/go/bin/go mod tidy
+  ${GOBIN}/go mod tidy
 
   log_info "viper module for config files"
-  /usr/local/go/bin/go get github.com/spf13/viper
+  ${GOBIN}/go get github.com/spf13/viper
 
   # gorm is to connect to amriadb
-  go get -u gorm.io/gorm
-  go get -u gorm.io/driver/mysql 
+  ${GOBIN}/go get -u gorm.io/gorm
+  ${GOBIN}/go get -u gorm.io/driver/mysql 
 
   # setup_foks
   log_success "Complete!"

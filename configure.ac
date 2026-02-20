@@ -10,6 +10,7 @@ AC_CONFIG_COMMANDS([franklin-build],
 
 AC_CONFIG_FILES([
   Makefile
+  docs/paper/Makefile
 ])
 
 dnl Checks for programs.
