@@ -4,7 +4,6 @@
 % !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
 % https://orcid.org/0000-0003-4586-8500
 
-
 \documentclass[11pt]{report}
 %\documentclass[11pt, twocolumn]{report}
 
@@ -32,7 +31,13 @@
 \fancyfoot[R]{\includegraphics[scale=0.50]{../../static/images/ucd-wide.jpg}}
 \renewcommand{\footrulewidth}{1pt}
 
-% Document Variables
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+\addbibresource{bib.bib}
+
 \newcommand{\myTitle}{Stash House}
 \newcommand{\myName}{Franklin Diaz}
 \newcommand{\myOrg}{University of Colorado}
@@ -87,14 +92,13 @@ we approach the question of how to meet our storage goal.
 \section{Local Back End Storage}
 
 While the tool chain set forth in this paper will use the \href{https://gnupg.org/}{GNU Privacy Guard} to encrypt
-user secrets for safe storage, an additional security safeguard can be implemented by simply storing your data in a ``local'' fashion. That is to say, the encrypted data stays within the Enterprise Network or Administrative Domain, with the goal of reducing it's accessibility those who are unauthorized.
-
-
+user secrets for safe storage, an additional security safeguard can be implemented by simply storing your data in a ``local'' fashion.
+That is to say, the encrypted data stays within the Enterprise Network or Administrative Domain, with the goal of reducing it's accessibility those who are unauthorized.
 
 \section{Distributed Back End Storage}
 
+The Federated Open Key Service\cite{foks}
 
-
-% include foks paper in the bibliography
+\printbibliography
 
 \end{document}
