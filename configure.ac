@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([stash-house], [0.2], [smoooth.y62wj@passmail.net], [https://github.com/devsecfranklin/stash-house])
+AC_INIT([stash-house], [0.2], [franklin.diaz@ucdenver.edu], [https://github.com/devsecfranklin/stash-house])
 AC_CONFIG_MACRO_DIR([config/m4])
 AC_CONFIG_AUX_DIR([config])
 AM_INIT_AUTOMAKE
@@ -10,6 +10,7 @@ AC_CONFIG_COMMANDS([franklin-build],
 
 AC_CONFIG_FILES([
   Makefile
+  docs/paper/Makefile
 ])
 
 dnl Checks for programs.
