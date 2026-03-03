@@ -7,3 +7,6 @@ if HAS_DOCKER
         docker system prune -f
 endif
 	rm *.aux *.bbl
+
+all:
+	latexmk -pdf stash.tex
