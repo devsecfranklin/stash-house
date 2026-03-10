@@ -17,29 +17,49 @@ set -o nounset  # Treat unset variables as an error
 # recognizes word boundaries while splitting a sequence of character strings.
 #IFS=$'\n\t'
 
+DEB_PKG=(figlet)
 LRED='\033[0;31m'
 NC='\033[0m' # No Color
+PORT="8080"
 WORK_DIR="${PWD}"
 
-
-function main() {
-  echo -e "\n" && figlet -f ${WORK_DIR}/fonts/pagga resume && echo -e "\n"
-  if [ -f "${WORK_DIR}/bin/common.sh" ]; then
-    source "${WORK_DIR}/bin/common.sh"
-  else
-    echo -e "${LRED}can not find ${WORK_DIR}/bin/common.sh.${NC}"
-    exit 1
-  fi
-  log_info "successfully sourced ${WORK_DIR}/bin/common.sh" && echo -e "\n"
-
-  log_header "Starting the server."
-
+function start_linux() {
+  log_header "Starting the server on Linux host" 
   log_info "cd to ${WORK_DIR}"
   pushd "${WORK_DIR}" >> /dev/null || exit 1       
   log_info "start screen session"
   screen -mdS website go run ${WORK_DIR}/cmd/www/main.go
   popd >> /dev/null || exit 1
-  log_success "Open in browser: http://localhost:9091"
+}
+
+function start_openbsd() {
+  log_header "Starting the server on OpenBSD: $(uanme -a)"
+  # doas pkg_add figlet
+  doas rcctl enable nginx
+  doas rcctl start nginx
+}
+
+function validate_configuration() {
+  nginx -t
+}
+
+function main() {
+  echo -e "\n" && figlet -f ./fonts/pagga resume && echo -e "\n"
+  if [ -f "./bin/common.sh" ]; then
+    source "./bin/common.sh"
+  else
+    echo -e "${LRED}can not find ./bin/common.sh.${NC}"
+    exit 1
+  fi
+  log_info "successfully sourced ./bin/common.sh" && echo -e "\n"
+
+  if [ "$(uname -s)" == "OpenBSD" ]; then
+    start_openbsd
+  else
+    start_linux
+  fi
+
+  log_success "Open in browser: http://localhost:${PORT}"
 }
 
 main "$@"

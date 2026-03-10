@@ -22,3 +22,11 @@ certbot certificates # displays information about the certificates that Certbot 
 systemctl status certbot.timer # showing whether it’s active and when it’s scheduled to run next.
 certbot renew --dry-run # If dry run is successful, the auto-renewal has been set up correctly.
 ```
+
+## Security Practices #
+
+- Run nginx as _nginx (default on OpenBSD).
+- Ensure files in /htdocs are owned by www and not world-writable.
+- Use try_files to avoid path traversal.
+- Do not expose nginx to the Internet without enabling TLS.
+- Validate all reverse proxy headers if used.
