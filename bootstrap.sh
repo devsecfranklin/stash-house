@@ -9,6 +9,7 @@
 DEB_PKG=(libpcsclite-dev texlive-pictures texlive-latex-extra)
 LRED=$(tput setaf 1)
 
+GOROOT="/usr/local/go" # is this in .envrc
 GOBIN="${GOROOT}/bin"
 
 function setup_foks() {
