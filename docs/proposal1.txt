@@ -1,3 +1,0 @@
-https://edu.google.com/programs/credits/research/?modal_active=none
-
-Please provide a project proposal that includes: research problem to be solved, GCP tools to be used, project timeline, key milestones and outcomes, and how GCP can support your research in the future. Please include a link to your shared Google Doc OR copy and paste text in the field below. (250 words maximum)
