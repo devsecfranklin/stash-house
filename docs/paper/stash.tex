@@ -41,11 +41,8 @@
 \fancyfoot[R]{\includegraphics[scale=0.50]{../../static/images/ucd-wide.jpg}}
 \renewcommand{\footrulewidth}{1pt}
 
-\usepackage[
-backend=biber,
-style=alphabetic,
-sorting=ynt
-]{biblatex}
+ % BIBLIOGRAPHY
+\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
 \addbibresource{bib.bib}
 
 \newcommand{\myTitle}{Stash House}
@@ -149,9 +146,20 @@ The projected architecture leverages Google Kubernetes Engine (GKE) and the Nost
 	\item \textbf{Enterprise Bridge:} Facilitating a site-to-site tunnel to institutional LDAP and Kerberos servers for identity mapping.
 \end{itemize}
 
-\section{Implementation and Results}
+\section{Related Work}
+The landscape of secret management is currently divided between centralized enterprise vaulting and decentralized personal identity. stash-house occupies the intersection of these domains, focusing on the transition from local disorder to federated stewardship.
 
-The current implementation of Stash House utilizes a diverse tech stack designed for portability and system-level control. The codebase is primarily composed of M4 (70.8\%) for configuration generation, Shell (10.2\%) for workflow orchestration, and Go (5.3\%) for the multi-user daemon logic. Initial results indicate a 90\% reduction in plaintext credential surface area within the first hour of deployment in "dirty" test environments.
+\subsection{Secret Scanning and Hygiene}
+Traditional approaches to credential security, such as GitGuardian or Gitleaks, focus primarily on the "Pre-Commit" phase of the development lifecycle. While effective at preventing new leaks, they offer little utility for the remediation of existing workstation entropy. stash-house builds upon this foundation but shifts the attractor from simple detection to active authority recovery \cite{stashhouse}.
+
+\subsection{Decentralized Transport and Storage}
+The use of the Nostr protocol as a transport layer represents a departure from centralized "fortress" models. By utilizing NIP-78 for application-specific data \cite{nip78}, we achieve a resilient, multi-relay distribution of ciphertext. To ensure the integrity of this distributed state, we implement cryptographic standards defined in NIP-44 \cite{nip44}, which provides a robust version-2 encryption scheme more suitable for infrastructure secrets than previous iterations.
+
+\subsection{Federated Authority and Enterprise Bridging}
+The "Extensions" layer of our research relies on the coordination of disparate identity authorities. The Federated Open Key Service (FOKS) provides the mechanical basis for brokered key release \cite{foks}, allowing for hardware-backed security in a non-proprietary framework. This is critical for our bridge to enterprise identity. By referencing established protocols like Kerberos \cite{kerberos} and OpenLDAP \cite{openldap}, we ensure that the sovereign identity reclaimed on the workstation can be mapped to institutional governance without compromising the developer's local autonomy.
+
+\subsection{The Materialization Boundary}
+While tools like 1Password and HashiCorp Vault address secret storage, there is limited academic focus on the "Materialization Boundary"—the exact moment a secret enters a runtime process memory. Our work expands upon the foundational concepts of ticket-based authentication found in Kerberos \cite{kerberos} to investigate just-in-time materialization, aiming to minimize the temporal window of exposure during automated infrastructure execution.
 
 \section{Conclusion}
 Project Stash House demonstrates that decentralized identity is not merely an automatic extension of encrypted storage, but a distinct operator that must be stabilized by local discipline. By focusing on authority recovery and the containment of runtime exposure, we provide a framework for organizations to adopt sovereign identity protocols while maintaining the rigor of enterprise governance.
