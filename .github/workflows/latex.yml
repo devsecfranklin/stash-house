@@ -1,4 +1,4 @@
-name: Build LaTeX document
+name: latex-slides
 on:
   - pull_request
 
@@ -14,9 +14,3 @@ jobs:
           root_file: stash.tex
           args: '-pdf -file-line-error -interaction=nonstopmode -shell-escape'
           working_directory: docs/slides
-      - name: Compile LaTeX paper
-        uses: xu-cheng/latex-action@v4
-        with:
-          root_file: stash.tex
-          args: '-pdf -file-line-error -interaction=nonstopmode -shell-escape'
-          working_directory: docs/paper
