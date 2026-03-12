@@ -1,5 +1,9 @@
 # paper
 
+- `-pdf: generates pdf`
+- `-bibtex: ensures bibliography is processed (supports biber)`
+- `-f: force completion even with minor errors`
+
 ## build
 
 ```sh

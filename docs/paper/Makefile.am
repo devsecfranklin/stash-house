@@ -6,7 +6,8 @@ clean:
 if HAS_DOCKER
         docker system prune -f
 endif
-	rm *.aux *.bbl
+	latexmk -C
+	rm -f *.bbl *.bcf *.run.xml *.nav *.snm *.vrb
 
 all:
-	latexmk -pdf stash.tex
+	latexmk -pdf -bibtex -f stash.tex
