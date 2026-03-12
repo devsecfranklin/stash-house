@@ -167,6 +167,26 @@ The projected architecture leverages Google Kubernetes Engine (GKE) and the Nost
 	\item \textbf{Enterprise Bridge:} Facilitating a site-to-site tunnel to institutional LDAP and Kerberos servers for identity mapping.
 \end{itemize}
 
+\section{Decentralized State Management via NIP-78}
+\label{sec:nip78_shift}
+
+The architectural transition from local, static configuration files to the \textit{Nostr Implementation Possibility 78} (NIP-78) protocol represents a fundamental shift in the \texttt{stash-house} methodology. By migrating from workstation-specific storage to a decentralized, event-based transport layer, we mitigate the inherent fragility of the "local-only" secret paradigm.
+
+\subsection{Mechanism of Application-Specific Data}
+NIP-78 defines a standard for "Application-specific data" (\texttt{kind:30078}), utilizing replaceable events to store arbitrary ciphertext indexed by a unique \texttt{d-tag}. In the \texttt{stash-house} context, this event serves as a "Virtual Vault." Unlike ephemeral social events, \texttt{kind:30078} ensures that the most recent iteration of a user's credential state is persisted across the relay network.
+
+\subsection{Technical Justification for the Shift}
+The adoption of NIP-78 over traditional local flat-files or centralized databases provides three primary advantages:
+
+\begin{itemize}
+	\item \textbf{Decentralized Redundancy:} Broadcasting the vault state to multiple relays---specifically the private \texttt{Hornet} instance within our GKE cluster---eliminates the workstation as a single point of failure.
+	\item \textbf{Cryptographic Sovereignty:} Since events are signed using the user's Schnorr-based Nostr identity, the infrastructure remains content-agnostic. The cloud provider hosts the data without ever possessing the keys required for its decryption.
+	\item \textbf{Materialization Agnostic:} NIP-78 allows the \texttt{stash-house} CLI to retrieve state across disparate environments (e.g., local shell, cloud-hosted dev container, or CI/CD runner) without requiring manual secret synchronization.
+\end{itemize}
+
+\subsection{Interaction with the FOKS Layer}
+While NIP-78 facilitates the \textit{transport} and \textit{storage} of the vault, the \textit{Federated Open Key Service} (FOKS) provides the brokered decryption logic. This separation ensures that the transport layer remains decentralized and resilient, while the authorization layer remains governed by the institutional policies defined in our University Research Lab (via the HA VPN bridge).
+
 \section{Related Work}
 The landscape of secret management is currently divided between centralized enterprise vaulting and decentralized personal identity. stash-house occupies the intersection of these domains, focusing on the transition from local disorder to federated stewardship.
 
