@@ -7,7 +7,7 @@
 \documentclass[11pt]{report}
 %\documentclass[11pt, twocolumn]{report}
 
-\usepackage{lipsum} %Package to generate latin text (Only for testing)
+% \usepackage{lipsum} %Package to generate latin text (Only for testing)
 
 \usepackage{amsmath} %AMS packages for mathematical symbols
 \usepackage{amsfonts}
@@ -30,25 +30,43 @@
 \definecolor{extension}{RGB}{235, 245, 235}
 \definecolor{accent}{RGB}{42, 87, 154}
 
-%Header and Footer Stuff
+%%%%% ----- Header and Footer Stuff ----- %%%%%
 \usepackage{fancyhdr}
+\usepackage{vhistory} % Ensure this is loaded to use \vhCurrentVersion
+
 \pagestyle{fancy}
-\fancyhead{}
-\fancyfoot{}
+\fancyhf{} % Clears all header and footer fields
+
+% --- Header Configuration ---
+\fancyhead[L]{Project Stash House}
 \fancyhead[R]{\myTitle}
-%\fancyfoot[L]{Credential Management Tooling}
-%\fancyfoot[R]{\thepage}
-\fancyfoot[R]{\includegraphics[scale=0.50]{../../static/images/ucd-wide.jpg}}
+
+% --- Footer Configuration ---
+% Left: Current version from the version history table
+\fancyfoot[L]{Version \vhCurrentVersion} 
+
+% Center: Page number
+\fancyfoot[C]{\thepage}
+
+% Right: Your University logo (scaled to fit footer height)
+\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[scale=0.30]{../../static/images/ucd-wide.jpg}}}
+
+% --- Rules ---
+\renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{1pt}
 
- % BIBLIOGRAPHY
-\usepackage[backend=biber,style=alphabetic,sorting=none]{biblatex}
-\addbibresource{bib.bib}
-
+% title page vars ----- %%%%%
 \newcommand{\myTitle}{Stash House}
 \newcommand{\myName}{Franklin Diaz}
 \newcommand{\myOrg}{University of Colorado}
 \newcommand{\myDate}{March 11, 2026}
+
+% history ----- %%%%%
+\usepackage{vhistory}
+
+ % BIBLIOGRAPHY ----- %%%%%
+\usepackage[backend=biber,style=alphabetic,sorting=none]{biblatex}
+\addbibresource{bib.bib}
 
 \begin{document}
 
@@ -73,7 +91,7 @@ Project Stash House is best understood not as a new storage vault, but as a syst
 
 \section{System Architecture}
 
-The architecture of Stash House is bifurcated into a structurally real foundational layer and a boltable extension layer.
+The architecture of Stash House is bifurcated into a structurally real foundational layer and a boltable extension layer.\\
 
 \begin{figure}[htbp]
 	\centering
@@ -126,11 +144,14 @@ The architecture of Stash House is bifurcated into a structurally real foundatio
 	\caption{Project Stash House: Authority Recovery and Materialization Boundary.}
 \end{figure}
 
-Horizontal Flow (Foundation): Represents the primary operator ProtectLocal. It shows the movement from Local Disorder (plaintext) to Encrypted Stewardship.
+Here is a view of the component relationshsips.\\
+\includegraphics[scale=0.35]{../../static/images/architecture-component.png}\\
 
-Vertical Flow (Boundary): The red dashed line and the arrow to Runtime Execution represent the Materialization Boundary. This is where the research analyzes the risk of secrets becoming "live."
-
-Bottom Layer (Extensions): This represents the GCP infrastructure you are requesting. It shows how the local vault is projected into a Distributed/Federated state via Nostr and FOKS, while bridging to institutional LDAP/Kerberos.
+\begin{itemize}
+	\item \textbf{Horizontal Flow (Foundation):} Represents the primary operator ProtectLocal. It shows the movement from Local Disorder (plaintext) to Encrypted Stewardship.
+	\item \textbf{Vertical Flow (Boundary):} The red dashed line and the arrow to Runtime Execution represent the Materialization Boundary. This is where the research analyzes the risk of secrets becoming "live."
+	\item \textbf{Bottom Layer (Extensions):} This represents the GCP infrastructure you are requesting. It shows how the local vault is projected into a Distributed/Federated state via Nostr and FOKS, while bridging to institutional LDAP/Kerberos.
+\end{itemize}
 
 \subsection{The Foundational Layer: Local Stewardship}
 The primary operator, \textit{ProtectLocal}, performs a scan-identify-relocate cycle. By utilizing workstation-native tools such as GPG and \textit{pass}, we establish a "Hygiene Boundary" that prevents plaintext sprawl.
@@ -145,6 +166,26 @@ The projected architecture leverages Google Kubernetes Engine (GKE) and the Nost
 	\item \textbf{FOKS Integration:} Employing the Federated Open Key Service to manage brokered key release via hardware tokens.
 	\item \textbf{Enterprise Bridge:} Facilitating a site-to-site tunnel to institutional LDAP and Kerberos servers for identity mapping.
 \end{itemize}
+
+\section{Decentralized State Management via NIP-78}
+\label{sec:nip78_shift}
+
+The architectural transition from local, static configuration files to the \textit{Nostr Implementation Possibility 78} (NIP-78) protocol represents a fundamental shift in the \texttt{stash-house} methodology. By migrating from workstation-specific storage to a decentralized, event-based transport layer, we mitigate the inherent fragility of the "local-only" secret paradigm.
+
+\subsection{Mechanism of Application-Specific Data}
+NIP-78 defines a standard for "Application-specific data" (\texttt{kind:30078}), utilizing replaceable events to store arbitrary ciphertext indexed by a unique \texttt{d-tag}. In the \texttt{stash-house} context, this event serves as a "Virtual Vault." Unlike ephemeral social events, \texttt{kind:30078} ensures that the most recent iteration of a user's credential state is persisted across the relay network.
+
+\subsection{Technical Justification for the Shift}
+The adoption of NIP-78 over traditional local flat-files or centralized databases provides three primary advantages:
+
+\begin{itemize}
+	\item \textbf{Decentralized Redundancy:} Broadcasting the vault state to multiple relays---specifically the private \texttt{Hornet} instance within our GKE cluster---eliminates the workstation as a single point of failure.
+	\item \textbf{Cryptographic Sovereignty:} Since events are signed using the user's Schnorr-based Nostr identity, the infrastructure remains content-agnostic. The cloud provider hosts the data without ever possessing the keys required for its decryption.
+	\item \textbf{Materialization Agnostic:} NIP-78 allows the \texttt{stash-house} CLI to retrieve state across disparate environments (e.g., local shell, cloud-hosted dev container, or CI/CD runner) without requiring manual secret synchronization.
+\end{itemize}
+
+\subsection{Interaction with the FOKS Layer}
+While NIP-78 facilitates the \textit{transport} and \textit{storage} of the vault, the \textit{Federated Open Key Service} (FOKS) provides the brokered decryption logic. This separation ensures that the transport layer remains decentralized and resilient, while the authorization layer remains governed by the institutional policies defined in our University Research Lab (via the HA VPN bridge).
 
 \section{Related Work}
 The landscape of secret management is currently divided between centralized enterprise vaulting and decentralized personal identity. stash-house occupies the intersection of these domains, focusing on the transition from local disorder to federated stewardship.
@@ -163,6 +204,18 @@ While tools like 1Password and HashiCorp Vault address secret storage, there is 
 
 \section{Conclusion}
 Project Stash House demonstrates that decentralized identity is not merely an automatic extension of encrypted storage, but a distinct operator that must be stabilized by local discipline. By focusing on authority recovery and the containment of runtime exposure, we provide a framework for organizations to adopt sovereign identity protocols while maintaining the rigor of enterprise governance.
+
+\section*{Acknowledgments}
+The Principal Investigator (Diaz) sincerely thanks Matt Greco, Perryman, and S1yb0rg for their indispensable contributions to this work.
+
+\begin{versionhistory}
+  \vhEntry{0.1.0}{2025-11-15}{FD}{Initial draft: Defining Authority Recovery attractor.}
+  \vhEntry{0.2.0}{2025-12-20}{FD|MG}{Integration of M4 configuration logic and GKE PoC architecture.}
+  \vhEntry{0.3.0}{2026-02-10}{FD|DP}{Expansion of Materialization Boundary analysis and JIT secret patterns.}
+  \vhEntry{0.3.5}{2026-03-11}{FD|MG|DP}{Current PR: Added NIP-78 transport layer and FOKS service definitions.}
+\end{versionhistory}
+
+\cleardoublepage
 
 \nocite{*}
 \printbibliography

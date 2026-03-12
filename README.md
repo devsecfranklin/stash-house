@@ -13,4 +13,5 @@ architecture that integrates enterprise standards like Kerberos and LDAP with so
 * [Click here for white paper](https://github.com/devsecfranklin/stash-house/blob/main/docs/paper/stash.pdf)
 * [Click here for the latest presentation PDF](https://zenodo.org/records/17442786)
 
-![UCD](https://github.com/devsecfranklin/stash-house/blob/main/static/images/ucd-wide.jpg)
+![GKE](https://github.com/devsecfranklin/stash-house/blob/main/static/images/architecture-cluster.png)
+![component](https://github.com/devsecfranklin/stash-house/blob/main/static/images/architecture-component.png)
