@@ -11,9 +11,9 @@ This file provides architectural context and development guidelines for the Stas
 - **Materialization Boundary:** The critical transition point where encrypted, stored authority becomes live runtime authority.
 - **Authority Recovery:** A hybrid architecture integrating enterprise standards (Kerberos, LDAP) with sovereign, distributed backends.
 - **Components:**
-    - **FOKS:** Federated Identity Broker.
-    - **Nostr:** Decentralized transport layer.
-    - **GKE/Terraform:** Cloud infrastructure for deployment.
+  - **FOKS:** Federated Identity Broker.
+  - **Nostr:** Decentralized transport layer.
+  - **GKE/Terraform:** Cloud infrastructure for deployment.
 
 ## Tech Stack
 
@@ -33,6 +33,7 @@ The project uses a bootstrap script to configure the environment, including GNU 
 ```
 
 This script will:
+
 1. Install necessary Debian packages.
 2. Initialize GNU Autotools (`aclocal`, `autoreconf`, `automake`, `./configure`).
 3. Initialize and update Go modules.
