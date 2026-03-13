@@ -41,7 +41,7 @@ This script will:
 ### Build Commands
 
 - **Build Go binaries:** `go build ./cmd/...`
-- **Build LaTeX White Paper:** `make paper`
+- **Build LaTeX White Paper:** `make -C docs/paper`
 - **Build LaTeX Slides:** `make slides`
 - **Clean build artifacts:** `make clean`
 
