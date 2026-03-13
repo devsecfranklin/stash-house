@@ -6,7 +6,7 @@
 
 # ChangeLog:
 
-DEB_PKG=(libpcsclite-dev texlive-pictures texlive-latex-extra)
+DEB_PKG=(libpcsclite-dev shfmt texlive-pictures texlive-latex-extra)
 LRED=$(tput setaf 1)
 
 GOROOT="/usr/local/go" # is this in .envrc

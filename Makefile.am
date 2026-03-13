@@ -42,12 +42,12 @@ lint:
 	shfmt -i 2 -l -w demo/01_locate/scan_local.sh
 	
 	pushd "${PWD}/docs/slides" &&  latexmk -c && popd
-	pushd "${PWD}docs//slides" &&  lacheck stash.tex && popd
+	pushd "${PWD}/docs/slides" &&  lacheck stash.tex && popd
 
 .PHONY: slides
 slides: 
 	pushd "${PWD}/docs/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
-	pushd "${PWD}docs/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
+	pushd "${PWD}/docs/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
 
 .PHONY: paper
 paper: 
