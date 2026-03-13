@@ -13,4 +13,4 @@ jobs:
         with:
           root_file: stash.tex
           args: '-pdf -file-line-error -interaction=nonstopmode -shell-escape'
-          working_directory: docs/slides
+          working_directory: docs/slides-bsides-cos
