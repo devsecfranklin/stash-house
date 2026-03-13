@@ -1,0 +1,22 @@
+# Ignore patterns for Gemini CLI
+.git/
+node_modules/
+venv/
+_test/
+*.pyc
+__pycache__/
+build/
+dist/
+*.o
+*.a
+*.so
+*.lo
+*.la
+.deps/
+.libs/
+Makefile.in
+aclocal.m4
+autom4te.cache/
+configure
+config.log
+config.status
