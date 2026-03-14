@@ -6,7 +6,7 @@
 
 # ChangeLog:
 
-DEB_PKG=(libpcsclite-dev shfmt texlive-pictures texlive-latex-extra)
+DEB_PKG=(biber direnv libpcsclite-dev shfmt texlive-pictures texlive-latex-extra)
 LRED=$(tput setaf 1)
 
 GOROOT="/usr/local/go" # is this in .envrc
@@ -31,6 +31,12 @@ function create_files() {
   for i in "${FILES[@]}"; do
     touch "${i}"
   done
+}
+
+function setup_direnv() {
+  # add this line to the end of `~/.config/fish/config.fish`
+  echo "direnv hook fish | source" > ~/.config/fish/config.fish
+  pass
 }
 
 function main() {

@@ -46,10 +46,10 @@ lint:
 
 .PHONY: slides
 slides: 
-	pushd "${PWD}/docs/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
-	pushd "${PWD}/docs/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
+	pushd "${PWD}/docs/slides-bsides-cos" && latexmk -pdf -bibtex -f -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash.tex && popd 
+
 
 .PHONY: paper
 paper: 
-	pushd "${PWD}/docs/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
-	pushd "${PWD}/docs/slides" && latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash && popd
+        pushd "${PWD}/docs/paper" && latexmk -pdf -bibtex -f -interaction=nonstopmode -shell-escape stash.tex && popd
+
