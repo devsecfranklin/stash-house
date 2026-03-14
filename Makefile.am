@@ -51,5 +51,4 @@ slides:
 
 .PHONY: paper
 paper: 
-        pushd "${PWD}/docs/paper" && latexmk -pdf -bibtex -f -interaction=nonstopmode -shell-escape stash.tex && popd
-
+	pushd "${PWD}/docs/paper" && latexmk -pdf -bibtex -f -interaction=nonstopmode -shell-escape stash.tex && popd
