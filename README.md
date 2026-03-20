@@ -1,6 +1,6 @@
 # Project Stash House
 
-[![DOI](static/images/zenodo.17442786.svg)](https://doi.org/10.5281/zenodo.17442786) [![markdown](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml)
+ [![markdown](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml)
 
 As developer environments increase in complexity, local credential sprawl has become a primary vector
 for authority loss. Project Stash House introduces a multi-layer framework for reconstituting disciplined
@@ -10,8 +10,8 @@ and federated identity brokers (FOKS). This paper explores the "Materialization 
 transition point where encrypted, stored authority becomes live runtime authority—and validates a hybrid
 architecture that integrates enterprise standards like Kerberos and LDAP with sovereign, distributed backends.
 
-* [Click here for white paper](https://github.com/devsecfranklin/stash-house/blob/main/docs/paper/stash.pdf)
-* [Click here for the latest presentation PDF](https://zenodo.org/records/17442786)
+* [![DOI](static/images/zenodo.19122412.svg)](https://doi.org/10.5281/zenodo.19122412) [Click here for white paper](https://zenodo.org/records/19122412)
+* [![DOI](static/images/zenodo.17442786.svg)](https://zenodo.org/records/17442786) [Click here for the Bsides Colorado slides](https://zenodo.org/records/17442786)
 
 ![GKE](https://github.com/devsecfranklin/stash-house/blob/main/static/images/architecture-cluster.png)
 ![component](https://github.com/devsecfranklin/stash-house/blob/main/static/images/architecture-component.png)
