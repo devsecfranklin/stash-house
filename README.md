@@ -1,6 +1,6 @@
 # Project Stash House
 
-[![DOI](static/images/zenodo.17442786.svg)](https://doi.org/10.5281/zenodo.17442786) [![markdown](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml) [![latex-paper](https://github.com/devsecfranklin/stash-house/actions/workflows/latex-paper.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/latex-paper.yml) [![latex-slides](https://github.com/devsecfranklin/stash-house/actions/workflows/latex.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/latex.yml)
+[![DOI](static/images/zenodo.17442786.svg)](https://doi.org/10.5281/zenodo.17442786) [![markdown](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml/badge.svg)](https://github.com/devsecfranklin/stash-house/actions/workflows/markdown.yml)
 
 As developer environments increase in complexity, local credential sprawl has become a primary vector
 for authority loss. Project Stash House introduces a multi-layer framework for reconstituting disciplined

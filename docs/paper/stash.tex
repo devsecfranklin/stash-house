@@ -8,13 +8,12 @@
 \documentclass[11pt]{report}
 %\documentclass[11pt, twocolumn]{report}
 
-% \usepackage{lipsum} %Package to generate latin text (Only for testing)
 
-\usepackage{amsmath} %AMS packages for mathematical symbols
+\usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
-\usepackage{graphicx} %package to include pictures and images
+\usepackage{graphicx}
 \usepackage[margin=1in, includefoot, includehead]{geometry} %Package to setup page layout
 
 \usepackage{minted} % code blocks
@@ -49,8 +48,8 @@
 % Center: Page number
 \fancyfoot[C]{\thepage}
 
-% Right: Your University logo (scaled to fit footer height)
-\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[scale=0.30]{../../static/images/ucd-wide.jpg}}}
+% Right: Your University logo (scaled to fit footer height
+%\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[scale=0.30]{../../static/images/ucd-wide.jpg}}}
 
 % --- Rules ---
 \renewcommand{\headrulewidth}{0.4pt}
@@ -86,7 +85,7 @@
 \pagenumbering{arabic} % Ensure your front matter (abstract, TOC) uses roman numerals and the main body uses arabic
 
 \section{Introduction}
-The modern developer workstation is characterized by high entropy. Credentials for cloud providers, internal databases, and CI/CD pipelines often accumulate in plaintext artifacts, history files, and unencrypted configuration directories. Traditional approaches to secret management typically emphasize "Pre-Commit" prevention, yet they offer little guidance for the recovery of stewardship once an environment has reached a state of disorder.
+The modern developer workstation is characterized by high entropy. Credentials for cloud providers, internal databases, and CI/CD pipelines can accumulate during working sessions in plaintext artifacts, history files, and unencrypted configuration directories. Traditional approaches to secret management typically emphasize "Pre-Commit" prevention, yet they offer little guidance for the recovery of stewardship once an environment has reached a state of disorder.
 
 Project Stash House is best understood not as a new storage vault, but as a system for the restoration of secret stewardship under workflow pressure. The foundational achievement of the project is the creation of a local hygiene scaffold that identifies leakage and relocates authority into an encrypted, manageable discipline without destroying developer velocity.
 
