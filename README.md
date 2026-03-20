@@ -11,7 +11,7 @@ transition point where encrypted, stored authority becomes live runtime authorit
 architecture that integrates enterprise standards like Kerberos and LDAP with sovereign, distributed backends.
 
 * [![DOI](static/images/zenodo.19122412.svg)](https://doi.org/10.5281/zenodo.19122412) [Click here for white paper](https://zenodo.org/records/19122412)
-* [![DOI](static/images/zenodo.17442786.svg)](https://zenodo.org/records/17442786)[Click here for the Bsides Colorado slides](https://zenodo.org/records/17442786)
+* [![DOI](static/images/zenodo.17442786.svg)](https://zenodo.org/records/17442786) [Click here for the Bsides Colorado slides](https://zenodo.org/records/17442786)
 
 ![GKE](https://github.com/devsecfranklin/stash-house/blob/main/static/images/architecture-cluster.png)
 ![component](https://github.com/devsecfranklin/stash-house/blob/main/static/images/architecture-component.png)
