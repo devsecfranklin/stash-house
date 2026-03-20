@@ -1,10 +1,3 @@
-# SPDX-FileCopyrightText: 2021-2025 franklin <smoooth.y62wj@passmail.net>
-#
-# SPDX-License-Identifier: MIT
-
-ACLOCAL_AMFLAGS = -I config/m4 -I aclocal/latex-m4
-CLOCAL_AMFLAGS = -I config/m4 -I aclocal/latex-m4
-
 #include target.mk
 
 check: DOCKER-exists
@@ -19,7 +12,7 @@ endif
 	rm -rf *.egg-info
 	find . -name '*.pyc' | xargs rm -rf
 	find . -name '__pycache__' | xargs rm -rf
-	for trash in README AUTHORS ChangeLog aclocal.m4 autom4te.cache config config.log \
+	for trash in README AUTHORS ChangeLog aclocal.m4 autom4te.cache config config.log; \
 	do \
 		if [ -f $$trash ] || [ -d $$trash ]; then \
 			echo "Removing $$trash" ;\
@@ -51,5 +44,4 @@ slides:
 
 .PHONY: paper
 paper: 
-        pushd "${PWD}/docs/paper" && latexmk -pdf -bibtex -f -interaction=nonstopmode -shell-escape stash.tex && popd
-
+	pushd "${PWD}/docs/paper" && latexmk -pdf -bibtex -f -interaction=nonstopmode -shell-escape stash.tex && popd
