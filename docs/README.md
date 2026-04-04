@@ -1,6 +1,6 @@
 # Stash
 
-1. Consolidation & De-duplication
+## Consolidation & De-duplication
 
 ```sh
 * [ ] Merge pass Guides: Consolidate docs/password-store-readme.txt, docs/stash.md, and the usage section of docs/README.md into a single
@@ -11,7 +11,7 @@
     docs/architecture/nostr.md and docs/guides/building-from-source.md).
 ```
 
-2. Architectural Clarity
+## Architectural Clarity
 
 ```sh
 * [ ] Create a Developer Guide: Add a docs/DEVELOPMENT.md explaining the Go project structure (cmd/, internal/), how to add new "ProtectLocal"
@@ -22,7 +22,7 @@
     viewing without a specific editor.
 ```
 
-3. Workflow & Tooling
+## Workflow & Tooling
 
 ```sh
 * [ ] Integrate Demo Docs: Link the demo/ scripts clearly within the documentation. Create a docs/guides/walkthrough.md that guides a user through
@@ -33,7 +33,7 @@
     path or remove the placeholder if it's no longer planned.
 ```
 
-4. Maintenance & Standards
+## Maintenance & Standards
 
 ```sh
 * [ ] Standardize Naming: Ensure the project is consistently referred to as "Stash House" (the framework) rather than just "Stash" (which is often
@@ -42,7 +42,7 @@
 * [ ] Verify Bibliography: Update docs/paper/bib.bib to ensure all URLs are current, particularly the FOKS whitepaper link.
 ```
 
-5. Suggested Directory Structure Refactor
+## Suggested Directory Structure Refactor
 
 ```sh
 docs/
