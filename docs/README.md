@@ -35,14 +35,13 @@
 
 5. Suggested Directory Structure Refactor
 
-
-1 docs/
-2 ├── architecture/           # High-level design (Materialization, Nostr, FOKS)
-3 ├── guides/                 # How-to guides (Local Stewardship, Deployment, Demos)
-4 ├── paper/                  # Formal LaTeX White Paper
-5 ├── slides/                 # Presentation materials (Consolidate ec/ and bsides-cos/)
-6 ├── DEVELOPMENT.md          # Contributor guide
-7 └── README.md               # Documentation Index
+docs/
+├── architecture/           # High-level design (Materialization, Nostr, FOKS)
+├── guides/                 # How-to guides (Local Stewardship, Deployment, Demos)
+├── paper/                  # Formal LaTeX White Paper
+├── slides/                 # Presentation materials (Consolidate ec/ and bsides-cos/)
+├── DEVELOPMENT.md          # Contributor guide
+└── README.md               # Documentation Index
 
 ## Usage
 
