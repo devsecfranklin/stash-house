@@ -39,8 +39,9 @@ lint:
 
 .PHONY: slides
 slides: 
-	pushd "${PWD}/docs/slides-bsides-cos" && latexmk -pdf -bibtex -f -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash.tex && popd 
-
+	pushd "${PWD}/docs/slides-bsides-cos" && latexmk -pdf -bibtex -f -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash.tex && popd
+	pushd "${PWD}/docs/slides-ec" && latexmk -pdf -bibtex -f -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash.tex && \
+	latexmk -pdf -bibtex -f -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape slides2.tex && popd 
 
 .PHONY: paper
 paper: 
