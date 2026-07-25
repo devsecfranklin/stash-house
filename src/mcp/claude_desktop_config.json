@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "stargate-tools": {
+      "command": "/home/skynet/path/to/.venv/bin/python",
+      "args": [
+        "/home/skynet/path/to/server.py"
+      ]
+    }
+  }
+}
