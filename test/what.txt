@@ -1,0 +1,71 @@
+franklin@chonk:~$ ssh wonderland
+Enter passphrase for key '/home/franklin/.ssh/id_rsa': 
+Enter passphrase for key '/home/franklin/.ssh/id_rsa': 
+Linux wonderland 6.1.0-42-cloud-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.159-1 (2025-12-30) x86_64
+
+                    .,,.    ..
+                  z$$$$$b c$$$L
+               ,,$$$$$$$F,,"?$$                .,,,
+          ,c" z$$$$$$$$",$$$c`F .          ,c$$$$,.
+         ,$" d$$$$$$P",d$$$$$b'F3$ccc,,cc$$$$$$$$$$$c
+        4$F 4$$$PF",c$$$?$$$$" $c$$$$$$$$$$$$$$$$$$$".
+        $PL 4$$zc$'$$PLd$$$$$P 3$$$$$$$$$$$$$$$$$$$$$$F
+        $ L '$$$$P,$$$"" d$$ : ?$$$$$$$$$$$$$$$$$$$$$P
+         J$L d$P",$$$L,-,$$$b;h $$$$$$$$$$$$$$$$$$$P",c
+         ?$$.$ '$$$$$$$$$$$$c;F $$$$$$$$$$$$$$$$?5,c$$$
+         `$$'."?,"L$$$$$$$$ :/,d$$$$$L"$$$$$$$$$$$$$$$"
+          "$b"$cc,"$$$$$$$$cr,$$$$$$$?b,"?$$$$$$$$$$P"
+            "?$$$$c`$$$bK""=d$$P??",r= ??$c,."""",,
+ `L c ,         F?$-"$$F `',;!!>',nMMMM ;!!!!><$$c,
+   "$ $   <>"MMMMMn'''' ,nMMMM  `!!!!!;,"?$$$$$bc
+   ,$$    ,cb,`<, )MMMMMMMMMMM !;,````     ""C3$$$,
+   $$$F ,c$$$$P'<> )L.,cc,,"TMe`!!!!!!   ,c$$$$$$$$P
+  <$$$$ $$$$F  ``   b,`C77?9hcc,,,,,ccd$$$$$$PF""
+  3$$$$ $$P"        `4n,"""""""""""??""".,,,       .,,xn,,.
+  4$$$$cP"            `"4MMMMMMMP",==~",;;,.  -=MMMMMMMMMMM=
+   $$P"                    ""_r='".df:!!!!!!!!!;, """"~=<
+   `                      ,xP" xMMMMM 
+                     _,eM"",dfJMMMMMMM.`!!!!!!!!!!!!;
+                  ,nMMP",dMMMLMMMMMMMMMe`!!!!!!!!!!!!>
+              ,eMMMMP",MMMMMMMMMMMMMMMMMe`!!!!!!!!!!!!>
+            eMMMMMM",dMMMMMMMMMMMMMMMMMMMr`!!!!!!!!!!!!
+         ,dMMMMMMP',MMMMMMMMMMMMMMMMMMMMMM !!!!!!!!!!!!!
+       ,dMMMMMMMP dMMMMMMMMMMMMMMMMMMMMMMM !!!!!!!!!!!!!
+     ,MMMMMMMMM" dMMMMMMMMMMMMMMMMMMMMMMMM !!!!!!!!!!!>!
+   eMMMMMMMMMMP MMMMMMMMMMMMMMMMMMMMMMMMMP !!!!!!!!!!!;!
+ eMMMMMMMMMMMM dMMMMMMMMMMMMMMMMMMMMMMMMM ;!!!!!!!!!' !'
+"4MMMMMMMMMMM'uMMMMMMMMMMMMMMMMMMMMMMMMM> !!!!!!!!!',!!
+;!> ;,"MMMMM>;MMMMMMMMMMMMMMMMMMMMMMMMMM ,
+ "4MM ,c ;;;;,.""TMMMMMMMMMMMMMM>  ;!!!!!!' ,!!', !      .,zc$$$c",
+;!!!!!!!!!!!';!!!!!!!!!!!!!!!!!!!!!!!!:!!! ,!!!!! ;>'!!!!!>"$$$$$P???L ",
+!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!'',!!!!!! ;!!> "$$"      ?P`b
+!!!!!!!!!!! ,`'''!!!!!!!!!!!!!!!!!!!!', !!!!> !!!!! ?         -$E
+!!!!!!!!!!! <<',;;,`` '``!!!>;`'!!!!!!!!!!!!!!!!!!!!!!!  !!!!!>'''`
+   ``'''''!! `'dc,,zcc`;,``'!!!!!!!!!!!!!!!!!!!> !!!!!'
+              ,$$$$$$$b`;, ``''!!!!!!!!!!!!!> ```
+             ,$$$$$$$$$F   ````       ```````
+            ,$$$$$$$$"
+            $$$$$$P"
+          ,$$$$$P"     "Would you tell me, please, which way I ought to go from here?”
+         ,$$$$"      "That depends a good deal on where you want to get to,” said the Cat.
+"$c-, , '$$$F                  "I don’t much care where—” said Alice.
+ "$$c?,%,4$F        "Then it doesn’t matter which way you go,” said the Cat.
+  `?$c"c'4"       "—so long as I get somewhere,” Alice added as an explanation.
+     4c`b      "Oh, you’re sure to do that,” said the Cat, “if you only walk long enough."
+       "
+
+
+Last login: Sun Feb 22 22:18:59 2026 from 136.29.107.89
+[Oh My Bash] Would you like to check for updates? [Y/n]: y
+Updating Oh My Bash
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+oh-my-bash: running 'git rebase --abort'...
+fatal: No rebase in progress?
+There was an error updating.
+If you have uncommited changes in '/home/franklin/.oh-my-bash', please commit, stash or discard them and retry updating.
+If you have your own local commits in '/home/franklin/.oh-my-bash' that conflict with the upstream changes, please resolve conflicts and merge the upstream manually.                                                                                               
+03:53:56 franklin@wonderland ~ → 
