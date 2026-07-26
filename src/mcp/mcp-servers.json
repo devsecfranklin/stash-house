@@ -1,0 +1,94 @@
+# MCP (Model Context Protocol) Configuration
+
+This file defines the MCP servers available to the Skynet AI cluster, including their commands, arguments, environment variables, and network configurations. It is used by orchestrator scripts to discover and communicate with these services.
+
+## MCP Server Definitions
+
+Each entry under `mcpServers` describes a single MCP service.
+
+*   **`command`**: The executable command to start the service (e.g., `python3`, `npx`).
+*   **`args`**: Arguments to pass to the command.
+*   **`env`**: Environment variables to set for the service process.
+*   **`remote`**: Specifies if the service runs on a remote host.
+    *   `host`: The IP address or hostname of the remote machine.
+    *   `user`: The username to connect as (e.g., for SSH).
+*   **`port`**: (Optional) Explicitly define the port the service listens on. If omitted, default ports are used.
+
+---
+
+{
+  "mcpServers": {
+    "stargate-utility": {
+      "command": "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/.venv/bin/python3",
+      "args": [
+        "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/src/mcp_server/mcp-server.py"
+      ],
+      "env": {
+        "PYTHONPATH": "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft"
+      }
+    },
+    "filesystem-stargate": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/src/schematics",
+        "/mnt/clusterfs/minecraft/schematics"
+      ],
+      "env": {
+        "SERVER_DIR": "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft"
+      },
+      "port": 8081
+    },
+    "rcon-chonk": {
+      "command": "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/.venv/bin/python3",
+      "args": [
+        "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/src/mcp_server/rcon_service.py"
+      ],
+      "env": {
+        "RCON_HOST": "10.10.8.60",
+        "RCON_PORT": "25575",
+        "HUB_ID": "Hub-02"
+      },
+      "port": 8082
+    },
+    "git-ledger": {
+      "command": "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/.venv/bin/python3",
+      "args": [
+        "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/src/mcp_server/git_service.py"
+      ],
+      "env": {
+        "BACKUP_SCRIPT": "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/bin/backup_to_git.sh"
+      },
+      "port": 8083
+    },
+    "vision-edge-t": {
+      "command": "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/.venv/bin/python3",
+      "args": [
+        "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/src/mcp_server/vision_service.py"
+      ],
+      "env": {
+        "EDGETPU_SHARED_LIB": "libedgetpu.so.1",
+        "MODEL_PATH": "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/src/models/vision_v1.tflite",
+        "SENSE_NET_HUB": "Hub-06"
+      },
+      "remote": {
+        "host": "10.10.16.4",
+        "user": "minecraft"
+      },
+      "port": 8084
+    },
+    "npu-skynet": {
+      "command": "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/.venv/bin/python3",
+      "args": [
+        "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/src/mcp_server/npu_service.py"
+      ],
+      "env": {
+        "HAILO_NPU_ACTIVE": "true",
+        "SCHEM_GEN_PATH": "/mnt/clusterfs2/workspace/gaming/game-skynet-minecraft/src/schem-gen",
+        "LOGIC_CORE": "Hub-01"
+      },
+      "port": 8085
+    }
+  }
+}

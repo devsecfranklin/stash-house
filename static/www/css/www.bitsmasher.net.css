@@ -1,0 +1,19 @@
+/*
+ * # SPDX-FileCopyrightText: ©2025 franklin <smoooth.y62wj@passmail.net>
+ * #
+ * # SPDX-License-Identifier: MIT
+ */
+
+html { color-scheme: light dark; }
+body { 
+  font-family: Tahoma, Verdana, Arial, sans-serif; color: white;
+}
+footer { background-color: #000; text-align: center; padding: 18px; }
+.container { display: grid; grid-template-columns: auto auto; background-color: black; padding: 10px; }
+.container div {
+  background-color: #000;
+  border: 1px solid black;
+  padding: 10px;
+  font-size: 10px;
+  text-align: center;
+}
