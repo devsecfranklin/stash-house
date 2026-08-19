@@ -1,0 +1,11 @@
+{
+  "version": "https://jsonfeed.org/version/2",
+  "title": "Tags: research",
+  "items": [
+    {
+      "title": "DC34 Badge Security Research Update",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-13-defcon-badge-research.md",
+      "date": "2026-08-13"
+    }
+  ]
+}
