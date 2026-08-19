@@ -265,4 +265,4 @@ sympy-plots-for-*.tex/
 # 8. MISCELLANEOUS (Explicit Files)
 ################################
 static/lab/devices/tplink-tl-sx8003f/Omada_SDN_Controller_v5.15.6.7_linux_x64.tar.gz
-
+**/*.venv/

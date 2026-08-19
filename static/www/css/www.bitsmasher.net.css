@@ -4,16 +4,104 @@
  * # SPDX-License-Identifier: MIT
  */
 
-html { color-scheme: light dark; }
-body { 
-  font-family: Tahoma, Verdana, Arial, sans-serif; color: white;
+/* Color Palette Variables */
+:root {
+  --blue-darkest: #000112;
+  --blue-card: #000328;
+  --blue-border: #00063F;
+  --blue-deep: #000057;
+  --blue-mid: #000071;
+  --blue-bright: #00008B;
+  --text-main: #FFFFFF;
 }
-footer { background-color: #000; text-align: center; padding: 18px; }
-.container { display: grid; grid-template-columns: auto auto; background-color: black; padding: 10px; }
+
+html { 
+  color-scheme: dark; 
+}
+
+body { 
+  font-family: Tahoma, Verdana, Arial, sans-serif; 
+  color: var(--text-main);
+  background-color: var(--blue-darkest);
+  margin: 0;
+  padding: 0;
+}
+
+/* W3.CSS Bar Hover & Base Overrides */
+.w3-bar.custom-nav-bar {
+  background-color: #000000 !important;
+  border-color: var(--blue-border) !important;
+}
+
+.custom-nav-bar .w3-bar-item {
+  color: var(--text-main);
+}
+
+.custom-nav-bar .w3-bar-item:hover {
+  background-color: var(--blue-bright) !important;
+  color: #FFFFFF !important;
+}
+
+.container { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  background-color: var(--blue-darkest); 
+  padding: 20px; 
+  max-width: 900px;
+  margin: 0 auto;
+}
+
 .container div {
-  background-color: #000;
-  border: 1px solid black;
-  padding: 10px;
-  font-size: 10px;
-  text-align: center;
+  background-color: var(--blue-card);
+  border: 1px solid var(--blue-border);
+  border-radius: 6px;
+  padding: 20px;
+  font-size: 14px; /* Bumped up slightly from 10px for improved readability */
+  text-align: left; // Changed from center
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Code/Key Display Formatting */
+.key-box {
+  background-color: #000000;
+  border: 1px solid var(--blue-border);
+  color: #00ffcc; /* Terminal-style pop for the hex key */
+  padding: 12px;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-family: monospace;
+  text-align: left;
+  margin-top: 10px;
+}
+
+/* Responsive Image Handling */
+.container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Footer Styling */
+footer { 
+  background-color: #000000; 
+  border-top: 1px solid var(--blue-border);
+  text-align: left; // Changed from center 
+  padding: 18px; 
+}
+
+/* Mobile Responsiveness: Stack columns on smaller screens */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
+
+a {
+  color: #3399ff; /* Bright readable blue */
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #00ffcc; /* Accent cyan highlight on hover */
 }

@@ -1,0 +1,91 @@
+{
+  "courses": [
+    {
+      "code": "ISMG-2050",
+      "title": "Business Problem Solving Tools",
+      "institution": "CU Denver Business School",
+      "description": "Technology and problem-solving skills for business decision making using spreadsheets (Excel), database tools, and web tools. Covers statistics, accounting, finance, marketing, management, and information systems.",
+      "professor": "Dr. Mohamad Saleh",
+      "email": "mohamad.saleh@ucdenver.edu",
+      "schedule": "Tuesdays & Thursdays, 3:30–4:45 PM",
+      "location": "Business School Building 2501",
+      "term": "Spring 2026 (Jan 20 – May 16)",
+      "role": "Adjunct Instructor"
+    }
+  ],
+  "trainingModules": {
+    "totalModules": 6,
+    "totalLabs": 4,
+    "lastUpdated": "2026-08-14T17:45:00Z",
+    "modules": [
+      {
+        "code": "Module 01",
+        "title": "Internal Tools Overview",
+        "status": "draft",
+        "description": "PAN internal AI tools: Notebook LM, Gemini, Panda AI, chat.pan.dev, #ai-tips Slack. What's current, what's deprecated, how to choose the right tool.",
+        "url": "/teaching/training/modules/01-internal-tools.md"
+      },
+      {
+        "code": "Module 02",
+        "title": "Security & Data Classification",
+        "status": "draft",
+        "description": "PAN's approved AI tools list, data classification rules for AI use, incident response procedure for improper AI usage.",
+        "url": "/teaching/training/modules/02-security-guardrails.md"
+      },
+      {
+        "code": "Module 03",
+        "title": "Model Context Protocol",
+        "status": "draft",
+        "description": "MCP architecture, current spec status and implementations (Aug 2026), architecture diagrams, PAN-specific usage patterns.",
+        "url": "/teaching/training/modules/03-mcp.md"
+      },
+      {
+        "code": "Module 04",
+        "title": "Prisma Cloud + AI (AIRS)",
+        "status": "draft",
+        "description": "Prisma Cloud's AI capabilities: threat detection, risk scoring, consultant use cases, PAN policies and customer engagement scenarios.",
+        "url": "/teaching/training/modules/04-prisma-airs.md"
+      },
+      {
+        "code": "Module 05",
+        "title": "AI Security for LLMs",
+        "status": "planned",
+        "description": "OWASP Top 10 for LLMs, prompt injection defense, output validation.",
+        "url": null
+      },
+      {
+        "code": "Module 06",
+        "title": "Prompt Engineering Deep Dive",
+        "status": "planned",
+        "description": "Advanced techniques: system prompts, few-shot patterns, chain-of-thought.",
+        "url": null
+      }
+    ],
+    "labs": [
+      {
+        "code": "Lab 01",
+        "title": "Prompt Engineering",
+        "url": "/teaching/training/labs/01-prompt-engineering/",
+        "description": "Write, test, and iterate prompts for a specific task."
+      },
+      {
+        "code": "Lab 02",
+        "title": "Token Counting",
+        "url": "/teaching/training/labs/02-token-counting/",
+        "description": "Measure token consumption across different inputs and approaches."
+      },
+      {
+        "code": "Lab 03",
+        "title": "Simple RAG Pipeline",
+        "url": "/teaching/training/labs/03-simple-rag/",
+        "description": "Build a minimal viable retrieval-augmented generation pipeline: vector DB + embeddings + LLM."
+      },
+      {
+        "code": "Lab 04",
+        "title": "MCP Server & Client",
+        "url": "/teaching/training/labs/04-mcp-server-client/",
+        "description": "Set up a local MCP server and client with an open-source model."
+      }
+    ]
+  }
+}
