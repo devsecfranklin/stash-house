@@ -1,0 +1,21 @@
+# bitsmasher.net — LLM Site Manifest
+
+## Full Content (Agent Ingestion)
+
+| Endpoint | Description |
+|----------|-------------|
+| [/llms-full.txt](/llms-full.txt) | **All blog posts concatenated** — single HTTP request for full site ingestion (Markdown + stripped HTML text) |
+| [/research/index.json](/research/index.json) | Machine-readable blog index with metadata per post |
+| [/.well-known/nostr.json](/.well-known/nostr.json) | Nostr identity verification |
+
+## Structured Feeds
+
+| Endpoint | Description |
+|----------|-------------|
+| [/research/tags/<tag>.json](/research/tags/) | Topic-specific feeds (e.g., `/research/tags/nostr.json`) |
+| [/research/feed.json](/research/feed.json) | JSON Feed v2 for blog posts |
+
+## Agent Protocol
+
+- **Raw Markdown**: Send `Accept: text/markdown` to any post URL to get source Markdown instead of HTML
+  - Example: `curl -H "Accept: text/markdown" https://www.bitsmasher.net/research/blog/POSTNAME.md`
