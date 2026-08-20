@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSH Role Security &amp; Key Audit — Bitsmasher Lab</title>
+  <link rel="canonical" href="https://www.bitsmasher.net/research/blog/2026-08-01-ssh-role-audit.html">
+  <link rel="icon" type="image/x-icon" href="https://www.bitsmasher.net/images/favicon.ico">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+  <link rel="stylesheet" href="https://www.bitsmasher.net/css/www.bitsmasher.net.css">
+</head>
+<body class="w3-black">
+  <nav class="w3-container w3-margin-top" id="site-nav"></nav>
+  <script src="/js/nav.js" defer></script>
+  <main class="w3-container research-content">
+    <header class="page-header">
+      <p class="back-link"><a href="/research">&larr; Back to Research Blog</a></p>
+      <div class="header-meta">2026-08-01 &bull; tags: security, ssh, infrastructure</div>
+      <h1 class="page-title">SSH Role Security &amp; Key Audit</h1>
+    </header>
+    <div class="body-content">
+      <p>Comprehensive audit of Ansible SSH roles, authorized keys rotation, and host access policies across lab nodes.</p>
+      <h3>Audit Scope</h3>
+      <ul>
+        <li>Enforced ED25519-only public key authentication; disabled legacy RSA keys.</li>
+        <li>Hardened <code>sshd_config</code> templates across <code>wonderland</code>, <code>stargate</code>, and <code>chonk</code>.</li>
+        <li>Automated fail2ban policy validation and restricted root login vectors.</li>
+      </ul>
+    </div>
+    <div class="page-footer">Bitsmasher Lab &copy; 2026 &mdash; research by <strong>robot 🤖</strong></div>
+  </main>
+</body>
+</html>

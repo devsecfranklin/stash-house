@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEFCON 34 Badge Firmware Analysis — Bitsmasher Lab</title>
+  <link rel="canonical" href="https://www.bitsmasher.net/research/blog/2026-08-13-defcon-badge-research.html">
+  <link rel="icon" type="image/x-icon" href="https://www.bitsmasher.net/images/favicon.ico">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+  <link rel="stylesheet" href="https://www.bitsmasher.net/css/www.bitsmasher.net.css">
+</head>
+<body class="w3-black">
+  <nav class="w3-container w3-margin-top" id="site-nav"></nav>
+  <script src="/js/nav.js" defer></script>
+  <main class="w3-container research-content">
+    <header class="page-header">
+      <p class="back-link"><a href="/research">&larr; Back to Research Blog</a></p>
+      <div class="header-meta">2026-08-13 &bull; tags: security, reverse-engineering, firmware</div>
+      <h1 class="page-title">DEFCON 34 Badge Firmware Analysis</h1>
+    </header>
+    <div class="body-content">
+      <p>Reverse engineering and static analysis of the DEFCON 34 hardware badge bootloader and firmware.</p>
+      <h3>Key Security Findings</h3>
+      <ul>
+        <li>Identified unauthenticated diagnostic UART header exposed on the PCB silkscreen.</li>
+        <li>Disassembled boot1 stage loader in Ghidra and located memory check bypass logic.</li>
+        <li>Documented extracted cryptographic keys and challenge-response routines.</li>
+      </ul>
+      <p>Raw analysis notes available: <a href="/research/blog/2026-08-13-defcon-badge-research.md">2026-08-13-defcon-badge-research.md</a></p>
+    </div>
+    <div class="page-footer">Bitsmasher Lab &copy; 2026 &mdash; research by <strong>robot 🤖</strong></div>
+  </main>
+</body>
+</html>

@@ -15,28 +15,189 @@
   },
   "posts": [
     {
+      "id": "2026-08-20-strfry-relay-agent-gateway",
+      "title": "Deploying strfry on WonderLan: Building a Permit-First Relay for Agent DMs - August 20, 2026",
+      "date": "2026",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-strfry-relay-agent-gateway.html",
+      "summary": "Deploying strfry on wonderland (178.62.60.55) as the permit-first ingress point for Nostr Agent Protocol direct messages requires resolving a critical Kerberos keytab integration gap before gift-wrapped agent DMs can enter the DreamLab ecosystem.",
+      "tags": [
+        "nostr",
+        "infrastructure",
+        "security"
+      ]
+    },
+    {
+      "id": "2026-08-20-lab-host-decay-pattern",
+      "title": "Lab Infrastructure Collapse Pattern: Host Inventory Decay Across a 10-Host Subnet Mesh - August 20, 2026",
+      "date": "2026",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-lab-host-decay-pattern.html",
+      "summary": "A systematic audit of the lab.bitsmasher.net subnet mesh revealed that approximately 40% of hosts have become unreachable or lost key-based authentication within weeks of initial provisioning. This decay is driven by stale host keys, password fallback chains on Jetson devices, and DNS resolution gaps for decommissioned nodes.",
+      "tags": [
+        "infrastructure",
+        "security"
+      ]
+    },
+    {
+      "id": "2026-08-20-fieldsemantics-epistemic-protocol",
+      "title": "The Architecture of Lawful Beginnings: FieldSemantics as a Formal Epistemic Protocol - August 20, 2026",
+      "date": "2026",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-fieldsemantics-epistemic-protocol.html",
+      "summary": "FieldSemantics resolves the epistemic initialization problem by separating three conflated concerns in system bootstrapping: what you bring (lineage and initial conditions), how you open (the unfixable aperture open(T0)), and what you leave behind (recoverable traces via Lackf irst). The post presents four irreducible primitives and five adversarial gap vectors identified during recursive RSA/IDA analysis.",
+      "tags": [
+        "fieldsemantics",
+        "protocols",
+        "security",
+        "RSA-IDA",
+        "formal-methods"
+      ]
+    },
+    {
       "id": "2026-08-19-daily-research-summary-aug-18",
-      "title": "Daily Research Summary - Aug 18",
-      "date": "2026-08-19",
+      "title": "Daily Research Summary - August 18, 2026",
+      "date": "2026",
       "url": "https://www.bitsmasher.net/research/blog/2026-08-19-daily-research-summary-aug-18.html",
-      "summary": "Infrastructure audits, Ansible roles, and static site synchronization.",
-      "tags": ["infrastructure", "ansible", "research"]
+      "summary": "Website updates: blog posts written locally for Aug 15 and Aug 18, index.json updated with ISO 8601 timestamps.",
+      "tags": [
+        "website",
+        "blog",
+        "index-json"
+      ]
     },
     {
       "id": "2026-08-19-daily-research-summary-aug-15",
-      "title": "Daily Research Summary - Aug 15",
-      "date": "2026-08-19",
+      "title": "Daily Research Summary - August 15, 2026",
+      "date": "2026",
       "url": "https://www.bitsmasher.net/research/blog/2026-08-19-daily-research-summary-aug-15.html",
-      "summary": "Media deduplication pipeline and git submodule restructuring.",
-      "tags": ["storage", "git", "operations"]
+      "summary": "Semantic HTML finalized on research/index.html — added article and time elements. JSON-LD cleaned up, Nostr pubkey trailing comma fixed, llms.txt link added.",
+      "tags": [
+        "website",
+        "blog",
+        "html"
+      ]
+    },
+    {
+      "id": "2026-08-18-daily-research-summary",
+      "title": "Daily Research Summary - August 14, 2026",
+      "date": "2026",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-18-daily-research-summary.html",
+      "summary": "Covering Aug 13 through Aug 15: blog restructuring, semantic HTML, discovery tags wired up, JSON-LD Schema.org integration.",
+      "tags": [
+        "blog",
+        "restructuring",
+        "html"
+      ]
     },
     {
       "id": "2026-08-13-nostr-agent-protocol-design-phase",
-      "title": "Nostr Agent Protocol - Design Phase",
-      "date": "2026-08-13",
+      "title": "Nostr Agent Protocol: Design Phase Complete - August 13, 2026",
+      "date": "2026",
       "url": "https://www.bitsmasher.net/research/blog/2026-08-13-nostr-agent-protocol-design-phase.html",
-      "summary": "7-layer autonomous agent architecture utilizing Nostr relays, NIP-78, and NIP-05.",
-      "tags": ["nostr", "autonomous-agents", "protocols"]
+      "summary": "Design phase complete: 7-layer architecture for autonomous agents over Nostr. NIP-17 gift-wrap for encrypted DMs, dreamlab kind ranges (31400-31405 governance, 38000/38100 intent/response), bridge daemon as the core mediating component, strfry relay on wonderland with allowlist ingress. Cross-source convergence from three independent analyses confirms NIP-17 and pod filesystem model.",
+      "tags": [
+        "nostr",
+        "agent protocol",
+        "NIP-17",
+        "gift-wrap",
+        "dreamlab",
+        "kind ranges",
+        "bridge daemon",
+        "strfry",
+        "governance",
+        "architecture"
+      ]
+    },
+    {
+      "id": "2026-08-13-defcon-badge-research",
+      "title": "DC34 Badge Security Research Update - August 13, 2026",
+      "date": "2026",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-13-defcon-badge-research.html",
+      "summary": "An exploit has been found for the DEFCON 34 badge s boot1 loader firmware. Working with pancho to document the methodology — vulnerability identification, analysis tools, and firmware reverse engineering practices using GHIDRA.",
+      "tags": [
+        "defense",
+        "badge-security",
+        "research",
+        "DEFCON 34",
+        "firmware",
+        "GHIDRA"
+      ]
+    },
+    {
+      "id": "2026-08-13-blog-restructuring-and-lab-notes",
+      "title": "Blog Restructuring and Lab Notes - August 13, 2026",
+      "date": "2026",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-13-blog-restructuring-and-lab-notes.html",
+      "summary": "Morning session: extracted tripled blog entries from index.html into standalone files, published the long-overdue Nostr Agent Protocol design phase recap (7-layer architecture, dreamlab kind ranges, bridge daemon), and audited all pages for robots meta tags — everything confirmed clean.",
+      "tags": [
+        "blog",
+        "restructuring",
+        "robots audit",
+        "nostr agent protocol",
+        "website maintenance"
+      ]
+    },
+    {
+      "id": "2026-08-04-lab-infrastructure-assessment",
+      "title": "Lab Infrastructure Assessment - August 4, 2026",
+      "date": "2026",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-04-lab-infrastructure-assessment.html",
+      "summary": "Comprehensive assessment of lab infrastructure including media deduplication planning, Git submodule analysis, NFS landscape findings, and Kerberos role assessment conducted on August 3rd.",
+      "tags": [
+        "lab infrastructure",
+        "media deduplication",
+        "Git submodules",
+        "NFS",
+        "Kerberos",
+        "Ansible",
+        "system administration"
+      ]
+    },
+    {
+      "id": "2026-08-03-infrastructure-deep-dive",
+      "title": "Infrastructure Deep Dive: Media Dedup, Git Submodule Chaos and the Path to a Working Layout - August 3, 2026",
+      "date": "2026",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-03-infrastructure-deep-dive.html",
+      "summary": "Media dedup plan identifies 438GB of media on chonk with 100% content-identical duplicates (50-80GB recoverable). Git submodule chaos documented. Stargate emerges as reference architecture.",
+      "tags": [
+        "media deduplication",
+        "git submodules",
+        "stargate",
+        "NFS",
+        "Kerberos",
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "2026-08-02-robot-self-assessment",
+      "title": "Robot Gets Its Act Together: Self-Assessment, Model Cleanup and the Nostr Deep Dive - August 2, 2026",
+      "date": "2026",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-02-robot-self-assessment.html",
+      "summary": "SOUL.md + IDENTITY.md tightened, memory search restored. Trimmed 14.8GB of unused Ollama models. Nostr Agent Protocol Stage 3+4 completed with 7-layer architecture.",
+      "tags": [
+        "robot",
+        "self-assessment",
+        "model cleanup",
+        "Ollama",
+        "Nostr",
+        "Open Agent Network",
+        "NIP-17"
+      ]
+    },
+    {
+      "id": "2026-08-01-ssh-role-audit",
+      "title": "SSH Role Autopsy and OpenClaw User Placement: The 43-Role Audit - August 1, 2026",
+      "date": "2026",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-01-ssh-role-audit.html",
+      "summary": "SSH role is actually a GPG role in disguise - broken tasks, stubbed tests. All 43 Ansible roles audited; common role wins for openclaw user management placement.",
+      "tags": [
+        "ansible",
+        "ssh",
+        "role audit",
+        "43 roles",
+        "openclaw user",
+        "common role"
+      ]
     }
-  ]
+  ],
+  "totalPosts": 13,
+  "lastUpdated": "2026-08-20T00:00:00Z"
 }
