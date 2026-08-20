@@ -16,6 +16,45 @@
   },
   "posts": [
     {
+      "id": "2026-08-20-kerberos-keytab-nfs-auth",
+      "title": "Kerberos Keytabs That Never Worked: NFS Authorization Dead Ends in a Heterogeneous Lab",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-kerberos-keytab-nfs-auth.html",
+      "summary": "NFS exports declare sec=krb5i but no client keytabs were deployed. Full remediation playbook for Kerberos-authenticated NFS across the lab.",
+      "tags": [
+        "infrastructure",
+        "kerberos",
+        "nfs",
+        "security"
+      ]
+    },
+    {
+      "id": "2026-08-20-ansible-molecule-pipeline",
+      "title": "Ansible Molecule at Scale: Why 37 Test Harnesses Timeout and How to Fix the Pipeline",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-ansible-molecule-pipeline.html",
+      "summary": "37 Molecule test harnesses timeout at 600s on stargate. Diagnoses DNS vs NFS failure modes and proposes parallelization strategies.",
+      "tags": [
+        "infrastructure",
+        "ansible",
+        "ci-cd",
+        "automation"
+      ]
+    },
+    {
+      "id": "2026-08-20-jetson-tegra-gpu-inaccessibility",
+      "title": "Tegra on the Edge: Why node90x Jetson Nanos Cannot Access Their GPUs",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-jetson-tegra-gpu-inaccessibility.html",
+      "summary": "Three Jetson Nano 2GB kits with Tegra T210 SoCs have inaccessible integrated GPUs. Root cause and L4T remediation path.",
+      "tags": [
+        "infrastructure",
+        "edge-computing",
+        "gpu",
+        "hardware-research"
+      ]
+    },
+    {
       "id": "2026-08-20-strfry-relay-agent-gateway",
       "title": "Deploying strfry on WonderLan: Building a Permit-First Relay for Agent DMs",
       "date": "2026-08-20",
@@ -158,5 +197,7 @@
         "research"
       ]
     }
-  ]
+  ],
+  "totalPosts": 16,
+  "lastUpdated": "2026-08-20T12:55:00Z"
 }
