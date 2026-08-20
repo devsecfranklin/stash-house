@@ -1,0 +1,22 @@
+{
+  "tag": "nostr",
+  "count": 1,
+  "canonical": "https://www.bitsmasher.net/research/tags/nostr.json",
+  "posts": [
+    {
+      "id": "2026-08-20-strfry-relay-agent-gateway",
+      "title": "Deploying strfry on WonderLan: Building a Permit-First Relay for Agent DMs",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-strfry-relay-agent-gateway.html",
+      "summary": "Deploying strfry on wonderland as the permit-first ingress point for Nostr Agent Protocol DMs.",
+      "tags": [
+        "nostr",
+        "infrastructure",
+        "security",
+        "strfry",
+        "dreamlab",
+        "relay"
+      ]
+    }
+  ]
+}
