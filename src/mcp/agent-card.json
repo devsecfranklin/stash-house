@@ -1,0 +1,75 @@
+{
+  "name": "skynet-mcp",
+  "description": "Skynet AI cluster orchestrator for autonomous Minecraft server management, including construction automation, RCON command execution, Git-based blueprint versioning, vision audit, and NPU inference on the Stargate host.",
+  "version": "1.0.0",
+  "supportedInterfaces": [
+    {
+      "url": "http://stargate.research.bitsmasher.net:8989/mcp",
+      "protocolBinding": "http+json",
+      "protocolVersion": "2025-06-18"
+    }
+  ],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "extendedAgentCard": false
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "mc-construction",
+      "name": "Minecraft Construction",
+      "description": "Autonomous schematic generation and block placement via RCON for in-game building automation.",
+      "tags": ["minecraft", "construction", "automation", "rcon"],
+      "examples": [
+        "Build a medieval castle at coordinates x=100 y=64 z=200",
+        "Generate a redstone circuit schematic from description"
+      ]
+    },
+    {
+      "id": "mc-admin",
+      "name": "Minecraft Administration",
+      "description": "Server administration via RCON: player management, world editing, CoreProtect queries, and WorldGuard region control.",
+      "tags": ["minecraft", "rcon", "administration"],
+      "examples": [
+        "List all players currently on the server",
+        "Roll back the last 50 actions at a specific location"
+      ]
+    },
+    {
+      "id": "blueprint-versioning",
+      "name": "Blueprint Versioning",
+      "description": "Git-backed version control for Minecraft schematics and blueprints with automated commit workflows.",
+      "tags": ["git", "schematics", "version-control"],
+      "examples": [
+        "Commit all recent schematic changes to the blueprint repository",
+        "Show git log for the last 10 blueprint commits"
+      ]
+    },
+    {
+      "id": "vision-audit",
+      "name": "Vision Terrain Audit",
+      "description": "Edge TPU-powered visual analysis and terrain auditing of Minecraft builds using spatial snapshots.",
+      "tags": ["vision", "edge-tpu", "audit", "terrain"],
+      "examples": [
+        "Audit the recent build at sector 7 for structural compliance",
+        "Generate a spatial snapshot of the current server state"
+      ]
+    },
+    {
+      "id": "ai-inference",
+      "name": "AI Inference",
+      "description": "Hailo-8L NPU-accelerated inference for T2BM (Text-to-Build) model and schematic generation tasks.",
+      "tags": ["npu", "inference", "t2bm", "ai"],
+      "examples": [
+        "Generate a building schematic from the prompt dragon lair",
+        "Run text-to-building inference on the submitted description"
+      ]
+    }
+  ]
+}

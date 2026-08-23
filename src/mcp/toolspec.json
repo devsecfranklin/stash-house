@@ -1,0 +1,460 @@
+{
+  "tools": [
+    {
+      "name": "greet",
+      "description": "Sends a greeting to the specified name.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the person to greet."
+          }
+        },
+        "required": ["name"]
+      },
+      "annotations": {
+        "title": "Greet",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "get_file_content",
+      "description": "Returns the content of the specified file (e.g. README.md).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "annotations": {
+        "title": "Get File Content",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "list_agents",
+      "description": "Lists all agents registered in the Skynet AI cluster.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "role_filter": {
+            "type": "string",
+            "description": "Optional filter by agent role (e.g., orchestrator, builder)."
+          }
+        },
+        "required": []
+      },
+      "annotations": {
+        "title": "List Agents",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "search_agents",
+      "description": "Searches agents in the Skynet cluster by name or capability tags.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query string."
+          }
+        },
+        "required": ["query"]
+      },
+      "annotations": {
+        "title": "Search Agents",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_agent",
+      "description": "Retrieves details for a specific agent by its identifier.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "Unique identifier of the agent."
+          }
+        },
+        "required": ["agent_id"]
+      },
+      "annotations": {
+        "title": "Get Agent",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_endpoints",
+      "description": "Lists all registered service endpoints in the Skynet cluster.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "annotations": {
+        "title": "List Endpoints",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_endpoint",
+      "description": "Retrieves details for a specific service endpoint.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "endpoint_id": {
+            "type": "string",
+            "description": "Unique identifier of the endpoint."
+          }
+        },
+        "required": ["endpoint_id"]
+      },
+      "annotations": {
+        "title": "Get Endpoint",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_mcp_servers",
+      "description": "Lists all MCP servers registered with Agent Registry.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "annotations": {
+        "title": "List MCP Servers",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "search_mcp_servers",
+      "description": "Searches MCP servers by name or capability.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query string."
+          }
+        },
+        "required": ["query"]
+      },
+      "annotations": {
+        "title": "Search MCP Servers",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_mcp_server",
+      "description": "Retrieves details for a specific MCP server.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "server_id": {
+            "type": "string",
+            "description": "Unique identifier of the MCP server."
+          }
+        },
+        "required": ["server_id"]
+      },
+      "annotations": {
+        "title": "Get MCP Server",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_services",
+      "description": "Lists all services registered with Agent Registry.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "annotations": {
+        "title": "List Services",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_service",
+      "description": "Retrieves details for a specific service.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "service_id": {
+            "type": "string",
+            "description": "Unique identifier of the service."
+          }
+        },
+        "required": ["service_id"]
+      },
+      "annotations": {
+        "title": "Get Service",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "create_service",
+      "description": "Creates a new service registration in Agent Registry.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Human-readable name for the service."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the service purpose."
+          }
+        },
+        "required": ["name", "description"]
+      },
+      "annotations": {
+        "title": "Create Service",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "update_service",
+      "description": "Updates an existing service registration.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "service_id": {
+            "type": "string",
+            "description": "Unique identifier of the service to update."
+          },
+          "name": {
+            "type": "string",
+            "description": "New human-readable name for the service."
+          },
+          "description": {
+            "type": "string",
+            "description": "Updated description."
+          }
+        },
+        "required": ["service_id"]
+      },
+      "annotations": {
+        "title": "Update Service",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "delete_service",
+      "description": "Deletes a service registration from Agent Registry.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "service_id": {
+            "type": "string",
+            "description": "Unique identifier of the service to delete."
+          }
+        },
+        "required": ["service_id"]
+      },
+      "annotations": {
+        "title": "Delete Service",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_bindings",
+      "description": "Lists all bindings between agents and services.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "annotations": {
+        "title": "List Bindings",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_binding",
+      "description": "Retrieves details for a specific agent-service binding.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "binding_id": {
+            "type": "string",
+            "description": "Unique identifier of the binding."
+          }
+        },
+        "required": ["binding_id"]
+      },
+      "annotations": {
+        "title": "Get Binding",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "create_binding",
+      "description": "Creates a new binding between an agent and a service.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "Agent identifier."
+          },
+          "service_id": {
+            "type": "string",
+            "description": "Service identifier."
+          }
+        },
+        "required": ["agent_id", "service_id"]
+      },
+      "annotations": {
+        "title": "Create Binding",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "update_binding",
+      "description": "Updates an existing agent-service binding.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "binding_id": {
+            "type": "string",
+            "description": "Binding identifier."
+          },
+          "agent_id": {
+            "type": "string",
+            "description": "New agent identifier."
+          },
+          "service_id": {
+            "type": "string",
+            "description": "New service identifier."
+          }
+        },
+        "required": ["binding_id"]
+      },
+      "annotations": {
+        "title": "Update Binding",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "delete_binding",
+      "description": "Deletes an agent-service binding.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "binding_id": {
+            "type": "string",
+            "description": "Binding identifier."
+          }
+        },
+        "required": ["binding_id"]
+      },
+      "annotations": {
+        "title": "Delete Binding",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "fetch_available_bindings",
+      "description": "Fetches the set of bindings that could be created.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      },
+      "annotations": {
+        "title": "Fetch Available Bindings",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_operation",
+      "description": "Retrieves the status of a long-running asynchronous operation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "operation_id": {
+            "type": "string",
+            "description": "Unique identifier of the operation."
+          }
+        },
+        "required": ["operation_id"]
+      },
+      "annotations": {
+        "title": "Get Operation",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    }
+  ]
+}
