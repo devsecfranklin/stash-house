@@ -11,6 +11,21 @@
   ],
   "items": [
     {
+      "id": "https://www.bitsmasher.net/research/blog/2026-08-25-ansible-native-test-pipeline.html",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-25-ansible-native-test-pipeline.html",
+      "title": "From Molecule to Native Ansible-Test: Zero-Cost Validation Pipeline on Stargate",
+      "summary": "Migrating from Docker-dependent Molecule testing to native ansible-test on stargate eliminates external container orchestration overhead, achieving zero-token shell executions within the lab topology.",
+      "date_published": "2026-08-25T00:00:00Z",
+      "tags": [
+        "/infrastructure/",
+        "/automation/",
+        "/ansible/",
+        "/testing/",
+        "/ci-cd/",
+        "/molecule/"
+      ]
+    },
+    {
       "id": "https://www.bitsmasher.net/research/blog/2026-08-20-strfry-relay-agent-gateway.html",
       "url": "https://www.bitsmasher.net/research/blog/2026-08-20-strfry-relay-agent-gateway.html",
       "title": "Deploying strfry on WonderLan: Building a Permit-First Relay for Agent DMs",
@@ -40,6 +55,35 @@
       ]
     },
     {
+      "id": "https://www.bitsmasher.net/research/blog/2026-08-20-kerberos-keytab-nfs-auth.html",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-kerberos-keytab-nfs-auth.html",
+      "title": "Kerberos Keytabs That Never Worked: NFS Authorization Dead Ends in a Heterogeneous Lab",
+      "summary": "NFS exports across chonk and stargate declare sec=krb5i but no client keytabs were ever deployed \u2014 every krb5 mount silently falls back to insecure access or fails entirely. A remediation playbook for a multi-host lab.",
+      "date_published": "2026-08-20T00:00:00Z",
+      "tags": [
+        "/kerberos/",
+        "/nfs/",
+        "/keytab/",
+        "/infrastructure/",
+        "/security/"
+      ]
+    },
+    {
+      "id": "https://www.bitsmasher.net/research/blog/2026-08-20-jetson-tegra-gpu-inaccessibility.html",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-jetson-tegra-gpu-inaccessibility.html",
+      "title": "Tegra on the Edge: Why node90x Jetson Nanos Can't Talk to Their Own GPUs",
+      "summary": "Three Jetson Nano 2GB Developer Kits with Tegra T210 SoCs have inaccessible integrated GPUs \u2014 no nvidia-smi, no OpenCL, no CUDA runtime. Root cause analysis and remediation.",
+      "date_published": "2026-08-20T00:00:00Z",
+      "tags": [
+        "/jetson/",
+        "/tegra/",
+        "/gpu/",
+        "/edge-computing/",
+        "/hardware/",
+        "/infrastructure/"
+      ]
+    },
+    {
       "id": "https://www.bitsmasher.net/research/blog/2026-08-20-fieldsemantics-epistemic-protocol.html",
       "url": "https://www.bitsmasher.net/research/blog/2026-08-20-fieldsemantics-epistemic-protocol.html",
       "title": "The Architecture of Lawful Beginnings: FieldSemantics as a Formal Epistemic Protocol",
@@ -51,6 +95,20 @@
         "/security/",
         "/rsa-ida/",
         "/formal-methods/"
+      ]
+    },
+    {
+      "id": "https://www.bitsmasher.net/research/blog/2026-08-20-ansible-molecule-pipeline.html",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-ansible-molecule-pipeline.html",
+      "title": "Ansible Molecule at Scale: Why 37 Test Harnesses Timeout and How to Fix the Pipeline",
+      "summary": "37 Ansible roles have Molecule test harnesses on stargate, but the cron job times out at 600s. Diagnosing DNS vs NFS failure modes and proposing parallelization.",
+      "date_published": "2026-08-20T00:00:00Z",
+      "tags": [
+        "/ansible/",
+        "/molecule/",
+        "/ci-cd/",
+        "/automation/",
+        "/infrastructure/"
       ]
     },
     {

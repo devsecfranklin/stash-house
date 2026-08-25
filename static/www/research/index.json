@@ -16,42 +16,18 @@
   },
   "posts": [
     {
-      "id": "2026-08-20-kerberos-keytab-nfs-auth",
-      "title": "Kerberos Keytabs That Never Worked: NFS Authorization Dead Ends in a Heterogeneous Lab",
-      "date": "2026-08-20",
-      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-kerberos-keytab-nfs-auth.html",
-      "summary": "NFS exports declare sec=krb5i but no client keytabs were deployed. Full remediation playbook for Kerberos-authenticated NFS across the lab.",
+      "id": "2026-08-25-ansible-native-test-pipeline",
+      "title": "From Molecule to Native Ansible-Test: Zero-Cost Validation Pipeline on Stargate",
+      "date": "2026-08-25",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-25-ansible-native-test-pipeline.html",
+      "summary": "Migrating from Docker-dependent Molecule testing to native ansible-test on stargate eliminates external container orchestration overhead, achieving zero-token shell executions within the lab topology.",
       "tags": [
         "infrastructure",
-        "kerberos",
-        "nfs",
-        "security"
-      ]
-    },
-    {
-      "id": "2026-08-20-ansible-molecule-pipeline",
-      "title": "Ansible Molecule at Scale: Why 37 Test Harnesses Timeout and How to Fix the Pipeline",
-      "date": "2026-08-20",
-      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-ansible-molecule-pipeline.html",
-      "summary": "37 Molecule test harnesses timeout at 600s on stargate. Diagnoses DNS vs NFS failure modes and proposes parallelization strategies.",
-      "tags": [
-        "infrastructure",
+        "automation",
         "ansible",
+        "testing",
         "ci-cd",
-        "automation"
-      ]
-    },
-    {
-      "id": "2026-08-20-jetson-tegra-gpu-inaccessibility",
-      "title": "Tegra on the Edge: Why node90x Jetson Nanos Cannot Access Their GPUs",
-      "date": "2026-08-20",
-      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-jetson-tegra-gpu-inaccessibility.html",
-      "summary": "Three Jetson Nano 2GB kits with Tegra T210 SoCs have inaccessible integrated GPUs. Root cause and L4T remediation path.",
-      "tags": [
-        "infrastructure",
-        "edge-computing",
-        "gpu",
-        "hardware-research"
+        "molecule"
       ]
     },
     {
@@ -84,6 +60,35 @@
       ]
     },
     {
+      "id": "2026-08-20-kerberos-keytab-nfs-auth",
+      "title": "Kerberos Keytabs That Never Worked: NFS Authorization Dead Ends in a Heterogeneous Lab",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-kerberos-keytab-nfs-auth.html",
+      "summary": "NFS exports across chonk and stargate declare sec=krb5i but no client keytabs were ever deployed \u2014 every krb5 mount silently falls back to insecure access or fails entirely. A remediation playbook for a multi-host lab.",
+      "tags": [
+        "kerberos",
+        "nfs",
+        "keytab",
+        "infrastructure",
+        "security"
+      ]
+    },
+    {
+      "id": "2026-08-20-jetson-tegra-gpu-inaccessibility",
+      "title": "Tegra on the Edge: Why node90x Jetson Nanos Can't Talk to Their Own GPUs",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-jetson-tegra-gpu-inaccessibility.html",
+      "summary": "Three Jetson Nano 2GB Developer Kits with Tegra T210 SoCs have inaccessible integrated GPUs \u2014 no nvidia-smi, no OpenCL, no CUDA runtime. Root cause analysis and remediation.",
+      "tags": [
+        "jetson",
+        "tegra",
+        "gpu",
+        "edge-computing",
+        "hardware",
+        "infrastructure"
+      ]
+    },
+    {
       "id": "2026-08-20-fieldsemantics-epistemic-protocol",
       "title": "The Architecture of Lawful Beginnings: FieldSemantics as a Formal Epistemic Protocol",
       "date": "2026-08-20",
@@ -95,6 +100,20 @@
         "security",
         "rsa-ida",
         "formal-methods"
+      ]
+    },
+    {
+      "id": "2026-08-20-ansible-molecule-pipeline",
+      "title": "Ansible Molecule at Scale: Why 37 Test Harnesses Timeout and How to Fix the Pipeline",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-ansible-molecule-pipeline.html",
+      "summary": "37 Ansible roles have Molecule test harnesses on stargate, but the cron job times out at 600s. Diagnosing DNS vs NFS failure modes and proposing parallelization.",
+      "tags": [
+        "ansible",
+        "molecule",
+        "ci-cd",
+        "automation",
+        "infrastructure"
       ]
     },
     {
@@ -197,7 +216,5 @@
         "research"
       ]
     }
-  ],
-  "totalPosts": 16,
-  "lastUpdated": "2026-08-20T12:55:00Z"
+  ]
 }

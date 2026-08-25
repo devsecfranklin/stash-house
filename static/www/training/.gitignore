@@ -1,0 +1,141 @@
+_build
+__pycache__
+docs/.~lock.*
+*.log
+.tox/
+.coverage
+*.egg-info/
+.$*.drawio.bkp
+
+# This is a minimal list, OK to add things per repo
+# mac specific
+.DS_Store
+.ansible
+.bash_history
+# don't check storage creds into GH
+.boto
+.cache
+#  may contain gcloud files
+.git.not
+.gitconfig
+.local
+# .netrc contains secrets for service tokens
+.netrc
+*.plan
+.sentinel
+# .ssh dir may contain private keys
+.ssh
+.terrascan
+# Terraform dot files
+.terraform
+.terraformrc
+**/.terraform/*
+.terraform.d
+*.tfstate
+*.tfstate.*
+.vscode
+.idea
+*.dtmp
+
+# Crash log files
+crash.log
+credentials.json
+terraform.rc
+# Auto variables
+*.auto.tfvars
+*.auto.tfvars.json
+
+Makefile
+Makefile.in
+configure
+configure~
+config/install-sh
+config/missing
+aclocal
+aclocal.m4
+autom4te.cache/
+config.status
+config.log
+COPYING
+INSTALL
+libtool
+
+## Core latex/pdflatex auxiliary files:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+## Intermediate documents:
+*.dvi
+*.xdv
+*-converted-to.*
+# these rules might exclude image files for figures etc.
+# *.ps
+# *.eps
+
+## Bibliography auxiliary files (bibtex/biblatex/biber):
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+## Build tool auxiliary files:
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+## Build tool directories for auxiliary files
+# latexrun
+latex.out/
+
+## Auxiliary and intermediate files from other packages:
+# algorithms
+*.alg
+*.loa
+
+# achemso
+acs-*.bib
+
+# amsthm
+*.thm
+
+# beamer
+*.nav
+*.pre
+*.snm
+*.vrb
+
+# changes
+*.soc
+
+# comment
+*.cut
+
+# cprotect
+*.cpt
+
+# elsarticle (documentclass of Elsevier journals)
+*.spl
+
+# endnotes
+*.ent
+
+# fixme
+*.lox
+ *.swp 
+
+update-tlmgr-latest.sh

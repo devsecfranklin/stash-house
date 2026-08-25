@@ -1,0 +1,308 @@
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+% !TeX TXS-program:bibliography = bibtex
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_US
+% !TeX root = ai-mcp-rag.tex
+
+% https://orcid.org/0000-0003-4586-8500
+
+\documentclass[aspectratio=169]{beamer}
+
+\input{../_header-palo}
+
+\begin{document}
+	
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{title_bg.png}}
+	\begin{frame}
+		\setlength{\TPHorizModule}{120mm}
+		\setlength{\TPVertModule}{140mm}
+		\begin{textblock}{0.75}(0.05, 0.25)
+			\bfseries\Huge{Part 3: MCP \& RAG} \\
+			\vspace{.5em}
+			
+			\bfseries\small{\href{https://github.com/devsecfranklin/training-ai/blob/main/docs/slides/ai-mcp-rag/ai-mcp-rag.pdf}{download this slide deck}}
+		\end{textblock}
+		\begin{textblock}{0.75}(0.99, 0.53)
+			\bfseries\textcolor{white}{Franklin Diaz}\\
+			\bfseries\textcolor{white}{Principal Engineer}\\
+			\bfseries\begin{tiny}\textcolor{white}{July 16th, 2026 v0.1}\end{tiny}
+		\end{textblock}
+	\end{frame}
+	
+	\note[itemize]{
+		\item created July 15th, 2026 v0.1
+		\item latest version: https://drive.google.com/file/d/1wfr\_2E9\_xZjOrY7pQP07Az928s40dDdP/view
+	}
+	
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		% Slide title in upper left
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Overview}
+		\end{textblock}
+		Today we will look at two recent popular ways for LLM's to pull contextual data and other digital artifacts. This data is meant to be used in conjunction with user AI sessions. 
+		\begin{itemize}
+		\item Model Context Prtocol (MCP) - MCP is the right choice when the model needs to go beyond answering and start doing. If the task involves interacting with a live system, triggering a process, or producing a real-world outcome, MCP is what makes that possible.
+		\item Retreival-Augmented Generation (RAG) - RAG is the right choice when the core job is answering questions from a body of knowledge your model wasn't trained on. If the task is retrieval and synthesis rather than action, RAG is where to start.
+		\end{itemize}
+	\end{frame}
+	\note{
+	RAG handles the knowledge side. MCP handles the action side. In most real-world AI applications, you need both. A model that can only retrieve information but can't act on it has limits. So does a model that can trigger workflows but has no grounded knowledge to draw from.
+	}
+
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{section.png}}
+	\section{\textcolor{white}{Review From last Time}}
+	
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Part 1: Prompting the LLM}
+		\end{textblock}
+		We looked at how to prompt and why it is important. \\
+		\vspace{.5em}
+		\bfseries\small{\href{https://github.com/devsecfranklin/training-ai/blob/main/docs/slides/ai-intro/ai-slides.pdf}{download this slide deck}}
+	\end{frame}
+	\note[itemize]{
+		\item created July 15th, 2026 v0.1
+		\item latest version: https://drive.google.com/file/d/1wfr\_2E9\_xZjOrY7pQP07Az928s40dDdP/view
+	}
+
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Part 2: LLM Tokenization}
+		\end{textblock}
+		We looked at how the LLM breaks our conversations down into discrete ``chunks'' known as tokens. We discussed ways to improve AI sessions and increase efficacy of session results. \\
+		\vspace{.5em}
+		\bfseries\small{\href{https://github.com/devsecfranklin/training-ai/blob/main/docs/slides/ai-tokens/ai-tokens.pdf}{download this slide deck}}
+	\end{frame}
+
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{section.png}}
+	\section{\textcolor{white}{Model Context Protocol: \\ Architecture and Components}}
+	
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		% Slide title in upper left
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Model Context Protocol}
+		\end{textblock}
+		\begin{itemize}
+			
+			\item The MCP creates a standardized, two-way connection for AI applications, allowing LLMs to easily connect with various data sources and tools.
+			\item MCP builds on existing concepts like tool use and function calling but standardizes them. This reduces the need for custom connections for each new AI model and external system.
+			\item MCP enables LLMs to use current, real-world data, perform actions, and access specialized features not included in their original training.
+		\end{itemize}
+	\end{frame}
+	
+	\note[itemize]{
+		\item The Model Context Protocol has a clear structure with components that work together to help LLMs and outside systems interact easily.
+		\item Slide created July 24th, 2025
+		\item Source material: \href{https://cloud.google.com/discover/what-is-model-context-protocol?hl=en}{What is the MCP and how does it work?}
+	}
+	
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{center}
+		\includegraphics[scale=0.35]{mcp1.png}
+		\end{center}
+	\end{frame}
+	
+	\note[itemize]{
+		\item created july16th 2026
+	}
+	
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		% Slide title in upper left
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{MCP Host}
+		\end{textblock}
+		The LLM is contained within the MCP host, an AI application or environment such as an AI-powered IDE or conversational AI. This is typically the user's interaction point, where the MCP host uses the LLM to process requests that may require external data or tools.
+	\end{frame}
+	
+	\note[itemize]{
+		\item The Model Context Protocol has a clear structure with components that work together to help LLMs and outside systems interact easily.
+		\item Slide created July 24th, 2025
+		\item Source material: \href{https://cloud.google.com/discover/what-is-model-context-protocol?hl=en}{What is the MCP and how does it work?}
+	}
+	
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		% Slide title in upper left
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{MCP Client}
+		\end{textblock}
+		The MCP client, located within the MCP host, helps the LLM and MCP server communicate with each other. \\
+		It translates the LLM's requests for the MCP and converts the MCP's replies for the LLM. It also finds and uses available MCP servers.
+	\end{frame}
+	
+	\note[itemize]{
+		\item The Model Context Protocol has a clear structure with components that work together to help LLMs and outside systems interact easily.
+		\item Slide created July 24th, 2025
+		\item Source material: \href{https://cloud.google.com/discover/what-is-model-context-protocol?hl=en}{What is the MCP and how does it work?}
+	}
+	
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		% Slide title in upper left
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{MCP Server}
+		\end{textblock}
+		The MCP server is the external service that provides context, data, or capabilities to the LLM. \\
+		It helps LLMs by connecting to external systems like databases and web services, translating their responses into a format the LLM can understand which helps developers provide diverse functionalities.
+	\end{frame}
+	
+	\note[itemize]{
+		\item The Model Context Protocol has a clear structure with components that work together to help LLMs and outside systems interact easily.
+		\item Slide created July 24th, 2025
+		\item Source material: \href{https://cloud.google.com/discover/what-is-model-context-protocol?hl=en}{What is the MCP and how does it work?}
+	}
+	
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		% Slide title in upper left
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{MCP Transport Layer}
+		\end{textblock}
+		The transport layer uses JSON-RPC 2.0 messages to communicate between the client and server, mainly through two transport methods:
+		\begin{itemize}
+			
+			\item Standard input/output (stdio): Works well for local resources, offering fast, synchronous message transmission
+			\item Server-sent events (SSE): Preferred for remote resources, allowing efficient, real-time data streaming
+		\end{itemize}
+	\end{frame}
+	
+	\note[itemize]{
+		\item The Model Context Protocol has a clear structure with components that work together to help LLMs and outside systems interact easily.
+		\item Slide created July 24th, 2025
+		\item Source material: \href{https://cloud.google.com/discover/what-is-model-context-protocol?hl=en}{What is the MCP and how does it work?}
+	}
+	
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{section.png}}
+	\section{\textcolor{white}{Retrieval-Augmented Generation: \\ Architecture and Components}}
+
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}
+				\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		% Slide title in upper left
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Retrieval-Augmented Generation}
+		\end{textblock}
+		An approach that improves how language models respond by connecting them to external data sources with a straightforward four-step flow: \\
+		\begin{itemize}
+			\item Step 1: Query: The user submits a question or prompt.
+			\item Step 2: Retrieve: The system searches an external data source (typically a vector database) for content that's semantically relevant to the query.
+			\item Step 3: Inject: The retrieved content is added to the model's prompt as context, alongside the original query.
+			\item Step 4: Generate: The model reads both the query and the retrieved context, then produces a response grounded in that information.
+		\end{itemize} 
+		The model only ``sees'' the most relevant chunks retrieved for that specific query, which keeps responses focused and latency manageable.
+	\end{frame}
+
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		% Slide title in upper left
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Key components of a RAG system}
+		\end{textblock}
+		\vspace{1em}
+		\begin{itemize}
+			\item Embeddings: Text (documents, knowledge base articles, etc.) is converted into numerical representations called embeddings. These capture semantic meaning, so content about similar topics ends up close together in vector space.
+			
+			\item Vector database: The embeddings are stored in a vector database (such as Pinecone, Weaviate, or pgvector). At query time, the user's question is also converted to an embedding, and the database returns the most semantically similar chunks.
+			
+			\item Retriever: This is the logic layer that handles the search, deciding how many chunks to return, applying filters, and ranking results by relevance before passing them to the model.
+			
+			\item LLM: The language model receives the retrieved context alongside the user's query and generates the final response. The quality of the output depends on both the retrieval quality and the model's reasoning ability.
+		\end{itemize} 
+	\end{frame}
+	\note[itemize]{
+		\item A working RAG pipeline involves four core components
+	}
+
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		% Slide title in upper left
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Common RAG use cases}
+		\end{textblock}
+		\vspace{1em}
+		\begin{itemize}
+			\item Enterprise knowledge assistants: Employees can ask questions against internal wikis, HR policies, or process documentation without digging through folders.
+			\item Customer support bots: Support agents or end users can get accurate answers drawn directly from product documentation or help articles, reducing hallucination risk.
+			\item Document Q\&A: Legal, finance, or research teams can query long contracts, reports, or research papers and get precise, cited answers.
+			\item Internal search: Engineering and product teams can surface relevant code documentation, runbooks, or past decisions across large repositories of unstructured text.
+		\end{itemize} 
+	\end{frame}
+
+	\note[itemize]{
+		\item RAG is particularly well-suited to scenarios where the model needs to answer questions from a large, evolving, or proprietary body of knowledge
+		\item In each of these cases, the value of RAG comes from the same core principle: the model's answer is only as good as the context it receives.
+		\item RAG ensures that context is fresh, relevant, and sourced from data you control.
+	}
+	
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+			\begin{textblock}{0.74}(0.05,0.05)
+		\bfseries\large\normalcolor{Pop Quiz hot Shot}
+		\end{textblock}
+		\begin{center}
+			\includegraphics[scale=0.20]{azure-mcp-deploymt.png}
+		\end{center}
+	\end{frame}
+	
+	\note[itemize]{
+		\item created july16th 2026
+	}
+
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{section.png}}
+	\section{\textcolor{white}{Supplemental}}
+
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		% Slide title in upper left
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{My Lab Example}
+		\end{textblock}
+		I kept ``starting over'' by accident because my models did not have a set of static reference materials. \\
+		I started creating a PDF document to give my moelds a ``brain'' and allow for a common starting point. \\
+	\end{frame}
+
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		% Slide title in upper left
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Training Resources}
+		\end{textblock}
+		Relevant training materials.
+	\end{frame}
+	
+\end{document}

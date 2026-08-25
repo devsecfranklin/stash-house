@@ -1,0 +1,279 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_US
+% !TeX root = ai-tokens.tex
+% !TeX TXS-program:compile = txs:///xelatex/[--shell-escape]
+
+% https://orcid.org/0000-0003-4586-8500
+
+\documentclass[aspectratio=169]{beamer}
+
+\input{../_header-palo}
+
+\begin{document}
+	
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{title_bg.png}}
+	\begin{frame}
+		\setlength{\TPHorizModule}{120mm}
+		\setlength{\TPVertModule}{140mm}
+		\begin{textblock}{0.75}(0.05, 0.25)
+			\bfseries\Huge{Part 2: The Gateway to AI: Tokenization} \\
+			\vspace{.5em}
+			\bfseries\small{\href{https://github.com/devsecfranklin/training-ai/blob/main/docs/slides/ai-tokens/ai-tokens.pdf}{download this slide deck}}
+		\end{textblock}
+		\begin{textblock}{0.75}(0.99, 0.53)
+			\bfseries\textcolor{white}{Franklin Diaz}\\
+			\bfseries\textcolor{white}{Principal Engineer}\\
+			\bfseries\begin{scriptsize}\textcolor{white}{version 0.2b - August 27th, 2025}\end{scriptsize}
+		\end{textblock}
+	\end{frame}
+
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Introduction: What is a Token?}
+		\end{textblock}
+		
+		\vspace{2em}
+		\begin{itemize}
+			\item \textbf{The Atoms of Language Models:} Language models do not see sentences or paragraphs; they process text broken down into fundamental units called tokens.
+			\item \textbf{More Than Just Words:} A token can be an entire word, part of a word (subword), a single character, or even punctuation marks.
+			\item \textbf{The Baseline Rule:} As a rule of thumb for English text, 1 token is approximately equal to 4 characters, or roughly 0.75 words.
+			\item \textbf{Why it Matters:} Tokenization directly determines how a model interprets context, handles novel terminology, and calculates operational computing costs.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{The Pipeline: Text to Vectors}
+		\end{textblock}
+		
+		\vspace{2em}
+		The standard journey of data through a modern natural language processing pipeline follows four core stages:
+		\vspace{1em}
+		\begin{enumerate}
+			\item \textbf{Raw Text Input:} The unstructured string provided by the user (e.g., \texttt{"Secure the cloud"}).
+			\item \textbf{Tokenization:} The string is divided into structured segments (e.g., \texttt{["Secure", " the", " cloud"]}).
+			\item \textbf{Token IDs:} Tokens are mapped to specific numerical indices based on the model's predefined static vocabulary database.
+			\item \textbf{Embeddings:} High-dimensional mathematical vectors are assigned to each token ID, representing its contextual and semantic meaning.
+		\end{enumerate}
+	\end{frame}
+	
+	% --- SLIDE 4: THE WHY ---
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{The "Why": Why Can't AI Read Raw Text?}
+		\end{textblock}
+		
+		\vspace{2em}
+		\begin{itemize}
+			\item \textbf{Mathematical Foundations:} Neural networks are fundamentally massive mathematical machines. They perform matrix multiplications, gradients, and regressions, requiring numbers rather than characters.
+			\item \textbf{Loss of Contextual Relationship:} Raw string formats or basic binary text encoding (like ASCII/UTF-8) do not inherently preserve the structural relations or semantic similarities between words.
+			\item \textbf{Standardization Requirement:} Tokenization provides a structured, predictable grid matrix that balances open-ended language inputs with static input neural layers.
+		\end{itemize}
+	\end{frame}
+	
+	% --- SLIDE 5: WORD-LEVEL TOKENIZATION ---
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Word-Level Tokenization: The Early Approach}
+		\end{textblock}
+		
+		\vspace{2em}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				\textbf{The Concept:}
+				\begin{itemize}
+					\item Splits text cleanly at whitespace and punctuation boundaries.
+					\item Maps each unique word directly to an integer.
+				\end{itemize}
+				\vspace{0.5em}
+				\textbf{Major Strengths:}
+				\begin{itemize}
+					\item Intuitive and easy to configure.
+					\item Keeps semantic units intact.
+				\end{itemize}
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\textbf{Critical Vulnerabilities:}
+				\begin{itemize}
+					\item \textbf{Massive Vocabulary Size:} Requires millions of entries to cover every derivative word form (run, running, ran).
+					\item \textbf{Out-Of-Vocabulary (OOV) Errors:} Totally fails when encountering unseen words, typos, or new technical terminology, returning an error marker (\texttt{<UNK>}).
+				\end{itemize}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	% --- SLIDE 6: CHARACTER-LEVEL TOKENIZATION ---
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Character-Level Tokenization: Pure Granularity}
+		\end{textblock}
+		
+		\vspace{2em}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				\textbf{The Concept:}
+				\begin{itemize}
+					\item Treats every single character (a, b, c, 1, 2, ?, etc.) as an individual token.
+				\end{itemize}
+				\vspace{0.5em}
+				\textbf{Major Strengths:}
+				\begin{itemize}
+					\item \textbf{Zero OOV Errors:} Vocabulary is tiny (usually just a few hundred characters), meaning it can ingest any typo or word variation seamlessly.
+				\end{itemize}
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\textbf{Critical Vulnerabilities:}
+				\begin{itemize}
+					\item \textbf{Loss of Semantic Meaning:} Individual letters carry no innate semantic weight, forcing the network to learn spelling mechanics before context.
+					\item \textbf{Exploding Context Lengths:} A simple paragraph turns into thousands of sequential tokens, rapidly overwhelming model memory.
+				\end{itemize}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	% --- SLIDE 7: SUBWORD TOKENIZATION ---
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Subword Tokenization: The Modern Industry Standard}
+		\end{textblock}
+		
+		\vspace{2em}
+		\begin{itemize}
+			\item \textbf{The Best of Both Worlds:} Bridges the gap by keeping frequent, complete words intact while splitting rare or complex words into smaller meaningful units.
+			\item \textbf{How It Looks in Action:} 
+			\begin{itemize}
+				\item Frequent word: \texttt{"cybersecurity"} $\rightarrow$ \texttt{["cybersecurity"]}
+				\item Uncommon/Complex word: \texttt{"cyber-resiliency"} $\rightarrow$ \texttt{["cyber", "-", "resil", "iency"]}
+			\end{itemize}
+			\item \textbf{Key Efficiencies:}
+			\begin{itemize}
+				\item Limits maximum vocabulary overhead to practical, high-performance ranges (typically 32k to 256k items).
+				\item Retains full adaptability to parse compound technical terms, unseen phrases, and structural code snippets without failing.
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	% --- SLIDE 8: BYTE-PAIR ENCODING (BPE) ---
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{A Deep Dive into Byte-Pair Encoding (BPE)}
+		\end{textblock}
+		
+		\vspace{2em}
+		BPE is the core algorithm running behind iconic foundational models like GPT-4, LLaMA, and RoBERTa.
+		\vspace{1em}
+		\begin{itemize}
+			\item \textbf{Initialization Step:} The vocabulary is pre-populated with all individual base characters and byte elements.
+			\item \textbf{Iterative Merging Logic:} The algorithm scans training data, identifies the most frequently adjacent pairs of tokens, and merges them into a new compound token.
+			\item \textbf{Stopping Metric:} This automated merging process runs continuously until the vocabulary matrix hits its predefined limit size.
+			\item \textbf{Practical Outcome:} Common prefixes, suffixes, and regular root terms are systematically grouped into structured tokens over time.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Alternative Architectures: WordPiece \& SentencePiece}
+		\end{textblock}
+		
+		\vspace{1.5em}
+		\begin{itemize}
+			\item \textbf{WordPiece (BERT):}
+			\begin{itemize}
+				\item Rather than simply tracking the highest frequency counts like BPE, WordPiece calculates the mathematical likelihood of adjacent symbols appearing together.
+				\item Focuses on merging pairs that maximize the statistical information gain of the training dataset language model.
+			\end{itemize}
+			\vspace{0.5em}
+			\item \textbf{SentencePiece (LLaMA, T5):}
+			\begin{itemize}
+				\item Treats whitespace as an explicit, measurable character (often rendered as a literal lower-line \texttt{\_}).
+				\item Decouples the tokenizer from language-specific whitespace split rules, allowing identical, robust processing for both European languages and non-spaced script architectures (e.g., Japanese, Chinese).
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{The Vocabulary: Operational Lookups}
+		\end{textblock}
+		
+		\vspace{2em}
+		The tokenizer works directly with a rigid, internal indices lookup matrix:
+		\vspace{1em}
+		\begin{center}
+			\small
+			\begin{tabular}{|l|c|l|}
+				\hline
+				\textbf{Token String Segment} & \textbf{Unique ID Index} & \textbf{Operational Class Category} \\
+				\hline
+				\texttt{<pad>} & 0 & Core System / Architecture Configuration \\
+				\texttt{<unk>} & 1 & Out-of-Vocabulary Fallback Indicator \\
+				\texttt{the} & 1024 & High-Frequency Linguistic Common Element \\
+				\texttt{network} & 5843 & Domain Standard Terminology Asset \\
+				\texttt{Palo} & 18942 & Specialized Entity / Proper Noun Token \\
+				\hline
+			\end{tabular}
+		\end{center}
+		\vspace{0.5em}
+		\begin{itemize}
+			\item Changing or modifying even a single item within this index mapping after a model has finished its training cycle will completely break its semantic output capabilities.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Context Windows, Efficiencies \& Fiscal Costs}
+		\end{textblock}
+		
+		\vspace{2em}
+		\begin{itemize}
+			\item \textbf{The Memory Premium:} Transformer self-attention mechanisms scale quadratically ($\mathcal{O}(N^2)$) relative to token length. Efficient token distribution preserves precious memory space.
+			\item \textbf{The Multi-Lingual Penalty:} Many legacy tokenizers were trained primarily on English corpuses. Consequently, languages like Spanish, Arabic, or Korean require 2x to 3x more tokens to convey identical sentences, leading to higher execution costs.
+			\item \textbf{Code Optimization:} Structured code fragments (Python, C++) often consume massive token allocations due to indented whitespace strings, though newer engines optimize for this.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{}
+		\setlength{\TPHorizModule}{\textwidth}
+		\setlength{\TPVertModule}{\textwidth}
+		\begin{textblock}{0.74}(0.05,0.05)
+			\bfseries\large\normalcolor{Conclusion: Implications for Consultants}
+		\end{textblock}
+		
+		\vspace{2em}
+		\begin{itemize}
+			\item \textbf{Strategic Takeaway:} Tokenization efficiency directly influences compute speed, deployment budgets, and accuracy when protecting enterprise LLM surfaces.
+			\item \textbf{Next-Gen Alignment:} When designing secure data prompts, data vector stores, and parsing pipelines, optimizing token patterns saves costs and prevents truncation errors.
+		\end{itemize}
+		
+		\vspace{1.5em}
+		\begin{center}
+			\large\bfseries Questions \& Collaborative Discussion
+		\end{center}
+	\end{frame}
+	
+	\note[itemize]{
+		\item Reinforce to enterprise clients that optimization at the token layer reduces API costs and drastically increases prompt engineering reliability.
+	}
+	
+\end{document}

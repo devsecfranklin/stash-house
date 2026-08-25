@@ -1,6 +1,6 @@
 {
   "tag": "security",
-  "count": 3,
+  "count": 4,
   "canonical": "https://www.bitsmasher.net/research/tags/security.json",
   "posts": [
     {
@@ -30,6 +30,20 @@
         "lab-decay",
         "ssh-audit",
         "ansible"
+      ]
+    },
+    {
+      "id": "2026-08-20-kerberos-keytab-nfs-auth",
+      "title": "Kerberos Keytabs That Never Worked: NFS Authorization Dead Ends in a Heterogeneous Lab",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-kerberos-keytab-nfs-auth.html",
+      "summary": "NFS exports across chonk and stargate declare sec=krb5i but no client keytabs were ever deployed \u2014 every krb5 mount silently falls back to insecure access or fails entirely. A remediation playbook for a multi-host lab.",
+      "tags": [
+        "kerberos",
+        "nfs",
+        "keytab",
+        "infrastructure",
+        "security"
       ]
     },
     {

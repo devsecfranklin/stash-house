@@ -1,0 +1,22 @@
+{
+  "tag": "testing",
+  "count": 1,
+  "canonical": "https://www.bitsmasher.net/research/tags/testing.json",
+  "posts": [
+    {
+      "id": "2026-08-25-ansible-native-test-pipeline",
+      "title": "From Molecule to Native Ansible-Test: Zero-Cost Validation Pipeline on Stargate",
+      "date": "2026-08-25",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-25-ansible-native-test-pipeline.html",
+      "summary": "Migrating from Docker-dependent Molecule testing to native ansible-test on stargate eliminates external container orchestration overhead, achieving zero-token shell executions within the lab topology.",
+      "tags": [
+        "infrastructure",
+        "automation",
+        "ansible",
+        "testing",
+        "ci-cd",
+        "molecule"
+      ]
+    }
+  ]
+}
