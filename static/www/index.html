@@ -1,170 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
-	<meta charset="UTF-8">
-	<link rel="canonical" href="https://www.bitsmasher.net/training" />
-	<meta name="generator" content="robot 🤖">
-	<meta name="author" content="Franklin">
-	<meta name="description" content="AI Training Materials — Practical courses for consultants and engineers. From internal tools to Prisma AI, MCP deep dives, and hands-on labs.">
-	<title>Training — Bitsmasher Lab</title>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="canonical" href="https://www.bitsmasher.net" />
+		<link rel="alternate" type="application/feed+json" href="/research/feed.json" title="Research Blog Feed">
+		<link rel="alternate" type="application/json" href="/research/index.json" title="Research Index (JSON)">
+		<link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM Site Manifest">
+		<link rel="alternate" type="text/markdown" href="/research/blog-guide.md" title="Blog Guide">
+		<link rel="alternate" type="application/json" href="/llms-full.json" title="Full Site Content (JSON)">
+		<link rel="alternate" type="text/markdown" href="/research/blog-guide.md" title="Blog Guide">
 
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
-	<link rel="stylesheet" href="https://www.bitsmasher.net/css/www.bitsmasher.net.css">
-	<link rel="icon" type="image/x-icon" href="https://www.bitsmasher.net/images/favicon.ico">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+		<meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.6.0">
+		<title>www.bitsmasher.net</title>
+		
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+		<link rel="stylesheet" href="https://www.bitsmasher.net/css/www.bitsmasher.net.css">	
+		<link rel="icon" type="image/x-icon" href="https://www.bitsmasher.net/images/favicon.ico">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Home page of @thedevilsvoice">
+	<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "bitsmasher.net Research Blog",
+  "url": "https://www.bitsmasher.net/research",
+  "publisher": {
+    "@type": "Person",
+    "name": "robot"
+  },
+  "numberOfPosts": 7
+}
+</script>
+	</head>
+	<body>
 
-	<style>
-		.research-content { text-align: left; max-width: 900px; margin: 0 auto; }
-		.page-header { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(26,115,232,0.2); }
-		.page-title { color: #1a73e8; font-size: 2rem; margin: 0.3rem 0; }
-		.page-subtitle { color: #9e9e9e; font-size: 1rem; margin-bottom: 0.5rem; }
-		h3 { color: #64b5f6; }
-		p { line-height: 1.7; }
-		code { background: rgba(26,115,232,0.15); padding: 2px 6px; border-radius: 3px; color: #82b1ff; }
-		.back-link { margin-bottom: 2rem; font-size: 0.9rem; }
-		.back-link a { color: #4fc3f7; text-decoration: none; }
-		.back-link a:hover { text-decoration: underline; }
-		.module-card { margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 8px; background-color: #0a1628; border-left: 4px solid #1a73e8; transition: border-color 0.2s; }
-		.module-card:hover { border-left-color: #4fc3f7; }
-		.module-code { color: #64b5f6; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.2rem; }
-		.module-name { color: #e0e0e0; font-size: 0.95rem; line-height: 1.5; }
-		.module-desc { color: #bdbdbd; font-size: 0.88rem; margin-top: 0.4rem; line-height: 1.6; }
-		.module-meta { color: #757575; font-size: 0.78rem; margin-top: 0.5rem; font-style: italic; }
-		.section-label { color: #4fc3f7; font-size: 1.15rem; font-weight: 600; margin: 2.5rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid rgba(26,115,232,0.15); }
-		.section-label:first-of-type { border-top: none; padding-top: 0; margin-top: 1.5rem; }
-		.learning-goals { margin-top: 1rem; padding: 0.75rem 1rem; background: rgba(26,115,232,0.06); border-radius: 6px; font-size: 0.84rem; color: #90caf9; }
-		.learning-goals ul { margin: 0.3rem 0 0 1.2rem; padding: 0; }
-		.learning-goals li { line-height: 1.6; color: #b0bec5; }
-		.status-badge { display: inline-block; font-size: 0.72rem; padding: 2px 8px; border-radius: 4px; margin-left: 0.5rem; vertical-align: middle; font-weight: 600; }
-		.status-live { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
-		.status-draft { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
-		.status-planned { background: rgba(156,163,175,0.15); color: #9ca3af; border: 1px solid rgba(156,163,175,0.3); }
-		.labs-note { margin-top: 1rem; padding: 0.75rem 1rem; background: rgba(14,154,75,0.08); border-left: 3px solid #0e9a4b; border-radius: 6px; font-size: 0.85rem; color: #a5d6a7; }
-		.page-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(26,115,232,0.2); font-size: 0.8rem; color: #9e9e9e; text-align: center; }
-	</style>
-</head>
 <body>
 	<nav class="w3-container w3-margin-top" id="site-nav"></nav><script src="/js/nav.js" defer></script>
-
-	<main class="w3-container w3-margin-top">
-		<div class="research-content">
-
-			<p class="back-link"><a href="https://www.bitsmasher.net">&#x2190; Home</a></p>
-
-			<div class="page-header">
-				<h2 class="page-title">Training Materials <span class="blog-tag">training</span></h2>
-				<p class="page-subtitle">AI courses for consultants, engineers, and anyone who wants to use AI tools well without getting fired.</p>
-				<p style="font-size: 0.85rem; color: #666; font-style: italic;">- bitsmasher.net/training</p>
-			</div>
-
-			<h3 class="section-label">Core Modules</h3>
-
-			<div class="module-card">
-				<p class="module-code">Module 01 — Internal Tools Overview <span class="status-badge status-draft">DRAFT</span></p>
-				<p class="module-name">PAN internal AI tools: Notebook LM, Gemini, Panda AI, chat.pan.dev, #ai-tips Slack. What's current, what's deprecated, how to choose the right tool for the task.</p>
-				<div class="learning-goals">
-					<strong>By the end:</strong>
-					<ul>
-						<li>Identify which AI tools are appropriate for a given consulting scenario</li>
-						<li>Configure PAN-approved AI tools per policy requirements</li>
-						<li>Demonstrate tool selection with a real-world example</li>
-					</ul>
-				</div>
-				<p class="module-meta">Includes internal tools inventory, deprecation timeline, and decision flowchart. Speaker notes + quiz sections planned.</p>
-			</div>
-
-			<div class="module-card">
-				<p class="module-code">Module 02 — Security &amp; Data Classification <span class="status-badge status-draft">DRAFT</span></p>
-				<p class="module-name">PAN's approved AI tools list with approval context. Data classification rules for AI use. Incident response procedure for improper AI usage.</p>
-				<div class="learning-goals">
-					<strong>By the end:</strong>
-					<ul>
-						<li>Categorize data by sensitivity level and determine if it can enter any AI system</li>
-						<li>Navigate PAN's approved tools registry and justify tool selection against policy</li>
-						<li>Demonstrate incident response workflow for improper AI usage</li>
-					</ul>
-				</div>
-				<p class="module-meta">Expanded security section (~4 slides), data classification decision tree, approved tools matrix. Cheat sheet available as take-home PDF.</p>
-			</div>
-
-			<div class="module-card">
-				<p class="module-code">Module 03 — Model Context Protocol <span class="status-badge status-draft">DRAFT</span></p>
-				<p class="module-name">What MCP is, how it works under the hood, current spec status and implementations (Aug 2026). Architecture diagrams with up-to-date components. PAN-specific usage patterns.</p>
-				<div class="learning-goals">
-					<strong>By the end:</strong>
-					<ul>
-						<li>Explain the MCP architecture and its role in tool integration</li>
-						<li>Evaluate current MCP implementations against project requirements</li>
-						<li>Demonstrate a basic MCP server/client connection with a local model</li>
-					</ul>
-				</div>
-				<p class="module-meta">Architecture diagrams updated, PAN policy references included. Source links verified against Aug 2026 spec.</p>
-			</div>
-
-			<div class="module-card">
-				<p class="module-code">Module 04 — Prisma Cloud + AI (AIRS) <span class="status-badge status-draft">DRAFT</span></p>
-				<p class="module-name">Prisma Cloud's AI capabilities: threat detection, risk scoring, consultant use cases. PAN-specific policies and practical scenarios for customer engagements.</p>
-				<div class="learning-goals">
-					<strong>By the end:</strong>
-					<ul>
-						<li>Identify Prisma Cloud AI features relevant to consulting workflows</li>
-						<li>Walk through a threat detection scenario using AI-powered risk scoring</li>
-						<li>Apply PAN-approved usage guidelines in a customer-facing context</li>
-					</ul>
-				</div>
-				<p class="module-meta">PAN policies, approved usage guidelines, practical customer scenarios. Deck + PDF compiled and ready.</p>
-			</div>
-
-			<h3 class="section-label">Planned Modules</h3>
-
-			<div class="module-card" style="border-left-color: #757575; opacity: 0.7;">
-				<p class="module-code">Module 05 — AI Security for LLMs <span class="status-badge status-planned">PLANNED</span></p>
-				<p class="module-desc">OWASP Top 10 for LLMs, prompt injection defense, output validation. For the people who build AI systems rather than just use them.</p>
-			</div>
-
-			<div class="module-card" style="border-left-color: #757575; opacity: 0.7;">
-				<p class="module-code">Module 06 — Prompt Engineering Deep Dive <span class="status-badge status-planned">PLANNED</span></p>
-				<p class="module-desc">Advanced techniques: system prompts, few-shot patterns, chain-of-thought. When to use which approach and why it matters in consulting engagements.</p>
-			</div>
-
-			<h3 class="section-label">Hands-On Labs</h3>
-
-			<div class="module-card" style="border-left-color: #0e9a4b;">
-				<p class="module-code">Lab 01 — Prompt Engineering <span class="status-badge status-planned">PLANNED</span></p>
-				<p class="module-desc">Write, test, and iterate prompts for a specific task. Measure effectiveness across different approaches.</p>
-			</div>
-
-			<div class="module-card" style="border-left-color: #0e9a4b;">
-				<p class="module-code">Lab 02 — Token Counting <span class="status-badge status-planned">PLANNED</span></p>
-				<p class="module-desc">Measure token consumption across different inputs and approaches. Learn to estimate costs and optimize prompts.</p>
-			</div>
-
-			<div class="module-card" style="border-left-color: #0e9a4b;">
-				<p class="module-code">Lab 03 — Simple RAG Pipeline <span class="status-badge status-planned">PLANNED</span></p>
-				<p class="module-desc">Build a minimal viable retrieval-augmented generation pipeline: vector DB + embeddings + LLM.</p>
-			</div>
-
-			<div class="module-card" style="border-left-color: #0e9a4b;">
-				<p class="module-code">Lab 04 — MCP Server &amp; Client <span class="status-badge status-planned">PLANNED</span></p>
-				<p class="module-desc">Set up a local MCP server and client with an open-source model. Verify connectivity and message flow.</p>
-			</div>
-
-			<div class="labs-note">
-				Labs include: objective, prerequisites, step-by-step instructions, and verification checklists. Each takes ~1-2 hours.
-			</div>
-
-			<h3 class="section-label">Resources</h3>
-			<p class="link-box" style="margin-bottom: 0.75rem; padding: 0.75rem 1rem; border-radius: 6px; background: rgba(14,154,75,0.08); border-left: 3px solid #0e9a4b;">
-				📄 <a href="docs/coding-foundations.html" style="color:#4ade80; text-decoration:none;">Coding Foundations (HTML)</a> — interactive reference sheet
-			</p>
-			<p class="link-box" style="margin-bottom: 0.75rem; padding: 0.75rem 1rem; border-radius: 6px; background: rgba(14,154,75,0.08); border-left: 3px solid #0e9a4b;">
-				📄 <a href="docs/ai-security.html" style="color:#4ade80; text-decoration:none;">AI Security Primer (HTML)</a> — OWASP Top 10 for LLMs reference
-			</p>
-
-		</div>
-
-		<div class="page-footer">Bitsmasher Lab &copy; 2026 — training content by <strong>robot 🤖</strong></div>
-	</main>
+  <div class="container">
+    <div>
+      <h2>WIZARD HQ</h2>
+      <div class="wizard-links-portal">
+        <a href="https://nostr.watch/" target="_blank" rel="noopener noreferrer" class="link-card">
+          <span class="link-icon">&#x1f50e;</span>
+          <span class="link-label">nostr.watch relay list</span>
+          <span class="link-arrow">&rarr;</span>
+        </a>
+        <a href="https://yakitofu.org/" target="_blank" rel="noopener noreferrer" class="link-card">
+          <span class="link-icon">&#x1f3b5;</span>
+          <span class="link-label">NIP-58 Badge Creation &amp; Award Application</span>
+          <span class="link-arrow">&rarr;</span>
+        </a>
+        <a href="https://discord.gg/mdJGV73Ub" target="_blank" rel="noopener noreferrer" class="link-card">
+          <span class="link-icon">&#x1f4ac;</span>
+          <span class="link-label">discord</span>
+          <span class="link-arrow">&rarr;</span>
+        </a>
+      </div>
+      Nostr public key:
+      {
+        "thedevilsvoice": "fedebe118f3815b88b47220923cd5ff3c4504233c6ee49fe5dc87c650f2012c0"
+      }
+    </div>
+    <div>
+      <img height=512 width=512 src="images/wizard2.png">
+    </div>
+  </div>
 </body>
+
 </html>

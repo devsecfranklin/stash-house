@@ -11,6 +11,33 @@
 \input{../_header-palo}
 
 \begin{document}
+% Code highlighting for Python / TypeScript examples
+\usepackage{listings}
+\definecolor{codebg}{RGB}{10,16,40}
+\definecolor{codefg}{RGB}{200,200,200}
+\definecolor{codekeyword}{RGB}{250,88,45}
+\definecolor{codestrings}{RGB}{80,200,120}
+\definecolor{commentcolor}{HTML}{669900}
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  framexleftmargin=4pt,
+  framesep=6pt,
+  rulecolor=\color{panorange}!,
+  breaklines=true,
+  breakatwhitespace=false,
+  showstringspaces=false,
+  tabsize=2,
+  captionpos=b,
+  keywordstyle=\color{codekeyword}\bfseries,
+  stringstyle=\color{codestrings},
+  commentstyle=\color{commentcolor},
+  morekeywords={class,def,function,void,const,var,let,new,return,import,type,interface,export},
+  literate={" "}{{" "}}1 {\n}{{"\n"}}1,
+  extendedchars=false,
+}
+
 	%\useoutertheme{miniframes}
 	
 	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{title_bg.png}}
@@ -25,14 +52,13 @@
 		\begin{textblock}{0.75}(0.99, 0.53)
 			\bfseries\textcolor{white}{Franklin Diaz}\\
 			\bfseries\textcolor{white}{Principal Engineer}\\
-			\bfseries\begin{scriptsize}\textcolor{white}{v0.3 - presented August 27th, 2025}\end{scriptsize}
+			\bfseries\begin{scriptsize}\textcolor{white}{v0.4 - updated August 25th, 2026}\end{scriptsize}
 		\end{textblock}
 	\end{frame}
 	
 	\note[itemize]{
 		\item updated July 24th, 2025 v0.2a
 		\item updated August 27th, 2025 v0.2b
-		\item updated July 15th, 2026 v0.3
 	}
 
 	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{section.png}}
@@ -380,6 +406,140 @@
 	%\section{\href{https://www.yahoo.com/entertainment/terminator-2-judgment-day-skynet-ai-predictions-chatgpt-robotics-humanoid-225747375.html}{THE FUTURE}}
 	
 	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{section.png}}
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{section.png}}
+\section{Deterministic Controls}
+
+\note[itemize]{
+  \item This section bridges the gap between "chat with AI" and "engineer AI reliably."
+  \item Deterministic controls turn non-deterministic generation into a production-safe pattern.
+}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+\begin{frame}{Deterministic Parameter Tuning}
+	\frametitle{Why temperature matters in production}
+	\begin{columns}[T]
+		\begin{column}{0.55\textwidth}
+			\small\bfseries Sampling Controls:
+			\begin{itemize}
+				\item \texttt{temperature}: Softens/hardens the probability distribution over logits
+				\item \texttt{top\_p}: Nucleus sampling cutoff — only tokens in the top-p mass are considered
+				\item \texttt{seed}: Fixed seed forces identical sampling paths across runs (same model, same prompt)
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.45\textwidth}
+			\small\bfseries Practical Regimes:
+			\begin{itemize}
+				\item \texttt{T=0.0, seed=42} → byte-for-byte reproducible (classification, extraction)
+				\item \texttt{T=0.2, top-p=0.95} → structured with slight variation (summarization)
+				\item \texttt{T=0.7+} → creative tasks where variance is desired (brainstorming)
+			\end{itemize}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\note[itemize]{
+  \item temperature=0 does not mean "no output" — it means greedy decoding (always pick highest-logit token).
+  \item seed only works with OpenAI-style APIs; local Ollama models ignore seed by default.
+}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+\begin{frame}{JSON Mode vs. Structured Outputs}
+	\frametitle{Two mechanisms, one goal: typed output from an LLM}
+	
+	\begin{columns}[T]
+		\begin{column}{0.52\textwidth}
+			\small\bfseries Prompt-Coaxed JSON \hfill \textcolor{codekeyword}{WEAK}
+			\vspace{0.3em}
+			\begin{itemize}
+				\item LLM is told: ``Respond only in valid JSON''
+				\item No schema enforcement — any well-formed object passes
+				\item Prone to hallucinated keys, dropped fields, invalid escaping
+				\item Works for ad-hoc extraction; fails for pipeline integration
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\small\bfseries Constrained Generation \hfill \textcolor{codekeyword}{STRONG}
+			\vspace{0.3em}
+			\begin{itemize}
+				\item Decoder-level grammar constraint (regex or JSON Schema)
+				\item Every token is forced to match the schema at generation time
+				\item Impossible to return malformed structure — compile-time guarantee
+				\item Supported: OpenAI Structured Outputs, Ollama \texttt{response} format, Anyscale structured output
+			\end{itemize}
+		\end{column}
+	\end{columns}
+	
+	\vspace{0.5em}
+	\normalsize\textbf{Key insight:} constrained generation moves validation from post-hoc parsing to pre-generation enforcement.
+\end{frame}
+
+\note[itemize]{
+  \item OpenAI's \texttt{response.json\_schema} is the gold standard today (supported since GPT-4o).
+  \item For open models: Ollama's \texttt{"format": "json"} mode + external JSON Schema validation.
+  \item Grammar-constrained decoding libraries: outlines, lm-eval-harness constrained decoding.
+}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+\begin{frame}{Pydantic + Function Calling: Strict Schema Example}
+	\frametitle{Python tool definition with Pydantic model enforcement}
+	
+	\begin{lstlisting}[language=Python,caption={Extraction schema for unstructured telemetry}]
+from pydantic import BaseModel, Field
+from typing import Optional
+
+class TelemetryEvent(BaseModel):
+    event_type: str = Field(
+        description="Type of telemetry event",
+        pattern=r"^(log_in|log_out|config_change|error)$"
+    )
+    user_id: str = Field(description="Unique user identifier")
+    severity: int = Field(ge=1, le=5)
+    source: Optional[str] = None
+    timestamp: str
+
+# OpenAI client with structured output:
+response = client.beta.chat.completions.parse(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": prompt}],
+    response_format=TelemetryEvent,  # <-- enforced at decoder level
+)
+event = response.choices[0].message.parsed  # Guaranteed TelemetryEvent
+	\end{lstlisting}
+	
+	\vspace{0.3em}
+	\normalsize\textbf{TypeScript equivalent:} Zod schema + \texttt{OpenAI.beta.chat.completions.parse(ZodSchema)} (beta) or \texttt{structuredOutputs()} with manual JSON Schema conversion via \texttt{zod-to-json-schema}.
+\end{frame}
+
+\note[itemize]{
+  \item The \texttt{parse()} call replaces the old \texttt{chat.completions.create()} + regex post-processing.
+  \item Pydantic's Field constraints (pattern, ge/le) become part of the JSON Schema sent to the model — not just a validation layer downstream.
+}
+
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
+\begin{frame}{Hands-On Micro-Lab: Telemetry Extraction}
+	\frametitle{Enforce an extraction schema over unstructured logs}
+	
+	\textbf{Objective:} Build a deterministic extraction pipeline that converts free-text log lines into typed \texttt{TelemetryEvent} objects.
+	
+	\vspace{0.5em}
+	\begin{enumerate}
+		\item \textbf{Collect:} Gather 10-20 raw log lines (e.g., from a web server, auth service, or application trace).
+		\item \textbf{Define:} Write a Pydantic model (or Zod schema) matching your expected fields. Include at least one regex constraint.
+		\item \textbf{Extract:} Prompt an LLM with the schema + raw logs. Use constrained generation (\texttt{response\_format} / \texttt{JSON mode}).
+		\item \textbf{Verify:} Run the extracted objects through the Pydantic/Zod validator — none should fail if the schema is correct.
+		\item \textbf{Stress test:} Inject noise (typos, missing fields) into raw logs. Measure extraction failure rate at \texttt{T=0.0} vs \texttt{T=0.3}.
+	\end{enumerate}
+	
+	\vspace{0.3em}
+	\normalsize\textbf{Deliverable:} A Python script (\texttt{extract.py}) that takes raw log input and outputs validated JSONL.
+\end{frame>
+
+\note[itemize]{
+  \item The stress test reveals when deterministic (T=0) vs stochastic sampling matters — at T=0 you get consistent errors on ambiguous inputs; at T=0.3 you get varied errors that might recover.
+  \item This lab bridges directly into Module 2 (token geometry) and Module 3 (MCP tool use).
+}
+
+
 	\section{LAGNIAPPE}
 	
 	\note{Mark Twain's Thoughts on Lagniappe
