@@ -1,0 +1,119 @@
+/*
+ * # SPDX-FileCopyrightText: ©2025 franklin <smoooth.y62wj@passmail.net>
+ * #
+ * # SPDX-License-Identifier: MIT
+ */
+
+/* ── Global Dark Blue Theme ──────────────────────────────────────── */
+:root {
+  --blue-darkest: #0a0e17;
+  --blue-darker: #0d1527;
+  --blue-card: #131f37;
+  --blue-accent: #1e3a5f;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --link-color: #3399ff;
+  --link-hover: #00ffcc;
+}
+
+html, body {
+  background-color: var(--blue-darkest) !important;
+  color: var(--text-main);
+  font-family: monospace, monospace;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Base link styling */
+a {
+  color: var(--link-color);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+/* Container & card dark backgrounds */
+.container, main, .w3-container {
+  background-color: transparent;
+  color: var(--text-main);
+}
+
+.card, .post-card, .research-card {
+  background-color: var(--blue-card);
+  color: var(--text-main);
+  border: 1px solid var(--blue-accent);
+}
+
+/* Navigation bar alignment */
+#site-nav, .site-nav-inner, .w3-bar.w3-black {
+  background-color: var(--blue-darker) !important;
+  color: var(--text-main) !important;
+}
+
+footer {
+  background-color: #000;
+  text-align: center;
+  padding: 18px;
+}
+
+/* ── Original Layout (preserved) ─────────────────────────────────── */
+.container {
+  display: grid;
+  grid-template-columns: auto auto;
+  background-color: var(--blue-darkest);
+  padding: 10px;
+}
+
+.container div {
+  background-color: var(--blue-card);
+  border: 1px solid var(--blue-accent);
+  padding: 10px;
+  font-size: 10px;
+  text-align: center;
+}
+
+/* ── Dynamic Navigation Bar ─────────────────────────────────────── */
+.custom-nav-bar {
+  background-color: var(--blue-darker) !important;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.custom-nav-bar .w3-bar-item {
+  color: var(--text-muted);
+  transition: color 0.15s, background-color 0.15s;
+  font-size: 0.85rem;
+  text-transform: lowercase;
+}
+
+.custom-nav-bar .w3-bar-item:hover {
+  background-color: rgba(26,115,232,0.12);
+  color: var(--link-hover);
+}
+
+.custom-nav-bar .w3-bar-item.active {
+  color: var(--link-color);
+  font-weight: 700;
+}
+
+/* ── Training / Link Boxes ─────────────────────────────────────── */
+.link-box {
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background: rgba(14,154,75,0.08);
+  border-left: 3px solid #0e9a4b;
+  font-size: 0.85rem;
+}
+
+.link-box a {
+  color: #4ade80;
+  text-decoration: none;
+}
+
+.link-box a:hover {
+  text-decoration: underline;
+}
