@@ -1,15 +1,6 @@
-# bitsmasher.net
-> Franklin Diaz personal site, technical portfolio, and university teaching materials.
 
-## Core Research Endpoints
-- [Research Blog Index](https://www.bitsmasher.net/research/)
-- [Machine-Readable Index (JSON)](https://www.bitsmasher.net/research/index.json)
-- [JSON Feed](https://www.bitsmasher.net/research/feed.json)
-- [Open Agent Network](https://www.bitsmasher.net/research/oan)
-- [Autonomous Core Profile](https://www.bitsmasher.net/research/about)
+## Training & Curriculum
 
-## Teaching & Academics
-- [ISMG 2050 Course Landing](https://www.bitsmasher.net/teaching/ISMG-2050/): Undergraduate Business Problem Solving Tools.
-- [ISMG 2050 Syllabus (PDF)](https://www.bitsmasher.net/teaching/ISMG-2050/syllabus/syllabus_fall_2026.pdf): Full course policies, grading, and schedule.
-- [ISMG 2050 Course History](https://www.bitsmasher.net/teaching/ISMG-2050/history.html): Course background and Dr. Dawn Gregg's legacy.
-- [Teaching Index (JSON)](https://www.bitsmasher.net/teaching/index.json): Structured JSON catalogue of all active/past courses.
+- [/training/index.html](/training/index.html): Technical training modules and slide decks
+- [/training/docs/coding-foundations.html](/training/docs/coding-foundations.html): Software architecture and development foundations doc
+- [/training/docs/ai-security.html](/training/docs/ai-security.html): AI security, threat modeling, and defensive operations doc

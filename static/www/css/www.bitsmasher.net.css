@@ -99,60 +99,21 @@ footer {
   font-weight: 700;
 }
 
-/* ── WIZARD LINKS PORTAL ─────────────────────────────────────── */
-.wizard-links-portal {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin: 12px 0 8px 0;
+/* ── Training / Link Boxes ─────────────────────────────────────── */
+.link-box {
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background: rgba(14,154,75,0.08);
+  border-left: 3px solid #0e9a4b;
+  font-size: 0.85rem;
 }
 
-.wizard-links-portal .link-card {
-  display: grid;
-  grid-template-columns: 24px 1fr auto;
-  align-items: center;
-  gap: 8px;
-  background: var(--blue-accent);
-  border: 1px solid var(--blue-accent);
-  border-radius: 3px;
-  padding: 8px 12px;
+.link-box a {
+  color: #4ade80;
   text-decoration: none;
-  color: var(--text-main);
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  transition: all 0.2s ease;
 }
 
-.wizard-links-portal .link-card:hover {
-  color: #fff;
-  border-color: var(--link-hover);
-  transform: translateX(4px);
-  box-shadow: 0 0 12px rgba(0, 255, 204, 0.15), inset 0 0 8px rgba(0, 255, 204, 0.05);
-}
-
-.wizard-links-portal .link-card:hover .link-icon {
-  transform: scale(1.15);
-}
-
-.wizard-links-portal .link-label {
-  font-family: monospace, monospace;
-  color: var(--link-color);
-  transition: color 0.2s ease;
-}
-
-.wizard-links-portal .link-card:hover .link-label {
-  color: #fff;
-}
-
-.wizard-links-portal .link-arrow {
-  color: var(--text-muted);
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: all 0.2s ease;
-}
-
-.wizard-links-portal .link-card:hover .link-arrow {
-  opacity: 1;
-  transform: translateX(0);
-  color: var(--link-hover);
+.link-box a:hover {
+  text-decoration: underline;
 }

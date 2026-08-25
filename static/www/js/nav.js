@@ -16,6 +16,7 @@
     { label: "minecraft", href: "/minecraft",                 external: false },
     { label: "research",  href: "/research",                  external: false },
     { label: "teaching",  href: "/teaching",                  external: false },
+    { label: "training",  href: "/training",                  external: false },
     { label: "discord",   href: "https://discord.gg/mdJGV73Ub", external: true }
   ];
 
