@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Animal Life Donations — ISMG 2050</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<style>
+ .header-meta { color: #9e9e9e; font-size: 0.9rem; }
+</style>
+</head>
+<body class="w3-black">
+<nav class="w3-container w3-margin-top" id="site-nav"></nav>
+<script src="/js/nav.js" defer></script>
+
+<main class="w3-container research-content" style="max-width: 860px; margin: 2rem auto; padding: 0 1.5rem;">
+<p><a href="/teaching/ISMG-2050/homework/week1-2/">← Back to Week 1–2 Portal</a> — <a href="/teaching/ISMG-2050/">Course Hub</a></p>
+
+<header class="page-header">
+<h1 class="page-title">Comprehensive Project: Animal Life Donations</h1>
+<p class="header-meta">Module 1 — Due: Sunday, September 6, 2026 at 11:59 PM MT</p>
+</header>
+
+<article class="body-content">
+<div class="info-block" style="background:#1a1a1a; border-left:4px solid #CFB87C; padding:1rem; margin-bottom:1.5rem;">
+<h3 style="margin-top:0; color:#CFB87C;">Project Requirements</h3>
+<ul>
+<li><strong>Starter File:</strong> None (start with a new Blank Workbook)</li>
+<li><strong>Submission File:</strong> <code>[your initials] AnimalLife.xlsx</code></li>
+</ul>
+</div>
+
+<h2>Overview</h2>
+<p>Animal Life, NFP, maintains donation data in an Excel workbook. In this comprehensive project, you create a workbook from scratch for the current month, enter and format category data, apply AutoSum and statistical functions, set page layout options across grouped sheets, and duplicate and reset the sheet for the upcoming month.</p>
+
+<h2>Step-by-Step Instructions</h2>
+
+<h3>1. Create and Save Workbook</h3>
+<ol type="a">
+<li>Create a new <strong>Blank workbook</strong> in Microsoft Excel.</li>
+<li>Save the workbook as <code>[your initials] AnimalLife.xlsx</code>.</li>
+</ol>
+
+<h3>2. Rename Sheet &amp; Set Tab Color</h3>
+<ol type="a">
+<li>Double-click the <code>Sheet1</code> tab, type <code>April</code>, and press <strong>Enter</strong>.</li>
+<li>Right-click the <code>April</code> tab → select <strong>Tab Color</strong> → choose <strong>Dark-Blue, Text 2</strong> (Column 4).</li>
+</ol>
+
+<h3>3. Enter Header Labels and Initial Data</h3>
+<ol type="a">
+<li>In cell <strong>A1</strong>, type <code>Animal Life NFP</code>.</li>
+<li>In cell <strong>A2</strong>, type <code>Donations by Category</code>.</li>
+<li>In cell <strong>A4</strong>, type <code>Source</code>.</li>
+<li>Enter row labels in <strong>A5:A9</strong>: <code>Web site</code>, <code>Mail-in</code>, <code>Visitor</code>, <code>Telemarketing</code>, and <code>Corporate</code>.</li>
+<li>In cell <strong>A11</strong>, type <code>Total</code>.</li>
+<li>Enter initial donation counts across <strong>B5:E9</strong>:
+<ul>
+<li><strong>Web site (B5:E5):</strong> 50, 52, 150, 105</li>
+<li><strong>Mail-in (B6:E6):</strong> 125, 82, 145, 48</li>
+<li><strong>Visitor (B7:E7):</strong> 25, 28, 145, 50</li>
+<li><strong>Telemarketing (B8:E8):</strong> 75, 74, 99, 70</li>
+<li><strong>Corporate (B9:E9):</strong> 100, 88, 137, 106</li>
+</ul></li>
+</ol>
+
+<h3>4. Use Fill Handle for Series Labels</h3>
+<ol type="a">
+<li>Select cell <strong>B4</strong>, type <code>Week 1</code>, and press <strong>Enter</strong>.</li>
+<li>Select <strong>B4</strong>, point to its Fill Handle, and drag across to cell <strong>E4</strong> (generates Week 2, Week 3, Week 4).</li>
+<li>In cell <strong>F4</strong>, type <code>Total</code>.</li>
+</ol>
+
+<h3>5. Insert AutoSum Functions</h3>
+<ol type="a">
+<li>Select cell <strong>F5</strong> and double-click <strong>AutoSum</strong> (Home tab → Editing group) to sum <code>B5:E5</code> (Result: <code>357</code>).</li>
+<li>Select cell <strong>B11</strong> and click <strong>AutoSum</strong>.</li>
+<li>Correct the suggested argument range from <code>B5:B10</code> to <code>B5:B9</code> and press <strong>Enter</strong> (Result: <code>375</code>).</li>
+</ol>
+
+<h3>6. Copy Formulas with AutoFill</h3>
+<ol type="a">
+<li>Select cell <strong>F5</strong> and double-click the Fill Handle to copy the formula down through row 9.</li>
+<li>Select cell <strong>B11</strong> and drag the Fill Handle across to cell <strong>F11</strong> to calculate all weekly column totals and the grand total (<code>1,754</code> in F11).</li>
+</ol>
+
+<h3>7. Calculate Maximum Donation</h3>
+<ol type="a">
+<li>In cell <strong>A12</strong>, type <code>Biggest Donation</code>.</li>
+<li>Select cell <strong>B12</strong>, click the <strong>AutoSum</strong> dropdown arrow, and choose <strong>Max</strong>.</li>
+<li>Drag across range <strong>B5:E9</strong> to set formula <code>=MAX(B5:E9)</code> and press <strong>Enter</strong> (Result: <code>150</code>).</li>
+</ol>
+
+<h3>8. Apply Number Formatting</h3>
+<ol type="a">
+<li>Select cells <strong>B5:F9</strong>, hold Ctrl, select <strong>B11:F11</strong>, and select <strong>B12</strong>.</li>
+<li>Click <strong>Accounting Number Format</strong> ($) on the Home tab → Number group.</li>
+<li>Click <strong>Decrease Decimal</strong> two times to show zero decimal positions.</li>
+</ol>
+
+<h3>9. Alignment &amp; Column Widths</h3>
+<ol type="a">
+<li>Select cells <strong>A1:F2</strong> → click the Alignment launcher → set Horizontal to <strong>Center Across Selection</strong> → OK.</li>
+<li>Select cells <strong>A4:F4</strong> and click <strong>Center</strong>.</li>
+<li>Select column headings <strong>B:F</strong>, right-click → <strong>Column Width...</strong> → set to <code>10</code>.</li>
+<li>Double-click the boundary between column headers A and B to <strong>AutoFit</strong> column A.</li>
+</ol>
+
+<h3>10. Adjust Row Heights &amp; Font Sizes</h3>
+<ol type="a">
+<li>Select cells <strong>A1:A2</strong> and change Font Size to <strong>16 pt</strong>.</li>
+<li>Select row headings <strong>1:2</strong>, right-click → <strong>Row Height...</strong> → set to <code>22</code>.</li>
+</ol>
+
+<h3>11. Apply Cell Styles &amp; Borders</h3>
+<ol type="a">
+<li>Select cells <strong>A4:F4</strong> → open <strong>Cell Styles</strong> → apply <strong>Heading 3</strong>.</li>
+<li>Select cells <strong>A11:F11</strong> → open <strong>Cell Styles</strong> → apply <strong>Total</strong>.</li>
+<li>Right-click row heading <strong>5</strong> and select <strong>Insert</strong> (inserts a blank row 5).</li>
+<li>Select cells <strong>A6:F10</strong> → open the Borders menu → choose <strong>All Borders</strong>.</li>
+<li>Select cell <strong>A1</strong>.</li>
+</ol>
+
+<h3>12. Duplicate and Reset for May</h3>
+<ol type="a">
+<li>Right-click the <code>April</code> tab → select <strong>Move or Copy...</strong> → select <code>(move to end)</code> → check <strong>Create a copy</strong> → OK.</li>
+<li>Rename the duplicated tab to <code>May</code>.</li>
+<li>Set the <code>May</code> tab color to <strong>Green, Accent 6</strong> (Column 10).</li>
+<li>Select data cells <strong>B6:E10</strong> and press <strong>Delete</strong>. (Formulas will display formatted zero dashes <code>$ -</code>).</li>
+<li>Press Ctrl+Home.</li>
+</ol>
+
+<h3>13. Group Sheets &amp; Page Setup</h3>
+<ol type="a">
+<li>Hold Ctrl and click the <code>April</code> tab to group both sheets.</li>
+<li>Go to <strong>Page Layout tab → Page Setup launcher</strong>:
+<ul>
+<li><strong>Page tab:</strong> Select <strong>Landscape</strong> orientation.</li>
+<li><strong>Margins tab:</strong> Check <strong>Horizontally</strong> under Center on page.</li>
+<li><strong>Header/Footer tab:</strong> Select workbook name in <strong>Header</strong>; select sheet name in <strong>Footer</strong>.</li>
+</ul></li>
+<li>Click OK. Right-click the <code>May</code> tab and choose <strong>Ungroup Sheets</strong>.</li>
+</ol>
+
+<h3>14. Zoom &amp; Freeze Panes</h3>
+<ol type="a">
+<li>Click the <code>April</code> tab and select cell <strong>B6</strong>.</li>
+<li>Click <strong>Zoom In</strong> on the Status bar five times (or set zoom to 150%).</li>
+<li>Go to <strong>View tab → Window group → Freeze Panes → Freeze Panes</strong>.</li>
+<li>Scroll horizontally so column F sits directly adjacent to column A.</li>
+<li>Select cell <strong>A1</strong>.</li>
+</ol>
+
+<h3>15. Save and Submit</h3>
+<ol type="a">
+<li>Save your workbook as <code>[your initials] AnimalLife.xlsx</code>.</li>
+<li>Submit the completed file via Canvas.</li>
+</ol>
+
+<div class="info-block" style="background:#1a1a1a; border-left:4px solid #CFB87C; padding:1rem; margin-top:2rem;">
+<h3 style="margin-top:0; color:#CFB87C;">Key Skills Practiced</h3>
+<ul>
+<li><code>SUM</code>, <code>MAX</code> via AutoSum and direct entry</li>
+<li>Fill Handle for numeric series (Week 1 → Week 4) and formula replication</li>
+<li>Accounting number format with zero decimal places</li>
+<li>Center Across Selection, Heading 3 / Total cell styles</li>
+<li>Insert blank rows, All Borders formatting</li>
+<li>Sheet duplication, tab naming, and tab color assignment</li>
+<li>Grouped sheet operations: Landscape orientation, centering, header/footer presets</li>
+<li>Ungroup sheets after grouped edits</li>
+<li>Zoom controls and Freeze Panes for multi-column viewing</li>
+</ul>
+</div>
+
+</article>
+
+<footer class="page-footer" style="margin-top: 3rem; border-top: 1px solid #333; padding-top: 1rem;">
+Bitsmasher Lab &copy; 2026 — <a href="/teaching/ISMG-2050/">ISMG 2050 Hub</a>
+</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice 3: Navigation, Document Properties & Page Setup — ISMG 2050</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<style>
+ .header-meta { color: #9e9e9e; font-size: 0.9rem; }
+</style>
+</head>
+<body class="w3-black">
+<nav class="w3-container w3-margin-top" id="site-nav"></nav>
+<script src="/js/nav.js" defer></script>
+
+<main class="w3-container research-content" style="max-width: 860px; margin: 2rem auto; padding: 0 1.5rem;">
+<p><a href="/teaching/ISMG-2050/">← Back to ISMG-2050 Course Hub</a></p>
+
+<header class="page-header">
+<h1 class="page-title">Practice 3: Navigation, Document Properties & Page Setup</h1>
+<p class="header-meta">Builds upon Practice 2 completed workbook — 100 Points</p>
+</header>
+
+<article class="body-content">
+
+<div class="info-block" style="background:#1a1a1a; border-left:4px solid #CFB87C; padding:1rem; margin-bottom:1.5rem;">
+<h3 style="margin-top:0; color:#CFB87C;">File Requirements</h3>
+<p><strong>Input:</strong> Your completed <code>[your initials]Practice02.xlsx</code> from Practice 2 (Enable Editing if Protected View opens).</p>
+<p><strong>Output:</strong> Save the working file as <code>[your initials]Practice03.xlsx</code>.</p>
+</div>
+
+<h2>Step-by-Step Instructions</h2>
+
+<h3>Step 1: Open and Save As</h3>
+<ol>
+<li>Open <code>[your initials]Practice02.xlsx</code>. Click <strong>Enable Editing</strong> if Protected View opens.</li>
+<li><strong>Save As</strong> → <code>[your initials]Practice03.xlsx</code>.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+
+<h3>Step 2: Select the Rental Days Worksheet</h3>
+<ol>
+<li>Click the <strong>Rental Days</strong> sheet tab to ensure it is the active worksheet.</li>
+</ol>
+
+<h3>Step 3: Use the Name Box and Go To Commands</h3>
+<ol>
+<li>Type <code>D5</code> into the <strong>Name Box</strong> (top-left, left of the formula bar) and press <strong>Enter</strong>. Cell D5 becomes active.</li>
+<li>Type <strong>6</strong> in cell D5 and press <strong>Enter</strong>.</li>
+<li>Press <strong>F5</strong> to open the Go To dialog box. Type <code>A8:C8</code> and press Enter — this selects three cells.</li>
+</ol>
+
+<h3>Step 4: Use the Find Command</h3>
+<ol>
+<li>Select cell <strong>A5</strong>.</li>
+<li>Click <strong>Find &amp; Select</strong> (Home tab → Editing group) → <strong>Find</strong>.</li>
+<li>Type <strong>33</strong> in the "Find what" box.</li>
+<li>Click <strong>Options &gt;&gt;</strong> to expand the dialog. Verify: Scope = <em>Sheet</em>, Look in = <em>By Rows</em>, Within = <em>Formulas</em>.</li>
+<li>Click <strong>Find All</strong>. An alert appears: Excel could not find "33" as a value — this is expected, because 33 may be a formula result rather than a literal value.</li>
+<li>Close the alert. Change "Look in" from <em>Formulas</em> to <strong>Values</strong>.</li>
+<li>Click <strong>Find All</strong> again. Cells <strong>H5</strong> and <strong>H7</strong> are found (they contain values that evaluate to 33).</li>
+<li>Select cell <strong>G5</strong>, type <strong>10</strong>, press Enter.</li>
+<li>Select cell <strong>G7</strong>, type <strong>8</strong>, press Enter.</li>
+<li>Click <strong>Find All</strong> again. No cells found with value 33 (because the changed values no longer equal 33). Close both dialog boxes.</li>
+</ol>
+
+<h3>Step 5: Enter Document Properties</h3>
+<ol>
+<li>Click the <strong>File</strong> tab → <strong>Info</strong>.</li>
+<li>Click <strong>Show All Properties</strong> at the bottom of the properties list to expand it.</li>
+<li>Fill in these properties:<ul>
+<li><strong>Title:</strong> <code>[your initials]Practice03</code></li>
+<li><strong>Status:</strong> <em>Draft</em></li>
+<li><strong>Subject:</strong> <em>Rental days by property</em></li>
+</ul></li>
+<li>Click <strong>Show Fewer Properties</strong>, then return to the worksheet.</li>
+</ol>
+
+<h3>Step 6: Add Header and Footer to Grouped Sheets</h3>
+<ol>
+<li>Hold <strong>Ctrl</strong> and click the <strong>Next Period</strong> tab to group both sheets together (both tabs appear white/highlighted).</li>
+<li>Click the <strong>Header &amp; Footer</strong> button (Insert tab → Text group). This switches to Page Layout view.</li>
+<li>In the <strong>header area</strong>, click the right section, then click <strong>Sheet Name</strong> (Header &amp; Footer Elements group). The code <code>&amp;[Tab]</code> appears.</li>
+<li>Click <strong>Go to Footer</strong> → click the right section of the footer area.</li>
+<li>Click <strong>File Name</strong>. The code <code>&amp;[File]</code> appears.</li>
+<li>Select cell <strong>A1</strong>, then click <strong>Normal</strong> view button in the status bar. Sheets remain grouped.</li>
+</ol>
+
+<h3>Step 7: Change Page Setup for Grouped Sheets</h3>
+<ol>
+<li>Click the <strong>Page Layout</strong> tab → <strong>Orientation</strong> → <strong>Landscape</strong>.</li>
+<li>Click <strong>File</strong> → <strong>Print</strong> to preview both sheets.</li>
+<li>Use the <strong>Next Page</strong>/<strong>Prev Page</strong> arrows to verify the header/footer appears on both "Rental Days" and "Next Period."</li>
+<li>In Print Settings, click <strong>Custom Margins</strong>. Check the <strong>Horizontally</strong> box under "Center on page." Click OK.</li>
+<li>Preview again to confirm centered alignment. Return to the worksheet.</li>
+<li>Right-click the <strong>Next Period</strong> sheet tab → <strong>Ungroup Sheets</strong>.</li>
+</ol>
+
+<h3>Step 8: Finalize and Submit</h3>
+<ol>
+<li>Review your completed workbook for accuracy.</li>
+<li>Save (<code>[your initials]Practice03.xlsx</code>).</li>
+<li>Upload via the Canvas assignment portal.</li>
+</ol>
+
+<div class="info-block" style="background:#1a1a1a; border-left:4px solid #CFB87C; padding:1rem; margin-top:2rem;">
+<h3 style="margin-top:0; color:#CFB87C;">Key Skills Practiced</h3>
+<ul>
+<li>Name Box navigation and Go To command (F5)</li>
+<li>Find &amp; Replace with scope options (Sheet vs. Workbook, Formulas vs. Values)</li>
+<li>Distinguishing literal values from formula results in Find</li>
+<li>Document properties (Title, Status, Subject) via File → Info</li>
+<li>Grouped sheet operations for multi-sheet headers/footers</li>
+<li>Header &amp; Footer Elements (&amp;[Tab], &amp;[File])</li>
+<li>Page Setup: Landscape orientation, custom margins, centering horizontally</li>
+<li>Ungrouping sheets after grouped edits</li>
+</ul>
+</div>
+
+</article>
+
+<footer class="page-footer" style="margin-top: 3rem; border-top: 1px solid #333; padding-top: 1rem;">
+Bitsmasher Lab &copy; 2026 — <a href="/teaching/ISMG-2050/">ISMG 2050 Hub</a>
+</footer>
+</main>
+</body>
+</html>
