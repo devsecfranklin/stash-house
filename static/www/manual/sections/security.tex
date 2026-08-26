@@ -1,0 +1,125 @@
+% !TeX encoding = UTF-8
+
+\chapter{Security}
+\label{ch:security}
+
+The lab.bitsmasher.net infrastructure relies on multiple security layers -- from SSH key-based authentication to automated vulnerability scanning. This chapter documents the security posture, procedures, and policies in place.
+
+\section{Authentication and Access Control}
+
+\subsection{SSH Key Management}
+The lab uses ed25519 SSH keys for host authentication. All automation hosts share a common key pair:
+
+\begin{itemize}
+  \item \textbf{Private key:} ~/.ssh/id\_ed25519\_openclaw (chonk)
+  \item \textbf{Public key:} ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJb9mV02PpxD8VpzYCnu7192dTwMnGWUc3qh55BIeElN openclaw@chonk
+  \item \textbf{Key users:} ``openclaw'' user on all production hosts
+\end{itemize}
+
+\subsection{Password Policy}
+Passwords are used only as a temporary fallback. The Jetson nodes (node900--node903) currently use password ``123'' for the franklin user during provisioning; this should be replaced with key-based authentication when possible.
+
+\subsection{User Accounts}
+
+\begin{center}
+\begin{tabular}{lll}
+  \hline
+  \textbf{User} & \textbf{Purpose} & \textbf{Access Scope} \\ \hline
+  franklin & Primary admin user & All hosts; sudo NOPASSWD on skynet \\
+  openclaw & Automation user & All production hosts via ed25519 key \\
+  root & Emergency access & KDC, ldap, music host only \\ \hline
+\end{tabular}
+\end{center}
+
+\section{Network Security}
+
+\subsection{Subnet Segmentation}
+The lab is divided into dedicated subnets providing implicit isolation:
+
+\begin{itemize}
+  \item \textbf{Main office:} 10.10.8.0/21 -- core infrastructure (chonk, stargate)
+  \item \textbf{Backbone:} 10.10.16.0/24 -- game server, DNS services
+  \item \textbf{Edge/specialized:} 10.10.12.x -- Jetson nodes, NTP, KDC, edge devices
+  \item \textbf{Service zone:} 10.10.13.0/24 -- LDAP directory services
+  \item \textbf{Storage zone:} 10.10.14.0/24 -- Blowfish and shared storage hosts
+  \item \textbf{Non-standard:} 192.168.86.x -- Music desktop (routed through skynet)
+\end{itemize}
+
+\subsection{Firewall Rules}
+The Ansible ``prereq'' role handles firewall exceptions for K3s API ports (6443, 2379--2381). Both UFW (Debian) and Firewalld (RedHat-family) are supported. Default policy is deny-all inbound with only explicitly allowed services accessible.
+
+\section{Certificate and TLS Management}
+The ``tls'' role manages certificate provisioning across the lab:
+\begin{itemize}
+  \item Certificates are stored on NFS (clusterfs2) for cross-host availability
+  \item OpenLDAP server experienced a TLS failure in December 2025 due to an expired certificate -- this is the primary remaining TLS vulnerability
+  \item All external-facing services use HTTPS with valid certificates where applicable
+\end{itemize}
+
+\section{Credential Management}
+
+\subsection{Pass + GPG (Stash House)}
+Credentials are stored using \texttt{pass} with GPG encryption. The Stash House project manages encrypted credential backups synced via bare git repositories:
+\begin{itemize}
+  \item Credentials never exist in plaintext in any repository
+  \item Git repos use bare repositories to store only the encrypted .gpg files
+  \item \textbf{No git-lfs} is used for credential data (see LFS policy)
+\end{itemize}
+
+\subsection{Ansible Vault}
+Sensitive variables (firewall credentials, API keys) are stored using \texttt{ansible-vault}. Vault files should never be committed to version control. The vault passphrase is managed outside the repository.
+
+\section{Backup and Disaster Recovery}
+
+\subsection{Data Backups}
+NFS-mounted clusterfs2 provides shared storage with redundant copies across hosts. DNS zones are version-controlled in BIND configuration files. Credential data uses GPG-encrypted pass entries synced via bare git repos.
+
+\subsection{Service Availability Status}
+
+\begin{center}
+\begin{tabular}{llll}
+  \hline
+  \textbf{Service} & \textbf{Host} & \textbf{Status} & \textbf{Last Known Good} \\ \hline
+  NTP stratum-1 & time.lab.bitsmasher.net & Online & Current \\
+  KDC (Kerberos) & odroid-c1.lab.bitsmasher.net & Online & ~242 days uptime \\
+  DNS (BIND) & ns1.lab.bitsmasher.net & Offline & December 2025 \\
+  OpenLDAP & ldap.lab.bitsmasher.net & Offline & December 2025 \\
+  Minecraft & skynet.lab.bitsmasher.net & Online & Current \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Disaster Recovery Priorities}
+\begin{enumerate}
+  \item \textbf{NTP (time host)} -- time sync failure cascades to all Kerberos authentication
+  \item \textbf{DNS (BIND)} -- resolution failure makes most hosts unreachable by name
+  \item \textbf{Kerberos KDC} -- authentication cascade failure affects all service access
+  \item \textbf{LDAP} -- directory services, offline since December 2025
+\end{enumerate}
+
+\section{Container and Kubernetes Security}
+
+The k3s cluster is hardened with:
+\begin{itemize}
+  \item Version pinning to 2.1.x
+  \item Containerd runtime with NVIDIA GPU support
+  \item TLS for all API communication (k3s default)
+  \item Pod security policies via Kubernetes native admission controllers
+\end{itemize}
+
+\section{Automated Security Scanning}
+The .github directory contains the following automated workflows:
+
+\begin{center}
+\begin{tabular}{lcl}
+  \hline
+  \textbf{Workflow} & \textbf{Tool} & \textbf{Purpose} \\ \hline
+  bandit.yml & Bandit & Python static analysis for security vulnerabilities \\
+  tfsec-sarif.yml & tfsec & Terraform IaC security scanning \\
+  trivy.yaml / trivy-cb.yml & Trivy & Container and filesystem vulnerability scanning \\
+  bash\_check.yaml & GNU Autotools & Build system validation (make security) \\
+  markdown.yml & markdownlint & Markdown style/lint checking \\ \hline
+\end{tabular}
+\end{center}
+
+All scanning workflows run on every pull request and main branch push. Results are uploaded as SARIF artifacts for review.
+

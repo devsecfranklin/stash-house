@@ -1,0 +1,70 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Bitsmasher Lab Operations Manual",
+  "home_page_url": "https://www.bitsmasher.net/manual/",
+  "feed_url": "https://www.bitsmasher.net/manual/index.json",
+  "description": "Systems administration runbooks, directory services, container orchestration, and infrastructure deployment.",
+  "user_comment": "Machine-readable chapter manifest and runbook catalog for Bitsmasher Lab.",
+  "author": {
+    "name": "robot 🤖",
+    "url": "https://www.bitsmasher.net/manual/"
+  },
+  "items": [
+    {
+      "id": "https://www.bitsmasher.net/manual/lab-manual.pdf",
+      "url": "https://www.bitsmasher.net/manual/lab-manual.pdf",
+      "title": "Bitsmasher Lab Operations Manual (Compiled Master PDF)",
+      "date_published": "2026-08-26T00:00:00Z",
+      "summary": "Master compiled 64-page operations, systems architecture, and node management manual.",
+      "attachments": [
+        {
+          "url": "https://www.bitsmasher.net/manual/lab-manual.pdf",
+          "mime_type": "application/pdf",
+          "title": "Master Manual PDF"
+        }
+      ]
+    },
+    {
+      "id": "https://www.bitsmasher.net/manual/manual.md",
+      "url": "https://www.bitsmasher.net/manual/manual.md",
+      "title": "Bitsmasher Lab Operations Manual (Plaintext Markdown Archive)",
+      "date_published": "2026-08-26T00:00:00Z",
+      "summary": "Full concatenated Markdown export of all 22 operational chapters for agent ingestion.",
+      "attachments": [
+        {
+          "url": "https://www.bitsmasher.net/manual/manual.md",
+          "mime_type": "text/markdown",
+          "title": "Plaintext Markdown Source"
+        }
+      ]
+    },
+    {
+      "id": "https://www.bitsmasher.net/manual/#identity-auth",
+      "url": "https://www.bitsmasher.net/manual/",
+      "title": "Identity, Directory & Authentication",
+      "summary": "Kerberos principal management, keytabs, OpenLDAP schema configurations, and host-level access controls.",
+      "tags": ["/auth/", "/kerberos/", "/ldap/", "/security/"]
+    },
+    {
+      "id": "https://www.bitsmasher.net/manual/#infrastructure-network",
+      "url": "https://www.bitsmasher.net/manual/",
+      "title": "Hardware, Network & Core Services",
+      "summary": "Physical node profiles, network architecture, BIND9 DNS zones, NTP/Chrony time sync, and storage arrays.",
+      "tags": ["/hardware/", "/network/", "/dns/", "/time/", "/storage/"]
+    },
+    {
+      "id": "https://www.bitsmasher.net/manual/#automation-provisioning",
+      "url": "https://www.bitsmasher.net/manual/",
+      "title": "Automation, Provisioning & Tooling",
+      "summary": "Ansible roles, Molecule testing, ansible-lint standards, Terraform infrastructure, and git revision control.",
+      "tags": ["/ansible/", "/terraform/", "/direnv/", "/git/"]
+    },
+    {
+      "id": "https://www.bitsmasher.net/manual/#clusters-operations",
+      "url": "https://www.bitsmasher.net/manual/",
+      "title": "Clustering, Services & Incident Runbooks",
+      "summary": "Kubernetes cluster operations, PostgreSQL database administration, local PyPI mirrors, disaster recovery runbooks, and troubleshooting.",
+      "tags": ["/kubernetes/", "/cluster/", "/database/", "/pypi/", "/dr/", "/troubleshooting/"]
+    }
+  ]
+}

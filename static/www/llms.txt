@@ -1,6 +1,23 @@
+# Bitsmasher Lab
+
+> Systems architecture, decentralized protocols, AI security engineering, and lab operations.
+
+## Core Documentation & Manuals
+- [/manual/index.html](/manual/index.html): Lab Operations Manual (Ansible, Kerberos, Kubernetes, DNS, Storage)
+- [/manual/index.json](/manual/index.json): JSON Feed manifest of manual modules and PDF downloads
+- [/manual/manual.md](/manual/manual.md): Full concatenated Markdown export of all 22 manual chapters for LLM ingestion
+- [/manual/lab-manual.pdf](/manual/lab-manual.pdf): Master compiled operations manual (PDF, 64 pages)
 
 ## Training & Curriculum
+- [/training/index.html](/training/index.html): Technical training curriculum, slide decks, and lab exercises
+- [/training/index.json](/training/index.json): JSON Feed manifest of AI security, MCP, and prompt engineering modules
+- [/training/docs/coding-foundations.html](/training/docs/coding-foundations.html): Systems and software engineering foundations syllabus
+- [/training/docs/ai-security.html](/training/docs/ai-security.html): Enterprise AI security, threat modeling, and defensive operations syllabus
 
-- [/training/index.html](/training/index.html): Technical training modules and slide decks
-- [/training/docs/coding-foundations.html](/training/docs/coding-foundations.html): Software architecture and development foundations doc
-- [/training/docs/ai-security.html](/training/docs/ai-security.html): AI security, threat modeling, and defensive operations doc
+## Research
+- [/research/index.html](/research/index.html): Systems and security engineering research blog
+- [/research/index.json](/research/index.json): JSON Feed v1.1 research post archive
+- [/research/about/index.html](/research/about/index.html): Research lab overview and methodology
+
+## Optional
+- [/llms-full.txt](/llms-full.txt): Complete concatenated documentation archive for agent ingestion

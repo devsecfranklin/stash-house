@@ -1,0 +1,39 @@
+\section{Minecraft Server}
+
+\subsection{Host and Location}
+
+The Minecraft server runs on \textbf{skynet.lab.bitsmasher.net} (10.10.16.10), one of the core lab infrastructure hosts alongside stargate and chonk. The Minecraft role is managed by the \texttt{minecraft} Ansible role in the lab-franklin collection.
+
+Skynet's dual-role setup:
+\begin{itemize}
+    \item Primary: Minecraft game server host
+    
+    \item Secondary: General-purpose infrastructure node (Ansible workspace, CI testing)
+\end{itemize}
+
+Note: skynet uses IP-based SSH login (10.10.16.10) rather than hostname -- the hostname resolves oddly in SSH config due to a double-domain suffix issue.
+
+\subsection{World and Chunk Storage}
+
+Minecraft world data is stored on NFS-mounted storage (clusterfs2). The world files are version-controlled where practical, with the following constraint:
+
+\textbf{NO GIT-LFS}: Chunk files and world data must not use git-lfs. The Minecraft repository hit GitHub's 10GB LFS limit in a prior incident where chunk files were held hostage. Use bare git repos for any versioned world data.
+
+\subsection{Dreamland Connection}
+
+The \textit{Dreamland Manual} referenced in the docs/manual directory covers the Dreamland Minecraft server -- this manual documents that specific server's configuration, players, and game rules. The physical infrastructure (skynet host) is shared between both operations.
+
+\subsection{Server Management via Ansible}
+
+The minecraft role handles:
+\begin{itemize}
+    \item Minecraft server installation and version updates
+    
+    \item World backup procedures (NFS snapshots or bare git repos)
+    
+    \item Player whitelist management
+    
+    \item Mod/plugin configuration if applicable
+\end{itemize}
+
+Molecule testing for the minecraft role confirms correct file placement and configuration generation, though live server connectivity is not verified by the test harness.

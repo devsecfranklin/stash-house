@@ -1,0 +1,79 @@
+% Chapter on Terraform Infrastructure Management
+% Add this as \input{sections/terraform-infra} in lab-manual.tex after the Ansible chapter
+
+\chapter{Terraform Infrastructure Management}
+
+Terraform configurations in this lab manage cloud infrastructure across two providers: DigitalOcean and Google Cloud Platform. All configurations are version-controlled and include automated security scanning via GitHub Actions.
+
+\section{DigitalOcean Infrastructure}
+
+The \texttt{terraform/digital\_ocean/} directory manages the external-facing web presence for bitsmasher.net.
+
+\subsection{Provisioned Resources}
+
+\begin{itemize}
+    \item \textbf{Droplet:} 512MB Debian 12 in lon1 region (www.bitsmasher.net)
+    \item \textbf{Domain:} bitsmasher.net with full DNS management
+    \item \textbf{DNS Records:} A, MX, TXT (SPF/DMARC/DKIM), NS, and ACME challenge records
+\end{itemize}
+
+\subsection{Key DNS Records}
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Name & Type & Purpose \\ \hline
+www.bitsmasher.net & A & Web server host (178.62.60.55) \\
+@ & MX & mail.protonmail.ch 10 (ProtonMail routing) \\
+@ & TXT & SPF and DMARC policies \\
+protonmail.\_domainkey & CNAME & DKIM email verification \\
+\_acme-challenge.*.lab & TXT & Let's Encrypt certificate challenges \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Configuration Notes}
+
+The droplet includes:
+\begin{itemize}
+    \item Automated backups enabled (immutable against accidental deletion)
+    \item SSH key injection via terraform data source
+    \item No external monitoring (consider enabling DO agent for uptime tracking)
+\end{itemize}
+
+Provider authentication uses a DigitalOcean API token managed through pass/direnv integration. The token is passed at runtime, never committed to the repository.
+
+\section{Google Cloud Platform Infrastructure}
+
+The \texttt{terraform/google/} directory manages GCP resources for Stash House free-tier operations.
+
+\subsection{Resources Managed}
+
+\begin{itemize}
+    \item \textbf{VPC Network:} \texttt{stash-house-vpc} dedicated network
+    \item \textbf{Compute Instance:} e2-micro Debian 12 (Always Free Tier eligible) in us-central1-a
+    \item \textbf{Firewall Rule:} \texttt{allow-ssh} opening port 22 to the VPC
+    \item \textbf{Billing Budget Alert:} Tripwire alert at \$0.01 threshold for free-tier monitoring
+\end{itemize}
+
+The GCP configuration is intentionally minimal, designed around Google's Always Free Tier limits to maintain zero-cost infrastructure.
+
+\section{Security Scanning}
+
+All Terraform configurations are automatically scanned by two GitHub Actions workflows:
+\begin{itemize}
+    \item \texttt{tfsec-sarif.yml} — IaC security scanning (generates SARIF reports)
+    \item \texttt{tfsec-comment.yml} — Posts security findings as PR comments
+\end{itemize}
+
+Additionally, the DigitalOcean directory includes existing \texttt{README.md} with doctl and pass integration instructions for manual operations.
+
+\section{Testing}
+
+Terraform configurations are validated through:
+\begin{itemize}
+    \item Go-based integration tests (\texttt{terraform/test/main\_test.go})
+    \item Plan dry-run validation via GitHub Actions (markdown.yml workflow)
+    \item Manual state reconciliation checks (compare terraform state against live infrastructure)
+\end{itemize}
+
+State drift detection is recommended as a regular maintenance task — compare \texttt{terraform state list} output against actual cloud resource inventories quarterly.

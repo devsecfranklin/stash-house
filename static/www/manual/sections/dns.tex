@@ -1,0 +1,55 @@
+\section{DNS Configuration}
+
+\subsection{BIND Overview}
+
+The lab uses BIND (named) as its authoritative DNS server. The DNS infrastructure is managed by the \texttt{dns} Ansible role in the lab-franklin collection, located at:
+\begin{lstlisting}[style=mystyle]
+ansible/collections/ansible_collections/lab/franklin/roles/dns/
+    \end{lstlisting}
+
+\subsection{Zones Maintained}
+
+\begin{itemize}
+    \item \textbf{Forward zone}: db.home.lab -- maps hostnames to IPs for all lab infrastructure
+    
+    \item \textbf{Reverse zones}: PTR records for each subnet (10.10.x.0/24 ranges)
+    
+    \item \textbf{SRV records}: Kerberos service discovery (\_kerberos.\_tcp, \_kdc.tcp)
+\end{itemize}
+
+\subsection{DNS Server Location}
+
+The DNS server (ns1) is the single authoritative nameserver for the lab. It has been unreachable during recent infrastructure audits, which explains why many hosts cannot resolve hostnames -- ns1 \textit{is} the DNS server and it's offline.
+
+When ns1 is available, it resolves all internal hostnames. Key entries include:
+\begin{itemize}
+    \item time.lab.bitsmasher.net $\rightarrow$ 10.10.12.2 (NTP server)
+    \item odroid-c1.lab.bitsmasher.net $\rightarrow$ 10.10.12.254 (KDC)
+    \item ldap.lab.bitsmasher.net $\rightarrow$ 10.10.13.1 (OpenLDAP)
+    \item blowfish.lab.bitsmasher.net $\rightarrow$ 10.10.14.85 (reassigned from 10.10.12.15)
+\end{itemize}
+
+\subsection{Molecule Test Harness}
+
+The DNS role has a molecule test harness that confirms:
+\begin{enumerate}
+    \item \textbf{Converge}: BIND packages installed, /etc/bind directory created, named.conf.options written
+    \item \textbf{Test sequence}: dependency $\rightarrow$ syntax $\rightarrow$ create (podman container) $\rightarrow$ prepare $\rightarrow$ converge
+    
+    \item \textbf{Limitation}: molecule test uses Ubuntu 20.04 container with hostname "server1"; the role has a hostname gate that targets the real DNS server's hostname
+\end{enumerate}
+
+The DNS molecule test confirms correct package installation and configuration file placement but does not verify actual name resolution (no live DNS server in the container test environment).
+
+\subsection{DNS Failure Impact}
+
+When ns1 is offline:
+\begin{itemize}
+    \item Lab hosts fall back to /etc/hosts entries (which are authoritative but not dynamic)
+    
+    \item Kerberos KDC discovery via SRV records fails -- clients need manual kdc = entry in krb5.conf
+    
+    \item DHCP reservations on the Dream Machine remain functional (DHCP server is separate from DNS)
+\end{itemize}
+
+The DNS role's molecule test harness ensures that when the server comes back online, its configuration will install and write correctly.

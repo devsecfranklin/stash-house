@@ -1,572 +1,138 @@
-% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
-% !TeX TXS-program:bibliography = bibtex
-% !TeX encoding = UTF-8
-% !TeX spellcheck = en_US
-% !TeX root = ai-slides.tex
+\documentclass[xcolor=x11names,aspectratio=169]{beamer}
 
-% Other possible values are: 1610, 149, 54, 43 and 32.
-% By default, it is to 128mm by 96mm(4:3)
-\documentclass[aspectratio=169]{beamer}
+% ── Packages ────────────────────────────────────────────────
+\usepackage{fontspec}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
 
-\input{../_header-palo}
+% ── Font ────────────────────────────────────────────────────
+\setsansfont{Montserrat}[
+  Extension      = .otf,
+  UprightFont    = *Regular,
+  BoldFont       = *Bold,
+  ItalicFont     = *Italic,
+  BoldItalicFont = *BoldItalic,
+]
+
+% ── Color Theme ─────────────────────────────────────────────
+\definecolor{accent}{RGB}{250,88,45}
+\definecolor{bgdark}{RGB}{32,34,37}
+\definecolor{bglite}{RGB}{246,248,250}
+\setbeamercolor{background canvas}{bg=bglite}
+
+% ── Listings colour scheme ───────────────────────────────────
+\lstdefinestyle{pycode}{
+  language     = Python,
+  basicstyle   = \ttfamily\small,
+  keywordstyle = \color{accent}\bfseries,
+  stringstyle  = \color{blue!70!black},
+  commentstyle = \color{green!60!black},
+  frame        = single,
+  frameround   = ffft,
+  numbers      = left,
+  numberstyle  = \tiny\color{gray},
+  showstringspaces = false,
+  tabsize      = 2,
+  breaklines   = true,
+}
+
+% ── Block theme ─────────────────────────────────────────────
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+% ── Title / Frame defaults ──────────────────────────────────
+\setbeamertemplate{itemize items}[circle]
+
+\title[AI 101 \textbar\ Module 1]{Deterministic Controls \& Structured Outputs}
+\subtitle{Module 1 — Fundamentals of Reproducible AI Inference}
+\author{}
+\date{\today}
 
 \begin{document}
-% Code highlighting for Python / TypeScript examples
-\usepackage{listings}
-\definecolor{codebg}{RGB}{10,16,40}
-\definecolor{codefg}{RGB}{200,200,200}
-\definecolor{codekeyword}{RGB}{250,88,45}
-\definecolor{codestrings}{RGB}{80,200,120}
-\definecolor{commentcolor}{HTML}{669900}
-\lstset{
-  basicstyle=\ttfamily\small,
-  backgroundcolor=\color{codebg},
-  frame=single,
-  framexleftmargin=4pt,
-  framesep=6pt,
-  rulecolor=\color{panorange}!,
-  breaklines=true,
-  breakatwhitespace=false,
-  showstringspaces=false,
-  tabsize=2,
-  captionpos=b,
-  keywordstyle=\color{codekeyword}\bfseries,
-  stringstyle=\color{codestrings},
-  commentstyle=\color{commentcolor},
-  morekeywords={class,def,function,void,const,var,let,new,return,import,type,interface,export},
-  literate={" "}{{" "}}1 {\n}{{"\n"}}1,
-  extendedchars=false,
-}
 
-	%\useoutertheme{miniframes}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{title_bg.png}}
-	\begin{frame}
-		\setlength{\TPHorizModule}{120mm}
-		\setlength{\TPVertModule}{140mm}
-		\begin{textblock}{0.75}(0.05, 0.25)
-			\bfseries\Huge{Part 1: Intro to LLMs and Prompting} \\
-	        \vspace{.5em}
-			\bfseries\small{\href{https://github.com/devsecfranklin/training-ai/blob/main/docs/slides/ai-intro/ai-slides.pdf}{download this slide deck}}
-		\end{textblock}
-		\begin{textblock}{0.75}(0.99, 0.53)
-			\bfseries\textcolor{white}{Franklin Diaz}\\
-			\bfseries\textcolor{white}{Principal Engineer}\\
-			\bfseries\begin{scriptsize}\textcolor{white}{v0.4 - updated August 25th, 2026}\end{scriptsize}
-		\end{textblock}
-	\end{frame}
-	
-	\note[itemize]{
-		\item updated July 24th, 2025 v0.2a
-		\item updated August 27th, 2025 v0.2b
-	}
-
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{section.png}}
-	\section{\textcolor{white}{Review}}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		\begin{textblock}{0.74}(0.05,0.05)
-			\bfseries\large\normalcolor{Where, exactly, are we?}
-		\end{textblock}
-		\begin{columns}
-			\begin{column}{.5\textwidth}
-				\includegraphics[width=1\columnwidth]{ai-venn.png}
-			\end{column}
-			\begin{column}{.5\textwidth}
-				\includegraphics[width=1\columnwidth]{ai-umbrella.png}
-			\end{column}
-		\end{columns}
-	\end{frame}
-	
-	\note[itemize]{
-		\item the key takeaway here is to use remember what's on the right and don't worry so much about all the terms on the left.
-		\item\href{https://intuitivetutorial.com/2023/02/25/machine-learning-interview-questions-part-1}{Machine Learning Interview Questions} - source for second image
-	}
-
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			\bfseries\large\normalcolor{Defining Terms}
-		\end{textblock}
-		% main body
-		\begin{itemize}
-			\item \href{https://www.youtube.com/watch?v=qYNweeDHiyU\&t=90s}{Defining some basic terms} check out this link for a short video on a bunch of new terms such as AI, machine learning (ML) vs Generative AI, etc.
-			\item Large Language Model (LLM) - this is what we are all calling ``AI'' now. Basically like an auto-complete or \href{https://hadoop.apache.org/}{Hadoop} on steroids.  \href{https://developers.google.com/machine-learning/resources/intro-llms}{Introduction to Large Language Models}
-			\item Here is a video that describes \href{https://www.youtube.com/watch?v=hfIUstzHs9A}{Large language Models}
-			\item \href{https://en.wikipedia.org/wiki/Agentic_AI}{Agentic} - the use of AI agents to perform automated tasks but without human intervention. \href{https://techcrunch.com/2024/12/15/what-exactly-is-an-ai-agent/}{What exactly is an AI agent? - Ron Miller - December 15, 2024 }
-		\end{itemize}
-	\end{frame}
-
-	\note[itemize]{
-		\item If anyone has terms for me to research I am happy to do so.
-		\item Slide created June 24th, 2025
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-	\setlength{\TPHorizModule}{\textwidth}
-	\setlength{\TPVertModule}{\textwidth}
-	% Slide title in upper left
-	\begin{textblock}{0.74}(0.05,0.05)
-	\bfseries\large\normalcolor{Model Context Protocol}
-	\end{textblock}
-	% main body
-	\begin{itemize}
-	
-	  \item MCP Hosts: Programs like Claude Desktop, IDEs, or AI tools that want to access data through MCP
-	  \item MCP Clients: Protocol clients that maintain 1:1 connections with servers
-	  \item MCP Servers: Lightweight programs that each expose specific capabilities through the standardized Model Context Protocol
-	  \item Local Data Sources: Your computer’s files, databases, and services that MCP servers can securely access
-	  \item Remote Services: External systems available over the internet (e.g., through APIs) that MCP servers can connect to
-	\end{itemize}
-	\end{frame}
-	
-	\note[itemize]{
-	\item Slide created July 24th, 2025
-	  \item \href{https://en.wikipedia.org/wiki/Model_Context_Protocol}{what the heck is it, anyway}
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			% \bfseries\large\normalcolor{Model Context Protocol - cont.}
-		\end{textblock}
-		\includegraphics[scale=0.35]{mcp1.png}
-	\end{frame}
-	
-	\note[itemize]{
-		\item Slide created July 24th, 2025
-		\item \href{https://en.wikipedia.org/wiki/Model\_Context\_Protocol}{what the heck is it, anyway}
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank\_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		\begin{textblock}{0.74}(0.05,0.05) % Slide title in upper left
-			\bfseries\large\normalcolor{Review of Palo Alto Networks Internal AI Use to Date}
-		\end{textblock}
-		\begin{itemize}
-			\item \href{https://notebooklm.google.com/notebook/f7607d7a-584c-4f35-96fc-f6815c573a6c}{Notebook LM}
-			\item Gemini integration with e-mail.
-			\item \href{https://theloop.paloaltonetworks.com/loop/gemini-notebooklm-ai-challenge}{Gemini Notebook Challenge} is underway. This is a contest where ``hundreds'' of videos have been submitted about folks using large-language models in their Palo work lives.
-			\item \href{https://panda.paloaltonetworks.com/}{Panda AI}
-			\item \href{https://script.google.com/a/macros/paloaltonetworks.com/s/AKfycbzB7hfTPNTs07o0zds90tp0CNsB-Osmyvws9fGkeaSITau2mMQwZTWyjZX2ZKAe2FdNaA/exec}{The AI Hub} is pretty cool.
-		\end{itemize}
-	\end{frame}
-	
-	\note[itemize]{
-		\item What is, in fact, happening?
-		\item Slide created June 24th, 2025
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{section.png}}
-	\section{\href{https://atlantablackstar.com/wp-content/uploads/2014/03/Whats-Happening-.jpg}{What's Happening}}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			\bfseries\large\normalcolor{Palo Alto Networks in the News}
-		\end{textblock}
-		% main body
-		\begin{itemize}
-			\item \href{https://www.youtube.com/watch?v=0nJH7DrWB8s&t=44sl}{CEO Nikesh Arora discusses the company’s purchase of artificial intelligence security firm Protect AI }
-		\end{itemize}
-	\end{frame}
-	
-	\note[itemize]{
-		\item Slide created July 24th, 2025, and added one link to Nikesh on YouTube
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			\includegraphics[scale=0.02]{logo-claude.png}\bfseries\normalcolor{Why So Popular?}
-		\end{textblock}
-		\begin{itemize}
-			\item Check out the \href{https://docs.anthropic.com/en/docs/intro}{Intro to Claude}
-			\item \href{https://claude.ai/download}{Claude} is a competitor to \href{https://openai.com/index/chatgpt/}{ChatGPT} and a video about \href{https://www.youtube.com/watch?v=LBELqZOIdp8}{Claude vs. ChatGPT}.
-			\item MONEY SHOT ---> \href{https://www.youtube.com/watch?v=L9qCRED--go}{Claude Code: The Future of Coding?} Safeties off, You can turn it loose on your home network!
-			\item \href{https://www.geeky-gadgets.com/build-a-website-using-claude-3-ai/}{How to build a website using Claude 3 AI with an AI chat box for visitors to use} a ``no code'' demonstration that should be fun and easy to check out the core concepts.
-		\end{itemize} 
-	\end{frame}
-	
-	\note[itemize]{
-		\item Slide created July 10th, 2025
-		\item \href{https://www.geeky-gadgets.com/claude-code-anthropic-keynote-2025/}{Claude Code AI: The Future of Smarter, Faster Coding Launches}
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			\includegraphics[scale=0.25]{logo-ollama.png}\bfseries\large\normalcolor{Ollama}
-		\end{textblock}
-		% main body
-		\begin{itemize}
-			\item Let's \href{https://www.youtube.com/watch?v=5RIOQuHOihY}{take a quick look at Ollama together}. I consider this the ``hacker path'', where the nerds and experimenters live and work.
-			\item Ollama uses your computer's GPU to speed up it's work. It can still run your Model if there is no GPU present, but at a much slower rate.
-			\item Let's check out the Modelfile that Gemini created for me to use in Ollama.
-		\end{itemize}
-	\end{frame}
-	
-	\note[itemize]{
-		\item Slide created July 10th, 2025
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			% \bfseries\large\normalcolor{Email Demo}
-			\includegraphics[scale=0.25]{logo-ollama.png}\bfseries\large\normalcolor{Ollama}
-		\end{textblock}
-		\begin{columns}
-			\begin{column}{.35\textwidth}
-					\begin{itemize}
-					\item \begin{scriptsize}1. The ``FROM'' line tells you what model to use.\end{scriptsize}
-					\item \begin{scriptsize}2. The ``PARAMETER'' line.\end{scriptsize}
-					\item \begin{scriptsize}3. The ``SYSTEM'' line is the ``personality''.\end{scriptsize}
-				\end{itemize}
-				\end{column}
-			\begin{column}{.65\textwidth}
-				\includegraphics[width=1\columnwidth]{ollama-modelfile1.png}
-			\end{column}
-		\end{columns}
-	\end{frame}
-	
-	\note[itemize]{
-		\item Slide created July 10th, 2025
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			\bfseries\large\normalcolor{Helpful Hints}
-		\end{textblock}
-		
-		\begin{itemize}
-			\item Internal AI System, use \href{https://chat.pan.dev}{chat.pan.dev} if you need to run AI LLM against customer data.
-			\item NEVER NEVER PUT CUSTOMER DATA INTO A RANDOM LLM. Be sure to use the Palo Alto Networks approved tools and ways of working as outlined by our management.
-			\item \href{https://chat.pan.dev/}{The AI page at pan.dev}
-			\item There is a Slack announcement channel called \char"0023ai-tips that you may find interesting.
-			%\item  \href{https://drive.google.com/file/d/185--WFs-kmeu9VpFyH8kWNvym4wYSF9I/view\?usp=sharing}{INTERNAL Video: Secure use of AI at Palo alto Networks}
-		\end{itemize}
-		
-	\end{frame}
-	
-	\note[itemize]{
-		\item These are some tips that Usama gave via Eugene slide deck.
-		\item Slide created June 24th, 2025
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		\begin{textblock}{0.74}(0.05,0.05) % Slide title in upper left
-			\bfseries\large\normalcolor{Exercise caution and common sense}
-		\end{textblock}
-		\begin{itemize}
-			\item This may, hopefully, sound odd to you.
-			\item \href{https://www.youtube.com/watch?v=F8iGL2pqpeo}{People are Falling in Love with \$300 Ai Chatbots}
-			\item \href{https://www.youtube.com/watch?v=_d08BZmdZu8}{Why people are falling in love with A.I. companions}
-			\item \href{https://www.youtube.com/watch?v=JE85PTDXARM}{God and robots: Will AI transform religion? - BBC News}
-		\end{itemize}
-	\end{frame}
-	
-	\note[itemize]{
-		\item Slide created June 24th, 2025
-		\item Please bear in mind that the AI is meant to be as human-like as possible. It is not actually a human.
-		\item \href{https://developers.google.com/profile/u/franklin}{you might like to get a dev profile} - save this for next time?
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			\bfseries\large\normalcolor{Google tools: Gemini and Notebook LM}
-		\end{textblock}
-		% main body
-		\begin{itemize}
-			\item Internal use only AI tools from Google are now available. 
-			\item \href{https://theloop.paloaltonetworks.com/loop/ls/content/174162541721643/ai-powered-productivity}{The AI powered productivity page} explains the rules around handling (customer) data, how the new official tools work, and more.
-			\item Internal panopto video that answers many, many questions. \\ \href{https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2a746b26-9251-4681-96f2-b321012a3b26}{Gemini and Notebook LM 2.0}
-			\item Check out \href{https://paloaltonetworks.enterprise.slack.com/archives/C08G69DHD0A}{the tooltime channel on Slack}.
-		\end{itemize}
-	\end{frame}
-	
-	\note[itemize]{
-		\item What is, in fact, happening?
-		\item Slide created July 28th, 2025
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			\bfseries\large\normalcolor{Performance Review Gem}
-		\end{textblock}
-		% main body
-		\begin{itemize}
-			\item You can use \href{https://docs.google.com/document/d/14Jou72KoDuKpGkQunMmrnYO0cUyPr73UwVlirhysE0s/edit?tab=t.0}{a "gem" to pre-configure a Gemini prompt} to assist you with your yearly performance review. 
-		\end{itemize}
-	\end{frame}
-	
-	\note[itemize]{
-		\item Slide created June 24th, 2025
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			\bfseries\large\normalcolor{Using AI with Gmail}
-		\end{textblock}
-		% main body
-		\begin{itemize}
-			\item We did a quick live demonstration during the team meeting on June 24th, 2025
-			\item If you would like to see it again or have questions please reach out.
-		\end{itemize}
-	\end{frame}
-	
-	\note[itemize]{
-		\item What is, in fact, happening?
-		\item Slide created June 24th, 2025
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			\bfseries\large\normalcolor{Google: NotebookLM}
-		\end{textblock}
-		% main body
-	    Choose a new notebook in NotebookLM when you're conducting research, learning a new topic,
-	    or trying to make sense of a large amount of information. NotebookLM excels at synthesizing
-	    information from multiple sources and providing you with a deeper understanding of your
-	    subject matter.
-	\end{frame}
-	
-	\note[itemize]{
-		\item Slide created August 27th, 2025
-		\item comparing the ``pro'' Google Ai toolset tools
-	}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			\bfseries\large\normalcolor{Google: Gemini Custom Gems}
-		\end{textblock}
-		% main body
-	Choose a custom Gem when you have a recurring task that you want to automate
-	or personalize. Gems are all about efficiency and consistency, allowing you to
-	create a tailored AI assistant that understands your unique needs.
-	\end{frame}
-	
-	\note[itemize]{
-		\item Slide created August 27th, 2025
-		\item comparing the ``pro'' Google Ai toolset tools
-	}
-	
-	%\usebackgroundtemplate{\includegraphics[width=\paperwidth]{section.png}}
-	%\section{\href{https://www.yahoo.com/entertainment/terminator-2-judgment-day-skynet-ai-predictions-chatgpt-robotics-humanoid-225747375.html}{THE FUTURE}}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{section.png}}
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{section.png}}
-\section{Deterministic Controls}
-
-\note[itemize]{
-  \item This section bridges the gap between "chat with AI" and "engineer AI reliably."
-  \item Deterministic controls turn non-deterministic generation into a production-safe pattern.
-}
-
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-\begin{frame}{Deterministic Parameter Tuning}
-	\frametitle{Why temperature matters in production}
-	\begin{columns}[T]
-		\begin{column}{0.55\textwidth}
-			\small\bfseries Sampling Controls:
-			\begin{itemize}
-				\item \texttt{temperature}: Softens/hardens the probability distribution over logits
-				\item \texttt{top\_p}: Nucleus sampling cutoff — only tokens in the top-p mass are considered
-				\item \texttt{seed}: Fixed seed forces identical sampling paths across runs (same model, same prompt)
-			\end{itemize}
-		\end{column}
-		\begin{column}{0.45\textwidth}
-			\small\bfseries Practical Regimes:
-			\begin{itemize}
-				\item \texttt{T=0.0, seed=42} → byte-for-byte reproducible (classification, extraction)
-				\item \texttt{T=0.2, top-p=0.95} → structured with slight variation (summarization)
-				\item \texttt{T=0.7+} → creative tasks where variance is desired (brainstorming)
-			\end{itemize}
-		\end{column}
-	\end{columns}
+% ────────────────────────────────────────────────────────────
+\begin{frame}
+  \titlepage
 \end{frame}
 
-\note[itemize]{
-  \item temperature=0 does not mean "no output" — it means greedy decoding (always pick highest-logit token).
-  \item seed only works with OpenAI-style APIs; local Ollama models ignore seed by default.
-}
+% ────────────────────────────────────────────────────────────
+\section{Deterministic Controls \& Structured Outputs}
 
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-\begin{frame}{JSON Mode vs. Structured Outputs}
-	\frametitle{Two mechanisms, one goal: typed output from an LLM}
-	
-	\begin{columns}[T]
-		\begin{column}{0.52\textwidth}
-			\small\bfseries Prompt-Coaxed JSON \hfill \textcolor{codekeyword}{WEAK}
-			\vspace{0.3em}
-			\begin{itemize}
-				\item LLM is told: ``Respond only in valid JSON''
-				\item No schema enforcement — any well-formed object passes
-				\item Prone to hallucinated keys, dropped fields, invalid escaping
-				\item Works for ad-hoc extraction; fails for pipeline integration
-			\end{itemize}
-		\end{column}
-		\begin{column}{0.48\textwidth}
-			\small\bfseries Constrained Generation \hfill \textcolor{codekeyword}{STRONG}
-			\vspace{0.3em}
-			\begin{itemize}
-				\item Decoder-level grammar constraint (regex or JSON Schema)
-				\item Every token is forced to match the schema at generation time
-				\item Impossible to return malformed structure — compile-time guarantee
-				\item Supported: OpenAI Structured Outputs, Ollama \texttt{response} format, Anyscale structured output
-			\end{itemize}
-		\end{column}
-	\end{columns}
-	
-	\vspace{0.5em}
-	\normalsize\textbf{Key insight:} constrained generation moves validation from post-hoc parsing to pre-generation enforcement.
+\begin{frame}[fragile]{Deterministic Sampling vs.\ Stochastic Generation}
+ \begin{itemize}
+ \item \textbf{Temperature ($T$):} Scales the logits before softmax.
+ \begin{itemize}
+ \item $T \to 0$: Argmax sampling / greedy decoding (reproducible classification, code, data extraction).
+ \item $T \ge 0.7$: High variance and exploratory token distributions.
+ \end{itemize}
+ \item \textbf{Top-$P$ (Nucleus Sampling):} Dynamically pools smallest token set whose cumulative probability exceeds $P$.
+ \item \textbf{Seed Calibration:} Fixes pseudo-random sampling seeds across deterministic API requests.
+ \end{itemize}
 \end{frame}
 
-\note[itemize]{
-  \item OpenAI's \texttt{response.json\_schema} is the gold standard today (supported since GPT-4o).
-  \item For open models: Ollama's \texttt{"format": "json"} mode + external JSON Schema validation.
-  \item Grammar-constrained decoding libraries: outlines, lm-eval-harness constrained decoding.
-}
+\begin{frame}[fragile]{JSON Mode vs.\ Constrained Grammars}
+ \begin{itemize}
+ \item \textbf{Prompt-Coaxed JSON (Unreliable):}
+ \begin{itemize}
+ \item Relies solely on system prompt instructions (e.g., \textit{"Respond only in valid JSON"}).
+ \item Prone to syntax breakage, preamble comments, and schema hallucinations.
+ \end{itemize}
+ \item \textbf{Constrained Grammar Decoding (Reliable):}
+ \begin{itemize}
+ \item Decoders enforce regular expressions or context-free grammars (GBNF, JSON Schema) directly against logits.
+ \item Tokens that violate the schema receive $-\infty$ logits and cannot be sampled.
+ \end{itemize}
+ \end{itemize}
+\end{frame}
 
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-\begin{frame}{Pydantic + Function Calling: Strict Schema Example}
-	\frametitle{Python tool definition with Pydantic model enforcement}
-	
-	\begin{lstlisting}[language=Python,caption={Extraction schema for unstructured telemetry}]
+\begin{frame}[fragile]{Enforcing Schemas via Pydantic \& Tool Calling}
+\begin{lstlisting}[style=pycode]
 from pydantic import BaseModel, Field
-from typing import Optional
 
-class TelemetryEvent(BaseModel):
-    event_type: str = Field(
-        description="Type of telemetry event",
-        pattern=r"^(log_in|log_out|config_change|error)$"
-    )
-    user_id: str = Field(description="Unique user identifier")
-    severity: int = Field(ge=1, le=5)
-    source: Optional[str] = None
-    timestamp: str
+class TelemetryAlert(BaseModel):
+    hostname: str = Field(..., description="Target node identifier")
+    severity: str = Field(..., regex="^(INFO|WARN|CRIT)$")
+    error_code: int = Field(..., ge=100, le=999)
+    resolved: bool
 
-# OpenAI client with structured output:
+# OpenAI / Ollama Structured Outputs Payload
 response = client.beta.chat.completions.parse(
-    model="gpt-4o-mini",
-    messages=[{"role": "user", "content": prompt}],
-    response_format=TelemetryEvent,  # <-- enforced at decoder level
+    model="qwen3.6",
+    messages=[{"role": "user", "content": log_entry}],
+    response_format=TelemetryAlert,
+    temperature=0.0
 )
-event = response.choices[0].message.parsed  # Guaranteed TelemetryEvent
-	\end{lstlisting}
-	
-	\vspace{0.3em}
-	\normalsize\textbf{TypeScript equivalent:} Zod schema + \texttt{OpenAI.beta.chat.completions.parse(ZodSchema)} (beta) or \texttt{structuredOutputs()} with manual JSON Schema conversion via \texttt{zod-to-json-schema}.
+event: TelemetryAlert = response.choices[0].message.parsed
+\end{lstlisting}
 \end{frame}
 
-\note[itemize]{
-  \item The \texttt{parse()} call replaces the old \texttt{chat.completions.create()} + regex post-processing.
-  \item Pydantic's Field constraints (pattern, ge/le) become part of the JSON Schema sent to the model — not just a validation layer downstream.
-}
+\begin{frame}{Hands-On Micro-Lab: Structured Log Extraction}
+ \begin{block}{Objective}
+ Extract structured alerts from unstructured kernel trace lines using strict schema enforcement.
+ \end{block}
+ \begin{enumerate}
+ \item Define a Pydantic schema extracting: \texttt{timestamp}, \texttt{service}, and \texttt{failure\_reason}.
+ \item Configure client inference with \texttt{temperature=0.0} and strict JSON schema decoding.
+ \item Ingest raw dmesg snippets and verify $100\%$ valid JSON parse rates across 50 iterations.
+ \end{enumerate}
+\end{frame}
 
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-\begin{frame}{Hands-On Micro-Lab: Telemetry Extraction}
-	\frametitle{Enforce an extraction schema over unstructured logs}
-	
-	\textbf{Objective:} Build a deterministic extraction pipeline that converts free-text log lines into typed \texttt{TelemetryEvent} objects.
-	
-	\vspace{0.5em}
-	\begin{enumerate}
-		\item \textbf{Collect:} Gather 10-20 raw log lines (e.g., from a web server, auth service, or application trace).
-		\item \textbf{Define:} Write a Pydantic model (or Zod schema) matching your expected fields. Include at least one regex constraint.
-		\item \textbf{Extract:} Prompt an LLM with the schema + raw logs. Use constrained generation (\texttt{response\_format} / \texttt{JSON mode}).
-		\item \textbf{Verify:} Run the extracted objects through the Pydantic/Zod validator — none should fail if the schema is correct.
-		\item \textbf{Stress test:} Inject noise (typos, missing fields) into raw logs. Measure extraction failure rate at \texttt{T=0.0} vs \texttt{T=0.3}.
-	\end{enumerate}
-	
-	\vspace{0.3em}
-	\normalsize\textbf{Deliverable:} A Python script (\texttt{extract.py}) that takes raw log input and outputs validated JSONL.
-\end{frame>
+% ────────────────────────────────────────────────────────────
+\begin{frame}{Summary}
+ \begin{block}{Key Take-Aways}
+ \begin{itemize}
+ \item Deterministic sampling ($T=0$) enables reproducible, pipeline-safe outputs.
+ \item Constrained grammar decoding is the only reliable path to schema-compliant JSON.
+ \item Pydantic + structured-output APIs combine type-hint validation with LLM reasoning.
+ \item Every production workflow should validate against $100\%$ parse-success targets.
+ \end{itemize}
+ \end{block}
+\end{frame}
 
-\note[itemize]{
-  \item The stress test reveals when deterministic (T=0) vs stochastic sampling matters — at T=0 you get consistent errors on ambiguous inputs; at T=0.3 you get varied errors that might recover.
-  \item This lab bridges directly into Module 2 (token geometry) and Module 3 (MCP tool use).
-}
-
-
-	\section{LAGNIAPPE}
-	
-	\note{Mark Twain's Thoughts on Lagniappe
-		
-		``We picked up one excellent word,'' wrote Mark Twain in Life on the Mississippi (1883), ``a word worth traveling to New Orleans to get; a nice limber, expressive, handy
-		word—'lagniappe'.... It is Spanish—so they said.'' Twain encapsulates the history of lagniappe quite nicely. English speakers learned the word from French-speaking
-		Louisianians, but they in turn had adapted it from the American Spanish word la ñapa. (What Twain didn't know is that the Spanish word is from Quechua, from the word yapa,
-		meaning "something added.") Twain went on to describe how New Orleanians completed shop transactions by saying ``Give me something for lagniappe,'' to which the shopkeeper
-		would respond with "a bit of liquorice-root, … a cheap cigar or a spool of thread." It took a while for lagniappe to catch on throughout the country, but in time, New
-		Yorkers and New Orleanians alike were familiar with this ``excellent word.''}
-	
-	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{blank_slide.png}}
-	\begin{frame}{}
-		\setlength{\TPHorizModule}{\textwidth}
-		\setlength{\TPVertModule}{\textwidth}
-		% Slide title in upper left
-		\begin{textblock}{0.74}(0.05,0.05)
-			\bfseries\large\normalcolor{Panda AI}
-		\end{textblock}
-		% main body
-		\begin{itemize}
-			\item Let's take a quick look at Panda AI together.
-		\end{itemize}
-	\end{frame}
-	
-	\note[itemize]{
-		\item Slide created June 24th, 2025
-	}
+\begin{frame}
+ \Huge \centering Questions?
+\end{frame}
 
 \end{document}

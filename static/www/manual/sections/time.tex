@@ -1,0 +1,117 @@
+\section{Network Time (NTP)}
+
+\subsection{Overview}
+
+Time synchronization is one of the most critical and least-visible aspects of network management. All lab services -- Kerberos authentication, TLS certificate validation, log correlation, distributed databases, and filesystem consistency -- depend on time accuracy. The lab uses a two-tier NTP architecture:
+
+\begin{enumerate}
+    \item \textbf{Stratum 1 source}: GPS-referenced clock on the \texttt{time} host (10.10.12.2) provides the lab's authoritative time reference.
+    
+    \item \textbf{Stratum 2+ clients}: All other hosts sync to \texttt{time.lab.bitsmasher.net}.
+\end{enumerate}
+
+\subsection{The Time Host}
+
+\begin{itemize}
+    \item \textbf{Hostname}: time.lab.bitsmasher.net (alias: time)
+    
+    \item \textbf{IP}: 10.10.12.2
+    
+    \item \textbf{User}: openclaw
+    
+    \item \textbf{OS}: Debian 12 bookworm
+    
+    \item \textbf{Role}: Stratum-1 NTP server / reference clock source for the lab
+\end{itemize}
+
+The time host has a GPS unit connected (serial/tty interface) providing UTC discipline. Its ntpd is configured via ntpsec to serve the lab subnet and use the GPS PPS signal as the primary time reference.
+
+\subsection{Configuration on Client Hosts}
+
+The NTP configuration is managed by Ansible via the \texttt{ntp} role in the lab-franklin collection. Here is what a typical client configuration looks like (as seen on stargate):
+
+\begin{lstlisting}[style=mystyle]
+# /etc/ntpsec/ntp.conf -- managed by Ansible
+driftfile /var/lib/ntp/ntp.drift
+leapfile /usr/share/zoneinfo/leap-seconds.list
+
+statsdir /var/log/ntpstats/
+
+statistics loopstats peerstats clockstats
+filegen loopstats file loopstats type day enable
+filegen peerstats file peerstats type day enable
+filegen clockstats file clockstats type day enable
+
+server time.lab.bitsmasher.net
+restrict 10.10.8.0/21
+restrict -4 default
+\end{lstlisting}
+
+Key points:
+\begin{itemize}
+    \item \texttt{driftfile}: Tracks oscillator drift between NTP restarts. Critical for stability on hosts that reboot frequently (Jetson devices, test VMs).
+    
+    \item \texttt{statistics}: Logs loop/peer/clock stats daily in /var/log/ntpstats/. Use these to verify sync health.
+    
+    \item \texttt{server}: Points to the lab's time host -- never pool.ntp.org for infrastructure hosts that need deterministic time sources.
+    
+    \item \texttt{restrict}: 
+    \begin{itemize}
+        \item \texttt{10.10.8.0/21} grants query access to the main lab subnet (used by other internal clients or monitoring tools).
+        
+        \item \texttt{-4 default} blocks all IPv4 queries not explicitly allowed, providing a deny-by-default posture.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Installation and Setup Steps}
+
+For a new host that needs NTP:
+
+\begin{enumerate}
+    \item Install ntpsec packages:
+    \begin{lstlisting}[style=mystyle]
+apt update && apt install -y ntpsec
+    \end{lstlisting}
+
+    \item Configure /etc/ntpsec/ntp.conf (either manually or via Ansible ntp role):
+    \begin{enumerate}
+        \item Set \texttt{server time.lab.bitsmasher.net} as the upstream reference.
+        
+        \item Set timezone: \texttt{timedatectl set-timezone America/Denver} (or appropriate TZ).
+        
+        \item Create the log directory if it doesn't exist: \texttt{mkdir -p /var/log/ntpstats}.
+    \end{enumerate}
+
+    \item Start and enable the service:
+    \begin{lstlisting}[style=mystyle]
+systemctl enable --now ntpsec.service
+timedatectl  # verify "System clock synchronized: yes"
+    \end{lstlisting}
+\end{enumerate}
+
+\subsection{Verification on Clients}
+
+Check synchronization status with these commands:
+
+\begin{lstlisting}[style=mystyle]
+# Check if the system clock is synchronized
+timedatectl | grep "System clock synchronized"
+
+# Check NTP peer status (if ntpq is available)
+ntpq -p
+
+# View recent sync logs
+journalctl -u ntpsec --since today
+    \end{lstlisting}
+
+\subsection{Notes for Deployment}
+
+\begin{itemize}
+    \item The Ansible \texttt{ntp} role handles all of the above automatically across lab hosts. It installs packages, copies configuration, sets timezone, and creates log directories.
+    
+    \item For Jetson devices (node900--node903), drift compensation is especially important -- they boot frequently and have less stable oscillators than desktop/server hardware.
+    
+    \item The GPS unit on the time host should be verified periodically: confirm it's locking to satellites, not using its internal oscillator as a holdover source. Check this by running \texttt{ntptime} on the time host itself.
+    
+    \item If the time host goes offline and all clients lose sync beyond their maximum correction threshold (typically 128 seconds), systems may need manual time correction before Kerberos/TLS will function again.
+\end{itemize}

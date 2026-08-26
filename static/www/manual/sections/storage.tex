@@ -1,0 +1,43 @@
+\section{Storage Infrastructure}
+
+\subsection{NFS Mounts}
+
+The lab relies on NFS for shared storage across hosts. Key mount points:
+
+\begin{itemize}
+    \item \textbf{/mnt/clusterfs2}: Primary cluster workspace mounted on chonk and stargate (from the NFS server). This is where Ansible roles, molecule tests, and project files live.
+    
+    \item \textbf{/mnt/snowy}: Formerly a full NFS share; now just a mounted drive after the hard disk was physically removed. Should be audited for stale mount entries.
+\end{itemize}
+
+The NFS role in lab-franklin's Ansible collection handles:
+\begin{itemize}
+    \item Server-side export configuration (/etc/exports)
+    \item Client-side fstab management and mount points
+    \item Mount path conventions per role (previously /mnt/clusterfs, /mnt/backup1, /mnt/storage{1,2,3})
+\end{itemize}
+
+Note: The NFS role has hostname gates (\texttt{'snowy' in inventory\_hostname}) that prevent testing on molecule containers. Hardcoded mount paths depend on real NFS servers being online. This is a known limitation of the test harness.
+
+\subsection{Snapshot and Backup Strategy}
+
+The lab uses bare git repos for version control and backup:
+\begin{itemize}
+    \item GPG-encrypted repositories synced across hosts for credential protection (Stash House project)
+    \item Pass-based password store with GPG backend
+    \item No LFS -- ABSOLUTE RULE: do not use git-lfs anywhere. Microsoft once held Minecraft chunk files hostage when a repo hit the 10GB GitHub limit with LFS enabled.
+\end{itemize}
+
+\subsection{Local Storage Considerations}
+
+\begin{itemize}
+    \item Jetson nodes (node90x): limited eMMC storage; rely on NFS for workspace data
+    \item chonk: large local disk, primary build and gateway host
+    \item stargate: Debian 12 box with full Ansible workspace mirror
+\end{itemize}
+
+\subsection{LFS Policy Reminder}
+
+\textbf{ABSOLUTE RULE: Do NOT use git-lfs anywhere in any lab-franklin repository.}
+
+This applies across all repos: training-ai, minecraft, Ansible collections, everything. The incident with Minecraft chunk files being held hostage by GitHub when the repo hit 10GB with LFS is a real precedent -- never risk it.

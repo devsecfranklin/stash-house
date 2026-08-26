@@ -1,0 +1,261 @@
+\section{Ansible Automation}
+
+\subsection{Current Landscape (August 2026)}
+
+As of August 2026, the Ansible ecosystem is split between two distribution paths:
+
+\begin{itemize}
+    \item \textbf{Ansible community package} -- the traditional monolithic install (pip install ansible). Current version is 13.x (built on ansible-core 2.20). This includes 85+ collections with thousands of modules and plugins bundled together. Follows semantic versioning, releases two major versions per year plus monthly minor releases.
+    
+    \item \textbf{ansible-core} -- the minimal core engine. Maintains three versions at a time (current + two older). Versioned independently from the community package (2.19, 2.20, 2.21). Releases every four weeks for minor updates.
+
+\end{itemize}
+
+\textbf{EOL versions as of August 2026}: Ansible 10--12 and ansible-core 2.15--2.18 are EOL. Do not use these in new work. Only Ansible 13.x / ansible-core 2.20 is current; 14.0.0/2.21 is in development.
+
+\subsection{Molecule Testing -- Status and Deprecation}
+
+Molecule (the canonical integration testing framework for Ansible roles and playbooks) remains \textbf{active} as of August 2026 but its role has shifted:
+
+\begin{itemize}
+    \item Molecule v26.4.x is the latest series, released June 2026. It still supports only the latest two major versions of Ansible (N/N-1).
+    
+    \item Molecule is being superseded as the preferred test strategy by:
+    \begin{itemize}
+        \item \texttt{pytest-ansible} -- pytest extension for testing Ansible module/plugin Python code directly.
+        
+        \item \texttt{tox-ansible} -- integration with tox to run tests across multiple Python interpreters and ansible-core versions simultaneously.
+        
+        \item Execution Environments (containers) as the primary test target, tested via \texttt{ansible-navigator}.
+    \end{itemize}
+    
+    \item The \textbf{community.molecule} collection still exists but new projects should prefer pytest-ansible + tox-ansible for role/test harness work. Molecule is not yet officially deprecated -- it is maintained on a best-effort basis while the community transitions.
+    
+    \item For existing molecule test harnesses (such as those in lab-franklin's Ansible collection at \texttt{ansible/collections/ansible\_collections/lab/franklin/roles/}), they will continue to work with ansible-core 2.20 and pytest-6.x but should be audited for:
+    \begin{itemize}
+        \item Podman driver compatibility (molecule continues using podman or docker as default driver)
+        \item Python version requirements (molecule requires Python $\ge$3.9)
+        \item Plugin deprecations in newer collections
+    \end{itemize}
+
+\end{itemize}
+
+\textbf{Note}: For lab-franklin's molecule tests, keep testing with podman for now. The container-based approach is still valid; only the \textit{preferred tooling around it} is shifting toward pytest-ansible + execution environments.
+
+\chapter{lab/franklin Collection}
+
+The lab/franklin Ansible collection lives at:
+\begin{lstlisting}[style=mystyle]
+/mnt/clusterfs2/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin/
+    \end{lstlisting}
+
+It is the central automation artifact for the entire lab.bitsmasher.net infrastructure, managing provisioning, configuration, and testing across all hosts.
+
+\section{Collection Manifest (galaxy.yml)}
+
+The collection follows standard Ansible Galaxy conventions with namespace \texttt{lab} and name \texttt{franklin}:
+
+\begin{itemize}
+    \item \textbf{Version}: 1.0.0
+    
+    \item \textbf{License}: MIT
+    
+    \item \textbf{Author}: franklin <franklin@bitsmasher.net>
+    
+    \item \textbf{Repository}: \url{https://github.com/devsecfranklin/lab-franklin}
+    
+    \item \textbf{Documentation}: \url{https://github.com/devsecfranklin/lab-franklin/docs}
+\end{itemize}
+
+\section{Role Inventory}
+
+The collection contains roles organized under the roles/ directory. As of August 2026, the following roles are maintained with molecule test harnesses:
+
+\begin{lstlisting}[style=mystyle]
+roles/
+├── apt_mirror/          # APT mirror configuration
+├── beagleboard/         # BeagleBoard device provisioning
+├── common/              # Shared base configuration (bootstrap.sh, common utils)
+├── container_registry/  # Docker/container registry setup
+├── ctfd/                # CTFd platform deployment
+├── desktop/             # Desktop environment provisioning
+├── docker/              # Docker engine installation
+├── documentation/       # Documentation generation roles
+├── dhcp/                # DHCP server configuration (dhcpd.conf)
+├── dns/                 # BIND/named DNS server
+├── golang/              # Go language toolchain
+├── jetson-nano/         # NVIDIA Jetson Nano provisioning
+├── k3s_agent/           # k3s worker node
+├── k3s_server/          # k3s control plane server
+├── k8s/                 # Kubernetes generic setup
+├── latex/               # LaTeX environment
+├── logging/             # Centralized logging
+├── music/               # Music service configuration
+├── nfs/                 # NFS server/client
+├── nix/                 # Nix package manager
+├── openbsd/             # OpenBSD host bootstrap (blowfish target)
+│   ├── tasks/main.yml   # Includes files.yml, timezone setup
+│   └── files/           # bootstrap.sh, login.conf, hosts entries
+├── paloalto/            # Palo Alto firewall config
+├── prereq/              # Prerequisite packages
+├── pypi_internal/       # Internal PyPI repository setup
+│   ├── tasks/main.yml   # Symlink pypi_dir -> html_dir/pypi
+│   └── vars/main.yml    # html_dir=/var/www/html, pypi_dir=/mnt/storage1/LAB/pypi
+├── python/              # Python environment
+├── raspberrypi/         # Raspberry Pi provisioning
+├── samba/               # Samba file sharing
+├── security/            # Hardening and security baselines
+├── shell/               # Shell configuration
+├── ssh/                 # SSH server hardening
+├── tls/                 # TLS certificate management
+├── chonk/               # chonk-specific configuration
+├── cluster/             # Cluster-wide settings
+    \end{lstlisting}
+
+Roles currently \textbf{missing molecule tests}: edge, mail, odroid, website (incomplete roles). These have tasks/main.yml but no test harness.
+
+\section{Workspace Structure}
+
+The full project layout:
+\begin{lstlisting}[style=mystyle]
+/workspace/lab-franklin/
+├── Makefile.am                  # Top-level autotools target (Python, Docker, dev)
+├── configure.ac                 # Autotools config (autoconf)
+├── bootstrap.sh                 # Cross-platform bootstrapper
+├── network_update.sh            # One-shot maintenance script (hardened 2026-08-02)
+├── ansible/                     # ANSIBLE_HOME root
+│   ├── playbook.yml             # Main playbook
+│   ├── hosts                    # Inventory file
+│   └── collections/             # Collections path
+│       ├── ansible_collections/ # Galaxy namespace
+│           └── lab/franklin/    # The lab/franklin collection
+│               ├── galaxy.yml
+│               ├── roles/       # All role modules (37 total)
+│               └── docs/latex/  # LaTeX docs build (autotools)
+├── container/                   # Docker/Podman configs
+├── terraform/                   # Terraform infrastructure definitions
+├── bin/                         # Shared utility scripts (common.sh)
+└── docs/manual/                 # Lab manual documentation (this document)
+    \end{lstlisting}
+
+\section{Build System (Autotools)}
+
+The project uses GNU Autotools for the root-level build:
+
+\begin{itemize}
+    \item \textbf{configure.ac}: Defines package (lab-franklin v0.2), libtool support, Python $\ge$ 3.9 requirement, podman/ansible/gpg checks, git version tagging
+    
+    \item \textbf{Makefile.am}: Top-level targets include test (ansible-lint + molecule), security (venv bootstrap), dev (Python venv in BUILDDIR)
+    
+    \item \textbf{bootstrap.sh}: Cross-platform bootstrapper that detects OS (Debian/RedHat/OpenBSD/macOS/Linux) and installs platform-specific packages, then runs aclocal $\rightarrow$ autoreconf $\rightarrow$ automake $\rightarrow$ configure
+    
+    \item \textbf{docs/manual/Makefile.am}: Standalone autotools stub for LaTeX docs build (clean target removes *.aux files)
+\end{itemize}
+
+The \texttt{network\_update.sh} script was hardened on 2026-08-02 with: set -euo pipefail, auto-resolved paths, pinned K3s version validation, ANSIBLE_HOME environment checks, removed dangerous clush/apt-get blast radius, and dead code removal. It runs the main playbook at \texttt{ansible/playbook.yml} as its primary action.
+
+\chapter{Testing from Stargate}
+
+\section{Molecule Test Harnesses on stargate.lab.bitsmasher.net}
+
+The stargate host (10.10.16.66, Debian 12 bookworm) serves as the primary testing platform for the lab/franklin Ansible collection. Testing is run from \texttt{/mnt/clusterfs2/workspace/lab-franklin/ansible/collections/ansible\_collections/lab/franklin/roles/\textless role\textgreater /molecule/}.
+
+\subsection{Test Environment}
+
+Molecule tests on stargate use:
+\begin{itemize}
+    \item \textbf{Driver}: podman (containers, not Docker -- avoids daemon dependency)
+    
+    \item \textbf{Base image}: Ubuntu 20.04 for most roles, with role-specific variations
+    
+    \item \textbf{Execution user}: openclaw user (has sudo -n, no password required)
+    
+    \item \textbf{Python}: $\ge$ 3.9 (required by both ansible and molecule)
+\end{itemize}
+
+\subsection{Test Execution Flow}
+
+For a given role, the molecule test cycle is:
+\begin{enumerate}
+    \item \textbf{dependency}: Install collection dependencies from galaxy.yml
+    
+    \item \textbf{syntax}: Validate playbook YAML syntax
+    
+    \item \textbf{create}: Launch podman container (e.g., "server1") as the test target host
+    
+    \item \textbf{prepare}: Verify role prerequisites within the container
+    
+    \item \textbf{converge}: Run ansible-playbook against the container -- this is where the role's tasks are executed
+    
+    \item \textbf{test/verify}: Optional pytest sequence runs inside the container to validate convergence
+\end{enumerate}
+
+\subsection{Example: DNS Role Testing}
+
+The DNS role molecule test confirmed:
+\begin{itemize}
+    \item Podman creates an Ubuntu 20.04 container (hostname "server1")
+    
+    \item Bind9 packages install correctly
+    
+    \item /etc/bind directory is created with named.conf.options written
+    
+    \item Molecule platform name was changed from "molecule-ubuntu" to "server1" to match the role's hostname gate
+    
+    \item Group assignment updated to "dns\_servers" for proper role targeting
+\end{itemize}
+
+\subsection{Known Limitations}
+
+Some roles cannot be fully tested on molecule containers:
+
+\begin{itemize}
+    \item \textbf{nfs}: Hostname gates (\texttt{'snowy' in inventory\_hostname}) and hardcoded mount paths depend on real NFS servers
+    
+    \item \textbf{openbsd}: The role targets OpenBSD hosts specifically; molecule tests run on Ubuntu containers by default
+    
+    \item \textbf{jetson-nano}: Hardware-specific (NVIDIA Jetson); molecule tests only verify file placement, not actual provisioning
+\end{itemize}
+
+\subsection{Running Tests Manually}
+
+To test a specific role from the stargate host:
+\begin{lstlisting}[style=mystyle]
+cd /mnt/clusterfs2/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin/roles/<role>/molecule
+molecule converge --scenario-name default
+    \end{lstlisting}
+
+To verify convergence results:
+\begin{lstlisting}[style=mystyle]
+molecule test --scenario-name default
+    \end{lstlisting}
+
+If the podman driver is unavailable, fall back to docker:
+\begin{lstlisting}[style=mystyle]
+molecule converge --driver-name docker
+    \end{lstlisting}
+
+\subsection{Test Results Dashboard}
+
+Testing output logs are captured in the molecule scenario directory under \texttt{logs/}. The full lab-franklin test suite (all roles with molecule tests) is run via the top-level Makefile.am \texttt{test} target:
+\begin{lstlisting}[style=mystyle]
+make test
+# Runs ansible-lint --all-roles and molecule converge per role
+    \end{lstlisting}
+
+\subsection{pytest-ansible Transition Plan}
+
+As molecule is being superseded, new tests should use pytest-ansible where possible:
+\begin{itemize}
+    \item Migrate the test directory structure from \texttt{molecule/} to a \texttt{tests/} directory with pytest configuration
+    
+    \item Use ansible-test for collection sanity tests (built into ansible-core)
+    
+    \item Keep molecule only where full environment isolation is needed (e.g., DNS zone file validation, NTP time sync testing)
+\end{itemize}
+
+\subsection{Pending Tasks and Todos}
+
+\begin{itemize}
+    \item \textbf{TODO: Re-establish internal PyPI server on stargate}. The pypi\_internal role is ready (role exists, molecule test added Aug 2026) but the actual PyPI service needs to be provisioned on the storage host. Requires: NFS mount of /mnt/storage1 available on stargate, web server (nginx/apache) installed and configured, pip packages populated into /mnt/storage1/LAB/pypi with PEP 503 structure. Run: \texttt{ansible-playbook ... -l storage --tags pypi\_internal} once the infrastructure is in place.
+\end{itemize}

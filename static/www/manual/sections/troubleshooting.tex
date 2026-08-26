@@ -1,0 +1,154 @@
+\section{Troubleshooting Guide}
+
+\subsection{SSH Connection Failures}
+
+\subsubsection{Host Key Mismatch}
+
+Symptom: \texttt{@@@@@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED! @@@@@}
+
+Fix:
+\begin{lstlisting}[style=mystyle]
+ssh-keygen -R <hostname>
+    \end{lstlisting}
+
+This occurs when a host was re-imaged with the same IP. Check \texttt{/etc/ssh/ssh\_config.d/} for stale entries.
+
+\subsubsection{Auth Denied (Port 22 Open, Key Rejected)}
+
+Symptom: TCP port 22 is reachable but SSH returns "Permission denied".
+
+Common causes:
+\begin{itemize}
+    \item No matching key in the remote host's authorized\_keys
+    
+    \item The key file permissions are too open on the target (must be mode 600 for .pub and 700 for ~/.ssh)
+    
+    \item Wrong user context (e.g., trying franklin@ when only root is configured)
+\end{itemize}
+
+Fix: Add the openclaw ed25519 key to the target host's authorized\_keys file. The pubkey is:
+\begin{lstlisting}[style=mystyle]
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJb9mV02PpxD8VpzYCnu7192dTwMnGWUc3qh55BIeElN openclaw@chonk
+    \end{lstlisting}
+
+\subsubsection{No Route to Host}
+
+Symptom: SSH hangs or returns "No route to host". The host is likely powered off. Common in Jetson nodes (node902, etc.) that are manually managed.
+
+\subsubsection{GSSAPI Interference}
+
+Symptom: SSH times out waiting for GSSAPI authentication before falling back to key auth.
+
+Fix: Add to \texttt{~/.ssh/config}:
+\begin{lstlisting}[style=mystyle]
+Host *
+    GSSAPIAuthentication no
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_ed25519_openclaw
+    \end{lstlisting}
+
+\subsection{Service-Specific Diagnostics}
+
+\subsubsection{Kerberos Authentication Failure}
+
+\begin{tabularx}{\textwidth}{l X}
+\textbf{Symptom} & \textbf{Likely Cause} \\
+\hline
+kinit fails with "clock skew" & NTP not synced -- check time.host first\\
+kinit fails with "KDC has no support for encryption type" & Wrong krb5.conf realm or KDC unavailable\\
+kadmin.local works but kadmin (remote) fails & Port 749 firewall rule on odroid-c1\\
+Ticket expired after reboot & Time drift during host downtime
+\end{tabularx}
+
+Verify: \texttt{klist}, \texttt{kinit username@LAB.BITSMASHER.NET}, \texttt{ktutil} for keytabs.
+
+\subsubsection{NTP Issues}
+
+\begin{tabularx}{\textwidth}{l X}
+\textbf{Symptom} & \textbf{Likely Cause} \\
+\hline
+ntpd not running & ntpsec service not enabled\\
+"no server suitable for synchronization" & No upstream reachable (time host offline)\\
+Clock gradually drifting & Missing driftfile or Jetson oscillator drift\\
+Time jumps by several seconds & Large correction applied; step-sync mode engaged
+\end{tabularx}
+
+Verify: \texttt{ntpq -p}, \texttt{timedatectl}, check /var/log/ntpstats/.
+
+\subsubsection{NFS Mount Issues}
+
+\begin{tabularx}{\textwidth}{l X}
+\textbf{Symptom} & \textbf{Likely Cause} \\
+\hline
+mount hangs & NFS server unreachable or export doesn't list client\\
+"Stale file handle" & Server-side data was deleted/recreated\\
+Permission denied on mount & /etc/exports restricts the client IP
+\end{tabularx}
+
+Verify: \texttt{showmount -e <server>}, check NFS server's exports, verify client IP matches the export rule.
+
+\subsection{Common Ansible Troubleshooting}
+
+\subsubsection{Module Not Found / Missing Collection}
+
+\begin{lstlisting}[style=mystyle]
+ansible-galaxy collection install lab.franklin
+# or for individual modules:
+ansible-galaxy collection install community.general
+    \end{lstlisting}
+
+\subsubsection{Molecule Test Failures on New Hosts}
+
+If molecule tests fail on a new host, the most common causes are:
+\begin{enumerate}
+    \item Podman not installed or permissions wrong (openclaw user needs podman group)
+    
+    \item Docker driver configured instead of podman -- edit \texttt{molecule.yml} to set driver
+    
+    \item Python version mismatch (molecule requires $\ge$3.9)
+    
+    \item Role hostname gates preventing test execution (e.g., the DNS role's hostname check for the real server vs. molecule container name)
+\end{enumerate}
+
+\subsection{General Debugging Checklist}
+
+When a service is down, work through this checklist:
+
+\begin{enumerate}
+    \item Can you ping the host? ($\rightarrow$ network up?)
+    
+    \item Is SSH responding? ($\rightarrow$ host OS running?)
+    
+    \item Does the service process exist? (\texttt{systemctl status or ps aux})
+    
+    \item Are logs showing errors? (\texttt{journalctl -u <service> --since today})
+    
+    \item Can you connect to the service port from another lab host? (\texttt{nc -zv <host> <port>})
+    
+    \item Is DNS resolving correctly? (\texttt{dig or getent hosts})
+    
+    \item Is time synchronized? (\texttt{timedatectl})
+\end{enumerate}
+
+\subsection{Quick Reference Commands}
+
+\begin{lstlisting}[style=mystyle]
+# Check if a host is reachable from chonk
+ping -c 1 <hostname>
+ssh -o ConnectTimeout=5 openclaw@<host> "echo alive"
+
+# Check service status remotely
+ssh openclaw@<host> "systemctl status <service>"
+
+# Verify time sync across hosts
+for host in stargate skynet chonk; do
+    ssh openclaw@$host "timedatectl | grep synchronized"
+done
+
+# Verify DNS resolution from a client
+dig @time.lab.bitsmasher.net <hostname>
+
+# Check Kerberos auth
+kinit username@LAB.BITSMASHER.NET
+klist
+    \end{lstlisting}

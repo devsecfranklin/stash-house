@@ -1,0 +1,63 @@
+\section{LDAP Directory Services}
+
+\subsection{Server Configuration}
+
+\begin{itemize}
+    \item \textbf{Hostname}: ldap.lab.bitsmasher.net (alias: bbb1)
+    
+    \item \textbf{IP}: 10.10.13.1
+    
+    \item \textbf{Software}: OpenLDAP (slapd)
+    
+    \item \textbf{Status}: SSH reachable as root, but slapd service has been \textbf{failed since December 2025}
+\end{itemize}
+
+\subsection{Outage Details}
+
+The slapd failure manifests as:
+\begin{lstlisting}[style=mystyle]
+TLS init def ctx failed (-1)
+    \end{lstlisting}
+
+This indicates a TLS certificate configuration issue -- likely an expired, missing, or misconfigured CA certificate. The server is listening on its network interface (SSH works for root), but the LDAP daemon itself has not recovered since December 2025.
+
+\subsection{Monitoring Approach}
+
+Franklin maintains \texttt{/home/franklin/status.sh} which checks:
+\begin{itemize}
+    \item slapd service status on bbb1/ldap
+    
+    \item ldapsearch queries for franklin and sly DN lookups -- both fail because the directory is down
+\end{itemize}
+
+The script provides a simple pass/fail indicator for LDAP health without requiring complex monitoring infrastructure.
+
+\subsection{Recovery Steps}
+
+To restore the LDAP server:
+\begin{enumerate}
+    \item SSH to ldap.lab.bitsmasher.net as root (ed25519 key)
+    
+    \item Check slapd logs: \texttt{journalctl -u slapd --since "2025-12-13"}
+    
+    \item Verify TLS certificate chain in /etc/ssl or the configured cert path
+    
+    \item Update or regenerate the CA-signed certificate if expired
+    
+    \item Restart slapd: \texttt{systemctl restart slapd}
+    
+    \item Verify with ldapsearch for franklin and sly DNs
+\end{enumerate}
+
+\subsection{Directory Structure (Expected)}
+
+The OpenLDAP directory should contain entries for:
+\begin{itemize}
+    \item User entries for franklin, Sly (slyborg), and other lab members
+    
+    \item Group/organizational unit entries for lab access control
+    
+    \item Service accounts for LDAP-authorized services (Kerberos integration, web auth)
+\end{itemize}
+
+Once restored, the LDAP directory serves as the central authentication source for the lab, complementing Kerberos for identity management.

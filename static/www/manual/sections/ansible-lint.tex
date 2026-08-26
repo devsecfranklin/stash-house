@@ -1,0 +1,59 @@
+\section{Ansible-Linting Infrastructure}
+
+All ansible roles in the lab collection should be linted on a regular basis to maintain configuration quality and catch issues early. The lab uses three tools: \texttt{ansible-lint}, \texttt{yamllint}, and \texttt{ansible-test sanity}.
+
+\subsection{Tools and Configuration}
+
+Each linter is configured in the \texttt{test/} directory:
+\begin{itemize}
+    \item \texttt{.ansible-lint.yml} — ansible-lint configuration with warnings for deprecated modules and experimental rules disabled
+    \item \texttt{.yamllint} / \texttt{.yamllintrc} — YAML linting extends default rules with lab-specific indentation and spacing constraints
+\end{itemize}
+
+\subsection{Coverage Status (44 Roles)}
+
+Based on the most recent audit of \texttt{ansible/collections/ansible\_collections/lab/franklin/roles/}:
+
+\begin{description}
+    \item[Complete (30 roles)] apt-mirror, beagleboard, chonk, cluster, common, container-registry, ctfd, desktop, dhcp, dns, docker, documentation, golang, k3s-agent, k3s-server, kerberos, ldap, logging, minecraft, music, nfs, nix, ntp, openbsd, paloalto, prereq, pypi-internal, python, raspberrypi, ssh
+    \item[Minimal/Functional (9 roles)] media, samba, shell, tls, website, apt-mirror-stub, jetson-nano, k8s (partial), dns-stub
+    \item[Stubs (4 roles)] edge, extensions, latex, odroid
+\end{description}
+
+Roles with the smallest role definitions tend to have the fewest linting issues. The most problematic roles are usually those that include dynamic template generation or custom module invocation.
+
+\subsection{Proposed Linting Pipeline}
+
+A new \texttt{test/lint\_all.sh} script should be created to run all three linters in sequence:
+
+\begin{verbatim}
+# Example lint_all.sh structure:
+#!/bin/bash
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+echo "=== ansible-lint ==="
+ansible-lint roles/ 2>&1 || echo "ansible-lint warnings found"
+
+echo "=== yamllint ==="
+yamllint -c test/.yamllint roles/ 2>&1 || echo "yamllint issues found"
+
+echo "=== ansible-test sanity ==="
+ansible-test sanity --docker default -v 2>&1 || echo "sanity check failures"
+\end{verbatim}
+
+The linting pipeline should be integrated into:
+\begin{itemize}
+    \item \textbf{GitHub Actions:} Run on PR and nightly builds (similar to existing bandit/trivy/tfsec workflows)
+    \item \textbf{Hourly cron job on stargate:} Optional for CI-style validation without external triggers
+\end{itemize}
+
+\subsection{Linting Exceptions by Role}
+
+Some roles require special handling during linting:
+\begin{itemize}
+    \item \texttt{tls}: Includes shell commands with \texttt{kss -kfe} which may trigger warning 403 (deprecated module) — explicitly skip in config
+    \item \texttt{samba}: Uses custom \texttt{smb.conf.j2} templates that require validation via \texttt{testparm} post-converge
+    \item \texttt{k8s}: Contains static manifests rather than role tasks — should be moved to a shared files directory or documented as a reference role
+\end{itemize}
