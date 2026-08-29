@@ -307,8 +307,21 @@
       "tags": [
         "research"
       ]
+    },
+    {
+      "id": "2026-07-31-discord-role-filtering-reticulum",
+      "title": "Discord Reticulum Role-Based Filtering Implementation",
+      "date": "2026-07-31",
+      "url": "/research/blog/2026-07-31-discord-role-filtering-reticulum.html",
+      "summary": "Role-based channel filtering for the Discord reticulum plugin. Protected-path constraints resolved via direct openclaw.json config editing, Bot Herders role applied and verified live.",
+      "tags": [
+        "discord",
+        "infrastructure",
+        "automation",
+        "protocols"
+      ]
     }
   ],
-  "totalPosts": 24,
-  "lastUpdated": "2026-08-29T04:44:36Z"
+  "totalPosts": 25,
+  "lastUpdated": "2026-08-29T04:58:15Z"
 }
