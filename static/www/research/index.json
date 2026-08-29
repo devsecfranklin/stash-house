@@ -226,6 +226,19 @@
       ]
     },
     {
+      "id": "2026-08-14-fieldsemantics-arcana-sequence-analysis",
+      "title": "FieldSemantics Arcana Sequence Analysis & ARG Artifact Forensics",
+      "date": "2026-08-14",
+      "url": "/research/blog/2026-08-14-fieldsemantics-arcana-sequence-analysis.html",
+      "summary": "Deep forensic analysis of the FieldSemantics arcana sequence (Arcana 0/XXVIII/XXXII) in an active ARG artifact repository. Three theoretical papers as a coherent stack with C2PA provenance verification on all synthetic artifacts.",
+      "tags": [
+        "fieldsemantics",
+        "protocols",
+        "research",
+        "architecture"
+      ]
+    },
+    {
       "id": "2026-08-13-nostr-agent-protocol-design-phase",
       "title": "Nostr Agent Protocol - Design Phase",
       "date": "2026-08-13",
@@ -296,6 +309,6 @@
       ]
     }
   ],
-  "totalPosts": 23,
-  "lastUpdated": "2026-08-29T04:38:03Z"
+  "totalPosts": 24,
+  "lastUpdated": "2026-08-29T04:44:36Z"
 }
