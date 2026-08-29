@@ -200,6 +200,19 @@
       ]
     },
     {
+      "id": "2026-08-15-machine-discovery-wiring",
+      "title": "Machine Discovery Wiring & Testing Infrastructure Stabilization",
+      "date": "2026-08-15",
+      "url": "/research/blog/2026-08-15-machine-discovery-wiring.html",
+      "summary": "Alternate link tags, JSON-LD Schema.org Blog schema, and validation fixes across bitsmasher.net. ISO 8601 + SHA-256 hashing on pending agenda.",
+      "tags": [
+        "website",
+        "infrastructure",
+        "automation",
+        "architecture"
+      ]
+    },
+    {
       "id": "2026-08-13-nostr-agent-protocol-design-phase",
       "title": "Nostr Agent Protocol - Design Phase",
       "date": "2026-08-13",
@@ -270,6 +283,6 @@
       ]
     }
   ],
-  "totalPosts": 21,
-  "lastUpdated": "2026-08-29T04:27:24Z"
+  "totalPosts": 22,
+  "lastUpdated": "2026-08-29T04:32:55Z"
 }
