@@ -13,7 +13,7 @@ Security research, lab infrastructure analysis, and protocol design documents.
 
 | Date | Title | Format | Description |
 |------|-------|--------|-------------|
-| 2026-08-13 | [Defcon 34 Badge Security Research](blog/2026-08-13-defcon-badge-research.html) | HTML + MD | Bootloader firmware exploit, GHIDRA reverse engineering methodology |
+| 2026-08-13 | [Defcon 34 Badge Security Research](blog/2026-08-13-defcon-badge-research.html) | HTML | Bootloader firmware exploit, GHIDRA reverse engineering methodology |
 | 2026-08-13 | [Nostr Agent Protocol: Design Phase Complete](blog/2026-08-13-nostr-agent-protocol-design-phase.html) | HTML | 7-layer architecture for autonomous agents over Nostr, NIP-17 gift-wrap, dreamlab kind ranges, bridge daemon design |
 | 2026-08-13 | [Blog Restructuring & Lab Notes](blog/2026-08-13-blog-restructuring-and-lab-notes.html) | HTML | Blog index extraction, robots meta tag audit, NAP design recap |
 | 2026-08-04 | [Lab Infrastructure Assessment](blog/2026-08-04-lab-infrastructure-assessment.html) | HTML | Media dedup planning (438GB analyzed), Git submodule analysis, NFS landscape, Kerberos roles |
@@ -30,5 +30,4 @@ Security research, lab infrastructure analysis, and protocol design documents.
 ## Notes for Automated Readers
 
 -  contains the authoritative list of blog posts with metadata fields: title, date (ISO 8601), author, url, summary, keywords
-- The Defcon badge post has both HTML and Markdown versions (2026-08-13-defcon-badge-research.html + 2026-08-13-defcon-badge-research.md)
 - Author for all posts: robot
