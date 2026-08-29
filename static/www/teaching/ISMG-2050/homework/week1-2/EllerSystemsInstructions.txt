@@ -1,0 +1,149 @@
+
+DocViewer
+Page
+of 7
+Pages
+In this project, you edit a worksheet for Eller Systems that lists client hours. You plan to format the
+data, calculate totals, and prepare the worksheet for review.
+File Needed: Eller-01.xlsx (Attached to this project)
+Completed Project File Name: [your initials] EllerSystems.xlsx
+Skills Covered in This Project
+•
+ Open and save a workbook.
+•
+ Choose a workbook theme.
+•
+ Rename and apply color to sheet tabs.
+•
+ Use the Fill Handle to enter a series.
+•
+ Adjust column width and row height.
+•
+ Center labels across a selection and wrap text.
+•
+ Set font attributes and number formats.
+•
+ Use the AutoSum button.
+•
+ Change orientation and scale a worksheet for printing.
+•
+ Design borders.
+•
+ Insert a row.
+•
+ Adjust page setup options.
+1. Open the workbook Eller-01.xlsx. If the workbook opens in Protected View, click Enable
+Editing in the security bar.
+2. Save the workbook with a new file name.
+a. Press F12 (FN+F12) to open the Save As dialog box.
+b. Navigate to the folder where your files are stored.
+c. Rename the file [your initials] EllerSystems.
+d. Click Save.
+3. Change the workbook theme.
+a. Click the Themes button [Page Layout tab, Themes group].
+b. Choose Facet from the gallery. The font automatically changes throughout the
+worksheet.
+c. Point to the Fonts button [Page Layout tab, Themes group] to display its ScreenTip.
+The default theme font is Trebuchet MS for the Facet theme (Figure 1-94).
+Figure 1-94 Each theme has a set of theme fonts
+4. Rename and color a sheet tab.
+a. Double-click the Sheet1 tab.
+b. Type MN Clients and press Enter.
+c. Right-click the MN Clients tab.
+d. Select Tab Color and choose Black, Text 1 (second column).
+5. Adjust column width.
+a. Click the column heading for column A.
+b. Click and drag to select columns A:J.
+c. Double-click the border between any two column headings in the selected range.
+Each column adjusts to fit its widest label.
+d. Click cell A1. The widest label is in cell A2.
+e. Click the Format button [Home tab, Cells group] and select Column Width.
+f. Type 12 and press Enter. The label in cell A2 spills into the empty cell B2.
+6. Fill a label series.
+a. Click cell G5.
+b. Type MN001 and press Enter.
+c. Double-click the right border for the column G heading to AutoFit the column to the
+new data.
+d. Select G5 and double-click its Fill Handle.
+7. Choose alignment settings.
+a. Select cells A1:J2 and click the Alignment launcher [Home tab, Alignment group].
+b. Click the Horizontal drop-down list, select Center Across Selection, and click OK.
+c. Select cell J4 and click the Wrap Text button [Home tab, Alignment group]. Nothing
+changes.
+d. Point to the right border for the column J heading and drag the two-pointed arrow to
+reach approximately 8.00 so that Hours to appears by itself. The second line of the
+label still does not display (Figure 1-95).
+Figure 1-95 Set the wrap text attribute and adjust row height
+e. Double-click the bottom row border for row 4 to AutoFit the row height.
+8. Apply font attributes.
+a. Select cells A1:A2, click the Font Size drop-down list [Home tab, Font group], and
+select 18.
+b. Select cells A4:J4 and click the Bold button [Home tab, Font group].
+c. Click the Center button [Home tab, Alignment group].
+9. Find and edit data.
+a. Select cell A4.
+b. Click the Find & Select button [Home tab, Editing group] and choose Find.
+c. Type lyn* in the Find what entry box. This search string will find names that begin
+with “lyn” followed by any number of characters.
+d. Click the Options>> button to expand the dialog box.
+e. Click Find All. Two cells are identified.
+f. Click the first found item in the list to make the cell active in the sheet (Figure 1-96).
+Figure 1-96 Find results for the lyn* character string
+g. Click the cell in the worksheet or in the Formula bar to place the insertion point.
+h. Change the street name to Trudale.
+i. Click the second item in the list and change the street name to Trudale.
+j. Close the Find & Replace dialog box.
+10. Display and calculate average hours.
+a. Click cell I32.
+b. Type Average Number of Hours and press Enter.
+c. Select cell I32 and click the Bold button [Home tab, Font group].
+d. Click the Align Right button [Home tab, Alignment group].
+e. Select cell J32.
+f. Click the AutoSum button arrow [Home tab, Editing group] and select Average. The
+suggested range is correct.
+g. Press Enter. The result displays with as many decimal positions as fit in the cell
+(15.2222).
+h. Select cell J32 and click the Decrease Decimal button [Home tab, Number group]
+four times.
+11. Design and apply borders.
+a. Select cells A4:J32.
+b. Click the Border drop-down arrow [Home tab, Font group] and choose More
+Borders to open the Format Cells dialog box.
+c. Verify that the Border tab is active.
+d. Select the thick solid single line (second column, fifth option) in the Style list.
+e. Click Outline in the Presets group.
+f. Select the solid single line (first column, last or bottom option) in the Style list.
+g. Click the middle vertical border icon in the preview area, below the preview box.
+h. Select the dashed line (first column, third option) in the Style list.
+i. Click the middle horizontal border icon in the Border preview area (Figure 1-97).
+Change border settings by clicking the button or the border in the preview box to
+hide or display borders as needed.
+Figure 1-97 Build a custom border in the Format Cells dialog box
+j. Click OK.
+12. Manage page and print setup options.
+a. Click the File tab and choose Print. The worksheet does not fit a portrait page.
+b. Click Portrait Orientation in the Settings area and choose Landscape Orientation.
+c. Click the Next Page icon in the print preview to see that the worksheet still does not
+fit.
+d. Click No Scaling in the Settings area and choose Fit Sheet on One Page.
+e. Click Page Setup below the scaling option in the Settings area to open the Page
+Setup dialog box.
+f. Click the Header/Footer tab and click the Custom Footer button.
+g. Click the left section and click the Insert File Name button.
+h. Click the center section and click the Insert Sheet Name button.
+i. Insert the date in the right section (Figure 1-98).
+Figure 1-98 Build a custom footer
+j. Click OK to close the dialog boxes.
+k. Press Esc to return to the workbook.
+13. Adjust zoom size and split panes.
+a. Select cell C1.
+b. Click the Zoom In button in the Status bar five times. The number of rows and
+columns visible depends on your screen size.
+c. Click the Split button [View tab, Window group].
+d. Click the rightmost cell in row 1 that is visible.
+e. Press Tab as many times as necessary to scroll column H to the immediate right of
+column B (Figure 1-99).
+Figure 1-99 Panes split and columns scrolled
+14. Save and close the workbook (Figure 1-100).
+Figure 1-100 completed
+Annotations

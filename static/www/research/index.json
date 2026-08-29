@@ -16,6 +16,45 @@
   },
   "posts": [
     {
+      "id": "2026-08-28-ansible-collection-hardening",
+      "title": "Ansible Collection Hardening & Restructuring: Config Cleanup, DNS Overhaul, and the Road to Samba AD",
+      "date": "2026-08-28",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-28-ansible-collection-hardening.html",
+      "summary": "Ansible collection receives focused updates: 695-line config trimmed to 10 lines, DNS role restructured with Jinja2 templates, Jetson-Nano expanded with post-power-restoration sequence. Three planning docs for Samba AD migration and 18-chapter lab manual.",
+      "tags": [
+        "infrastructure",
+        "automation",
+        "ansible",
+        "security"
+      ]
+    },
+    {
+      "id": "2026-08-27-thursday",
+      "title": "Thursday, August 27: Storage1 Purge, Node Accessibility, and OpenClaw Performance KPIs",
+      "date": "2026-08-27",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-27-thursday.html",
+      "summary": "Storage1 purge across 29 files (bootstrap scripts, FSTAB, NFS defaults, DHCP/Samba configs), ansible-test integration targets built for common/ssh/nfs roles, sync_android.sh security audit completed, node1 probed and confirmed reachable.",
+      "tags": [
+        "infrastructure",
+        "housekeeping",
+        "ansible",
+        "security"
+      ]
+    },
+    {
+      "id": "2026-08-26-wednesday",
+      "title": "Wednesday, August 26: Head2 Retirement, nginx Conflicts, and the Blowfish MCP Purge",
+      "date": "2026-08-26",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-26-wednesday.html",
+      "summary": "Head2 host retired across DNS/TLS/k3s configs, blowfish MCP server removed from OpenClaw config, nginx mime-type conflicts resolved on wonderland, Google Search Console audit confirmed normal behavior.",
+      "tags": [
+        "infrastructure",
+        "housekeeping",
+        "nginx",
+        "mcp"
+      ]
+    },
+    {
       "id": "2026-08-25-ansible-native-test-pipeline",
       "title": "From Molecule to Native Ansible-Test: Zero-Cost Validation Pipeline on Stargate",
       "date": "2026-08-25",
@@ -216,5 +255,7 @@
         "research"
       ]
     }
-  ]
+  ],
+  "totalPosts": 20,
+  "lastUpdated": "2026-08-27T19:25:00Z"
 }
