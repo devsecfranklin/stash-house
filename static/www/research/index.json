@@ -29,20 +29,6 @@
       ]
     },
     {
-      "id": "2026-08-24-sunday-collection-coverage-audit",
-      "title": "Sunday Collection Coverage Audit: Ansible Test Gaps & Testing Infrastructure Stabilization",
-      "date": "2026-08-24",
-      "url": "/research/blog/2026-08-24-sunday-collection-coverage-audit.html",
-      "summary": "Comprehensive code coverage audit of the lab.franklin Ansible collection across 43 roles (4,376 task lines). Only four roles have real integration tests; testing infrastructure pivoted to native ansible-test with pypi_internal as approved package source.",
-      "tags": [
-        "infrastructure",
-        "ansible",
-        "automation",
-        "testing",
-        "ci-cd"
-      ]
-    },
-    {
       "id": "2026-08-27-thursday",
       "title": "Thursday, August 27: Storage1 Purge, Node Accessibility, and OpenClaw Performance KPIs",
       "date": "2026-08-27",
@@ -81,6 +67,20 @@
         "testing",
         "ci-cd",
         "molecule"
+      ]
+    },
+    {
+      "id": "2026-08-24-sunday-collection-coverage-audit",
+      "title": "Sunday Collection Coverage Audit: Ansible Test Gaps & Testing Infrastructure Stabilization",
+      "date": "2026-08-24",
+      "url": "/research/blog/2026-08-24-sunday-collection-coverage-audit.html",
+      "summary": "Comprehensive code coverage audit of the lab.franklin Ansible collection across 43 roles (4,376 task lines). Only four roles have real integration tests; testing infrastructure pivoted to native ansible-test with pypi_internal as approved package source.",
+      "tags": [
+        "infrastructure",
+        "ansible",
+        "automation",
+        "testing",
+        "ci-cd"
       ]
     },
     {
@@ -271,5 +271,5 @@
     }
   ],
   "totalPosts": 21,
-  "lastUpdated": "2026-08-29T04:26:02Z"
+  "lastUpdated": "2026-08-29T04:27:24Z"
 }
