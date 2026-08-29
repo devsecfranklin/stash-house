@@ -22,22 +22,45 @@
  {
    "@context": "https://schema.org",
    "@type": "TechArticle",
-   "headline": "Bitsmasher Lab Operations Manual",
+   "headline": "Bitsmasher Lab Infrastructure Manual",
    "description": "Systems administration runbooks, directory services, container orchestration, and infrastructure deployment.",
    "url": "https://www.bitsmasher.net/manual/",
+   "encodingFormat": "text/html",
    "inLanguage": "en",
    "author": {
      "@type": "Person",
      "name": "Franklin"
-   }
+   },
+   "hasPart": [
+     {
+       "@type": "DigitalDocument",
+       "name": "lab-manual.pdf",
+       "description": "Print-ready 62-page lab manual compiled from LaTeX source.",
+       "encodingFormat": "application/pdf",
+       "url": "https://www.bitsmasher.net/manual/lab-manual.pdf"
+     },
+     {
+       "@type": "DigitalDocument",
+       "name": "manual.md",
+       "description": "Full concatenated Markdown export of all 22 manual chapters for LLM/agent ingestion.",
+       "encodingFormat": "text/markdown",
+       "url": "https://www.bitsmasher.net/manual/manual.md"
+     },
+     {
+       "@type": "DataFeed",
+       "name": "index.json",
+       "description": "Section index with page ranges, file references, and machine-readable metadata.",
+       "encodingFormat": "application/json",
+       "url": "https://www.bitsmasher.net/manual/index.json"
+     }
+   ]
  }
  </script>
 </head>
 <body class="w3-black">
 
- <!-- Modular Navigation Bar -->
  <nav class="w3-container w3-margin-top" id="site-nav"></nav>
- <script src="/js/nav.js" defer></script>
+ <script src="/js/nav.js" defer="defer"></script>
 
  <main class="w3-container research-content">
  <header class="page-header">
@@ -53,17 +76,43 @@
 
  <div class="link-box" style="margin: 1.5rem 0;">
  <a href="/manual/lab-manual.pdf" target="_blank" rel="noopener noreferrer">
- 📄 <strong>Download Lab Manual (PDF)</strong>
+ &#128196; <strong>Download Lab Manual (PDF)</strong>
  </a>
  </div>
 
- <h3>Core Chapters &amp; Topics</h3>
+ <h3>All Sections (22)</h3>
+<ul class="manual-toc">
+ <li><a href="sections/ansible-lint.html">Ansible Lint</a></li>
+ <li><a href="sections/ansible.html">Ansible</a></li>
+ <li><a href="sections/cluster.html">Cluster</a></li>
+ <li><a href="sections/database.html">Database</a></li>
+ <li><a href="sections/direnv.html">Direnv</a></li>
+ <li><a href="sections/disaster-recovery.html">Disaster Recovery</a></li>
+ <li><a href="sections/dns.html">Dns</a></li>
+ <li><a href="sections/hardware.html">Hardware</a></li>
+ <li><a href="sections/history.html">History</a></li>
+ <li><a href="sections/kerberos.html">Kerberos</a></li>
+ <li><a href="sections/kubernetes.html">Kubernetes</a></li>
+ <li><a href="sections/ldap.html">Ldap</a></li>
+ <li><a href="sections/minecraft.html">Minecraft</a></li>
+ <li><a href="sections/network.html">Network</a></li>
+ <li><a href="sections/nfs-testing.html">Nfs Testing</a></li>
+ <li><a href="sections/pypi.html">Pypi</a></li>
+ <li><a href="sections/revision-control.html">Revision Control</a></li>
+ <li><a href="sections/security.html">Security</a></li>
+ <li><a href="sections/storage.html">Storage</a></li>
+ <li><a href="sections/terraform-infra.html">Terraform Infra</a></li>
+ <li><a href="sections/time.html">Time</a></li>
+ <li><a href="sections/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+
+
+ <h3>Machine-Readable Assets</h3>
  <ul>
- <li><strong>Identity &amp; Auth:</strong> Kerberos, OpenLDAP, Security &amp; Access Controls</li>
- <li><strong>Infrastructure:</strong> Hardware, Network Topology, Storage, NFS Testing, Time Sync</li>
- <li><strong>Automation:</strong> Ansible, Ansible-Lint, Terraform Infra, Revision Control</li>
- <li><strong>Services &amp; Clustering:</strong> Kubernetes, Cluster Management, Databases, PyPI, Minecraft</li>
- <li><strong>Operations:</strong> Direnv, Disaster Recovery, Troubleshooting Runbooks</li>
+ <li>[JSON Index](/manual/index.json) — Section metadata with page ranges and file references</li>
+ <li>[Markdown Export](/manual/manual.md) — Full 22-chapter plaintext documentation for agent ingestion</li>
+ <li>[LLMs.txt](/llms.txt) — AI/agent discovery manifest</li>
+ <li>[Sitemap](/sitemap.xml) — XML site map for search engines and crawlers</li>
  </ul>
  </div>
 

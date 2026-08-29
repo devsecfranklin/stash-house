@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Network</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Network section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Network_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/network.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Network</h1>
+<span class="meta"><em>Pages 37-39 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Network Infrastructure</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">Addressing Scheme</h3>
+<p class="latex-para">The lab uses private IPv4 addressing across multiple subnets, organized by function:</p>
+<p class="latex-para">tabularx}{}{l l X}</p>
+<p class="latex-para">&lt;strong&gt;Subnet&lt;/strong&gt; &amp; &lt;strong&gt;Allocation&lt;/strong&gt; &amp; &lt;strong&gt;Purpose&lt;/strong&gt; \\</p>
+<hr class="latex-hline">
+<p class="latex-para">10.10.8.0/21 &amp; chonk, chonk-wifi, music.lan (via skynet) &amp; Main office / desk area\\</p>
+<p class="latex-para">10.10.12.0/&amp; time, node90x, odroid-c1, blowfish, ns1 &amp; Core infrastructure\\</p>
+<p class="latex-para">10.10.13.0/ &amp; ldap/bbb1 &amp; Directory services (moved to working hosts)\\</p>
+<p class="latex-para">10.10.14.0/ &amp; blowfish (reassigned) &amp; New allocation for blowfish\\</p>
+<p class="latex-para">10.10.15.0/ &amp; femputer &amp; Guest / temporary hosts\\</p>
+<p class="latex-para">10.10.16.0/&amp; stargate, skynet, edge-t &amp; Lab backbone / staging</p>
+<p class="latex-para">tabularx}</p>
+<p class="latex-para">Note: The full subnet masks vary by role and DHCP scope configuration on the Dream Machine (DHCP server).</p>
+<h3 class="latex-subsection">DHCP</h3>
+<p class="latex-para">The dhcp} Ansible role manages the DHCP server configuration stored at roles/dhcp/files/dhcpd.conf}. Key reserved hosts include:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;chonk&lt;/strong&gt;: 10.10.8.60, MAC fc:9d:05:01:27:02 -- Franklin's desk</li>
+<li class="latex-list-item">&lt;strong&gt;chonk-wifi&lt;/strong&gt;: 10.10.8.61 -- wireless client</li>
+<li class="latex-list-item">&lt;strong&gt;chonk-ten-gig-1&lt;/strong&gt;: 10.10.8.?? -- dedicated ten-gig link</li>
+<li class="latex-list-item">&lt;strong&gt;blowfish&lt;/strong&gt;: 10.10.8.15 / 10.10.12.15, MAC 98:b7:85:21:ad:77 -- database host</li>
+<li class="latex-list-item">&lt;strong&gt;femputer&lt;/strong&gt;: 10.10.15.1, MAC d8:bb:c1:af:21:17 -- temporary/guest</li>
+</ul>
+<h3 class="latex-subsection">DNS</h3>
+<p class="latex-para">The DNS infrastructure is managed by the dns} Ansible role (BIND/named). Zones maintained include:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Forward zone: db.home.lab</li>
+<li class="latex-list-item">Reverse zones for each subnet</li>
+<li class="latex-list-item">A records and PTR records for all lab hosts</li>
+</ul>
+<p class="latex-para">DNS role molecule testing confirms BIND packages install correctly and named.conf.options are written. The DNS server (ns1) has been offline during recent audits, which explains why many hosts in the 10.10.x.0/24 range cannot resolve -- ns1 is a single point of failure for lab DNS resolution.</p>
+<h3 class="latex-subsection">Firewall and Access Control</h3>
+<ul class="latex-list">
+<li class="latex-list-item">The Dream Machine provides built-in DHCP and handles basic routing between subnets</li>
+<li class="latex-list-item">odroid-c1 serves as the KDC and likely has pf firewall rules managing cross-subnet Kerberos traffic</li>
+<li class="latex-list-item">OpenBSD hosts (blowfish planned) use pf for host-level firewalls</li>
+<li class="latex-list-item">stargate has configured SSH access from chonk via openclaw key pair</li>
+</ul>
+<h3 class="latex-subsection">Physical Topology</h3>
+<p class="latex-para">The lab spans multiple physical locations and subnets:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Main office where Franklin and Sly have their desks monitors (music.lan)</li>
+<li class="latex-list-item">Server racks hosting core infrastructure (time, odroid-c1/KDC)</li>
+<li class="latex-list-item">Jetson cluster (node900--node903) for GPU compute</li>
+<li class="latex-list-item">Public cloud (wonderland/178.62.60.55) for external-facing services</li>
+</ul>
+<p class="latex-para">Routing between the 192.168.86.x subnet (music) and the rest of the lab requires hopping through skynet due to the non-standard routing configuration.</p>
+
+<nav class="footer-nav">
+ <div><a href="minecraft.html" class="nav-prev">&#8592; Previous: Minecraft </a>  <a href="nfs-testing.html" class="nav-next">Next: Nfs Testing &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

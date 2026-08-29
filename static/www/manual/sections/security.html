@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Security</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Security section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Security_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/security.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Security</h1>
+<span class="meta"><em>Pages 48-50 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+<p class="latex-para">The lab.bitsmasher.net infrastructure relies on multiple security layers -- from SSH key-based authentication to automated vulnerability scanning. This chapter documents the security posture, procedures, and policies in place.</p>
+</div>
+<h2 class="latex-section">Authentication and Access Control</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">SSH Key Management</h3>
+<p class="latex-para">The lab uses ed25519 SSH keys for host authentication. All automation hosts share a common key pair:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Private key:&lt;/strong&gt; ~/.ssh/id\_ed25519\_openclaw (chonk)</li>
+<li class="latex-list-item">&lt;strong&gt;Public key:&lt;/strong&gt; ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJb9mV02PpxD8VpzYCnu7192dTwMnGWUc3qh55BIeElN openclaw@chonk</li>
+<li class="latex-list-item">&lt;strong&gt;Key users:&lt;/strong&gt; ``openclaw'' user on all production hosts</li>
+</ul>
+<h3 class="latex-subsection">SSH Hardening and Drop-In Standards</h3>
+<p class="latex-para">All hosts use standardized hardening.conf} drop-ins in /etc/ssh/sshd\_config.d/:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;PermitRootLogin prohibit-password&lt;/strong&gt; -- root login allowed only via key, never password</li>
+<li class="latex-list-item">&lt;strong&gt;StrictModes yes&lt;/strong&gt; -- OpenSSH enforces file permission checks on ~/.ssh and authorized\_keys</li>
+<li class="latex-list-item">&lt;strong&gt;Explicit user key sync&lt;/strong&gt; -- ed25519 keys deployed to target hosts via ansible ssh role; no manual key management</li>
+</ul>
+<h3 class="latex-subsection">Password Policy -- Subnet Exceptions</h3>
+<p class="latex-para">Passwords are used only as a temporary fallback. The following hosts have documented exceptions:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Jetson nodes (node900--node903)&lt;/strong&gt;: Temporary password authentication allowed pending ed25519 key rollout. Password is \texttt{123} for the franklin user. These nodes will be migrated to key-only auth when infrastructure permits.</li>
+</ul>
+<p class="latex-para">All other hosts enforce key-only authentication. No new password-based access may be granted without operator approval.</p>
+<h3 class="latex-subsection">User Accounts</h3>
+<p class="latex-para">center}</p>
+<p class="latex-para">tabular}{lll}</p>
+<hr class="latex-hline">
+<hr class="latex-hline">
+<p class="latex-para">  franklin &amp; Primary admin user &amp; All hosts; sudo NOPASSWD on skynet \\</p>
+<p class="latex-para">  openclaw &amp; Automation user &amp; All production hosts via ed25519 key \\</p>
+<hr class="latex-hline">
+<p class="latex-para">tabular}</p>
+<p class="latex-para">center}</p>
+</div>
+<h2 class="latex-section">Network Security</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">Subnet Segmentation</h3>
+<p class="latex-para">The lab is divided into dedicated subnets providing implicit isolation:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Main office:&lt;/strong&gt; 10.10.8.0/21 -- core infrastructure (chonk, stargate)</li>
+<li class="latex-list-item">&lt;strong&gt;Backbone:&lt;/strong&gt; 10.10.16.0/24 -- game server, DNS services</li>
+<li class="latex-list-item">&lt;strong&gt;Edge/specialized:&lt;/strong&gt; 10.10.12.x -- Jetson nodes, NTP, KDC, edge devices</li>
+<li class="latex-list-item">&lt;strong&gt;Service zone:&lt;/strong&gt; 10.10.13.0/24 -- LDAP directory services</li>
+<li class="latex-list-item">&lt;strong&gt;Storage zone:&lt;/strong&gt; 10.10.14.0/24 -- Blowfish and shared storage hosts</li>
+<li class="latex-list-item">&lt;strong&gt;Non-standard:&lt;/strong&gt; 192.168.86.x -- Music desktop (routed through skynet)</li>
+</ul>
+<h3 class="latex-subsection">Firewall Rules</h3>
+<p class="latex-para">The Ansible ``prereq'' role handles firewall exceptions for K3s API ports (6443, 2379--2381). Both UFW (Debian) and Firewalld (RedHat-family) are supported. Default policy is deny-all inbound with only explicitly allowed services accessible.</p>
+</div>
+<h2 class="latex-section">Certificate and TLS Management</h2>
+<div class="latex-content">
+<p class="latex-para">The ``tls'' role manages certificate provisioning across the lab:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Certificates are stored on NFS (clusterfs2) for cross-host availability</li>
+<li class="latex-list-item">OpenLDAP server experienced a TLS failure in December 2025 due to an expired certificate -- this is the primary remaining TLS vulnerability</li>
+<li class="latex-list-item">All external-facing services use HTTPS with valid certificates where applicable</li>
+</ul>
+</div>
+<h2 class="latex-section">Credential Management</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">Pass + GPG (Stash House)</h3>
+<p class="latex-para">Credentials are stored using pass} with GPG encryption. The Stash House project manages encrypted credential backups synced via bare git repositories:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Credentials never exist in plaintext in any repository</li>
+<li class="latex-list-item">Git repos use bare repositories to store only the encrypted .gpg files</li>
+<li class="latex-list-item">&lt;strong&gt;No git-lfs&lt;/strong&gt; is used for credential data (see LFS policy)</li>
+</ul>
+<h3 class="latex-subsection">Ansible Vault</h3>
+<p class="latex-para">Sensitive variables (firewall credentials, API keys) are stored using ansible-vault}. Vault files should never be committed to version control. The vault passphrase is managed outside the repository.</p>
+</div>
+<h2 class="latex-section">Backup and Disaster Recovery</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">Data Backups</h3>
+<p class="latex-para">NFS-mounted clusterfs2 provides shared storage with redundant copies across hosts. DNS zones are version-controlled in BIND configuration files. Credential data uses GPG-encrypted pass entries synced via bare git repos.</p>
+<h3 class="latex-subsection">Service Availability Status</h3>
+<p class="latex-para">center}</p>
+<p class="latex-para">tabular}{llll}</p>
+<hr class="latex-hline">
+<hr class="latex-hline">
+<p class="latex-para">  NTP stratum-1 &amp; time.lab.bitsmasher.net &amp; Online &amp; Current \\</p>
+<p class="latex-para">  KDC (Kerberos) &amp; odroid-c1.lab.bitsmasher.net &amp; Online &amp; ~242 days uptime \\</p>
+<p class="latex-para">  DNS (BIND) &amp; node3.lab.bitsmasher.net &amp; Operational &amp; August 2026 \\</p>
+<p class="latex-para">  OpenLDAP &amp; ldap.lab.bitsmasher.net &amp; Offline &amp; December 2025 \\</p>
+<hr class="latex-hline">
+<p class="latex-para">tabular}</p>
+<p class="latex-para">center}</p>
+<h3 class="latex-subsection">Disaster Recovery Priorities</h3>
+<ol class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;NTP (time host)&lt;/strong&gt; -- time sync failure cascades to all Kerberos authentication</li>
+<li class="latex-list-item">&lt;strong&gt;DNS (node3, BIND)&lt;/strong&gt; -- resolution failure makes most hosts unreachable by name</li>
+<li class="latex-list-item">&lt;strong&gt;Kerberos KDC&lt;/strong&gt; -- authentication cascade failure affects all service access</li>
+<li class="latex-list-item">&lt;strong&gt;LDAP&lt;/strong&gt; -- directory services, offline since December 2025</li>
+</ol>
+</div>
+<h2 class="latex-section">Container and Kubernetes Security</h2>
+<div class="latex-content">
+<p class="latex-para">The k3s cluster is hardened with:</p>
+<li class="latex-list-item">Version pinning to 2.1.x</li>
+<li class="latex-list-item">Containerd runtime with NVIDIA GPU support</li>
+<li class="latex-list-item">TLS for all API communication (k3s default)</li>
+<li class="latex-list-item">Pod security policies via Kubernetes native admission controllers</li>
+</ul>
+</div>
+<h2 class="latex-section">Automated Security Scanning</h2>
+<div class="latex-content">
+<p class="latex-para">The .github directory contains the following automated workflows:</p>
+<p class="latex-para">center}</p>
+<p class="latex-para">tabular}{lcl}</p>
+<hr class="latex-hline">
+<hr class="latex-hline">
+<p class="latex-para">  bandit.yml &amp; Bandit &amp; Python static analysis for security vulnerabilities \\</p>
+<p class="latex-para">  tfsec-sarif.yml &amp; tfsec &amp; Terraform IaC security scanning \\</p>
+<p class="latex-para">  trivy.yaml / trivy-cb.yml &amp; Trivy &amp; Container and filesystem vulnerability scanning \\</p>
+<p class="latex-para">  bash\_check.yaml &amp; GNU Autotools &amp; Build system validation (make security) \\</p>
+<hr class="latex-hline">
+<p class="latex-para">tabular}</p>
+<p class="latex-para">center}</p>
+<p class="latex-para">All scanning workflows run on every pull request and main branch push. Results are uploaded as SARIF artifacts for review.</p>
+
+<nav class="footer-nav">
+ <div><a href="revision-control.html" class="nav-prev">&#8592; Previous: Revision Control </a>  <a href="storage.html" class="nav-next">Next: Storage &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

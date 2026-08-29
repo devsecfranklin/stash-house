@@ -1,23 +1,29 @@
-# Bitsmasher Lab
+# Bitsmasher Lab & Infrastructure
+> Documentation and manual for bitsmasher homelab, networking, and automation.
 
-> Systems architecture, decentralized protocols, AI security engineering, and lab operations.
+## Core Infrastructure
+- Website: https://www.bitsmasher.net
+- DNS: node3 (10.10.12.3) — authoritative BIND9 master for lab.bitsmasher.net
+- KDC: odroid-c1.lab.bitsmasher.net — MIT Kerberos KDC for lab.bitsmasher.net realm
+- Ansible workspace: stargate.research.bitsmasher.net (primary), chonk.local (secondary mirror)
 
-## Core Documentation & Manuals
-- [/manual/index.html](/manual/index.html): Lab Operations Manual (Ansible, Kerberos, Kubernetes, DNS, Storage)
-- [/manual/index.json](/manual/index.json): JSON Feed manifest of manual modules and PDF downloads
-- [/manual/manual.md](/manual/manual.md): Full concatenated Markdown export of all 22 manual chapters for LLM ingestion
-- [/manual/lab-manual.pdf](/manual/lab-manual.pdf): Master compiled operations manual (PDF, 64 pages)
+## Manual & Documentation
+- [Lab Manual Markdown](https://www.bitsmasher.net/manual/manual.md): Full comprehensive lab documentation in plain markdown.
+- [Lab Manual JSON Index](https://www.bitsmasher.net/manual/index.json): Section index with page ranges and section slugs.
+- [Lab Manual PDF](https://www.bitsmasher.net/manual/lab-manual.pdf): Print-ready 62-page lab manual.
+- [Manual HTML](https://www.bitsmasher.net/manual/): Browser-readable manual landing page with JSON-LD Schema.org markup.
 
 ## Training & Curriculum
-- [/training/index.html](/training/index.html): Technical training curriculum, slide decks, and lab exercises
-- [/training/index.json](/training/index.json): JSON Feed manifest of AI security, MCP, and prompt engineering modules
-- [/training/docs/coding-foundations.html](/training/docs/coding-foundations.html): Systems and software engineering foundations syllabus
-- [/training/docs/ai-security.html](/training/docs/ai-security.html): Enterprise AI security, threat modeling, and defensive operations syllabus
+- [Training Index](https://www.bitsmasher.net/training/): Technical training curriculum and slide decks.
+- [Coding Foundations](https://www.bitsmasher.net/training/docs/coding-foundations.html): Systems and software engineering syllabus.
+- [AI Security](https://www.bitsmasher.net/training/docs/ai-security.html): Enterprise AI security, threat modeling, defensive operations.
 
 ## Research
-- [/research/index.html](/research/index.html): Systems and security engineering research blog
-- [/research/index.json](/research/index.json): JSON Feed v1.1 research post archive
-- [/research/about/index.html](/research/about/index.html): Research lab overview and methodology
+- [Research Index](https://www.bitsmasher.net/research/): Systems and security engineering research blog.
+- [Research About](https://www.bitsmasher.net/research/about/): Research methodology overview.
 
-## Optional
-- [/llms-full.txt](/llms-full.txt): Complete concatenated documentation archive for agent ingestion
+## Discovery & Metadata
+- [robots.txt](https://www.bitsmasher.net/robots.txt): Crawling rules for search engines.
+- [sitemap.xml](https://www.bitsmasher.net/sitemap.xml): XML site map covering all routes.
+- [llms-full.txt](https://www.bitsmasher.net/llms-full.txt): Complete concatenated documentation archive.
+- [nostr.txt](https://www.bitsmasher.net/nostr.txt): Nostr-related metadata and protocol docs.

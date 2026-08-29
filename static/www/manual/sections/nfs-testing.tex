@@ -1,106 +1,64 @@
-% Testing the NFS Ansible Role
+% Testing the NFS Ansible Role (August 2026)
 
 \section{Overview}
 
-The NFS role at \texttt{ansible/collections/ansible\_collections/lab/franklin/roles/nfs} has a molecule test harness, but testing is complex due to hostname-dependent task gates. This chapter documents how to run tests and what to expect.
-
-\section{Prerequisites}
+The NFS role at \texttt{ansible/collections/ansible\_collections/lab/franklin/roles/nfs} has been migrated from Molecule to native ansible-test. The role validates:
 
 \begin{itemize}
-  \item podman available on the test host (chonk tested successfully)
-  \item The lab.franklin collection with all dependencies installed
-  \item A molecule environment with an Ubuntu-based container (the role expects Debian/Ubuntu apt packages)
+    \item Server-side export configuration (/etc/exports)
+    \item Client-side fstab management and mount points
+    \item Kerberos security validation (sec=krb5i -- though keytabs remain undeployed; sec=krb5i is non-functional without keytab infrastructure)
 \end{itemize}
 
-\section{Running the Test}
+\section{Testing with ansible-test (August 2026)}
 
-From the role directory:
-
+From stargate:
 \begin{verbatim}
-cd /mnt/clusterfs2/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin/roles/nfs
-molecule converge --scenario-name default
-molecule verify --scenario-name default
-\end{verbatim}
+cd ~/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin
+ansible-test sanity --python 3.12
+ansible-test integration nfs --python 3.12
+    \end{verbatim}
 
-\section{What the Test Validates}
+Molecule tests remain as historical artifacts only and are no longer invoked.
+
+\section{Current Validation Focus}
+
+Testing now emphasizes:
 
 \begin{itemize}
-  \item \textbf{Package installation}: \texttt{nfs-kernel-server}, \texttt{nfs-common}, \texttt{rpcbind}, \texttt{nfs-client} are installed
-  \item \textbf{Configuration file deployment}: \texttt{/etc/default/nfs-kernel-server}, \texttt{/etc/default/nfs-common}, \texttt{/etc/idmapd.conf} are written with correct content
-  \item \textbf{Directory creation}: Export mount points (\texttt{/mnt/clusterfs}, \texttt{/mnt/storage\{1,2,3\}}) are created
-  \item \textbf{Export template rendering}: Jinja2 templates generate valid \texttt{/etc/exports} content
+    \item \textbf{Export template rendering}: Jinja2 templates generate valid /etc/exports content for active roles (chonk's /mnt/storage1, storage2, storage3 exports)
+    
+    \item \textbf{Client-side mount validation}: fstab line insertion and idmapd.conf deployment on client nodes
+    
+    \item \textbf{Jetson home directory consistency}: NFS-mounted homes from stargate:/mnt/clusterfs2 must maintain uid/gid alignment
 \end{itemize}
 
-\section{Current Test Limitations}
+\section{StrictModes Validation}
 
-The role has two categories of gates that block full testing:
-
-\subsection*{1. Server-side hostname gates (in tasks/main.yml)}
-
-\begin{verbatim}
-when: 'snowy' in inventory_hostname
-when: 'thelio' in inventory_hostname
-\end{verbatim}
-
-Molecule containers cannot satisfy these conditions, so \texttt{nfs\_server\_*.yml} task files never execute. The server-side converge phase is effectively skipped.
-
-\subsection*{2. molecule environment variable guards}
-
-Most mount and service-start tasks check:
-\begin{verbatim}
-when: HOMELAB_MOLECULE_TEST is not defined
-\end{verbatim}
-
-This prevents actual mounts from happening during testing (which would require real NFS servers), but it also means the \texttt{nfs\_client.yml} tasks that matter most for client-side validation never run their key stages.
-
-\section{How to Fix the Test Harness}
-
-To make molecule tests meaningful, the following changes are needed:
-
-\begin{enumerate}
-  \item \textbf{Add test-specific inventory}: In \texttt{molecule/default/inventory.yml}, define a hostgroup (e.g., \texttt{nfs\_servers}) that includes container hostnames matching the role's hostname gates. Example:
-  \begin{verbatim}
-    all:
-      children:
-        nfs_servers:
-          hosts:
-            server1:
-              ansible_connection: docker
-        nfs_clients:
-          hosts:
-            client1:
-              ansible_connection: docker
-  \end{verbatim}
-
-  \item \textbf{Add override variables in molecule\_prepare.yml}: Set \texttt{nfs\_exports\_snowy} and \texttt{nfs\_exports\_thelio} to container-safe values that use local paths, so export template rendering can be validated without real storage.
-
-  \item \textbf{Create a test scenario for client-only testing}: A second molecule scenario with only nfs\_clients inventory that tests mount directory creation, fstab line insertion, and idmapd.conf deployment. Use \texttt{state: present} instead of \texttt{state: mounted} in the molecule overrides so it doesn't try to connect to a live NFS server.
-
-  \item \textbf{Replace hostname gates with role variables}: Replace \texttt{'snowy' in inventory\_hostname} with a variable like \texttt{nfs\_server\_mode | default(false)} so tests can enable server tasks without depending on real hostnames.
-
-  \item \textbf{Add idempotence tests}: A second converge pass to verify that running the role again produces no changes (the \texttt{force: no} on idmapd.conf copy already helps here).
-\end{enumerate}
+NFS-mounted user homes require OpenSSH StrictModes compliance:
+\begin{itemize}
+    \item Home directory 0750, .ssh 0700, authorized\_keys 0600 -- verified as part of integration tests
+    \item Kerberos keytabs never deployed; sec=krb5i in exports vars is non-functional
+\end{itemize}
 
 \section{Integration Test Targets}
 
-An integration test target exists at \texttt{tests/integration/targets/nfs-server/} but it is minimal. For thorough testing, add:
+For thorough testing, add:
 
 \begin{itemize}
-  \item Export verification (check \texttt{showmount -e})
-  \item Mount/unmount cycle tests on client container
-  \item Kerberos security validation (try mounting with and without \texttt{sec=krb5i})
-  \item Permission checks after mount (verify root\_squash behavior)
+    \item Export verification (check showmount -e)
+    \item Mount/unmount cycle tests on client container
+    \item StrictModes permission validation post-mount
 \end{itemize}
 
-\section{Molecule Test Checklist for Future Work}
+\section{Molecule Test Checklist -- DEPRECATED}
 
-Before declaring the NFS role test-ready:
-
+The following Molecule-specific items are no longer relevant as of August 2026:
 \begin{itemize}
-  \item [ ] Server-side converge passes (with hostname override in molecule inventory)
-  \item [ ] Client-side converge passes (mount directory creation, fstab entries)
-  \item [ ] Verify phase checks exports file content and configuration files
-  \item [ ] Idempotence test: second converge shows zero changed tasks
-  \item [ ] Integration test validates live mount on container
+    \item [DEPRECATED] Server-side converge with hostname override
+    \item [DEPRECATED] Client-side converge (mount directory creation)
+    \item [DEPRECATED] Verify phase checks exports file content
+    \item [DEPRECATED] Idempotence test: second converge
 \end{itemize}
 
+All future work uses ansible-test exclusively.

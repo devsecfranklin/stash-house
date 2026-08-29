@@ -16,8 +16,27 @@ The lab uses ed25519 SSH keys for host authentication. All automation hosts shar
   \item \textbf{Key users:} ``openclaw'' user on all production hosts
 \end{itemize}
 
-\subsection{Password Policy}
-Passwords are used only as a temporary fallback. The Jetson nodes (node900--node903) currently use password ``123'' for the franklin user during provisioning; this should be replaced with key-based authentication when possible.
+\subsection{SSH Hardening and Drop-In Standards}
+
+All hosts use standardized \texttt{hardening.conf} drop-ins in /etc/ssh/sshd\_config.d/:
+
+\begin{itemize}
+    \item \textbf{PermitRootLogin prohibit-password} -- root login allowed only via key, never password
+  
+    \item \textbf{StrictModes yes} -- OpenSSH enforces file permission checks on ~/.ssh and authorized\_keys
+  
+    \item \textbf{Explicit user key sync} -- ed25519 keys deployed to target hosts via ansible ssh role; no manual key management
+\end{itemize}
+
+\subsection{Password Policy -- Subnet Exceptions}
+
+Passwords are used only as a temporary fallback. The following hosts have documented exceptions:
+
+\begin{itemize}
+    \item \textbf{Jetson nodes (node900--node903)}: Temporary password authentication allowed pending ed25519 key rollout. Password is \texttt{123} for the franklin user. These nodes will be migrated to key-only auth when infrastructure permits.
+\end{itemize}
+
+All other hosts enforce key-only authentication. No new password-based access may be granted without operator approval.
 
 \subsection{User Accounts}
 
@@ -27,7 +46,7 @@ Passwords are used only as a temporary fallback. The Jetson nodes (node900--node
   \textbf{User} & \textbf{Purpose} & \textbf{Access Scope} \\ \hline
   franklin & Primary admin user & All hosts; sudo NOPASSWD on skynet \\
   openclaw & Automation user & All production hosts via ed25519 key \\
-  root & Emergency access & KDC, ldap, music host only \\ \hline
+  root & Emergency access & KDC, ldap, music host only; key auth only \\ \hline
 \end{tabular}
 \end{center}
 
@@ -82,7 +101,7 @@ NFS-mounted clusterfs2 provides shared storage with redundant copies across host
   \textbf{Service} & \textbf{Host} & \textbf{Status} & \textbf{Last Known Good} \\ \hline
   NTP stratum-1 & time.lab.bitsmasher.net & Online & Current \\
   KDC (Kerberos) & odroid-c1.lab.bitsmasher.net & Online & ~242 days uptime \\
-  DNS (BIND) & ns1.lab.bitsmasher.net & Offline & December 2025 \\
+  DNS (BIND) & node3.lab.bitsmasher.net & Operational & August 2026 \\
   OpenLDAP & ldap.lab.bitsmasher.net & Offline & December 2025 \\
   Minecraft & skynet.lab.bitsmasher.net & Online & Current \\ \hline
 \end{tabular}
@@ -91,7 +110,7 @@ NFS-mounted clusterfs2 provides shared storage with redundant copies across host
 \subsection{Disaster Recovery Priorities}
 \begin{enumerate}
   \item \textbf{NTP (time host)} -- time sync failure cascades to all Kerberos authentication
-  \item \textbf{DNS (BIND)} -- resolution failure makes most hosts unreachable by name
+  \item \textbf{DNS (node3, BIND)} -- resolution failure makes most hosts unreachable by name
   \item \textbf{Kerberos KDC} -- authentication cascade failure affects all service access
   \item \textbf{LDAP} -- directory services, offline since December 2025
 \end{enumerate}
@@ -99,7 +118,6 @@ NFS-mounted clusterfs2 provides shared storage with redundant copies across host
 \section{Container and Kubernetes Security}
 
 The k3s cluster is hardened with:
-\begin{itemize}
   \item Version pinning to 2.1.x
   \item Containerd runtime with NVIDIA GPU support
   \item TLS for all API communication (k3s default)
@@ -122,4 +140,3 @@ The .github directory contains the following automated workflows:
 \end{center}
 
 All scanning workflows run on every pull request and main branch push. Results are uploaded as SARIF artifacts for review.
-

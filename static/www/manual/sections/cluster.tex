@@ -1,7 +1,40 @@
-% sec 03 ch 02 clustershell
-\section{Clustershell}
+% Ansible Workspace & Node Inventory -- August 2026
 
-all
-head
-compute
-gpu
+\section{Ansible Workspace}
+
+All Ansible source code, playbooks, roles, and testing are centralized on \textbf{stargate.research.bitsmasher.net}:
+
+\begin{itemize}
+    \item \textbf{Primary workspace}: \texttt{~/workspace/lab-franklin/ansible/} on stargate
+    
+    \item \textbf{Secondary (chonk)}: \texttt{/mnt/backup1/workspace/lab-franklin/ansible/} (mirror for local builds)
+    
+    \item \textbf{Interpreter}: \texttt{/home/franklin/.local/bin/ansible} on stargate
+    
+    \item \textbf{Testing standard}: Native \texttt{ansible-test} (sanity + integration) -- Molecule deprecated as of August 2026
+\end{itemize}
+
+\section{Cluster Architecture}
+
+The lab uses cluster-wide automation via ansible-playbook targeting inventory groups defined in \texttt{ansible/hosts}. Cluster management is handled through role-based provisioning rather than a dedicated orchestration layer.
+
+\subsection{k3s Clustershell (Historical)}
+
+Previous cluster shell groupings remain documented for reference:
+\begin{verbatim}
+all     -- all managed nodes
+head    -- control plane nodes
+compute -- worker nodes
+gpu     -- GPU-enabled Jetson nodes
+    \end{verbatim}
+
+These groupings are now managed through Ansible inventory patterns rather than clustershell.
+
+\subsection{Centralized Ansible Workflow}
+
+\begin{enumerate}
+    \item Role changes committed to stargate workspace
+    \item Native ansible-test runs on stargate (zero external cost)
+    \item Playbook execution targets remote hosts via SSH batch probes
+    \item Changes verified via dynamic reachability: \texttt{ssh -o BatchMode=yes -o ConnectTimeout=3 franklin@\textless host\textgreater}
+\end{enumerate}

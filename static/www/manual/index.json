@@ -1,70 +1,161 @@
 {
-  "version": "https://jsonfeed.org/version/1.1",
   "title": "Bitsmasher Lab Operations Manual",
-  "home_page_url": "https://www.bitsmasher.net/manual/",
-  "feed_url": "https://www.bitsmasher.net/manual/index.json",
-  "description": "Systems administration runbooks, directory services, container orchestration, and infrastructure deployment.",
-  "user_comment": "Machine-readable chapter manifest and runbook catalog for Bitsmasher Lab.",
-  "author": {
-    "name": "robot 🤖",
-    "url": "https://www.bitsmasher.net/manual/"
-  },
-  "items": [
+  "pageCount": 62,
+  "sections": [
     {
-      "id": "https://www.bitsmasher.net/manual/lab-manual.pdf",
-      "url": "https://www.bitsmasher.net/manual/lab-manual.pdf",
-      "title": "Bitsmasher Lab Operations Manual (Compiled Master PDF)",
-      "date_published": "2026-08-26T00:00:00Z",
-      "summary": "Master compiled 64-page operations, systems architecture, and node management manual.",
-      "attachments": [
-        {
-          "url": "https://www.bitsmasher.net/manual/lab-manual.pdf",
-          "mime_type": "application/pdf",
-          "title": "Master Manual PDF"
-        }
-      ]
+      "title": "Ansible Lint",
+      "file": "ansible-lint.tex",
+      "id": "ansible-lint",
+      "start_page": 1,
+      "end_page": 2
     },
     {
-      "id": "https://www.bitsmasher.net/manual/manual.md",
-      "url": "https://www.bitsmasher.net/manual/manual.md",
-      "title": "Bitsmasher Lab Operations Manual (Plaintext Markdown Archive)",
-      "date_published": "2026-08-26T00:00:00Z",
-      "summary": "Full concatenated Markdown export of all 22 operational chapters for agent ingestion.",
-      "attachments": [
-        {
-          "url": "https://www.bitsmasher.net/manual/manual.md",
-          "mime_type": "text/markdown",
-          "title": "Plaintext Markdown Source"
-        }
-      ]
+      "title": "Ansible",
+      "file": "ansible.tex",
+      "id": "ansible",
+      "start_page": 3,
+      "end_page": 5
     },
     {
-      "id": "https://www.bitsmasher.net/manual/#identity-auth",
-      "url": "https://www.bitsmasher.net/manual/",
-      "title": "Identity, Directory & Authentication",
-      "summary": "Kerberos principal management, keytabs, OpenLDAP schema configurations, and host-level access controls.",
-      "tags": ["/auth/", "/kerberos/", "/ldap/", "/security/"]
+      "title": "Cluster",
+      "file": "cluster.tex",
+      "id": "cluster",
+      "start_page": 6,
+      "end_page": 8
     },
     {
-      "id": "https://www.bitsmasher.net/manual/#infrastructure-network",
-      "url": "https://www.bitsmasher.net/manual/",
-      "title": "Hardware, Network & Core Services",
-      "summary": "Physical node profiles, network architecture, BIND9 DNS zones, NTP/Chrony time sync, and storage arrays.",
-      "tags": ["/hardware/", "/network/", "/dns/", "/time/", "/storage/"]
+      "title": "Database",
+      "file": "database.tex",
+      "id": "database",
+      "start_page": 9,
+      "end_page": 11
     },
     {
-      "id": "https://www.bitsmasher.net/manual/#automation-provisioning",
-      "url": "https://www.bitsmasher.net/manual/",
-      "title": "Automation, Provisioning & Tooling",
-      "summary": "Ansible roles, Molecule testing, ansible-lint standards, Terraform infrastructure, and git revision control.",
-      "tags": ["/ansible/", "/terraform/", "/direnv/", "/git/"]
+      "title": "Direnv",
+      "file": "direnv.tex",
+      "id": "direnv",
+      "start_page": 12,
+      "end_page": 14
     },
     {
-      "id": "https://www.bitsmasher.net/manual/#clusters-operations",
-      "url": "https://www.bitsmasher.net/manual/",
-      "title": "Clustering, Services & Incident Runbooks",
-      "summary": "Kubernetes cluster operations, PostgreSQL database administration, local PyPI mirrors, disaster recovery runbooks, and troubleshooting.",
-      "tags": ["/kubernetes/", "/cluster/", "/database/", "/pypi/", "/dr/", "/troubleshooting/"]
+      "title": "Disaster Recovery",
+      "file": "disaster-recovery.tex",
+      "id": "disaster-recovery",
+      "start_page": 15,
+      "end_page": 16
+    },
+    {
+      "title": "Dns",
+      "file": "dns.tex",
+      "id": "dns",
+      "start_page": 17,
+      "end_page": 19
+    },
+    {
+      "title": "Hardware",
+      "file": "hardware.tex",
+      "id": "hardware",
+      "start_page": 20,
+      "end_page": 22
+    },
+    {
+      "title": "History",
+      "file": "history.tex",
+      "id": "history",
+      "start_page": 23,
+      "end_page": 25
+    },
+    {
+      "title": "Kerberos",
+      "file": "kerberos.tex",
+      "id": "kerberos",
+      "start_page": 26,
+      "end_page": 28
+    },
+    {
+      "title": "Kubernetes",
+      "file": "kubernetes.tex",
+      "id": "kubernetes",
+      "start_page": 29,
+      "end_page": 31
+    },
+    {
+      "title": "Ldap",
+      "file": "ldap.tex",
+      "id": "ldap",
+      "start_page": 32,
+      "end_page": 33
+    },
+    {
+      "title": "Minecraft",
+      "file": "minecraft.tex",
+      "id": "minecraft",
+      "start_page": 34,
+      "end_page": 36
+    },
+    {
+      "title": "Network",
+      "file": "network.tex",
+      "id": "network",
+      "start_page": 37,
+      "end_page": 39
+    },
+    {
+      "title": "Nfs Testing",
+      "file": "nfs-testing.tex",
+      "id": "nfs-testing",
+      "start_page": 40,
+      "end_page": 42
+    },
+    {
+      "title": "Pypi",
+      "file": "pypi.tex",
+      "id": "pypi",
+      "start_page": 43,
+      "end_page": 45
+    },
+    {
+      "title": "Revision Control",
+      "file": "revision-control.tex",
+      "id": "revision-control",
+      "start_page": 46,
+      "end_page": 47
+    },
+    {
+      "title": "Security",
+      "file": "security.tex",
+      "id": "security",
+      "start_page": 48,
+      "end_page": 50
+    },
+    {
+      "title": "Storage",
+      "file": "storage.tex",
+      "id": "storage",
+      "start_page": 51,
+      "end_page": 53
+    },
+    {
+      "title": "Terraform Infra",
+      "file": "terraform-infra.tex",
+      "id": "terraform-infra",
+      "start_page": 54,
+      "end_page": 56
+    },
+    {
+      "title": "Time",
+      "file": "time.tex",
+      "id": "time",
+      "start_page": 57,
+      "end_page": 59
+    },
+    {
+      "title": "Troubleshooting",
+      "file": "troubleshooting.tex",
+      "id": "troubleshooting",
+      "start_page": 60,
+      "end_page": 62
     }
-  ]
+  ],
+  "generatedAt": "2026-08-27T21:35:00Z"
 }

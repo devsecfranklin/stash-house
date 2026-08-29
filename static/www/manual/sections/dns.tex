@@ -1,55 +1,72 @@
 \section{DNS Configuration}
 
-\subsection{BIND Overview}
+\subsection{BIND Overview -- Post-Migration (August 2026)}
 
-The lab uses BIND (named) as its authoritative DNS server. The DNS infrastructure is managed by the \texttt{dns} Ansible role in the lab-franklin collection, located at:
+The DNS infrastructure has been migrated from the legacy \texttt{server1} (10.10.12.12) to a new authoritative setup:
+
+\begin{itemize}
+    \item \textbf{DNS Master}: \textbf{node3} (10.10.12.3) -- promoted from client node to authoritative BIND9 master
+    
+    \item \textbf{Legacy DNS host}: \texttt{server1} (10.10.12.12) has been decommissioned; all zone transfers and updates now target node3
+\end{itemize}
+
+The DNS role in lab-franklin's Ansible collection manages:
+\begin{itemize}
+    \item Forward zone: db.home.lab (hostnames to IPs)
+    \item Reverse zones: PTR records for each 10.10.x.0/24 subnet
+    \item SRV records: Kerberos service discovery
+    \item Zone file generation via Jinja2 templates on node3
+\end{itemize}
+
+\subsection{Zone and Host Realignment (August 2026)}
+
+The following entries have been updated in the forward zone (db.home.lab):
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+\textbf{Hostname} & \textbf{IP Address} & \textbf{Notes} \\ \hline
+stargate.research.bitsmasher.net & 10.10.16.66 & Ansible orchestration host, primary workspace \\
+chonk.lab.bitsmasher.net & 10.10.8.60 & Gateway host, primary compute + inference \\ \hline
+\end{tabular}
+\end{center}
+
+The corresponding reverse zones (PTR records) have been updated to match:
+\begin{itemize}
+    \item 10.10.16.66 $\rightarrow$ stargate.research.bitsmasher.net
+    \item 10.10.8.60 $\rightarrow$ chonk.lab.bitsmasher.net
+\end{itemize}
+
+\subsection{Kerberos SRV RFC Compliance}
+
+The following SRV records now point directly to FQDN A records rather than CNAMEs, per RFC 2782:
+
 \begin{lstlisting}[style=mystyle]
-ansible/collections/ansible_collections/lab/franklin/roles/dns/
+_kerberos-adm._tcp.lab.bitsmasher.net IN SRV 0 100 749 kdc1.lab.bitsmasher.net.
+_kerberos._tcp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kerberos._udp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kdc._tcp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kdc._udp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
     \end{lstlisting}
 
-\subsection{Zones Maintained}
-
-\begin{itemize}
-    \item \textbf{Forward zone}: db.home.lab -- maps hostnames to IPs for all lab infrastructure
-    
-    \item \textbf{Reverse zones}: PTR records for each subnet (10.10.x.0/24 ranges)
-    
-    \item \textbf{SRV records}: Kerberos service discovery (\_kerberos.\_tcp, \_kdc.tcp)
-\end{itemize}
-
-\subsection{DNS Server Location}
-
-The DNS server (ns1) is the single authoritative nameserver for the lab. It has been unreachable during recent infrastructure audits, which explains why many hosts cannot resolve hostnames -- ns1 \textit{is} the DNS server and it's offline.
-
-When ns1 is available, it resolves all internal hostnames. Key entries include:
-\begin{itemize}
-    \item time.lab.bitsmasher.net $\rightarrow$ 10.10.12.2 (NTP server)
-    \item odroid-c1.lab.bitsmasher.net $\rightarrow$ 10.10.12.254 (KDC)
-    \item ldap.lab.bitsmasher.net $\rightarrow$ 10.10.13.1 (OpenLDAP)
-    \item blowfish.lab.bitsmasher.net $\rightarrow$ 10.10.14.85 (reassigned from 10.10.12.15)
-\end{itemize}
-
-\subsection{Molecule Test Harness}
-
-The DNS role has a molecule test harness that confirms:
-\begin{enumerate}
-    \item \textbf{Converge}: BIND packages installed, /etc/bind directory created, named.conf.options written
-    \item \textbf{Test sequence}: dependency $\rightarrow$ syntax $\rightarrow$ create (podman container) $\rightarrow$ prepare $\rightarrow$ converge
-    
-    \item \textbf{Limitation}: molecule test uses Ubuntu 20.04 container with hostname "server1"; the role has a hostname gate that targets the real DNS server's hostname
-\end{enumerate}
-
-The DNS molecule test confirms correct package installation and configuration file placement but does not verify actual name resolution (no live DNS server in the container test environment).
+\textbf{Note}: The \texttt{_kerberos-adm.\_tcp} record now points directly to the A record for \texttt{kdc1.lab.bitsmasher.net} rather than via a CNAME chain, eliminating resolution latency and failure modes from indirection.
 
 \subsection{DNS Failure Impact}
 
-When ns1 is offline:
+When the DNS master (node3) is offline:
 \begin{itemize}
-    \item Lab hosts fall back to /etc/hosts entries (which are authoritative but not dynamic)
+    \item Lab hosts fall back to /etc/hosts entries (authoritative but static -- no dynamic updates)
     
-    \item Kerberos KDC discovery via SRV records fails -- clients need manual kdc = entry in krb5.conf
+    \item Kerberos KDC discovery via SRV records fails -- clients need manual \texttt{kdc = kdc1.lab.bitsmasher.net} in \texttt{/etc/krb5.conf}
     
-    \item DHCP reservations on the Dream Machine remain functional (DHCP server is separate from DNS)
+    \item Dynamic zone updates cannot propagate; new hosts require manual /etc/hosts sync
 \end{itemize}
 
-The DNS role's molecule test harness ensures that when the server comes back online, its configuration will install and write correctly.
+\subsection{DNS Maintenance Procedures}
+
+Zone file updates are committed to the DNS Ansible role and deployed via:
+\begin{lstlisting}[style=mystyle]
+ansible-playbook -l dns_servers -t dns deploy.yml
+    \end{lstlisting}
+
+Forward and reverse zone files should be audited quarterly for IP realignment accuracy.

@@ -2,38 +2,46 @@
 
 \subsection{Host and Location}
 
-The Minecraft server runs on \textbf{skynet.lab.bitsmasher.net} (10.10.16.10), one of the core lab infrastructure hosts alongside stargate and chonk. The Minecraft role is managed by the \texttt{minecraft} Ansible role in the lab-franklin collection.
+The Minecraft server (Dreamland) runs on \textbf{chonk.lab.bitsmasher.net} (10.10.8.60), a primary compute host with RX 9070 / Navi 48 GPU. Server files are at /home/minecraft.
 
-Skynet's dual-role setup:
+Previous host was skynet.lab.bitsmasher.net (10.10.16.10) during the CraftBukkit/early Paper era.
+
+\subsection{Current Configuration}
+
+The server runs \textbf{Paper 1.21.11} on Java 21 (Debian Bookworm). Key settings:
 \begin{itemize}
-    \item Primary: Minecraft game server host
-    
-    \item Secondary: General-purpose infrastructure node (Ansible workspace, CI testing)
+    \item Gamemode: Survival
+    \item Difficulty: Normal
+    \item Max players: 69
+    \item PvP: Disabled
+    \item View distance: 10 (simulation distance: 12)
+    \item Server port: 25565
 \end{itemize}
 
-Note: skynet uses IP-based SSH login (10.10.16.10) rather than hostname -- the hostname resolves oddly in SSH config due to a double-domain suffix issue.
+The server name is \textit{Dreamland} (MOTD: \texttt{\&aDreamland\&7 | \&fEst. 2012}).
 
-\subsection{World and Chunk Storage}
+\subsection{Core Plugins}
 
-Minecraft world data is stored on NFS-mounted storage (clusterfs2). The world files are version-controlled where practical, with the following constraint:
-
-\textbf{NO GIT-LFS}: Chunk files and world data must not use git-lfs. The Minecraft repository hit GitHub's 10GB LFS limit in a prior incident where chunk files were held hostage. Use bare git repos for any versioned world data.
-
-\subsection{Dreamland Connection}
-
-The \textit{Dreamland Manual} referenced in the docs/manual directory covers the Dreamland Minecraft server -- this manual documents that specific server's configuration, players, and game rules. The physical infrastructure (skynet host) is shared between both operations.
-
-\subsection{Server Management via Ansible}
-
-The minecraft role handles:
 \begin{itemize}
-    \item Minecraft server installation and version updates
-    
-    \item World backup procedures (NFS snapshots or bare git repos)
-    
-    \item Player whitelist management
-    
-    \item Mod/plugin configuration if applicable
+    \item \textbf{EssentialsX} -- Core, Chat, AntiBuild
+    \item \textbf{LuckPerms} -- Permissions (backed by MariaDB)
+    \item \textbf{CoreProtect} -- Audit/log (backed by MySQL)
 \end{itemize}
 
-Molecule testing for the minecraft role confirms correct file placement and configuration generation, though live server connectivity is not verified by the test harness.
+\subsection{Interactive Map}
+
+BlueMap provides an interactive 3D web map: \url{https://chonk.lab.bitsmasher.net:8100}
+
+\subsection{Storage}
+
+World data is approximately 13 GB. BlueMap assets are ~6.5 GB. All files on local disk (no NFS dependency for world data).
+
+\textbf{NO GIT-LFS}: Chunk files and world data must not use git-lfs. Use bare git repos for any versioned world metadata.
+
+\subsection{Administrative Access}
+
+Operations automation via start.sh with a custom rcon-based controller. Management infrastructure ports: server 25565, BlueMap 8100, Plan analytics 8804.
+
+\textbf{Ops team}: theDevilsVoice (level 4), Perryman (level 4).
+
+\textbf{Whitelist}: slyborg4realz, UnvaluedShoe79, BeefyGamer76y, some_garlic, KindredFiori, secove_, DrewPellino, NotPebl3, VibyCat, CallMeTesla.

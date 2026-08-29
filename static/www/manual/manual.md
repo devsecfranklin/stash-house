@@ -25,7 +25,7 @@ Each linter is configured in the test/ directory:
 ### Coverage Status (44 Roles)
 
 
-Based on the most recent audit of ansible/collections/ansible\_collections/lab/franklin/roles/:
+Based on the most recent audit of ansible/collections/ansible\_collections/lab/franklin/roles/ role:
 
 description
     [Complete (30 roles)] apt-mirror, beagleboard, chonk, cluster, common, container-registry, ctfd, desktop, dhcp, dns, docker, documentation, golang, k3s-agent, k3s-server, kerberos, ldap, logging, minecraft, music, nfs, nix, ntp, openbsd, paloalto, prereq, pypi-internal, python, raspberrypi, ssh
@@ -93,31 +93,18 @@ As of August 2026, the Ansible ecosystem is split between two distribution paths
 **EOL versions as of August 2026**: Ansible 10--12 and ansible-core 2.15--2.18 are EOL. Do not use these in new work. Only Ansible 13.x / ansible-core 2.20 is current; 14.0.0/2.21 is in development.
 
 
-### Molecule Testing -- Status and Deprecation
+### Molecule Testing -- Deprecated (August 2026)
 
 
-Molecule (the canonical integration testing framework for Ansible roles and playbooks) remains **active** as of August 2026 but its role has shifted:
+**Molecule has been removed from the active workflow as of August 2026.** It no longer serves as a testing target or standard. All role validation now uses:
 
 
-- Molecule v26.4.x is the latest series, released June 2026. It still supports only the latest two major versions of Ansible (N/N-1).
-- Molecule is being superseded as the preferred test strategy by:
-- pytest-ansible -- pytest extension for testing Ansible module/plugin Python code directly.
-- tox-ansible -- integration with tox to run tests across multiple Python interpreters and ansible-core versions simultaneously.
-- Execution Environments (containers) as the primary test target, tested via ansible-navigator.
-
-    
-     The **community.molecule** collection still exists but new projects should prefer pytest-ansible + tox-ansible for role/test harness work. Molecule is not yet officially deprecated -- it is maintained on a best-effort basis while the community transitions.
-    
-     For existing molecule test harnesses (such as those in lab-franklin's Ansible collection at ansible/collections/ansible\_collections/lab/franklin/roles/), they will continue to work with ansible-core 2.20 and pytest-6.x but should be audited for:
-    
-- Podman driver compatibility (molecule continues using podman or docker as default driver)
-- Python version requirements (molecule requires Python $$3.9)
-- Plugin deprecations in newer collections
+- ansible-test --sanity -- built-in collection sanity checks, run natively on stargate.research.bitsmasher.net with zero external overhead
+- ansible-test --integration -- integration tests targeting real hosts or containerized environments via ansible-test's native docker driver
+- ansible-playbook --syntax-check -- YAML structure validation for all playbooks and role task files
 
 
-itemize
-
-**Note**: For lab-franklin's molecule tests, keep testing with podman for now. The container-based approach is still valid; only the *preferred tooling around it* is shifting toward pytest-ansible + execution environments.
+Existing Molecule test harnesses (in ansible/collections/ansible\_collections/lab/franklin/roles/ role /molecule/) remain as historical artifacts but are no longer invoked or maintained. New roles must use native ansible-test exclusively.
 
 lab/franklin Collection
 
@@ -145,7 +132,7 @@ The collection follows standard Ansible Galaxy conventions with namespace lab an
 ## Role Inventory
 
 
-The collection contains roles organized under the roles/ directory. As of August 2026, the following roles are maintained with molecule test harnesses:
+The collection contains roles organized under the roles/ directory. As of August 2026, the following roles are maintained with native ansible-test harnesses:
 
 lstlisting[style=mystyle]
 roles/
@@ -188,8 +175,6 @@ roles/
 ├── cluster/             # Cluster-wide settings
     lstlisting
 
-Roles currently **missing molecule tests**: edge, mail, odroid, website (incomplete roles). These have tasks/main.yml but no test harness.
-
 
 ## Workspace Structure
 
@@ -224,7 +209,7 @@ The project uses GNU Autotools for the root-level build:
 
 
 - configure.ac: Defines package (lab-franklin v0.2), libtool support, Python $$ 3.9 requirement, podman/ansible/gpg checks, git version tagging
-- Makefile.am: Top-level targets include test (ansible-lint + molecule), security (venv bootstrap), dev (Python venv in BUILDDIR)
+- Makefile.am: Top-level targets include test (ansible-lint + ansible-test sanity/integration), security (venv bootstrap), dev (Python venv in BUILDDIR)
 - bootstrap.sh: Cross-platform bootstrapper that detects OS (Debian/RedHat/OpenBSD/macOS/Linux) and installs platform-specific packages, then runs aclocal $$ autoreconf $$ automake $$ configure
 - docs/manual/Makefile.am: Standalone autotools stub for LaTeX docs build (clean target removes *.aux files)
 
@@ -234,115 +219,126 @@ The network\_update.sh script was hardened on 2026-08-02 with: set -euo pipefail
 Testing from Stargate
 
 
-## Molecule Test Harnesses on stargate.lab.bitsmasher.net
+## Native ansible-test on stargate.research.bitsmasher.net
 
 
-The stargate host (10.10.16.66, Debian 12 bookworm) serves as the primary testing platform for the lab/franklin Ansible collection. Testing is run from /mnt/clusterfs2/workspace/lab-franklin/ansible/collections/ansible\_collections/lab/franklin/roles/ role /molecule/.
+The stargate host (10.10.16.66, Debian 12 bookworm) serves as the exclusive testing platform for the lab/franklin Ansible collection. All test execution runs with zero external billing -- direct shell access to the gateway sandbox eliminates API token overhead.
 
 
-### Test Environment
+### Testing Standard: ansible-test (August 2026)
 
 
-Molecule tests on stargate use:
-
-- Driver: podman (containers, not Docker -- avoids daemon dependency)
-- Base image: Ubuntu 20.04 for most roles, with role-specific variations
-- Execution user: openclaw user (has sudo -n, no password required)
-- Python: $$ 3.9 (required by both ansible and molecule)
+Native ansible-test has replaced Molecule as the canonical testing framework:
 
 
-### Test Execution Flow
+- sanity checks: Built into ansible-core; validates module/plugin imports, YAML structure, and collection metadata without any container dependency
+- integration tests: Run via ansible-test integration targeting real hosts or the native docker driver (preferred over podman for consistency)
+- syntax validation: ansible-playbook --syntax-check validates all playbooks and role task files before execution
 
 
-For a given role, the molecule test cycle is:
-
-- dependency: Install collection dependencies from galaxy.yml
-- syntax: Validate playbook YAML syntax
-- create: Launch podman container (e.g., "server1") as the test target host
-- prepare: Verify role prerequisites within the container
-- converge: Run ansible-playbook against the container -- this is where the role's tasks are executed
-- test/verify: Optional pytest sequence runs inside the container to validate convergence
+The legacy Molecule directory structure at each role's molecule/ subdirectory has been deprecated. It remains in-place as historical reference but is excluded from CI pipelines and the Makefile.am test target.
 
 
-### Example: DNS Role Testing
+### Test Execution Flow (ansible-test)
 
 
-The DNS role molecule test confirmed:
+For a given role, the native test cycle is:
 
-- Podman creates an Ubuntu 20.04 container (hostname "server1")
-- Bind9 packages install correctly
-- /etc/bind directory is created with named.conf.options written
-- Molecule platform name was changed from "molecule-ubuntu" to "server1" to match the role's hostname gate
-- Group assignment updated to "dns\_servers" for proper role targeting
+- syntax-check: ansible-playbook --syntax-check playbook.yml validates YAML structure
+- sanity: ansible-test sanity runs built-in linting against the collection -- no container, no overhead
+- integration: ansible-test integration <role> runs target-specific tests using docker driver containers
 
 
-### Known Limitations
+### Running Tests from Stargate
 
 
-Some roles cannot be fully tested on molecule containers:
-
-
-- nfs: Hostname gates ('snowy' in inventory\_hostname) and hardcoded mount paths depend on real NFS servers
-- openbsd: The role targets OpenBSD hosts specifically; molecule tests run on Ubuntu containers by default
-- jetson-nano: Hardware-specific (NVIDIA Jetson); molecule tests only verify file placement, not actual provisioning
-
-
-### Running Tests Manually
-
-
-To test a specific role from the stargate host:
+From stargate's workspace:
 lstlisting[style=mystyle]
-cd /mnt/clusterfs2/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin/roles/<role>/molecule
-molecule converge --scenario-name default
-    lstlisting
-
-To verify convergence results:
-lstlisting[style=mystyle]
-molecule test --scenario-name default
-    lstlisting
-
-If the podman driver is unavailable, fall back to docker:
-lstlisting[style=mystyle]
-molecule converge --driver-name docker
+cd ~/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin
+ansible-test sanity
+ansible-test integration dns --python 3.12
+ansible-playbook --syntax-check playbook.yml
     lstlisting
 
 
-### Test Results Dashboard
+## Dynamic Scoping and Pathing Convention
 
 
-Testing output logs are captured in the molecule scenario directory under logs/. The full lab-franklin test suite (all roles with molecule tests) is run via the top-level Makefile.am test target:
+Roles use dynamic file inclusion via templated variables to avoid hardcoded paths:
+
+
+- Roles include task fragments using: {\_role\_name\_files} and {\_role\_name\_templates} for dynamically scoped file/paths
+- Template references follow the pattern: \{include\_task "tasks/\_role\_name.yml"\ } scoped within dynamically included tasks
+
+
+This convention eliminates static path dependencies across role invocations and supports multi-target deployment without playbook-level path overrides.
+
+
+## Package Standards -- Deprecated Utilities
+
+
+The following deprecated utilities have been removed from baseline role manifests:
+
+
+- neofetch: Removed from common role; replaced by standard Linux tools (lsb\_release, uname -r)
+- tripwire: Removed from security role; no longer maintained and superseded by native file integrity monitoring
+- Other legacy packages audited during August 2026 cleanup -- verify role manifests before adding new dependencies
+
+
+## Dynamic Probing Standard
+
+
+Static inventory reachability assumptions have been replaced with non-interactive batch probes:
+
 lstlisting[style=mystyle]
-make test
-# Runs ansible-lint --all-roles and molecule converge per role
+ssh -o BatchMode=yes -o ConnectTimeout=3 -i ~/.ssh/id_ed25519_openclaw franklin@<host> "hostname && whoami"
     lstlisting
 
-
-### pytest-ansible Transition Plan
-
-
-As molecule is being superseded, new tests should use pytest-ansible where possible:
-
-- Migrate the test directory structure from molecule/ to a tests/ directory with pytest configuration
-- Use ansible-test for collection sanity tests (built into ansible-core)
-- Keep molecule only where full environment isolation is needed (e.g., DNS zone file validation, NTP time sync testing)
-
-
-### Pending Tasks and Todos
-
-
-- TODO: Re-establish internal PyPI server on stargate. The pypi\_internal role is ready (role exists, molecule test added Aug 2026) but the actual PyPI service needs to be provisioned on the storage host. Requires: NFS mount of /mnt/storage1 available on stargate, web server (nginx/apache) installed and configured, pip packages populated into /mnt/storage1/LAB/pypi with PEP 503 structure. Run: ansible-playbook ... -l storage --tags pypi\_internal once the infrastructure is in place.
+This approach eliminates stale host entries, prevents password prompts in automation pipelines, and provides deterministic connectivity feedback with a 3-second timeout. Never assume reachability from static notes -- always probe on demand.
 
 
 ============================================================
 ## Cluster
 ============================================================
-## Clustershell
+## Ansible Workspace
 
 
-all
-head
-compute
-gpu
+All Ansible source code, playbooks, roles, and testing are centralized on **stargate.research.bitsmasher.net**:
+
+
+- Primary workspace: ~/workspace/lab-franklin/ansible/ on stargate
+- Secondary (chonk): /mnt/backup1/workspace/lab-franklin/ansible/ (mirror for local builds)
+- Interpreter: /home/franklin/.local/bin/ansible on stargate
+- Testing standard: Native ansible-test (sanity + integration) -- Molecule deprecated as of August 2026
+
+
+## Cluster Architecture
+
+
+The lab uses cluster-wide automation via ansible-playbook targeting inventory groups defined in ansible/hosts. Cluster management is handled through role-based provisioning rather than a dedicated orchestration layer.
+
+
+### k3s Clustershell (Historical)
+
+
+Previous cluster shell groupings remain documented for reference:
+verbatim
+all     -- all managed nodes
+head    -- control plane nodes
+compute -- worker nodes
+gpu     -- GPU-enabled Jetson nodes
+    verbatim
+
+These groupings are now managed through Ansible inventory patterns rather than clustershell.
+
+
+### Centralized Ansible Workflow
+
+
+- Role changes committed to stargate workspace
+- Native ansible-test runs on stargate (zero external cost)
+- Playbook execution targets remote hosts via SSH batch probes
+- Changes verified via dynamic reachability: ssh -o BatchMode=yes -o ConnectTimeout=3 franklin@ host
 
 
 ============================================================
@@ -512,60 +508,81 @@ The lab-franklin Ansible collection should eventually include a monitoring role 
 ## DNS Configuration
 
 
-### BIND Overview
+### BIND Overview -- Post-Migration (August 2026)
 
 
-The lab uses BIND (named) as its authoritative DNS server. The DNS infrastructure is managed by the dns Ansible role in the lab-franklin collection, located at:
+The DNS infrastructure has been migrated from the legacy server1 (10.10.12.12) to a new authoritative setup:
+
+
+- DNS Master: node3 (10.10.12.3) -- promoted from client node to authoritative BIND9 master
+- Legacy DNS host: server1 (10.10.12.12) has been decommissioned; all zone transfers and updates now target node3
+
+
+The DNS role in lab-franklin's Ansible collection manages:
+
+- Forward zone: db.home.lab (hostnames to IPs)
+- Reverse zones: PTR records for each 10.10.x.0/24 subnet
+- SRV records: Kerberos service discovery
+- Zone file generation via Jinja2 templates on node3
+
+
+### Zone and Host Realignment (August 2026)
+
+
+The following entries have been updated in the forward zone (db.home.lab):
+
+center
+tabular{lll}
+
+**Hostname** & **IP Address** & **Notes** 
+ 
+stargate.research.bitsmasher.net & 10.10.16.66 & Ansible orchestration host, primary workspace 
+chonk.lab.bitsmasher.net & 10.10.8.60 & Gateway host, primary compute + inference 
+ 
+tabular
+center
+
+The corresponding reverse zones (PTR records) have been updated to match:
+
+- 10.10.16.66 $$ stargate.research.bitsmasher.net
+- 10.10.8.60 $$ chonk.lab.bitsmasher.net
+
+
+### Kerberos SRV RFC Compliance
+
+
+The following SRV records now point directly to FQDN A records rather than CNAMEs, per RFC 2782:
+
 lstlisting[style=mystyle]
-ansible/collections/ansible_collections/lab/franklin/roles/dns/
+_kerberos-adm._tcp.lab.bitsmasher.net IN SRV 0 100 749 kdc1.lab.bitsmasher.net.
+_kerberos._tcp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kerberos._udp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kdc._tcp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kdc._udp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
     lstlisting
 
-
-### Zones Maintained
-
-
-- Forward zone: db.home.lab -- maps hostnames to IPs for all lab infrastructure
-- Reverse zones: PTR records for each subnet (10.10.x.0/24 ranges)
-- SRV records: Kerberos service discovery (\_kerberos.\_tcp, \_kdc.tcp)
-
-
-### DNS Server Location
-
-
-The DNS server (ns1) is the single authoritative nameserver for the lab. It has been unreachable during recent infrastructure audits, which explains why many hosts cannot resolve hostnames -- ns1 *is* the DNS server and it's offline.
-
-When ns1 is available, it resolves all internal hostnames. Key entries include:
-
-- time.lab.bitsmasher.net $$ 10.10.12.2 (NTP server)
-- odroid-c1.lab.bitsmasher.net $$ 10.10.12.254 (KDC)
-- ldap.lab.bitsmasher.net $$ 10.10.13.1 (OpenLDAP)
-- blowfish.lab.bitsmasher.net $$ 10.10.14.85 (reassigned from 10.10.12.15)
-
-
-### Molecule Test Harness
-
-
-The DNS role has a molecule test harness that confirms:
-
-- Converge: BIND packages installed, /etc/bind directory created, named.conf.options written
-- Test sequence: dependency $$ syntax $$ create (podman container) $$ prepare $$ converge
-- Limitation: molecule test uses Ubuntu 20.04 container with hostname "server1"; the role has a hostname gate that targets the real DNS server's hostname
-
-
-The DNS molecule test confirms correct package installation and configuration file placement but does not verify actual name resolution (no live DNS server in the container test environment).
+**Note**: The _kerberos-adm.\_tcp record now points directly to the A record for kdc1.lab.bitsmasher.net rather than via a CNAME chain, eliminating resolution latency and failure modes from indirection.
 
 
 ### DNS Failure Impact
 
 
-When ns1 is offline:
+When the DNS master (node3) is offline:
 
-- Lab hosts fall back to /etc/hosts entries (which are authoritative but not dynamic)
-- Kerberos KDC discovery via SRV records fails -- clients need manual kdc = entry in krb5.conf
-- DHCP reservations on the Dream Machine remain functional (DHCP server is separate from DNS)
+- Lab hosts fall back to /etc/hosts entries (authoritative but static -- no dynamic updates)
+- Kerberos KDC discovery via SRV records fails -- clients need manual kdc = kdc1.lab.bitsmasher.net in /etc/krb5.conf
+- Dynamic zone updates cannot propagate; new hosts require manual /etc/hosts sync
 
 
-The DNS role's molecule test harness ensures that when the server comes back online, its configuration will install and write correctly.
+### DNS Maintenance Procedures
+
+
+Zone file updates are committed to the DNS Ansible role and deployed via:
+lstlisting[style=mystyle]
+ansible-playbook -l dns_servers -t dns deploy.yml
+    lstlisting
+
+Forward and reverse zone files should be audited quarterly for IP realignment accuracy.
 
 
 ============================================================
@@ -590,51 +607,58 @@ The DNS role's molecule test harness ensures that when the server comes back onl
 tabularx{}{l l l X}
 **Host** & **IP** & **User** & **Role** 
 
-chonk & 10.10.8.60 & franklin/openclaw & Gateway host, primary workstation
-stargate & 10.10.16.66 & openclaw & Ansible collection workspace, build host
-skynet & 10.10.16.10 & openclaw/franklin & Minecraft server, IP-direct login (hostname resolves oddly)
-time & 10.10.12.2 & openclaw/franklin & Stratum-1 NTP server with GPS reference
-wonderland & 178.62.60.55 & franklin/openclaw & Public cloud VM (Debian 12, 6.1 kernel)
-music.lan & 192.168.86.38 & root & Desktop machine via skynet route
+chonk & 10.10.8.60 & franklin/openclaw & Gateway host, primary workstation + inference 
+stargate & 10.10.16.66 & openclaw & Ansible workspace, build host, DNS master (node3), NFS server 
+skynet & 10.10.16.10 & openclaw/franklin & Minecraft server, IP-direct login 
+time & 10.10.12.2 & openclaw/franklin & Stratum-1 NTP server with GPS reference 
+wonderland & 178.62.60.55 & franklin/openclaw & Public cloud VM (Debian 12, 6.1 kernel), web host 
+music.lan & 192.168.86.38 & root & Desktop machine via skynet route 
+node3 & 10.10.12.3 & openclaw & **Authoritative BIND9 DNS master** (post-server1 migration) 
+
 tabularx
 
 *{Jetson Cluster ( 87 days uptime)}
 
-All three Jetsons run Ubuntu 18.04 with ed25519 key auth (openclaw permanent, franklin has password 123 as fallback):
+All Jetsons run Ubuntu 18.04 with ed25519 key auth (openclaw permanent, franklin has password 123 as fallback -- pending key-only migration):
 
 tabularx{}{l l X}
 **Host** & **IP** & **Status** 
 
-node900 & 10.10.12.90 & Online, key auth
-node901 & 10.10.12.91 & Online, key auth
-node903 & 10.10.12.93 & Online, key auth
-node902 & 10.10.12.92 & Off / no route to host (likely powered down)
+node900 & 10.10.12.90 & Online, key auth; home dir from stargate:/mnt/clusterfs2 
+node901 & 10.10.12.91 & Online, key auth; home dir from stargate:/mnt/clusterfs2 
+node903 & 10.10.12.93 & Online, key auth; home dir from stargate:/mnt/clusterfs2 
+node902 & 10.10.12.92 & Off / no route to host (likely powered down) 
+
 tabularx
+
+**NFS note**: Jetson home directories are NFS-mounted from stargate:/mnt/clusterfs2. StrictModes permissions apply (home 0750, .ssh 0700, authorized\_keys 0600).
 
 *{KDC and Directory Services}
 
 tabularx{}{l l X}
 **Host** & **IP** & **Status** 
 
-odroid-c1 / kdc1 & 10.10.12.254 & Online (~242d uptime), root key auth, KDC for lab.bitsmasher.net Kerberos realm
-ldap/bbb1 & 10.10.13.1 & SSH reachable as root; slapd failed Dec 2025 (TLS cert issue)
+odroid-c1 / kdc1 & 10.10.12.254 & Online (~242d uptime), root key auth, KDC for lab.bitsmasher.net Kerberos realm 
+ldap/bbb1 & 10.10.13.1 & SSH reachable as root; slapd failed Dec 2025 (TLS cert issue) 
+
 tabularx
 
 
 ### Historical / Decommissioned Hosts
 
 
-- snowy: Hard disk physically removed. /mnt/snowy is now just a mounted drive (not SSH-accessible). Should be cleaned from DNS and SSH config.
-- blowfish: Previously at 10.10.12.15, reassigned to 10.10.14.85. Key not authorized yet -- unreachable from chonk but port 22 is open. Expected role: database host with OpenBSD.
-- node902: Powered off; no route to host from any known peer.
+- server1 (10.10.12.12): Former DNS master -- decommissioned August 2026; role replaced by node3
+- snowy: Hard disk physically removed; /mnt/snowy now just a raw mounted drive (not SSH-accessible)
+- blowfish: Previously at 10.10.12.15, reassigned to 10.10.14.85. Key not authorized yet -- unreachable from chonk but port 22 is open. Expected role: database host with OpenBSD
+- node902: Powered off; no route to host from any known peer
 
 
 ### Planned Hardware Expansion
 
 
 - blowfish as the primary database server (OpenBSD planned)
-- head2 for cluster management (referenced in network\_update.sh but unreachable)
-- k3s_server and k3s_agent roles for Kubernetes across node infrastructure
+- Full ed25519 key rollout for node900--node903 to remove password fallback
+- k3s\_server and k3s\_agent roles for Kubernetes across node infrastructure
 
 
 ============================================================
@@ -669,7 +693,7 @@ workspace repo
 
 The KDC only has SSH key auth configured for the root user. The franklin user has been rejected by the KDC's SSH configuration -- direct root access is required for any management tasks.
 
-Key file: ~/.ssh/id\_ed25519\_openclaw (the standard openclaw key).
+Key file: /.ssh/id\_ed25519\_openclaw (the standard openclaw key).
 
 
 ### Principal Conventions
@@ -682,17 +706,22 @@ Kerberos principals in the lab.bitsmasher.net realm should follow these conventi
 - Host principals: host/FQDN@lab.BITSMASHER.NET
 
 
-### DNS/Kerberos Integration
+### DNS/Kerberos Integration -- RFC Compliant (August 2026)
 
 
-Kerberos relies on DNS SRV records for KDC discovery:
+Kerberos relies on DNS SRV records for KDC discovery. The following records point directly to FQDN A records (no CNAME indirection):
+
 lstlisting[style=mystyle]
-_kerberos._tcp.lab.bitsmasher.net  IN SRV 0 0 88 odroid-c1.lab.bitsmasher.net.
-_kerberos._udp.lab.bitsmasher.net  IN SRV 0 0 88 odroid-c1.lab.bitsmasher.net.
-_kdc.tcp.lab.bitsmasher.net        IN SRV 0 0 88 odroid-c1.lab.bitsmasher.net.
+_kerberos-adm._tcp.lab.bitsmasher.net IN SRV 0 100 749 kdc1.lab.bitsmasher.net.
+_kerberos._tcp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kerberos._udp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kdc._tcp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kdc._udp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
     lstlisting
 
-These records should be present in the BIND DNS zones on the lab's DNS server. If ns1 is offline (as has been the case), Kerberos clients may fail to discover the KDC automatically and will need manual configuration via kdc = odroid-c1.lab.bitsmasher.net in /etc/krb5.conf.
+The _kerberos-adm.\_tcp record now points directly to the A record for kdc1.lab.bitsmasher.net, per RFC 2782 compliance.
+
+These records are authoritative on node3 (10.10.12.3), the new DNS master following the server1 decommissioning. If DNS is unavailable, clients fall back to manual kdc = kdc1.lab.bitsmasher.net in /etc/krb5.conf.
 
 
 ### Keytab Management
@@ -705,7 +734,7 @@ Keytabs for service principals should be:
 - Set to mode 600 and owned by the appropriate service user
 
 
-The lab-franklin Ansible collection should have a role for managing keytabs across hosts, though this may need to be verified against current KDC state.
+**Note**: Kerberos keytabs have not been deployed across the infrastructure. NFS exports with sec=krb5i are currently non-functional pending keytab deployment. The Ansible ssh role handles the StrictModes requirements for SSH-based keytab transfer.
 
 
 ============================================================
@@ -963,98 +992,70 @@ Routing between the 192.168.86.x subnet (music) and the rest of the lab requires
 ## Overview
 
 
-The NFS role at ansible/collections/ansible\_collections/lab/franklin/roles/nfs has a molecule test harness, but testing is complex due to hostname-dependent task gates. This chapter documents how to run tests and what to expect.
+The NFS role at ansible/collections/ansible\_collections/lab/franklin/roles/nfs has been migrated from Molecule to native ansible-test. The role validates:
 
 
-## Prerequisites
+- Server-side export configuration (/etc/exports)
+- Client-side fstab management and mount points
+- Kerberos security validation (sec=krb5i -- though keytabs remain undeployed; sec=krb5i is non-functional without keytab infrastructure)
 
 
-- podman available on the test host (chonk tested successfully)
-- The lab.franklin collection with all dependencies installed
-- A molecule environment with an Ubuntu-based container (the role expects Debian/Ubuntu apt packages)
+## Testing with ansible-test (August 2026)
 
 
-## Running the Test
-
-
-From the role directory:
-
+From stargate:
 verbatim
-cd /mnt/clusterfs2/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin/roles/nfs
-molecule converge --scenario-name default
-molecule verify --scenario-name default
-verbatim
+cd ~/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin
+ansible-test sanity --python 3.12
+ansible-test integration nfs --python 3.12
+    verbatim
+
+Molecule tests remain as historical artifacts only and are no longer invoked.
 
 
-## What the Test Validates
+## Current Validation Focus
 
 
-- Package installation: nfs-kernel-server, nfs-common, rpcbind, nfs-client are installed
-- Configuration file deployment: /etc/default/nfs-kernel-server, /etc/default/nfs-common, /etc/idmapd.conf are written with correct content
-- Directory creation: Export mount points (/mnt/clusterfs, /mnt/storage\{1,2,3\}) are created
-- Export template rendering: Jinja2 templates generate valid /etc/exports content
+Testing now emphasizes:
 
 
-## Current Test Limitations
+- Export template rendering: Jinja2 templates generate valid /etc/exports content for active roles (chonk's /mnt/storage1, storage2, storage3 exports)
+- Client-side mount validation: fstab line insertion and idmapd.conf deployment on client nodes
+- Jetson home directory consistency: NFS-mounted homes from stargate:/mnt/clusterfs2 must maintain uid/gid alignment
 
 
-The role has two categories of gates that block full testing:
-
-*{1. Server-side hostname gates (in tasks/main.yml)}
-
-verbatim
-when: 'snowy' in inventory_hostname
-when: 'thelio' in inventory_hostname
-verbatim
-
-Molecule containers cannot satisfy these conditions, so nfs\_server\_*.yml task files never execute. The server-side converge phase is effectively skipped.
-
-*{2. molecule environment variable guards}
-
-Most mount and service-start tasks check:
-verbatim
-when: HOMELAB_MOLECULE_TEST is not defined
-verbatim
-
-This prevents actual mounts from happening during testing (which would require real NFS servers), but it also means the nfs\_client.yml tasks that matter most for client-side validation never run their key stages.
+## StrictModes Validation
 
 
-## How to Fix the Test Harness
+NFS-mounted user homes require OpenSSH StrictModes compliance:
 
-
-To make molecule tests meaningful, the following changes are needed:
-
-
-- Add test-specific inventory: In molecule/default/inventory.yml, define a hostgroup (e.g., nfs\_servers) that includes container hostnames matching the role's hostname gates. Example:
-- Add override variables in molecule\_prepare.yml: Set nfs\_exports\_snowy and nfs\_exports\_thelio to container-safe values that use local paths, so export template rendering can be validated without real storage.
-- Create a test scenario for client-only testing: A second molecule scenario with only nfs\_clients inventory that tests mount directory creation, fstab line insertion, and idmapd.conf deployment. Use state: present instead of state: mounted in the molecule overrides so it doesn't try to connect to a live NFS server.
-- Replace hostname gates with role variables: Replace 'snowy' in inventory\_hostname with a variable like nfs\_server\_mode | default(false) so tests can enable server tasks without depending on real hostnames.
-- Add idempotence tests: A second converge pass to verify that running the role again produces no changes (the force: no on idmapd.conf copy already helps here).
+- Home directory 0750, .ssh 0700, authorized\_keys 0600 -- verified as part of integration tests
+- Kerberos keytabs never deployed; sec=krb5i in exports vars is non-functional
 
 
 ## Integration Test Targets
 
 
-An integration test target exists at tests/integration/targets/nfs-server/ but it is minimal. For thorough testing, add:
+For thorough testing, add:
 
 
 - Export verification (check showmount -e)
 - Mount/unmount cycle tests on client container
-- Kerberos security validation (try mounting with and without sec=krb5i)
-- Permission checks after mount (verify root\_squash behavior)
+- StrictModes permission validation post-mount
 
 
-## Molecule Test Checklist for Future Work
+## Molecule Test Checklist -- DEPRECATED
 
 
-Before declaring the NFS role test-ready:
+The following Molecule-specific items are no longer relevant as of August 2026:
+
+- [DEPRECATED] Server-side converge with hostname override
+- [DEPRECATED] Client-side converge (mount directory creation)
+- [DEPRECATED] Verify phase checks exports file content
+- [DEPRECATED] Idempotence test: second converge
 
 
-- [ ] Server-side converge passes (with hostname override in molecule inventory)
-- [ ] Client-side converge passes (mount directory creation, fstab entries)
-- [ ] Verify phase checks exports file content and configuration files
-- [ ] Idempotence test: second converge shows zero changed tasks
-- [ ] Integration test validates live mount on container
+All future work uses ansible-test exclusively.
 
 
 ============================================================
@@ -1164,9 +1165,27 @@ The lab uses ed25519 SSH keys for host authentication. All automation hosts shar
 - Key users: ``openclaw'' user on all production hosts
 
 
-### Password Policy
+### SSH Hardening and Drop-In Standards
 
-Passwords are used only as a temporary fallback. The Jetson nodes (node900--node903) currently use password ``123'' for the franklin user during provisioning; this should be replaced with key-based authentication when possible.
+
+All hosts use standardized hardening.conf drop-ins in /etc/ssh/sshd\_config.d/:
+
+
+- PermitRootLogin prohibit-password -- root login allowed only via key, never password
+- StrictModes yes -- OpenSSH enforces file permission checks on ~/.ssh and authorized\_keys
+- Explicit user key sync -- ed25519 keys deployed to target hosts via ansible ssh role; no manual key management
+
+
+### Password Policy -- Subnet Exceptions
+
+
+Passwords are used only as a temporary fallback. The following hosts have documented exceptions:
+
+
+- Jetson nodes (node900--node903): Temporary password authentication allowed pending ed25519 key rollout. Password is 123 for the franklin user. These nodes will be migrated to key-only auth when infrastructure permits.
+
+
+All other hosts enforce key-only authentication. No new password-based access may be granted without operator approval.
 
 
 ### User Accounts
@@ -1179,7 +1198,7 @@ tabular{lll}
  
   franklin & Primary admin user & All hosts; sudo NOPASSWD on skynet 
   openclaw & Automation user & All production hosts via ed25519 key 
-  root & Emergency access & KDC, ldap, music host only 
+  root & Emergency access & KDC, ldap, music host only; key auth only 
  
 tabular
 center
@@ -1250,7 +1269,7 @@ tabular{llll}
  
   NTP stratum-1 & time.lab.bitsmasher.net & Online & Current 
   KDC (Kerberos) & odroid-c1.lab.bitsmasher.net & Online & ~242 days uptime 
-  DNS (BIND) & ns1.lab.bitsmasher.net & Offline & December 2025 
+  DNS (BIND) & node3.lab.bitsmasher.net & Operational & August 2026 
   OpenLDAP & ldap.lab.bitsmasher.net & Offline & December 2025 
   Minecraft & skynet.lab.bitsmasher.net & Online & Current 
  
@@ -1262,7 +1281,7 @@ center
 
 
 - NTP (time host) -- time sync failure cascades to all Kerberos authentication
-- DNS (BIND) -- resolution failure makes most hosts unreachable by name
+- DNS (node3, BIND) -- resolution failure makes most hosts unreachable by name
 - Kerberos KDC -- authentication cascade failure affects all service access
 - LDAP -- directory services, offline since December 2025
 
@@ -1271,11 +1290,11 @@ center
 
 
 The k3s cluster is hardened with:
-
-- Version pinning to 2.1.x
-- Containerd runtime with NVIDIA GPU support
-- TLS for all API communication (k3s default)
-- Pod security policies via Kubernetes native admission controllers
+   Version pinning to 2.1.x
+   Containerd runtime with NVIDIA GPU support
+   TLS for all API communication (k3s default)
+   Pod security policies via Kubernetes native admission controllers
+itemize
 
 
 ## Automated Security Scanning
@@ -1305,24 +1324,45 @@ All scanning workflows run on every pull request and main branch push. Results a
 ## Storage Infrastructure
 
 
-### NFS Mounts
+### Active Disk Topology (chonk -- August 2026)
 
 
-The lab relies on NFS for shared storage across hosts. Key mount points:
+All compiled documents and web artifacts target wonderland; chonk serves as local scratch space. Physical topology on chok:
 
 
-- /mnt/clusterfs2: Primary cluster workspace mounted on chonk and stargate (from the NFS server). This is where Ansible roles, molecule tests, and project files live.
-- /mnt/snowy: Formerly a full NFS share; now just a mounted drive after the hard disk was physically removed. Should be audited for stale mount entries.
+- /mnt/backup1: Source directory for Ansible repos, workspace code, and build artifacts
+- /mnt/clusterfs: Scratch disk for temporary compilation, LaTeX builds, and intermediate files
+- /mnt/snowy: Bulk storage -- formerly a full NFS share; hard disk physically removed, now mounted as raw drive only
 
 
-The NFS role in lab-franklin's Ansible collection handles:
+The following mount points have been purged:
 
-- Server-side export configuration (/etc/exports)
-- Client-side fstab management and mount points
-- Mount path conventions per role (previously /mnt/clusterfs, /mnt/backup1, /mnt/storage{1,2,3})
+- /mnt/storage1: Completely removed across all roles and /etc/exports on all hosts
+- Legacy /mnt/storage2, /mnt/storage3: Purged from inventory references
 
 
-Note: The NFS role has hostname gates ('snowy' in inventory\_hostname) that prevent testing on molecule containers. Hardcoded mount paths depend on real NFS servers being online. This is a known limitation of the test harness.
+### NFS Mounts -- Current State
+
+
+The lab relies on NFS for shared storage. Active mounts as of August 2026:
+
+
+- stargate:/mnt/clusterfs2: Primary cluster workspace; mounted on stargate and accessible from wonderland via SSH-sync pipelines
+- Jetson home directories: Shared from stargate via stargate:/mnt/clusterfs2 -- provides consistent /home for node900--node903
+
+
+### StrictModes and Permission Requirements
+
+
+OpenSSH StrictModes enforces strict permission checks on home directories. Required permissions:
+
+
+- Home directory: 0750 (rwxr-x---)
+- /.ssh: 0700 (rwx------)
+- /.ssh/authorized\_keys: 0600 (rw-------)
+
+
+All Jetson nodes must comply with these permissions or SSH authentication fails silently. NFS-mounted homes require uid/gid consistency between stargate and each Jetson host.
 
 
 ### Snapshot and Backup Strategy
@@ -1333,14 +1373,6 @@ The lab uses bare git repos for version control and backup:
 - GPG-encrypted repositories synced across hosts for credential protection (Stash House project)
 - Pass-based password store with GPG backend
 - No LFS -- ABSOLUTE RULE: do not use git-lfs anywhere. Microsoft once held Minecraft chunk files hostage when a repo hit the 10GB GitHub limit with LFS enabled.
-
-
-### Local Storage Considerations
-
-
-- Jetson nodes (node90x): limited eMMC storage; rely on NFS for workspace data
-- chonk: large local disk, primary build and gateway host
-- stargate: Debian 12 box with full Ansible workspace mirror
 
 
 ### LFS Policy Reminder

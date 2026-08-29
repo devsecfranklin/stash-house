@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Disaster Recovery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Disaster Recovery section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Disaster Recovery_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/disaster-recovery.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Disaster Recovery</h1>
+<span class="meta"><em>Pages 15-16 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Disaster Recovery</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">Critical Dependencies Chain</h3>
+<p class="latex-para">The lab infrastructure has a cascading dependency chain. A failure in one layer propagates:</p>
+<ol class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Time (NTP)&lt;/strong&gt; $\rightarrow$ if time drift exceeds 128 seconds, Kerberos tickets expire and TLS handshakes fail</li>
+<li class="latex-list-item">&lt;strong&gt;DNS (ns1/BIND)&lt;/strong&gt; $\rightarrow$ without DNS resolution, all hostname-based services (Kerberos SRV records, NTP upstream, LDAP) break</li>
+<li class="latex-list-item">&lt;strong&gt;Kerberos (odroid-c1/KDC)&lt;/strong&gt; $\rightarrow$ without the KDC, authentication fails for all Kerberos-authenticated services</li>
+<li class="latex-list-item">&lt;strong&gt;LDAP (bbb1/slapd)&lt;/strong&gt; $\rightarrow$ without LDAP, directory lookups fail and user/service account information is unavailable</li>
+</ol>
+<p class="latex-para">Recovery priority should follow this chain in reverse: fix time first, then DNS, then KDC, then LDAP.</p>
+<h3 class="latex-subsection">Failure Scenarios and Recovery</h3>
+<h4 class="latex-subsubsection">NTP Failure -- All Hosts Lose Time Sync</h4>
+<p class="latex-para">Symptoms: timedatectl} shows &quot;System clock synchronized: no&quot;, Kerberos tickets rejected.</p>
+<p class="latex-para">Recovery:</p>
+<ol class="latex-list">
+<li class="latex-list-item">Verify GPS unit is locked on odroid-c1 (time host)</li>
+<li class="latex-list-item">Check ntpd/ntpsec service: \texttt{systemctl status ntpsec}</li>
+<li class="latex-list-item">If GPS is offline, enable holdover mode (internal oscillator continues at reduced accuracy)</li>
+<li class="latex-list-item">On affected clients, force resync: \texttt{ntpdate -s time.lab.bitsmasher.net} or wait for ntpd's step-sync to kick in</li>
+<li class="latex-list-item">Verify with \texttt{ntpq -p} on clients and \texttt{ntptime} on the server</li>
+</ol>
+<h4 class="latex-subsubsection">DNS (ns1) Offline -- Cascade Failure</h4>
+<p class="latex-para">Symptoms: hostnames don't resolve, Kerberos SRV discovery fails.</p>
+<p class="latex-para">Recovery:</p>
+<ol class="latex-list">
+<li class="latex-list-item">Check ns1 reachability: ping from any known-good host</li>
+<li class="latex-list-item">If ns1 is up but not answering: check BIND (named) service status</li>
+<li class="latex-list-item">If BIND has crashed due to config error: restore from last known-good named.conf</li>
+<li class="latex-list-item">As a workaround, add manual entries to /etc/hosts on affected hosts until DNS recovers</li>
+<li class="latex-list-item">Update krb5.conf with explicit \texttt{kdc = odroid-c1.lab.bitsmasher.net}</li>
+</ol>
+<h4 class="latex-subsubsection">LDAP (bbb1) Down -- No Directory Service</h4>
+<p class="latex-para">Symptoms: slapd failed, status.sh reports both slapd and ldapsearch as failing.</p>
+<p class="latex-para">Recovery:</p>
+<ol class="latex-list">
+<li class="latex-list-item">SSH to bbb1/lab.bitsmasher.net as root</li>
+<li class="latex-list-item">Check TLS certificate validity in the configured cert path</li>
+<li class="latex-list-item">Regenerate or replace expired certificates</li>
+<li class="latex-list-item">Restart slapd: \texttt{systemctl restart slapd}</li>
+<li class="latex-list-item">Verify with ldapsearch for franklin and sly DNs</li>
+</ol>
+<h4 class="latex-subsubsection">KDC (odroid-c1) Offline -- No Authentication</h4>
+<p class="latex-para">Symptoms: kinit fails for all realms, service authentication denied.</p>
+<p class="latex-para">Recovery:</p>
+<ol class="latex-list">
+<li class="latex-list-item">SSH to odroid-c1 as root (franklin user's key is not authorized)</li>
+<li class="latex-list-item">Check kdc process: \texttt{kadmind/krb5kdc status}</li>
+<li class="latex-list-item">Verify KDC database integrity: \texttt{kdb5_util list}</li>
+<li class="latex-list-item">Restart kerberos services if needed</li>
+<li class="latex-list-item">Regenerate host keytabs for affected services via \texttt{kadmin.local}</li>
+</ol>
+<h3 class="latex-subsection">Backup and Restoration</h3>
+<ul class="latex-list">
+<li class="latex-list-item">Ansible playbooks (lab-franklin collection) are the single source of truth -- they can reconstruct any configured state</li>
+<li class="latex-list-item">Bare git repos with GPG-encrypted pass entries handle credential backup</li>
+<li class="latex-list-item">KDC database (\texttt{\$KRB5\_KDB\_FILE}) should be backed up regularly on odroid-c1</li>
+<li class="latex-list-item">DNS zone files should have local copies (in the DNS role's files/ directory)</li>
+</ul>
+<h3 class="latex-subsection">Prevention: Monitoring</h3>
+<p class="latex-para">The current monitoring approach is manual via status.sh. For improved resilience, consider:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Automated ping/SSH checks on critical hosts in HEARTBEAT.md</li>
+<li class="latex-list-item">Nagios/Zabbix-style monitoring on a dedicated host</li>
+<li class="latex-list-item">Email/slack alerts for service down conditions</li>
+</ul>
+<p class="latex-para">The lab-franklin Ansible collection should eventually include a monitoring role to automate this.</p>
+
+<nav class="footer-nav">
+ <div><a href="direnv.html" class="nav-prev">&#8592; Previous: Direnv </a>  <a href="dns.html" class="nav-next">Next: Dns &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

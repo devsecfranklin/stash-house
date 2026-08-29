@@ -16,7 +16,7 @@
 
 The KDC only has SSH key auth configured for the \texttt{root} user. The \texttt{franklin} user has been rejected by the KDC's SSH configuration -- direct root access is required for any management tasks.
 
-Key file: \texttt{~/.ssh/id\_ed25519\_openclaw} (the standard openclaw key).
+Key file: \texttt{\textasciitilde/.ssh/id\_ed25519\_openclaw} (the standard openclaw key).
 
 \subsection{Principal Conventions}
 
@@ -27,16 +27,21 @@ Kerberos principals in the lab.bitsmasher.net realm should follow these conventi
     \item Host principals: \texttt{host/FQDN@lab.BITSMASHER.NET}
 \end{itemize}
 
-\subsection{DNS/Kerberos Integration}
+\subsection{DNS/Kerberos Integration -- RFC Compliant (August 2026)}
 
-Kerberos relies on DNS SRV records for KDC discovery:
+Kerberos relies on DNS SRV records for KDC discovery. The following records point directly to FQDN A records (no CNAME indirection):
+
 \begin{lstlisting}[style=mystyle]
-_kerberos._tcp.lab.bitsmasher.net  IN SRV 0 0 88 odroid-c1.lab.bitsmasher.net.
-_kerberos._udp.lab.bitsmasher.net  IN SRV 0 0 88 odroid-c1.lab.bitsmasher.net.
-_kdc.tcp.lab.bitsmasher.net        IN SRV 0 0 88 odroid-c1.lab.bitsmasher.net.
+_kerberos-adm._tcp.lab.bitsmasher.net IN SRV 0 100 749 kdc1.lab.bitsmasher.net.
+_kerberos._tcp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kerberos._udp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kdc._tcp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kdc._udp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
     \end{lstlisting}
 
-These records should be present in the BIND DNS zones on the lab's DNS server. If ns1 is offline (as has been the case), Kerberos clients may fail to discover the KDC automatically and will need manual configuration via \texttt{kdc = odroid-c1.lab.bitsmasher.net} in \texttt{/etc/krb5.conf}.
+The \texttt{_kerberos-adm.\_tcp} record now points directly to the A record for \texttt{kdc1.lab.bitsmasher.net}, per RFC 2782 compliance.
+
+These records are authoritative on node3 (10.10.12.3), the new DNS master following the server1 decommissioning. If DNS is unavailable, clients fall back to manual \texttt{kdc = kdc1.lab.bitsmasher.net} in \texttt{/etc/krb5.conf}.
 
 \subsection{Keytab Management}
 
@@ -47,4 +52,4 @@ Keytabs for service principals should be:
     \item Set to mode 600 and owned by the appropriate service user
 \end{itemize}
 
-The lab-franklin Ansible collection should have a role for managing keytabs across hosts, though this may need to be verified against current KDC state.
+\textbf{Note}: Kerberos keytabs have not been deployed across the infrastructure. NFS exports with \texttt{sec=krb5i} are currently non-functional pending keytab deployment. The Ansible ssh role handles the StrictModes requirements for SSH-based keytab transfer.

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Terraform Infra</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Terraform Infra section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Terraform Infra_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/terraform-infra.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Terraform Infra</h1>
+<span class="meta"><em>Pages 54-56 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+<p class="latex-para">Terraform configurations in this lab manage cloud infrastructure across two providers: DigitalOcean and Google Cloud Platform. All configurations are version-controlled and include automated security scanning via GitHub Actions.</p>
+</div>
+<h2 class="latex-section">DigitalOcean Infrastructure</h2>
+<div class="latex-content">
+<p class="latex-para">The terraform/digital\_ocean/} directory manages the external-facing web presence for bitsmasher.net.</p>
+<h3 class="latex-subsection">Provisioned Resources</h3>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Droplet:&lt;/strong&gt; 512MB Debian 12 in lon1 region (www.bitsmasher.net)</li>
+<li class="latex-list-item">&lt;strong&gt;Domain:&lt;/strong&gt; bitsmasher.net with full DNS management</li>
+<li class="latex-list-item">&lt;strong&gt;DNS Records:&lt;/strong&gt; A, MX, TXT (54F/DMARC/DKIM), NS, and ACME challenge records</li>
+</ul>
+<h3 class="latex-subsection">Key DNS Records</h3>
+<p class="latex-para">center}</p>
+<p class="latex-para">tabular}{lll}</p>
+<hr class="latex-hline">
+<hr class="latex-hline">
+<p class="latex-para">www.bitsmasher.net &amp; A &amp; Web server host (178.62.60.55) \\</p>
+<p class="latex-para">@ &amp; MX &amp; mail.protonmail.ch 10 (ProtonMail routing) \\</p>
+<p class="latex-para">@ &amp; TXT &amp; 54F and DMARC policies \\</p>
+<p class="latex-para">protonmail.\_domainkey &amp; CNAME &amp; DKIM email verification \\</p>
+<hr class="latex-hline">
+<p class="latex-para">tabular}</p>
+<p class="latex-para">center}</p>
+<h3 class="latex-subsection">Configuration Notes</h3>
+<p class="latex-para">The droplet includes:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Automated backups enabled (immutable against accidental deletion)</li>
+<li class="latex-list-item">SSH key injection via terraform data source</li>
+<li class="latex-list-item">No external monitoring (consider enabling DO agent for uptime tracking)</li>
+</ul>
+<p class="latex-para">Provider authentication uses a DigitalOcean API token managed through pass/direnv integration. The token is passed at runtime, never committed to the repository.</p>
+</div>
+<h2 class="latex-section">Google Cloud Platform Infrastructure</h2>
+<div class="latex-content">
+<p class="latex-para">The terraform/google/} directory manages GCP resources for Stash House free-tier operations.</p>
+<h3 class="latex-subsection">Resources Managed</h3>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;VPC Network:&lt;/strong&gt; \texttt{stash-house-vpc} dedicated network</li>
+<li class="latex-list-item">&lt;strong&gt;Compute Instance:&lt;/strong&gt; e2-micro Debian 12 (Always Free Tier eligible) in us-central1-a</li>
+<li class="latex-list-item">&lt;strong&gt;Firewall Rule:&lt;/strong&gt; \texttt{allow-ssh} opening port 22 to the VPC</li>
+<li class="latex-list-item">&lt;strong&gt;Billing Budget Alert:&lt;/strong&gt; Tripwire alert at \$0.01 threshold for free-tier monitoring</li>
+</ul>
+<p class="latex-para">The GCP configuration is intentionally minimal, designed around Google's Always Free Tier limits to maintain zero-cost infrastructure.</p>
+</div>
+<h2 class="latex-section">Security Scanning</h2>
+<div class="latex-content">
+<p class="latex-para">All Terraform configurations are automatically scanned by two GitHub Actions workflows:</p>
+<ul class="latex-list">
+<li class="latex-list-item">\texttt{tfsec-sarif.yml} — IaC security scanning (generates SARIF reports)</li>
+<li class="latex-list-item">\texttt{tfsec-comment.yml} — Posts security findings as PR comments</li>
+</ul>
+<p class="latex-para">Additionally, the DigitalOcean directory includes existing README.md} with doctl and pass integration instructions for manual operations.</p>
+</div>
+<h2 class="latex-section">Testing</h2>
+<div class="latex-content">
+<p class="latex-para">Terraform configurations are validated through:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Go-based integration tests (\texttt{terraform/test/main\_test.go})</li>
+<li class="latex-list-item">Plan dry-run validation via GitHub Actions (markdown.yml workflow)</li>
+<li class="latex-list-item">Manual state reconciliation checks (compare terraform state against live infrastructure)</li>
+</ul>
+<p class="latex-para">State drift detection is recommended as a regular maintenance task — compare terraform state list} output against actual cloud resource inventories quarterly.</p>
+
+<nav class="footer-nav">
+ <div><a href="storage.html" class="nav-prev">&#8592; Previous: Storage </a>  <a href="time.html" class="nav-next">Next: Time &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

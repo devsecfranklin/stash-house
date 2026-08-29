@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=UTF-8>
+<title>Minecraft</title>
+<meta name=viewport content=width=device-width, initial-scale=1>
+<meta name=description content=Minecraft section from the Bitsmasher Lab Operations Manual.>
+<link rel=stylesheet href=/css/www.bitsmasher.net.css>
+<script type=application/ld+json>
+{
+  @context: https://schema.org,
+  @type: TechArticle,
+  headline: Minecraft_ESC,
+  url: https://www.bitsmasher.net/manual/sections/minecraft.html,
+  inLanguage: en,
+  isPartOf: {
+    @type: TechArticle,
+    headline: Bitsmasher Lab Infrastructure Manual,
+    url: https://www.bitsmasher.net/manual/
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+table.config{border-collapse:collapse;width:100%;margin:1rem 0}
+table.config th,table.config td{padding:6px 10px;border:1px solid #0f3460;text-align:left}
+table.config th{background:#0f3460;color:#53d8fb;width:180px}
+</style>
+</head>
+<body>
+
+<nav class=nav-bar>
+ <a href=../index.html>&#8592; Back to Manual Index</a>
+ <a href=../lab-manual.pdf target=_blank>&#128196; Download PDF</a>
+ <a href=../manual.md target=_blank>&#12344; Raw Markdown</a>
+</nav>
+
+<div class=container>
+<h1>Minecraft Server</h1>
+<span class=meta><em>Minecraft section from the Bitsmasher Lab Operations Manual</em></span>
+
+<h2 class=latex-section>Host and Location</h2>
+
+<div class=latex-content>
+<p class=latex-para>The Minecraft server (<strong>Dreamland</strong>) runs on <strong>chonk.lab.bitsmasher.net</strong> (10.10.8.60), a primary compute host with RX 9070 / Navi 48 GPU. Server files are at <code>/home/minecraft</code>.</p>
+
+<p class=latex-para>Previous host was skynet.lab.bitsmasher.net (10.10.16.10) during the CraftBukkit/early Paper era.</p>
+</div>
+
+<h2 class=latex-section>Current Configuration</h2>
+
+<div class=latex-content>
+<p class=latex-para>The server runs <strong>Paper 1.21.11</strong> on Java 21 (Debian Bookworm). Key settings:</p>
+
+<table class=config>
+<tr><th>Server Name</th><td>Dreamland</td></tr>
+<tr><th>MOTD</th><td><code>&amp;aDreamland&amp;7 | &amp;fEst. 2012</code></td></tr>
+<tr><th>Gamemode</th><td>Survival</td></tr>
+<tr><th>Difficulty</th><td>Normal</td></tr>
+<tr><th>Max Players</th><td>69</td></tr>
+<tr><th>PvP</th><td>Disabled</td></tr>
+<tr><th>View Distance</th><td>10 (simulation distance: 12)</td></tr>
+<tr><th>Server Port</th><td>25565</td></tr>
+<tr><th>RCON Port</th><td>25575</td></tr>
+<tr><th>BlueMap Port</th><td>8100</td></tr>
+<tr><th>Plan Analytics</th><td>8804</td></tr>
+<tr><th>World Size</th><td>13 GB (local disk)</td></tr>
+<tr><th>BlueMap Assets</th><td>6.5 GB</td></tr>
+</table>
+</div>
+
+<h2 class=latex-section>Core Plugins</h2>
+
+<div class=latex-content>
+<ul class=latex-list>
+<li class=latex-list-item><strong>EssentialsX</strong> &mdash; Core, Chat, AntiBuild</li>
+<li class=latex-list-item><strong>LuckPerms</strong> &mdash; Permissions (backed by MariaDB)</li>
+<li class=latex-list-item><strong>CoreProtect</strong> &mdash; Audit/log (backed by MySQL)</li>
+</ul>
+</div>
+
+<h2 class=latex-section>Interactive Map</h2>
+
+<div class=latex-content>
+<p class=latex-para>BlueMap provides an interactive 3D web map: <a class=latex-url href=https://chonk.lab.bitsmasher.net:8100>chonk.lab.bitsmasher.net:8100</a></p>
+</div>
+
+<h2 class=latex-section>Storage</h2>
+
+<div class=latex-content>
+<p class=latex-para>World data is approximately 13 GB. BlueMap assets are ~6.5 GB. All files on local disk (no NFS dependency for world data).</p>
+<p class=latex-para><strong>NO GIT-LFS</strong>: Chunk files and world data must not use git-lfs. Use bare git repos for any versioned world metadata.</p>
+</div>
+
+<h2 class=latex-section>Administrative Access</h2>
+
+<div class=latex-content>
+<p class=latex-para>Operations automation via start.sh with a custom rcon-based controller. Management infrastructure ports: server 25565, BlueMap 8100, Plan analytics 8804.</p>
+
+<h3 class=latex-subsection>Ops (level 4)</h3>
+<ul class=latex-list>
+<li class=latex-list-item>theDevilsVoice</li>
+<li class=latex-list-item>Perryman</li>
+</ul>
+
+<h3 class=latex-subsection>Whitelist</h3>
+<p class=latex-para>slyborg4realz, UnvaluedShoe79, BeefyGamer76y, some_garlic, KindredFiori, secove_, DrewPellino, NotPebl3, VibyCat, CallMeTesla</p>
+</div>
+
+<h2 class=latex-section>History</h2>
+
+<div class=latex-content>
+<table class=config>
+<tr><th>Period</th><th>Platform</th><th>Notes</th></tr>
+<tr><td>2012&#x2013;2014</td><td>CraftBukkit / Bukkit</td><td>Initial server (Cujo Server). Essentials, Factions, Residence, Jail, ChestShop.</td></tr>
+<tr><td>2015&#x2013;2021</td><td>Forge (modded)</td><td>Extended Forge modded era from 1.15.2 through 1.20.1.</td></tr>
+<tr><td>2022&#x2013;present</td><td>Paper 1.21.11</td><td>Returned to vanilla-compatible Paper with EssentialsX, LuckPerms (MariaDB), CoreProtect (MySQL).</td></tr>
+</table>
+
+<p class=latex-para>Full history: <a class=latex-url href=/minecraft/history.html>minecraft server history page</a></p>
+</div>
+
+<nav class=footer-nav>
+ <div><a href=kerberos.html class=nav-prev>&#8592; Previous: Kerberos </a>  <a href=ntp_server.html class=nav-next>Next: NTP Server &#8594;</a></div>
+ <div><a href=../index.html>&#8592; Back to Index</a></div>
+</nav>
+
+</div>
+
+</body>
+</html>

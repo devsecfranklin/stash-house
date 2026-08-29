@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ansible Lint</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ansible Lint section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Ansible Lint_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/ansible-lint.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Ansible Lint</h1>
+<span class="meta"><em>Pages 1-2 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Ansible-Linting Infrastructure</h2>
+<div class="latex-content">
+<p class="latex-para">All ansible roles in the lab collection should be linted on a regular basis to maintain configuration quality and catch issues early. The lab uses three tools: ansible-lint}, yamllint}, and ansible-test sanity}.</p>
+<h3 class="latex-subsection">Tools and Configuration</h3>
+<p class="latex-para">Each linter is configured in the test/} directory:</p>
+<ul class="latex-list">
+<li class="latex-list-item">\texttt{.ansible-lint.yml} — ansible-lint configuration with warnings for deprecated modules and experimental rules disabled</li>
+<li class="latex-list-item">\texttt{.yamllint} / \texttt{.yamllintrc} — YAML linting extends default rules with lab-specific indentation and spacing constraints</li>
+</ul>
+<h3 class="latex-subsection">Coverage Status (44 Roles)</h3>
+<p class="latex-para">Based on the most recent audit of ansible/collections/ansible\_collections/lab/franklin/roles/ role}:</p>
+<p class="latex-para">description}</p>
+<li class="latex-list-item">[Complete (30 roles)] apt-mirror, beagleboard, chonk, cluster, common, container-registry, ctfd, desktop, dhcp, dns, docker, documentation, golang, k3s-agent, k3s-server, kerberos, ldap, logging, minecraft, music, nfs, nix, ntp, openbsd, paloalto, prereq, pypi-internal, python, raspberrypi, ssh</li>
+<li class="latex-list-item">[Minimal/Functional (9 roles)] media, samba, shell, tls, website, apt-mirror-stub, jetson-nano, k8s (partial), dns-stub</li>
+<li class="latex-list-item">[Stubs (4 roles)] edge, extensions, latex, odroid</li>
+<p class="latex-para">description}</p>
+<p class="latex-para">Roles with the smallest role definitions tend to have the fewest linting issues. The most problematic roles are usually those that include dynamic template generation or custom module invocation.</p>
+<h3 class="latex-subsection">Proposed Linting Pipeline</h3>
+<p class="latex-para">A new test/lint\_all.sh} script should be created to run all three linters in sequence:</p>
+<pre class="latex-code"><code>
+<p class="latex-para"># Example lint_all.sh structure:</p>
+<p class="latex-para">#!/bin/bash</p>
+<p class="latex-para">set -euo pipefail</p>
+<p class="latex-para">cd &quot;$(dirname &quot;$0&quot;)/..&quot;</p>
+<p class="latex-para">echo &quot;=== ansible-lint ===&quot;</p>
+<p class="latex-para">ansible-lint roles/ 2&gt;&amp;1 || echo &quot;ansible-lint warnings found&quot;</p>
+<p class="latex-para">echo &quot;=== yamllint ===&quot;</p>
+<p class="latex-para">yamllint -c test/.yamllint roles/ 2&gt;&amp;1 || echo &quot;yamllint issues found&quot;</p>
+<p class="latex-para">echo &quot;=== ansible-test sanity ===&quot;</p>
+<p class="latex-para">ansible-test sanity --docker default -v 2&gt;&amp;1 || echo &quot;sanity check failures&quot;</p>
+</code></pre>
+<p class="latex-para">The linting pipeline should be integrated into:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;GitHub Actions:&lt;/strong&gt; Run on PR and nightly builds (similar to existing bandit/trivy/tfsec workflows)</li>
+<li class="latex-list-item">&lt;strong&gt;Hourly cron job on stargate:&lt;/strong&gt; Optional for CI-style validation without external triggers</li>
+</ul>
+<h3 class="latex-subsection">Linting Exceptions by Role</h3>
+<p class="latex-para">Some roles require special handling during linting:</p>
+<ul class="latex-list">
+<li class="latex-list-item">\texttt{tls}: Includes shell commands with \texttt{kss -kfe} which may trigger warning 403 (deprecated module) — explicitly skip in config</li>
+<li class="latex-list-item">\texttt{samba}: Uses custom \texttt{smb.conf.j2} templates that require validation via \texttt{testparm} post-converge</li>
+<li class="latex-list-item">\texttt{k8s}: Contains static manifests rather than role tasks — should be moved to a shared files directory or documented as a reference role</li>
+</ul>
+
+<nav class="footer-nav">
+ <div> <a href="ansible.html" class="nav-next">Next: Ansible &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>
