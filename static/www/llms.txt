@@ -13,6 +13,12 @@
 - [Lab Manual PDF](https://www.bitsmasher.net/manual/lab-manual.pdf): Print-ready 62-page lab manual.
 - [Manual HTML](https://www.bitsmasher.net/manual/): Browser-readable manual landing page with JSON-LD Schema.org markup.
 
+
+## Nostr Identity & Talks
+- [/nostr/index.html](/nostr/index.html): Personal Nostr public keys and protocol presentations
+- [/nostr/index.json](/nostr/index.json): JSON Feed manifest of Nostr decks and assets
+- [/nostr/slides/codemash/codemash-nostr.pdf](/nostr/slides/codemash/codemash-nostr.pdf): CodeMash presentation deck
+- [/nostr/slides/bsides-cosprings/bsides-nostr-security.pdf](/nostr/slides/bsides-cosprings/bsides-nostr-security.pdf): BSides Colorado Springs security presentation deck
 ## Training & Curriculum
 - [Training Index](https://www.bitsmasher.net/training/): Technical training curriculum and slide decks.
 - [Coding Foundations](https://www.bitsmasher.net/training/docs/coding-foundations.html): Systems and software engineering syllabus.

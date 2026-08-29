@@ -11,7 +11,7 @@
   // ── Nav Configuration ────────────────────────────────────────────────
   var NAV_ITEMS = [
     { label: "home",      href: "/",                          external: false },
-    { label: "social",    href: "https://nostter.app/thedevilsvoice@bitsmasher.net", external: true },
+    { label: "nostr",      href: "/nostr",                         external: false },
     { label: "work",      href: "https://g.dev/franklin",     external: true },
     { label: "minecraft", href: "/minecraft",                 external: false },
     { label: "research",  href: "/research",                  external: false },
