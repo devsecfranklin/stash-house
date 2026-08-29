@@ -84,6 +84,19 @@
       ]
     },
     {
+      "id": "2026-08-23-badge-repo-syllabus-markdown-sync",
+      "title": "DEFCON 34 Badge Repo, Syllabus Markdown Sync & Testing Infrastructure Stabilization",
+      "date": "2026-08-23",
+      "url": "/research/blog/2026-08-23-badge-repo-syllabus-markdown-sync.html",
+      "summary": "Five-session workday across three deliverables: DEFCON 34 badge firmware repo creation, ISMG-2050 syllabus LaTeX-to-Markdown extraction synced to wonderland, and site framework updates with TOOLS.md directives and JSON-LD injection.",
+      "tags": [
+        "website",
+        "ansible",
+        "architecture",
+        "research"
+      ]
+    },
+    {
       "id": "2026-08-20-strfry-relay-agent-gateway",
       "title": "Deploying strfry on WonderLan: Building a Permit-First Relay for Agent DMs",
       "date": "2026-08-20",
@@ -283,6 +296,6 @@
       ]
     }
   ],
-  "totalPosts": 22,
-  "lastUpdated": "2026-08-29T04:32:55Z"
+  "totalPosts": 23,
+  "lastUpdated": "2026-08-29T04:38:03Z"
 }
