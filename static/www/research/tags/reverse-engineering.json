@@ -1,0 +1,19 @@
+{
+  "tag": "reverse-engineering",
+  "count": 1,
+  "canonical": "https://www.bitsmasher.net/research/tags/reverse-engineering.json",
+  "posts": [
+    {
+      "id": "2026-08-13-defcon-badge-research",
+      "title": ">DEFCON 34 Badge Firmware Analysis",
+      "date": "2026-08-13",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-13-defcon-badge-research.html",
+      "summary": "Reverse engineering and static analysis of the DEFCON 34 hardware badge bootloader and firmware.",
+      "tags": [
+        "security",
+        "reverse-engineering",
+        "firmware"
+      ]
+    }
+  ]
+}

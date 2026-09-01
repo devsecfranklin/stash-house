@@ -1,8 +1,51 @@
 {
   "tag": "security",
-  "count": 4,
+  "count": 9,
   "canonical": "https://www.bitsmasher.net/research/tags/security.json",
   "posts": [
+    {
+      "id": "2026-08-28-ansible-collection-hardening",
+      "title": "Ansible Collection Hardening & Restructuring: Config Cleanup, DNS Overhaul, and the Road to Samba AD",
+      "date": "2026-08-28",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-28-ansible-collection-hardening.html",
+      "summary": "Ansible lab collection received focused updates: config bloat removed, DNS role restructured with Jinja2 templates, Jetson-Nano expanded. Three planning docs for Samba AD migration and 18-chapter lab manual.",
+      "tags": [
+        "infrastructure",
+        "automation",
+        "ansible",
+        "security",
+        "samba",
+        "dns",
+        "jetson"
+      ]
+    },
+    {
+      "id": "2026-08-27-thursday",
+      "title": "Thursday, August 27: Storage1 Purge, Node Accessibility, and OpenClaw Performance KPIs",
+      "date": "2026-08-27",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-27-thursday.html",
+      "summary": "Storage1 purge across 29 files, ansible-test integration targets built for common/ssh/nfs roles, sync_android.sh security audit completed, node1 probed and confirmed reachable.",
+      "tags": [
+        "infrastructure",
+        "housekeeping",
+        "ansible",
+        "security"
+      ]
+    },
+    {
+      "id": "2026-08-26-infra-housekeeping",
+      "title": "Housekeeping: Head2 Retirement, Storage1 Purge, and a 1654-Line Lab Manual",
+      "date": "2026-08-27",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-26-infra-housekeeping.html",
+      "summary": "Two-phase infrastructure cleanup across Wednesday and Thursday: head2 references purged, /mnt/storage1 replaced, lab manual expanded from 6 lines to 1654.",
+      "tags": [
+        "infrastructure",
+        "housekeeping",
+        "ansible",
+        "automation",
+        "security"
+      ]
+    },
     {
       "id": "2026-08-20-strfry-relay-agent-gateway",
       "title": "Deploying strfry on WonderLan: Building a Permit-First Relay for Agent DMs",
@@ -58,6 +101,30 @@
         "security",
         "rsa-ida",
         "formal-methods"
+      ]
+    },
+    {
+      "id": "2026-08-13-defcon-badge-research",
+      "title": ">DEFCON 34 Badge Firmware Analysis",
+      "date": "2026-08-13",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-13-defcon-badge-research.html",
+      "summary": "Reverse engineering and static analysis of the DEFCON 34 hardware badge bootloader and firmware.",
+      "tags": [
+        "security",
+        "reverse-engineering",
+        "firmware"
+      ]
+    },
+    {
+      "id": "2026-08-01-ssh-role-audit",
+      "title": ">SSH Role Security & Key Audit",
+      "date": "2026-08-01",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-01-ssh-role-audit.html",
+      "summary": "Comprehensive audit of Ansible SSH roles, authorized keys rotation, and host access policies across lab nodes.",
+      "tags": [
+        "security",
+        "ssh",
+        "infrastructure"
       ]
     }
   ]

@@ -1,0 +1,19 @@
+{
+  "tag": "ssh",
+  "count": 1,
+  "canonical": "https://www.bitsmasher.net/research/tags/ssh.json",
+  "posts": [
+    {
+      "id": "2026-08-01-ssh-role-audit",
+      "title": ">SSH Role Security & Key Audit",
+      "date": "2026-08-01",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-01-ssh-role-audit.html",
+      "summary": "Comprehensive audit of Ansible SSH roles, authorized keys rotation, and host access policies across lab nodes.",
+      "tags": [
+        "security",
+        "ssh",
+        "infrastructure"
+      ]
+    }
+  ]
+}

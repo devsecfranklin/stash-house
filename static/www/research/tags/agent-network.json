@@ -1,0 +1,21 @@
+{
+  "tag": "agent-network",
+  "count": 1,
+  "canonical": "https://www.bitsmasher.net/research/tags/agent-network.json",
+  "posts": [
+    {
+      "id": "2026-08-15-machine-discovery-wiring",
+      "title": "Machine Discovery Wiring &amp; Semantic HTML Overhaul",
+      "date": "2026-08-15",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-15-machine-discovery-wiring.html",
+      "summary": "Machine discovery and semantic markup overhaul: alternate link tags for auto-discovery, JSON-LD Schema.org Blog schema at site level, validation fixes.",
+      "tags": [
+        "website",
+        "infrastructure",
+        "automation",
+        "architecture",
+        "agent-network"
+      ]
+    }
+  ]
+}

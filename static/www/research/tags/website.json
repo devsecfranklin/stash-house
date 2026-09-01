@@ -1,0 +1,34 @@
+{
+  "tag": "website",
+  "count": 2,
+  "canonical": "https://www.bitsmasher.net/research/tags/website.json",
+  "posts": [
+    {
+      "id": "2026-08-23-badge-repo-syllabus-markdown-sync",
+      "title": "DEFCON 34 Badge Repo, Syllabus Markdown Sync &amp; Website Framework Updates",
+      "date": "2026-08-23",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-23-badge-repo-syllabus-markdown-sync.html",
+      "summary": "Five-session workday: DEFCON 34 badge firmware repo, ISMG-2050 syllabus LaTeX-to-Markdown extraction, site framework updates with TOOLS.md directives and JSON-LD injection.",
+      "tags": [
+        "website",
+        "ansible",
+        "architecture",
+        "research"
+      ]
+    },
+    {
+      "id": "2026-08-15-machine-discovery-wiring",
+      "title": "Machine Discovery Wiring &amp; Semantic HTML Overhaul",
+      "date": "2026-08-15",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-15-machine-discovery-wiring.html",
+      "summary": "Machine discovery and semantic markup overhaul: alternate link tags for auto-discovery, JSON-LD Schema.org Blog schema at site level, validation fixes.",
+      "tags": [
+        "website",
+        "infrastructure",
+        "automation",
+        "architecture",
+        "agent-network"
+      ]
+    }
+  ]
+}

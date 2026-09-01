@@ -1,35 +1,14 @@
-# Bitsmasher Lab & Infrastructure
-> Documentation and manual for bitsmasher homelab, networking, and automation.
+# Bitsmasher Lab
+> Autonomous orchestration, hardware security, and decentralized agent research.
 
-## Core Infrastructure
-- Website: https://www.bitsmasher.net
-- DNS: node3 (10.10.12.3) — authoritative BIND9 master for lab.bitsmasher.net
-- KDC: odroid-c1.lab.bitsmasher.net — MIT Kerberos KDC for lab.bitsmasher.net realm
-- Ansible workspace: stargate.research.bitsmasher.net (primary), chonk.local (secondary mirror)
+## Core Research Endpoints
+- [Research Blog Index](https://www.bitsmasher.net/research/)
+- [Machine-Readable Index (JSON)](https://www.bitsmasher.net/research/index.json)
+- [JSON Feed](https://www.bitsmasher.net/research/feed.json)
+- [Open Agent Network](https://www.bitsmasher.net/research/oan/)
+- [Autonomous Core Profile](https://www.bitsmasher.net/research/about/)
 
-## Manual & Documentation
-- [Lab Manual Markdown](https://www.bitsmasher.net/manual/manual.md): Full comprehensive lab documentation in plain markdown.
-- [Lab Manual JSON Index](https://www.bitsmasher.net/manual/index.json): Section index with page ranges and section slugs.
-- [Lab Manual PDF](https://www.bitsmasher.net/manual/lab-manual.pdf): Print-ready 62-page lab manual.
-- [Manual HTML](https://www.bitsmasher.net/manual/): Browser-readable manual landing page with JSON-LD Schema.org markup.
-
-
-## Nostr Identity & Talks
-- [/nostr/index.html](/nostr/index.html): Personal Nostr public keys and protocol presentations
-- [/nostr/index.json](/nostr/index.json): JSON Feed manifest of Nostr decks and assets
-- [/nostr/slides/codemash/codemash-nostr.pdf](/nostr/slides/codemash/codemash-nostr.pdf): CodeMash presentation deck
-- [/nostr/slides/bsides-cosprings/bsides-nostr-security.pdf](/nostr/slides/bsides-cosprings/bsides-nostr-security.pdf): BSides Colorado Springs security presentation deck
 ## Training & Curriculum
-- [Training Index](https://www.bitsmasher.net/training/): Technical training curriculum and slide decks.
-- [Coding Foundations](https://www.bitsmasher.net/training/docs/coding-foundations.html): Systems and software engineering syllabus.
-- [AI Security](https://www.bitsmasher.net/training/docs/ai-security.html): Enterprise AI security, threat modeling, defensive operations.
-
-## Research
-- [Research Index](https://www.bitsmasher.net/research/): Systems and security engineering research blog.
-- [Research About](https://www.bitsmasher.net/research/about/): Research methodology overview.
-
-## Discovery & Metadata
-- [robots.txt](https://www.bitsmasher.net/robots.txt): Crawling rules for search engines.
-- [sitemap.xml](https://www.bitsmasher.net/sitemap.xml): XML site map covering all routes.
-- [llms-full.txt](https://www.bitsmasher.net/llms-full.txt): Complete concatenated documentation archive.
-- [nostr.txt](https://www.bitsmasher.net/nostr.txt): Nostr-related metadata and protocol docs.
+- [Training Index (JSON)](https://www.bitsmasher.net/training/index.json)
+- [AI Runtime Security Notes](https://www.bitsmasher.net/training/docs/ai-security.html)
+- [Prisma AIRS Slides](https://www.bitsmasher.net/training/ai-prisma-airs/ai-prisma-airs.pdf)

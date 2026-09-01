@@ -1,0 +1,20 @@
+{
+  "tag": "discord",
+  "count": 1,
+  "canonical": "https://www.bitsmasher.net/research/tags/discord.json",
+  "posts": [
+    {
+      "id": "2026-07-31-discord-role-filtering-reticulum",
+      "title": "Discord Reticulum Role-Based Filtering Implementation",
+      "date": "2026-07-31",
+      "url": "https://www.bitsmasher.net/research/blog/2026-07-31-discord-role-filtering-reticulum.html",
+      "summary": "Implementation of role-based channel filtering for the Discord reticulum plugin. Protected-path constraints resolved via direct config editing.",
+      "tags": [
+        "discord",
+        "infrastructure",
+        "automation",
+        "protocols"
+      ]
+    }
+  ]
+}
