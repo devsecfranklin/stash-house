@@ -1,11 +1,6 @@
 {
-  "version": "https://jsonfeed.org/version/2",
-  "title": "Tags: badge-security",
-  "items": [
-    {
-      "title": "DC34 Badge Security Research Update",
-      "url": "https://www.bitsmasher.net/research/blog/2026-08-13-defcon-badge-research.md",
-      "date": "2026-08-13"
-    }
-  ]
+  "tag": "badge-security",
+  "count": 0,
+  "canonical": "https://www.bitsmasher.net/research/tags/badge-security.json",
+  "posts": []
 }

@@ -1,0 +1,213 @@
+\section{Ansible Automation}
+
+\subsection{Current Landscape (August 2026)}
+
+As of August 2026, the Ansible ecosystem is split between two distribution paths:
+
+\begin{itemize}
+    \item \textbf{Ansible community package} -- the traditional monolithic install (pip install ansible). Current version is 13.x (built on ansible-core 2.20). This includes 85+ collections with thousands of modules and plugins bundled together. Follows semantic versioning, releases two major versions per year plus monthly minor releases.
+    
+    \item \textbf{ansible-core} -- the minimal core engine. Maintains three versions at a time (current + two older). Versioned independently from the community package (2.19, 2.20, 2.21). Releases every four weeks for minor updates.
+
+\end{itemize}
+
+\textbf{EOL versions as of August 2026}: Ansible 10--12 and ansible-core 2.15--2.18 are EOL. Do not use these in new work. Only Ansible 13.x / ansible-core 2.20 is current; 14.0.0/2.21 is in development.
+
+\subsection{Molecule Testing -- Deprecated (August 2026)}
+
+\textbf{Molecule has been removed from the active workflow as of August 2026.} It no longer serves as a testing target or standard. All role validation now uses:
+
+\begin{itemize}
+    \item \textbf{ansible-test --sanity} -- built-in collection sanity checks, run natively on stargate.research.bitsmasher.net with zero external overhead
+    \item \textbf{ansible-test --integration} -- integration tests targeting real hosts or containerized environments via ansible-test's native docker driver
+    \item \textbf{ansible-playbook --syntax-check} -- YAML structure validation for all playbooks and role task files
+    
+\end{itemize}
+
+Existing Molecule test harnesses (in \texttt{ansible/collections/ansible\_collections/lab/franklin/roles/\textless role\textgreater /molecule/}) remain as historical artifacts but are no longer invoked or maintained. New roles must use native ansible-test exclusively.
+
+\chapter{lab/franklin Collection}
+
+The lab/franklin Ansible collection lives at:
+\begin{lstlisting}[style=mystyle]
+/mnt/clusterfs2/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin/
+    \end{lstlisting}
+
+It is the central automation artifact for the entire lab.bitsmasher.net infrastructure, managing provisioning, configuration, and testing across all hosts.
+
+\section{Collection Manifest (galaxy.yml)}
+
+The collection follows standard Ansible Galaxy conventions with namespace \texttt{lab} and name \texttt{franklin}:
+
+\begin{itemize}
+    \item \textbf{Version}: 1.0.0
+    
+    \item \textbf{License}: MIT
+    
+    \item \textbf{Author}: franklin <franklin@bitsmasher.net>
+    
+    \item \textbf{Repository}: \url{https://github.com/devsecfranklin/lab-franklin}
+    
+    \item \textbf{Documentation}: \url{https://github.com/devsecfranklin/lab-franklin/docs}
+\end{itemize}
+
+\section{Role Inventory}
+
+The collection contains roles organized under the roles/ directory. As of August 2026, the following roles are maintained with native ansible-test harnesses:
+
+\begin{lstlisting}[style=mystyle]
+roles/
+├── apt_mirror/          # APT mirror configuration
+├── beagleboard/         # BeagleBoard device provisioning
+├── common/              # Shared base configuration (bootstrap.sh, common utils)
+├── container_registry/  # Docker/container registry setup
+├── ctfd/                # CTFd platform deployment
+├── desktop/             # Desktop environment provisioning
+├── docker/              # Docker engine installation
+├── documentation/       # Documentation generation roles
+├── dhcp/                # DHCP server configuration (dhcpd.conf)
+├── dns/                 # BIND/named DNS server
+├── golang/              # Go language toolchain
+├── jetson-nano/         # NVIDIA Jetson Nano provisioning
+├── k3s_agent/           # k3s worker node
+├── k3s_server/          # k3s control plane server
+├── k8s/                 # Kubernetes generic setup
+├── latex/               # LaTeX environment
+├── logging/             # Centralized logging
+├── music/               # Music service configuration
+├── nfs/                 # NFS server/client
+├── nix/                 # Nix package manager
+├── openbsd/             # OpenBSD host bootstrap (blowfish target)
+│   ├── tasks/main.yml   # Includes files.yml, timezone setup
+│   └── files/           # bootstrap.sh, login.conf, hosts entries
+├── paloalto/            # Palo Alto firewall config
+├── prereq/              # Prerequisite packages
+├── pypi_internal/       # Internal PyPI repository setup
+│   ├── tasks/main.yml   # Symlink pypi_dir -> html_dir/pypi
+│   └── vars/main.yml    # html_dir=/var/www/html, pypi_dir=/mnt/storage1/LAB/pypi
+├── python/              # Python environment
+├── raspberrypi/         # Raspberry Pi provisioning
+├── samba/               # Samba file sharing
+├── security/            # Hardening and security baselines
+├── shell/               # Shell configuration
+├── ssh/                 # SSH server hardening
+├── tls/                 # TLS certificate management
+├── chonk/               # chonk-specific configuration
+├── cluster/             # Cluster-wide settings
+    \end{lstlisting}
+
+\section{Workspace Structure}
+
+The full project layout:
+\begin{lstlisting}[style=mystyle]
+/workspace/lab-franklin/
+├── Makefile.am                  # Top-level autotools target (Python, Docker, dev)
+├── configure.ac                 # Autotools config (autoconf)
+├── bootstrap.sh                 # Cross-platform bootstrapper
+├── network_update.sh            # One-shot maintenance script (hardened 2026-08-02)
+├── ansible/                     # ANSIBLE_HOME root
+│   ├── playbook.yml             # Main playbook
+│   ├── hosts                    # Inventory file
+│   └── collections/             # Collections path
+│       ├── ansible_collections/ # Galaxy namespace
+│           └── lab/franklin/    # The lab/franklin collection
+│               ├── galaxy.yml
+│               ├── roles/       # All role modules (37 total)
+│               └── docs/latex/  # LaTeX docs build (autotools)
+├── container/                   # Docker/Podman configs
+├── terraform/                   # Terraform infrastructure definitions
+├── bin/                         # Shared utility scripts (common.sh)
+└── docs/manual/                 # Lab manual documentation (this document)
+    \end{lstlisting}
+
+\section{Build System (Autotools)}
+
+The project uses GNU Autotools for the root-level build:
+
+\begin{itemize}
+    \item \textbf{configure.ac}: Defines package (lab-franklin v0.2), libtool support, Python $\ge$ 3.9 requirement, podman/ansible/gpg checks, git version tagging
+    
+    \item \textbf{Makefile.am}: Top-level targets include test (ansible-lint + ansible-test sanity/integration), security (venv bootstrap), dev (Python venv in BUILDDIR)
+    
+    \item \textbf{bootstrap.sh}: Cross-platform bootstrapper that detects OS (Debian/RedHat/OpenBSD/macOS/Linux) and installs platform-specific packages, then runs aclocal $\rightarrow$ autoreconf $\rightarrow$ automake $\rightarrow$ configure
+    
+    \item \textbf{docs/manual/Makefile.am}: Standalone autotools stub for LaTeX docs build (clean target removes *.aux files)
+\end{itemize}
+
+The \texttt{network\_update.sh} script was hardened on 2026-08-02 with: set -euo pipefail, auto-resolved paths, pinned K3s version validation, ANSIBLE_HOME environment checks, removed dangerous clush/apt-get blast radius, and dead code removal. It runs the main playbook at \texttt{ansible/playbook.yml} as its primary action.
+
+\chapter{Testing from Stargate}
+
+\section{Native ansible-test on stargate.research.bitsmasher.net}
+
+The stargate host (10.10.16.66, Debian 12 bookworm) serves as the exclusive testing platform for the lab/franklin Ansible collection. All test execution runs with zero external billing -- direct shell access to the gateway sandbox eliminates API token overhead.
+
+\subsection{Testing Standard: ansible-test (August 2026)}
+
+Native \texttt{ansible-test} has replaced Molecule as the canonical testing framework:
+
+\begin{itemize}
+    \item \textbf{sanity checks}: Built into ansible-core; validates module/plugin imports, YAML structure, and collection metadata without any container dependency
+    
+    \item \textbf{integration tests}: Run via \texttt{ansible-test integration} targeting real hosts or the native docker driver (preferred over podman for consistency)
+    
+    \item \textbf{syntax validation}: \texttt{ansible-playbook --syntax-check} validates all playbooks and role task files before execution
+    
+\end{itemize}
+
+The legacy Molecule directory structure at each role's \texttt{molecule/} subdirectory has been deprecated. It remains in-place as historical reference but is excluded from CI pipelines and the Makefile.am test target.
+
+\subsection{Test Execution Flow (ansible-test)}
+
+For a given role, the native test cycle is:
+\begin{enumerate}
+    \item \textbf{syntax-check}: \texttt{ansible-playbook --syntax-check playbook.yml} validates YAML structure
+    
+    \item \textbf{sanity}: \texttt{ansible-test sanity} runs built-in linting against the collection -- no container, no overhead
+    
+    \item \textbf{integration}: \texttt{ansible-test integration <role>} runs target-specific tests using docker driver containers
+\end{enumerate}
+
+\subsection{Running Tests from Stargate}
+
+From stargate's workspace:
+\begin{lstlisting}[style=mystyle]
+cd ~/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin
+ansible-test sanity
+ansible-test integration dns --python 3.12
+ansible-playbook --syntax-check playbook.yml
+    \end{lstlisting}
+
+\section{Dynamic Scoping and Pathing Convention}
+
+Roles use dynamic file inclusion via templated variables to avoid hardcoded paths:
+
+\begin{itemize}
+    \item Roles include task fragments using: \texttt{{\_role\_name\_files}} and \texttt{{\_role\_name\_templates}} for dynamically scoped file/paths
+    
+    \item Template references follow the pattern: \texttt{\{include\_task "tasks/\_role\_name.yml"\} } scoped within dynamically included tasks
+\end{itemize}
+
+This convention eliminates static path dependencies across role invocations and supports multi-target deployment without playbook-level path overrides.
+
+\section{Package Standards -- Deprecated Utilities}
+
+The following deprecated utilities have been removed from baseline role manifests:
+
+\begin{itemize}
+    \item \textbf{neofetch}: Removed from common role; replaced by standard Linux tools (lsb\_release, uname -r)
+    
+    \item \textbf{tripwire}: Removed from security role; no longer maintained and superseded by native file integrity monitoring
+    
+    \item Other legacy packages audited during August 2026 cleanup -- verify role manifests before adding new dependencies
+\end{itemize}
+
+\section{Dynamic Probing Standard}
+
+Static inventory reachability assumptions have been replaced with non-interactive batch probes:
+
+\begin{lstlisting}[style=mystyle]
+ssh -o BatchMode=yes -o ConnectTimeout=3 -i ~/.ssh/id_ed25519_openclaw franklin@<host> "hostname && whoami"
+    \end{lstlisting}
+
+This approach eliminates stale host entries, prevents password prompts in automation pipelines, and provides deterministic connectivity feedback with a 3-second timeout. Never assume reachability from static notes -- always probe on demand.

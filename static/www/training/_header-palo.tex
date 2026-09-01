@@ -1,0 +1,66 @@
+% https://orcid.org/0000-0003-4586-8500
+
+%%%%% COLORS %%%%%
+\setbeameroption{hide notes} % Only slides
+%\setbeameroption{show only notes} % Only notes
+%\setbeameroption{show notes on second screen=right} % Both
+% https://hartwork.org/beamer-theme-matrix/
+\definecolor{bulletcolor}{RGB}{250,88,45} % RGB model is defined with values between 0 and 255
+%\setbeamercolor{local structure}{fg=bulletcolor}
+% \setbeamertemplate{itemize items}[circle]
+\setbeamercolor{part title}{fg=white}
+
+% Set the document font https://tug.org/FontCatalogue/montserratregular/
+%\usepackage[defaultfam,tabular,lining]{montserrat} %% Option 'defaultfam'
+\usepackage[T1]{fontenc} % fontenc does not work with pdf latex 
+%\renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}}
+% Required for using system fonts
+%\usepackage{fontspec}
+
+% Set Montserrat as the main font
+% Make sure Montserrat is installed on your system
+%\setmainfont{Montserrat}
+%\setsansfont{Montserrat}
+%\setmonofont{Montserrat} % Optional, if you have a monospace variant of Montserrat or want to use it for code
+
+% You might also want to set specific fonts for different elements if needed,
+% but for general branding, setting the main fonts is usually enough.
+% For example, if titles need a different weight:
+% \setbeamerfont{title}{series=\bfseries}
+% \setbeamerfont{frametitle}{series=\bfseries}
+
+\usepackage{graphicx}
+\graphicspath{{../images}}
+
+% no navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% Text positioning
+\usepackage[absolute,overlay]{textpos}
+
+\usepackage{tikz} % this is to format the orange rectangles
+\definecolor{mycolor}{HTML}{FA582D}
+\definecolor{panorange}{HTML}{FF6A00}
+
+%%% HEADER %%%
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{0pt} % remove the underline from below the graphic
+\setlength{\headheight}{25pt} % Adjust header height for graphics
+% section headers
+\usepackage{xkeyval}
+\usetheme{default} % Or your desired theme
+\definecolor{white}{HTML}{FFFFFF}  % Explicitly define whit
+
+\usepackage{hyperref} % make the hyperlinks blue
+\hypersetup{colorlinks=true,urlcolor=blue}
+
+\AtBeginSection[]{
+	\begin{frame}
+		\vfill
+		\centering
+		\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+			\usebeamerfont{title}\insertsectionhead\par%
+		\end{beamercolorbox}
+		\vfill
+	\end{frame}
+}

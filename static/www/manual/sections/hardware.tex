@@ -1,0 +1,76 @@
+\section{Hardware Inventory}
+
+\subsection{Desk Setup}
+
+\begin{itemize}
+    \item \textbf{Franklin's desk}: chonk (10.10.8.60) -- GAMING Windows PC, primary workstation, Gateway host running OpenClaw
+    
+    \item \textbf{Sly's desk}: GAMING Windows computer (Twitch: \url{https://www.twitch.tv/s1y_b0rg}) -- at main office near music.lan monitor
+    
+    \item Both sit at the main office where music.lan's monitor is displayed
+\end{itemize}
+
+\subsection{Server and Compute Hosts}
+
+\subsubsection*{Core Infrastructure (Debian 12)}
+
+\begin{tabularx}{\textwidth}{l l l X}
+\textbf{Host} & \textbf{IP} & \textbf{User} & \textbf{Role} \\
+\hline
+chonk & 10.10.8.60 & franklin/openclaw & Gateway host, primary workstation + inference \\
+stargate & 10.10.16.66 & openclaw & Ansible workspace, build host, DNS master (node3), NFS server \\
+skynet & 10.10.16.10 & openclaw/franklin & Minecraft server, IP-direct login \\
+time & 10.10.12.2 & openclaw/franklin & Stratum-1 NTP server with GPS reference \\
+wonderland & 178.62.60.55 & franklin/openclaw & Public cloud VM (Debian 12, 6.1 kernel), web host \\
+music.lan & 192.168.86.38 & root & Desktop machine via skynet route \\
+node3 & 10.10.12.3 & openclaw & \textbf{Authoritative BIND9 DNS master} (post-server1 migration) \\
+\hline
+\end{tabularx}
+
+\subsubsection*{Jetson Cluster (\textasciitilde 87 days uptime)}
+
+All Jetsons run Ubuntu 18.04 with ed25519 key auth (openclaw permanent, franklin has password \texttt{123} as fallback -- pending key-only migration):
+
+\begin{tabularx}{\textwidth}{l l X}
+\textbf{Host} & \textbf{IP} & \textbf{Status} \\
+\hline
+node900 & 10.10.12.90 & Online, key auth; home dir from stargate:/mnt/clusterfs2 \\
+node901 & 10.10.12.91 & Online, key auth; home dir from stargate:/mnt/clusterfs2 \\
+node903 & 10.10.12.93 & Online, key auth; home dir from stargate:/mnt/clusterfs2 \\
+node902 & 10.10.12.92 & Off / no route to host (likely powered down) \\
+\hline
+\end{tabularx}
+
+\textbf{NFS note}: Jetson home directories are NFS-mounted from stargate:/mnt/clusterfs2. StrictModes permissions apply (home 0750, .ssh 0700, authorized\_keys 0600).
+
+\subsubsection*{KDC and Directory Services}
+
+\begin{tabularx}{\textwidth}{l l X}
+\textbf{Host} & \textbf{IP} & \textbf{Status} \\
+\hline
+odroid-c1 / kdc1 & 10.10.12.254 & Online (~242d uptime), root key auth, KDC for lab.bitsmasher.net Kerberos realm \\
+ldap/bbb1 & 10.10.13.1 & SSH reachable as root; slapd failed Dec 2025 (TLS cert issue) \\
+\hline
+\end{tabularx}
+
+\subsection{Historical / Decommissioned Hosts}
+
+\begin{itemize}
+    \item \textbf{server1 (10.10.12.12)}: Former DNS master -- decommissioned August 2026; role replaced by node3
+    
+    \item \textbf{snowy}: Hard disk physically removed; /mnt/snowy now just a raw mounted drive (not SSH-accessible)
+    
+    \item \textbf{blowfish}: Previously at 10.10.12.15, reassigned to 10.10.14.85. Key not authorized yet -- unreachable from chonk but port 22 is open. Expected role: database host with OpenBSD
+    
+    \item \textbf{node902}: Powered off; no route to host from any known peer
+\end{itemize}
+
+\subsection{Planned Hardware Expansion}
+
+\begin{itemize}
+    \item blowfish as the primary database server (OpenBSD planned)
+    
+    \item Full ed25519 key rollout for node900--node903 to remove password fallback
+    
+    \item k3s\_server and k3s\_agent roles for Kubernetes across node infrastructure
+\end{itemize}

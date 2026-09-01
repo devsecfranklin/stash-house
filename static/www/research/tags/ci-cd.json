@@ -1,0 +1,50 @@
+{
+  "tag": "ci-cd",
+  "count": 3,
+  "canonical": "https://www.bitsmasher.net/research/tags/ci-cd.json",
+  "posts": [
+    {
+      "id": "2026-08-25-ansible-native-test-pipeline",
+      "title": "From Molecule to Native Ansible-Test: Zero-Cost Validation Pipeline on Stargate",
+      "date": "2026-08-25",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-25-ansible-native-test-pipeline.html",
+      "summary": "Migrating from Docker-dependent Molecule testing to native ansible-test on stargate eliminates external container orchestration overhead, achieving zero-token shell executions within the lab topology.",
+      "tags": [
+        "infrastructure",
+        "automation",
+        "ansible",
+        "testing",
+        "ci-cd",
+        "molecule"
+      ]
+    },
+    {
+      "id": "2026-08-24-sunday-collection-coverage-audit",
+      "title": "Sunday Collection Coverage Audit: Ansible Test Gaps &amp; Testing Infrastructure Stabilization",
+      "date": "2026-08-24",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-24-sunday-collection-coverage-audit.html",
+      "summary": "Comprehensive code coverage audit of the lab.franklin Ansible collection across 43 roles (4,376 task lines). Only four roles have real integration tests; testing infrastructure pivoted to native ansible-test with pypi_internal as approved package source.",
+      "tags": [
+        "infrastructure",
+        "automation",
+        "ansible",
+        "testing",
+        "ci-cd"
+      ]
+    },
+    {
+      "id": "2026-08-20-ansible-molecule-pipeline",
+      "title": "Ansible Molecule at Scale: Why 37 Test Harnesses Timeout and How to Fix the Pipeline",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-ansible-molecule-pipeline.html",
+      "summary": "37 Ansible roles have Molecule test harnesses on stargate, but the cron job times out at 600s. Diagnosing DNS vs NFS failure modes and proposing parallelization.",
+      "tags": [
+        "ansible",
+        "molecule",
+        "ci-cd",
+        "automation",
+        "infrastructure"
+      ]
+    }
+  ]
+}

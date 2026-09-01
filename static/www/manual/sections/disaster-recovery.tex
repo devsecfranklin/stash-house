@@ -1,0 +1,112 @@
+\section{Disaster Recovery}
+
+\subsection{Critical Dependencies Chain}
+
+The lab infrastructure has a cascading dependency chain. A failure in one layer propagates:
+
+\begin{enumerate}
+    \item \textbf{Time (NTP)} $\rightarrow$ if time drift exceeds 128 seconds, Kerberos tickets expire and TLS handshakes fail
+    
+    \item \textbf{DNS (ns1/BIND)} $\rightarrow$ without DNS resolution, all hostname-based services (Kerberos SRV records, NTP upstream, LDAP) break
+    
+    \item \textbf{Kerberos (odroid-c1/KDC)} $\rightarrow$ without the KDC, authentication fails for all Kerberos-authenticated services
+    
+    \item \textbf{LDAP (bbb1/slapd)} $\rightarrow$ without LDAP, directory lookups fail and user/service account information is unavailable
+\end{enumerate}
+
+Recovery priority should follow this chain in reverse: fix time first, then DNS, then KDC, then LDAP.
+
+\subsection{Failure Scenarios and Recovery}
+
+\subsubsection{NTP Failure -- All Hosts Lose Time Sync}
+
+Symptoms: \texttt{timedatectl} shows "System clock synchronized: no", Kerberos tickets rejected.
+
+Recovery:
+\begin{enumerate}
+    \item Verify GPS unit is locked on odroid-c1 (time host)
+    
+    \item Check ntpd/ntpsec service: \texttt{systemctl status ntpsec}
+    
+    \item If GPS is offline, enable holdover mode (internal oscillator continues at reduced accuracy)
+    
+    \item On affected clients, force resync: \texttt{ntpdate -s time.lab.bitsmasher.net} or wait for ntpd's step-sync to kick in
+    
+    \item Verify with \texttt{ntpq -p} on clients and \texttt{ntptime} on the server
+\end{enumerate}
+
+\subsubsection{DNS (ns1) Offline -- Cascade Failure}
+
+Symptoms: hostnames don't resolve, Kerberos SRV discovery fails.
+
+Recovery:
+\begin{enumerate}
+    \item Check ns1 reachability: ping from any known-good host
+    
+    \item If ns1 is up but not answering: check BIND (named) service status
+    
+    \item If BIND has crashed due to config error: restore from last known-good named.conf
+    
+    \item As a workaround, add manual entries to /etc/hosts on affected hosts until DNS recovers
+    
+    \item Update krb5.conf with explicit \texttt{kdc = odroid-c1.lab.bitsmasher.net}
+\end{enumerate}
+
+\subsubsection{LDAP (bbb1) Down -- No Directory Service}
+
+Symptoms: slapd failed, status.sh reports both slapd and ldapsearch as failing.
+
+Recovery:
+\begin{enumerate}
+    \item SSH to bbb1/lab.bitsmasher.net as root
+    
+    \item Check TLS certificate validity in the configured cert path
+    
+    \item Regenerate or replace expired certificates
+    
+    \item Restart slapd: \texttt{systemctl restart slapd}
+    
+    \item Verify with ldapsearch for franklin and sly DNs
+\end{enumerate}
+
+\subsubsection{KDC (odroid-c1) Offline -- No Authentication}
+
+Symptoms: kinit fails for all realms, service authentication denied.
+
+Recovery:
+\begin{enumerate}
+    \item SSH to odroid-c1 as root (franklin user's key is not authorized)
+    
+    \item Check kdc process: \texttt{kadmind/krb5kdc status}
+    
+    \item Verify KDC database integrity: \texttt{kdb5_util list}
+    
+    \item Restart kerberos services if needed
+    
+    \item Regenerate host keytabs for affected services via \texttt{kadmin.local}
+\end{enumerate}
+
+\subsection{Backup and Restoration}
+
+\begin{itemize}
+    \item Ansible playbooks (lab-franklin collection) are the single source of truth -- they can reconstruct any configured state
+    
+    \item Bare git repos with GPG-encrypted pass entries handle credential backup
+    
+    \item KDC database (\texttt{\$KRB5\_KDB\_FILE}) should be backed up regularly on odroid-c1
+    
+    \item DNS zone files should have local copies (in the DNS role's files/ directory)
+\end{itemize}
+
+\subsection{Prevention: Monitoring}
+
+The current monitoring approach is manual via status.sh. For improved resilience, consider:
+\begin{itemize}
+    \item Automated ping/SSH checks on critical hosts in HEARTBEAT.md
+    
+    \item Nagios/Zabbix-style monitoring on a dedicated host
+    
+    \item Email/slack alerts for service down conditions
+\end{itemize}
+
+The lab-franklin Ansible collection should eventually include a monitoring role to automate this.

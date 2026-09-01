@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dns</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Dns section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Dns_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/dns.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Dns</h1>
+<span class="meta"><em>Pages 17-19 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">DNS Configuration</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">BIND Overview -- Post-Migration (August 2026)</h3>
+<p class="latex-para">The DNS infrastructure has been migrated from the legacy server1} (10.10.12.12) to a new authoritative setup:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;DNS Master&lt;/strong&gt;: &lt;strong&gt;node3&lt;/strong&gt; (10.10.12.3) -- promoted from client node to authoritative BIND9 master</li>
+<li class="latex-list-item">&lt;strong&gt;Legacy DNS host&lt;/strong&gt;: \texttt{server1} (10.10.12.12) has been decommissioned; all zone transfers and updates now target node3</li>
+</ul>
+<p class="latex-para">The DNS role in lab-franklin's Ansible collection manages:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Forward zone: db.home.lab (hostnames to IPs)</li>
+<li class="latex-list-item">Reverse zones: PTR records for each 10.10.x.0/24 subnet</li>
+<li class="latex-list-item">SRV records: Kerberos service discovery</li>
+<li class="latex-list-item">Zone file generation via Jinja2 templates on node3</li>
+</ul>
+<h3 class="latex-subsection">Zone and Host Realignment (August 2026)</h3>
+<p class="latex-para">The following entries have been updated in the forward zone (db.home.lab):</p>
+<p class="latex-para">center}</p>
+<p class="latex-para">tabular}{lll}</p>
+<hr class="latex-hline">
+<hr class="latex-hline">
+<p class="latex-para">stargate.research.bitsmasher.net &amp; 10.10.16.66 &amp; Ansible orchestration host, primary workspace \\</p>
+<hr class="latex-hline">
+<p class="latex-para">tabular}</p>
+<p class="latex-para">center}</p>
+<p class="latex-para">The corresponding reverse zones (PTR records) have been updated to match:</p>
+<ul class="latex-list">
+<li class="latex-list-item">10.10.16.66 $\rightarrow$ stargate.research.bitsmasher.net</li>
+<li class="latex-list-item">10.10.8.60 $\rightarrow$ chonk.lab.bitsmasher.net</li>
+</ul>
+<h3 class="latex-subsection">Kerberos SRV RFC Compliance</h3>
+<p class="latex-para">The following SRV records now point directly to FQDN A records rather than CNAMEs, per RFC 2782:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">_kerberos-adm._tcp.lab.bitsmasher.net IN SRV 0 100 749 kdc1.lab.bitsmasher.net.</p>
+<p class="latex-para">_kerberos._tcp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.</p>
+<p class="latex-para">_kerberos._udp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.</p>
+<p class="latex-para">_kdc._tcp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.</p>
+<p class="latex-para">_kdc._udp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<p class="latex-para">&lt;strong&gt;Note&lt;/strong&gt;: The _kerberos-adm.\_tcp} record now points directly to the A record for kdc1.lab.bitsmasher.net} rather than via a CNAME chain, eliminating resolution latency and failure modes from indirection.</p>
+<h3 class="latex-subsection">DNS Failure Impact</h3>
+<p class="latex-para">When the DNS master (node3) is offline:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Lab hosts fall back to /etc/hosts entries (authoritative but static -- no dynamic updates)</li>
+<li class="latex-list-item">Kerberos KDC discovery via SRV records fails -- clients need manual \texttt{kdc = kdc1.lab.bitsmasher.net} in \texttt{/etc/krb5.conf}</li>
+<li class="latex-list-item">Dynamic zone updates cannot propagate; new hosts require manual /etc/hosts sync</li>
+</ul>
+<h3 class="latex-subsection">DNS Maintenance Procedures</h3>
+<p class="latex-para">Zone file updates are committed to the DNS Ansible role and deployed via:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">ansible-playbook -l dns_servers -t dns deploy.yml</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<p class="latex-para">Forward and reverse zone files should be audited quarterly for IP realignment accuracy.</p>
+
+<nav class="footer-nav">
+ <div><a href="disaster-recovery.html" class="nav-prev">&#8592; Previous: Disaster Recovery </a>  <a href="hardware.html" class="nav-next">Next: Hardware &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

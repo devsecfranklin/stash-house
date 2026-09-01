@@ -1,192 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
-		<meta charset="UTF-8">
-		<link rel="canonical" href="https://www.bitsmasher.net/research/blog/2026-08-13-nostr-agent-protocol-design-phase.html" />
-		<meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.6.0">
-		<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
-		<link rel="stylesheet" href="https://www.bitsmasher.net/css/www.bitsmasher.net.css">
-		<link rel="icon" type="image/x-icon" href="https://www.bitsmasher.net/images/favicon.ico">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="Bitsmasher Lab — Nostr Agent Protocol: design phase complete with 7-layer architecture, dreamlab kind ranges, NIP-17 gift-wrap for agent DMs, and strfry relay ingress.">
-		<title>Nostr Agent Protocol — Design Phase Complete — Bitsmasher Lab Research</title>
-		<style>
-			.research-content { text-align: left; max-width: 900px; margin: 0 auto; }
-			.page-header { margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(26,115,232,0.2); }
-			.page-title { color: #1a73e8; font-size: 2rem; margin: 0.3rem 0; }
-			.page-subtitle { color: #9e9e9e; font-size: 1rem; margin-bottom: 0.5rem; }
-			h2, h3 { color: #64b5f6; }
-			h4 { color: #90caf9; }
-			p { line-height: 1.7; }
-			code { background: rgba(26,115,232,0.15); padding: 2px 6px; border-radius: 3px; color: #82b1ff; }
-			.back-link { margin-bottom: 2rem; font-size: 0.9rem; }
-			.back-link a { color: #4fc3f7; text-decoration: none; }
-			.back-link a:hover { text-decoration: underline; }
-			.blog-tag { display: inline-block; background: #1a73e8; color: white; padding: 2px 8px; border-radius: 3px; font-size: 0.8rem; margin-right: 4px; vertical-align: middle; }
-			.page-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(26,115,232,0.2); font-size: 0.8rem; color: #9e9e9e; text-align: center; }
-			.arch-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-			.arch-table th { background: rgba(26,115,232,0.15); color: #64b5f6; padding: 8px 12px; text-align: left; border: 1px solid rgba(26,115,232,0.2); }
-			.arch-table td { padding: 8px 12px; border: 1px solid rgba(26,115,232,0.15); }
-			.arch-table tr:nth-child(even) { background: rgba(10,22,40,0.5); }
-			.kind-badge { display: inline-block; background: #1a73e8; color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.75rem; font-weight: bold; margin-right: 4px; }
-			.blockquote { border-left: 3px solid #1a73e8; padding: 1rem 1.5rem; margin: 1rem 0; background: rgba(10,22,40,0.5); font-style: italic; }
-			.diagram { background: rgba(0,0,0,0.3); padding: 1rem; font-family: monospace; overflow-x: auto; white-space: pre; margin: 1rem 0; font-size: 0.85rem; line-height: 1.5; color: #90caf9; }
-		</style>
-	</head>
-	<body>
-		<nav class="w3-container w3-margin-top">
-			<div class="w3-bar w3-border custom-nav-bar">
-				<a href="/" target="_blank" rel="noopener noreferrer" class="w3-bar-item w3-button">home</a>
-				<a href="https://nostter.app/thedevilsvoice@bitsmasher.net" target="_blank" rel="noopener noreferrer" class="w3-bar-item w3-button">social</a>
-				<a href="https://g.dev/franklin" target="_blank" rel="noopener noreferrer" class="w3-bar-item w3-button">work</a>
-				<a href="/minecraft" target="_blank" rel="noopener noreferrer" class="w3-bar-item w3-button">minecraft</a>
-				<a href="/research" target="_blank" rel="noopener noreferrer" class="w3-bar-item w3-button">research</a>
-				<a href="https://discord.gg/mdJGV73Ub" target="_blank" rel="noopener noreferrer" class="w3-bar-item w3-button">discord</a>
-			</div>
-		</nav>
-		<main class="w3-container w3-margin-top">
-			<div class="research-content">
-				<p class="back-link"><a href="https://www.bitsmasher.net/research">&#x2190; Back to Research Blog</a></p>
-				<div class="page-header">
-					<p class="blog-date">August 13, 2026 - MDT</p>
-					<h2 class="page-title">Nostr Agent Protocol: Design Phase Complete <span class="blog-tag">nostr</span> <span class="blog-tag">agent-network</span> <span class="blog-tag">architecture</span></h2>
-					<p class="page-subtitle">Bitsmasher Lab - Open Agent Network Research</p>
-				</div>
-
-				<p>Design phase is done. Seven layers, three external analyses cross-validated, and a convergence on exactly how autonomous agents should find each other, authenticate, communicate, and coordinate over Nostr without touching any centralized platform.</p>
-
-				<div class="blockquote">
-					<strong>The central insight:</strong> the relay is transport, not trust. Every other layer in this architecture flows from that realization. The persistence guarantee lives in a local pod filesystem; relays are just how state propagates between agents.
-				</div>
-
-				<h3>The Problem We're Solving</h3>
-
-				<p>When two bots want to talk today, they need APIs, OAuth flows, rate limits, terms of service, or a hosted platform that can revoke access at any time. Every agent-to-agent bridge is a dependency graph &mdash; and dependency graphs break.</p>
-
-				<p>We want agents to communicate the way humans use email: open standards, pubkeys as identity, no middlemen required. Nostr provides the substrate. The Open Agent Network (OAN) is the protocol built on top of it.</p>
-
-				<h3>The 7-Layer Architecture</h3>
-
-				<p>Stage 4 synthesized the design into seven layers. Here's the complete picture:</p>
-
-				<table class="arch-table">
-					<tr><th>Layer</th><th>Component</th><th>Key Decision</th></tr>
-					<tr><td><strong>0. Trust Substrate</strong></td><td>Pubkey identity, DNS binding, contact lists, relay advertisements</td><td>NIP-05 for <code>agent@bitsmasher.net</code> mapping; kind 10002 + 10050 for relay discovery</td></tr>
-					<tr><td><strong>1. Transport</strong></td><td>strfry relay on wonderland via Docker</td><td><code>allowlist</code> ingress mode; nginx reverse proxy with TLS termination</td></tr>
-					<tr><td><strong>2. Messaging</strong></td><td>NIP-17 kind 1059 gift-wrap + NIP-44 encryption</td><td>Per-message ephemeral keys, zero metadata leak. <strong>Replaces dead NIP-04.</strong></td></tr>
-					<tr><td><strong>3. Ingestion (Bridge)</strong></td><td>Pod filesystem as source of truth</td><td>Inbox/outbox with content-addressed filenames; bridge daemon handles WebSocket &harr; disk sync</td></tr>
-					<tr><td><strong>4. Shared State</strong></td><td>NIP-78 kind 30078 cross-agent events</td><td>Synchronization protocol only, not persistent storage. Version vectors for conflict resolution.</td></tr>
-					<tr><td><strong>5. Governance</strong></td><td>Agent Control Surface (kind 31400&ndash;31405) + intent/response ranges</td><td>Bidirectional human-in-the-loop approval before autonomous action</td></tr>
-					<tr><td><strong>6. Lifecycle &amp; Auth</strong></td><td>NIP-42 relay auth, status signals (kind 30315), key rotation protocol</td><td>Deterministic bootstrap from seed phrase; grace periods during pubkey rotation</td></tr>
-				</table>
-
-				<h3>The Kind Ranges &mdash; DreamLab's Agent Control Surface</h3>
-
-				<p>DreamLab (AgentBox) has claimed specific kind ranges that directly map to our governance needs. Rather than inventing new kinds, we adopt their conventions for interoperability:</p>
-
-				<table class="arch-table">
-					<tr><th>Kind Range</th><th>Purpose</th></tr>
-					<tr><td><span class="kind-badge">31400</span>&ndash;<span class="kind-badge">31405</span></td><td><strong>Agent Control Surface</strong> &mdash; panel definitions, state snapshots (31401), action requests (31402), human responses (31403), diffs (31404), retirement (31405)</td></tr>
-					<tr><td><span class="kind-badge">38000</span>&ndash;<span class="kind-badge">38099</span></td><td><strong>Agent-intent</strong> &mdash; inbound requests for an agent to act on behalf of another agent or human</td></tr>
-					<tr><td><span class="kind-badge">38100</span>&ndash;<span class="kind-badge">38199</span></td><td><strong>Agent-response</strong> &mdash; task completion reports from agents back to the requester</td></tr>
-				</table>
-
-				<p>The governance flow transforms our architecture from a "communicating bots" system into a governed autonomous system:</p>
-
-				<div class="diagram">
-External Agent &#x2192; kind:38000 intent event &#x2192; Our Agent inbox
-Our Agent processes &#x2192; kind:31402 action request &#x2192; relay &#x2192; Human dashboard
-Human responds &#x2192; kind:31403 approval/denial &#x2192; our agent outbox
-Agent reports result &#x2192; kind:38100 response event &#x2192; external agent</div>
-
-				<h3>Cross-Source Convergence</h3>
-
-				<p>We analyzed three independent sources and found remarkable agreement on core architectural decisions:</p>
-
-				<table class="arch-table">
-					<tr><th>Decision</th><th>Our Position</th><th>eliteai.tools</th><th>kheAI blog</th><th>DreamLab/AgentBox</th></tr>
-					<tr><td><strong>Encryption for agent DMs</strong></td><td>NIP-17 kind 1059</td><td>sendMessageNIP17() as modern option, calls NIP-04 legacy</td><td>Implicitly via kind 1059 tag parsing</td><td>kind 1059 only; kind 4 rejected by default with E031 error code</td></tr>
-					<tr><td><strong>Inbox model</strong></td><td>Pod filesystem, content-addressed</td><td>getMessageNIP17() pattern matches</td><td>None (ephemeral only)</td><td>Pod filesystem source of truth &mdash; inbox/outbox with content-addressed filenames</td></tr>
-					<tr><td><strong>Filtering as hardest problem</strong></td><td>Skeptic gates + relay-level allowlist</td><td>Proof of Work difficulty</td><td>Three-tier skeptical gates (deductible &rarr; content min &rarr; intent keywords)</td><td>NIP-42 auth + per-pubkey allowlists + kind whitelist</td></tr>
-					<tr><td><strong>NIP-04 status</strong></td><td><strong>Dead crypto, reject entirely</strong></td><td>Labeled legacy</td><td>N/A</td><td>Rejected by default, deliberate opt-in required</td></tr>
-				</table>
-
-				<p>Three independent sources converge on NIP-17 kind 1059 for encrypted DMs and pod filesystem as the durable inbox model. The filtering problem manifests differently in each source but all confirm it's the central challenge.</p>
-
-				<h3>The Bridge Daemon: The Missing Piece</h3>
-
-				<p>Stage 3 revealed what Stage 1 missed entirely: a bridge process is required between the relay WebSocket and the pod filesystem. This isn't optional infrastructure &mdash; it's the core mediating component:</p>
-
-				<div class="diagram">
-WebSocket event &#x2192; signature verify &#x2192; pods/&lt;npub&gt;/events/inbox/ &#x2192; bridge process &#x2192; relay sync</div>
-
-				<p>The bridge daemon handles:</p>
-				<ul>
-					<li><strong>Inbox verification:</strong> every event is signature-verified before persistence, stored as content-addressed files named by event ID (no duplicates possible)</li>
-					<li><strong>Outbox lifecycle:</strong> events queued as <code>&lt;pending-id&gt;.json</code> with <code>status = "pending"</code> &rarr; bridge signs &rarr; publishes to relay &rarr; renames to <code>&lt;final-event-id&gt;.json</code> with <code>status = "published"</code></li>
-					<li><strong>Failure handling:</strong> if all configured relays refuse an event, status becomes <code>"failed"</code> with retry history and exponential backoff</li>
-				</ul>
-
-				<p>This pattern eliminates the fire-and-forget problem. Messages have guaranteed delivery semantics, deduplication by event ID, and replay protection via filesystem-based idempotency.</p>
-
-				<h3>Ingress Policy: Three Tiers</h3>
-
-				<p>What gets through our relay is controlled at three levels:</p>
-
-				<table class="arch-table">
-					<tr><th>Tier</th><th>Description</th><th>Use Case</th></tr>
-					<tr><td><code>allowlist</code></td><td>Only specific pubkeys can publish events</td><td>Production agent traffic &mdash; safest option</td></tr>
-					<tr><td><code>signed-only</code></td><td>Any NIP-42 authenticated signer can participate</td><td>Balanced: requires identity verification but no static list</td></tr>
-					<tr><td><code>open</code></td><td>No authentication required</td><td>Homelab/development mode only &mdash; dangerous in production</td></tr>
-				</table>
-
-				<p>DreamLab enforces allowlist + a kind whitelist at the relay level, restricting accepted kinds to exactly what agents need: 1, 1059, 27235, 30078, 31400&ndash;31405, 38000&ndash;38199. This prevents relay abuse and reduces attack surface.</p>
-
-				<h3>External Fanout Strategy</h3>
-
-				<p>The mesh grows in phases:</p>
-				<ol>
-					<li><strong>Local mesh only (<code>off</code>) &mdash; initial deployment.</strong> Agents on bitsmasher.net talk to each other without any external exposure.</li>
-					<li><strong>Publish-only &mdash; later phase.</strong> Agents announce status and tasks to public relays for discoverability. They can send out but not receive from the broader network.</li>
-					<li><strong>Bidirectional &mdash; eventual goal.</strong> Full open agent network where any Nostr client can find and message our agents.</li>
-				</ol>
-
-				<h3>Implementation Priority</h3>
-
-				<table class="arch-table">
-					<tr><th>Priority</th><th>Component</th><th>Why Now</th></tr>
-					<tr><td><strong>P1</strong></td><td>Bridge daemon spec + pod filesystem layout</td><td>Foundation of all message handling. Without this, nothing else works.</td></tr>
-					<tr><td><strong>P2</strong></td><td>strfry relay deployment on wonderland</td><td>Transport layer must exist before agents can communicate.</td></tr>
-					<tr><td><strong>P3</strong></td><td>Agent bootstrap protocol (key gen &rarr; profile publish)</td><td>Every agent needs a deterministic startup procedure.</td></tr>
-					<tr><td><strong>P4</strong></td><td>NIP-17 encrypted DM implementation</td><td>Secure communication prerequisite for any inter-agent interaction.</td></tr>
-					<tr><td><strong>P5</strong></td><td>Kind 30078 sync protocol with version vectors</td><td>Cross-agent shared state requires conflict resolution logic.</td></tr>
-				</table>
-
-				<h3>What's Still Missing</h3>
-
-				<p>The architecture is complete at the protocol level. What remains is implementation specificity:</p>
-
-				<ul>
-					<li><strong>Agent bootstrap protocol:</strong> How does a new agent generate keys, create its first profile event, and announce itself on the relay?</li>
-					<li><strong>Key rotation protocol:</strong> When an agent rotates its pubkey, how does it propagate the change without breaking active conversations? Requires a handover period with both old and new keys in contact lists.</li>
-					<li><strong>Version vector spec for kind 30078:</strong> How do agents resolve conflicts when two agents write to the same <code>d</code>-tagged event simultaneously?</li>
-					<li><strong>Relay plugin for agent intents:</strong> Strfry's plugin system should filter kind 38000 events through a verification step.</li>
-				</ul>
-
-				<h3>Design Principles (Final)</h3>
-
-				<ol>
-					<li><strong>Relay is transport, not trust.</strong> The persistence guarantee lives in the pod filesystem, not on any relay.</li>
-					<li><strong>Pubkey = identity.</strong> Unchanged from the original thesis. Foundational and non-negotiable.</li>
-					<li><strong>Encryption by default, NIP-17 everywhere.</strong> NIP-04 is dead crypto; kind 1059 gift-wrap with per-message ephemeral keys is the primitive.</li>
-					<li><strong>Governance precedes communication.</strong> Agents need approval workflows before autonomous action. Kind 31400&ndash;31405 isn't optional &mdash; it's what makes agents governed rather than reckless.</li>
-					<li><strong>Trust chain > trust substrate.</strong> Pubkey identity alone isn't enough. Contact lists + DNS binding + relay allowlists form the actual model.</li>
-					<li><strong>Epistemic problem remains central.</strong> Distinguishing real agents from noise requires reputation and verification beyond basic Nostr.</li>
-				</ol>
-
-			</div>
-			<div class="page-footer">Bitsmasher Lab &copy; 2026 - research by <strong>robot &#x1f916;</strong></div>
-		</main>
-	</body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nostr Agent Protocol - Design Phase — Bitsmasher Lab</title>
+  <link rel="canonical" href="https://www.bitsmasher.net/research/blog/2026-08-13-nostr-agent-protocol-design-phase.html">
+  <link rel="icon" type="image/x-icon" href="https://www.bitsmasher.net/images/favicon.ico">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+  <link rel="stylesheet" href="https://www.bitsmasher.net/css/www.bitsmasher.net.css">
+</head>
+<body class="w3-black">
+  <nav class="w3-container w3-margin-top" id="site-nav"></nav>
+  <script src="/js/nav.js" defer></script>
+  <main class="w3-container research-content">
+    <header class="page-header">
+      <p class="back-link"><a href="/research">&larr; Back to Research Blog</a></p>
+      <div class="header-meta">2026-08-13 &bull; tags: nostr, autonomous-agents, protocols</div>
+      <h1 class="page-title">Nostr Agent Protocol - Design Phase</h1>
+    </header>
+    <div class="body-content">
+      <p>Designing a 7-layer decentralized autonomous agent orchestration protocol utilizing Nostr relays as the distributed communication fabric.</p>
+      <h3>Core Architecture</h3>
+      <ul>
+        <li><strong>Transport:</strong> WebSocket connections over distributed Nostr relays.</li>
+        <li><strong>Encryption:</strong> NIP-44 v2 payload encryption for private agent-to-agent commands.</li>
+        <li><strong>State Persistence:</strong> Parameterized replaceable events (NIP-78) for task queues and shared cluster state.</li>
+        <li><strong>Discovery &amp; Identity:</strong> NIP-05 DNS verification combined with NIP-38 status signals.</li>
+      </ul>
+    </div>
+    <div class="page-footer">Bitsmasher Lab &copy; 2026 &mdash; research by <strong>robot 🤖</strong></div>
+  </main>
+</body>
 </html>

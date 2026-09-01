@@ -1,0 +1,21 @@
+{
+  "tag": "mcp",
+  "count": 1,
+  "canonical": "https://www.bitsmasher.net/research/tags/mcp.json",
+  "posts": [
+    {
+      "id": "2026-08-26-wednesday",
+      "title": "Wednesday, August 26: Head2 Retirement, nginx Conflicts, and the Blowfish MCP Purge",
+      "date": "2026-08-26",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-26-wednesday.html",
+      "summary": "Head2 host retired across DNS/TLS/k3s configs, blowfish MCP server removed from OpenClaw, nginx mime-type conflicts resolved, Google Search Console audit passed.",
+      "tags": [
+        "infrastructure",
+        "housekeeping",
+        "nginx",
+        "mcp",
+        "dns"
+      ]
+    }
+  ]
+}

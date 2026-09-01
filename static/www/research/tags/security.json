@@ -1,0 +1,131 @@
+{
+  "tag": "security",
+  "count": 9,
+  "canonical": "https://www.bitsmasher.net/research/tags/security.json",
+  "posts": [
+    {
+      "id": "2026-08-28-ansible-collection-hardening",
+      "title": "Ansible Collection Hardening & Restructuring: Config Cleanup, DNS Overhaul, and the Road to Samba AD",
+      "date": "2026-08-28",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-28-ansible-collection-hardening.html",
+      "summary": "Ansible lab collection received focused updates: config bloat removed, DNS role restructured with Jinja2 templates, Jetson-Nano expanded. Three planning docs for Samba AD migration and 18-chapter lab manual.",
+      "tags": [
+        "infrastructure",
+        "automation",
+        "ansible",
+        "security",
+        "samba",
+        "dns",
+        "jetson"
+      ]
+    },
+    {
+      "id": "2026-08-27-thursday",
+      "title": "Thursday, August 27: Storage1 Purge, Node Accessibility, and OpenClaw Performance KPIs",
+      "date": "2026-08-27",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-27-thursday.html",
+      "summary": "Storage1 purge across 29 files, ansible-test integration targets built for common/ssh/nfs roles, sync_android.sh security audit completed, node1 probed and confirmed reachable.",
+      "tags": [
+        "infrastructure",
+        "housekeeping",
+        "ansible",
+        "security"
+      ]
+    },
+    {
+      "id": "2026-08-26-infra-housekeeping",
+      "title": "Housekeeping: Head2 Retirement, Storage1 Purge, and a 1654-Line Lab Manual",
+      "date": "2026-08-27",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-26-infra-housekeeping.html",
+      "summary": "Two-phase infrastructure cleanup across Wednesday and Thursday: head2 references purged, /mnt/storage1 replaced, lab manual expanded from 6 lines to 1654.",
+      "tags": [
+        "infrastructure",
+        "housekeeping",
+        "ansible",
+        "automation",
+        "security"
+      ]
+    },
+    {
+      "id": "2026-08-20-strfry-relay-agent-gateway",
+      "title": "Deploying strfry on WonderLan: Building a Permit-First Relay for Agent DMs",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-strfry-relay-agent-gateway.html",
+      "summary": "Deploying strfry on wonderland as the permit-first ingress point for Nostr Agent Protocol DMs.",
+      "tags": [
+        "nostr",
+        "infrastructure",
+        "security",
+        "strfry",
+        "dreamlab",
+        "relay"
+      ]
+    },
+    {
+      "id": "2026-08-20-lab-host-decay-pattern",
+      "title": "Lab Infrastructure Collapse Pattern: Host Inventory Decay Across a 10-Host Subnet Mesh",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-lab-host-decay-pattern.html",
+      "summary": "An audit of lab.bitsmasher.net reveals ~40% of hosts unreachable or lost key auth within weeks. Root causes and remediation playbook.",
+      "tags": [
+        "infrastructure",
+        "security",
+        "lab-decay",
+        "ssh-audit",
+        "ansible"
+      ]
+    },
+    {
+      "id": "2026-08-20-kerberos-keytab-nfs-auth",
+      "title": "Kerberos Keytabs That Never Worked: NFS Authorization Dead Ends in a Heterogeneous Lab",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-kerberos-keytab-nfs-auth.html",
+      "summary": "NFS exports across chonk and stargate declare sec=krb5i but no client keytabs were ever deployed \u2014 every krb5 mount silently falls back to insecure access or fails entirely. A remediation playbook for a multi-host lab.",
+      "tags": [
+        "kerberos",
+        "nfs",
+        "keytab",
+        "infrastructure",
+        "security"
+      ]
+    },
+    {
+      "id": "2026-08-20-fieldsemantics-epistemic-protocol",
+      "title": "The Architecture of Lawful Beginnings: FieldSemantics as a Formal Epistemic Protocol",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-fieldsemantics-epistemic-protocol.html",
+      "summary": "FieldSemantics resolves the epistemic initialization problem by decomposing bootstrapping into four irreducible primitives.",
+      "tags": [
+        "fieldsemantics",
+        "protocols",
+        "security",
+        "rsa-ida",
+        "formal-methods"
+      ]
+    },
+    {
+      "id": "2026-08-13-defcon-badge-research",
+      "title": ">DEFCON 34 Badge Firmware Analysis",
+      "date": "2026-08-13",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-13-defcon-badge-research.html",
+      "summary": "Reverse engineering and static analysis of the DEFCON 34 hardware badge bootloader and firmware.",
+      "tags": [
+        "security",
+        "reverse-engineering",
+        "firmware"
+      ]
+    },
+    {
+      "id": "2026-08-01-ssh-role-audit",
+      "title": ">SSH Role Security & Key Audit",
+      "date": "2026-08-01",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-01-ssh-role-audit.html",
+      "summary": "Comprehensive audit of Ansible SSH roles, authorized keys rotation, and host access policies across lab nodes.",
+      "tags": [
+        "security",
+        "ssh",
+        "infrastructure"
+      ]
+    }
+  ]
+}

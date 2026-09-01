@@ -1,0 +1,25 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.bitsmasher.net/sitemap.xml
+
+# Explicit AI/LLM crawler directives
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Googlebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Standard exclusion for non-content paths
+Disallow: /images/
+Disallow: /css/www.bitsmasher.net.css
+Disallow: /js/nav.js

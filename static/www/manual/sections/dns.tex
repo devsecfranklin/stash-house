@@ -1,0 +1,72 @@
+\section{DNS Configuration}
+
+\subsection{BIND Overview -- Post-Migration (August 2026)}
+
+The DNS infrastructure has been migrated from the legacy \texttt{server1} (10.10.12.12) to a new authoritative setup:
+
+\begin{itemize}
+    \item \textbf{DNS Master}: \textbf{node3} (10.10.12.3) -- promoted from client node to authoritative BIND9 master
+    
+    \item \textbf{Legacy DNS host}: \texttt{server1} (10.10.12.12) has been decommissioned; all zone transfers and updates now target node3
+\end{itemize}
+
+The DNS role in lab-franklin's Ansible collection manages:
+\begin{itemize}
+    \item Forward zone: db.home.lab (hostnames to IPs)
+    \item Reverse zones: PTR records for each 10.10.x.0/24 subnet
+    \item SRV records: Kerberos service discovery
+    \item Zone file generation via Jinja2 templates on node3
+\end{itemize}
+
+\subsection{Zone and Host Realignment (August 2026)}
+
+The following entries have been updated in the forward zone (db.home.lab):
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+\textbf{Hostname} & \textbf{IP Address} & \textbf{Notes} \\ \hline
+stargate.research.bitsmasher.net & 10.10.16.66 & Ansible orchestration host, primary workspace \\
+chonk.lab.bitsmasher.net & 10.10.8.60 & Gateway host, primary compute + inference \\ \hline
+\end{tabular}
+\end{center}
+
+The corresponding reverse zones (PTR records) have been updated to match:
+\begin{itemize}
+    \item 10.10.16.66 $\rightarrow$ stargate.research.bitsmasher.net
+    \item 10.10.8.60 $\rightarrow$ chonk.lab.bitsmasher.net
+\end{itemize}
+
+\subsection{Kerberos SRV RFC Compliance}
+
+The following SRV records now point directly to FQDN A records rather than CNAMEs, per RFC 2782:
+
+\begin{lstlisting}[style=mystyle]
+_kerberos-adm._tcp.lab.bitsmasher.net IN SRV 0 100 749 kdc1.lab.bitsmasher.net.
+_kerberos._tcp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kerberos._udp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kdc._tcp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+_kdc._udp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.
+    \end{lstlisting}
+
+\textbf{Note}: The \texttt{_kerberos-adm.\_tcp} record now points directly to the A record for \texttt{kdc1.lab.bitsmasher.net} rather than via a CNAME chain, eliminating resolution latency and failure modes from indirection.
+
+\subsection{DNS Failure Impact}
+
+When the DNS master (node3) is offline:
+\begin{itemize}
+    \item Lab hosts fall back to /etc/hosts entries (authoritative but static -- no dynamic updates)
+    
+    \item Kerberos KDC discovery via SRV records fails -- clients need manual \texttt{kdc = kdc1.lab.bitsmasher.net} in \texttt{/etc/krb5.conf}
+    
+    \item Dynamic zone updates cannot propagate; new hosts require manual /etc/hosts sync
+\end{itemize}
+
+\subsection{DNS Maintenance Procedures}
+
+Zone file updates are committed to the DNS Ansible role and deployed via:
+\begin{lstlisting}[style=mystyle]
+ansible-playbook -l dns_servers -t dns deploy.yml
+    \end{lstlisting}
+
+Forward and reverse zone files should be audited quarterly for IP realignment accuracy.

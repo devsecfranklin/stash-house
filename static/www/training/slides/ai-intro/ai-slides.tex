@@ -1,0 +1,138 @@
+\documentclass[xcolor=x11names,aspectratio=169]{beamer}
+
+% ── Packages ────────────────────────────────────────────────
+\usepackage{fontspec}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+% ── Font ────────────────────────────────────────────────────
+\setsansfont{Montserrat}[
+  Extension      = .otf,
+  UprightFont    = *Regular,
+  BoldFont       = *Bold,
+  ItalicFont     = *Italic,
+  BoldItalicFont = *BoldItalic,
+]
+
+% ── Color Theme ─────────────────────────────────────────────
+\definecolor{accent}{RGB}{250,88,45}
+\definecolor{bgdark}{RGB}{32,34,37}
+\definecolor{bglite}{RGB}{246,248,250}
+\setbeamercolor{background canvas}{bg=bglite}
+
+% ── Listings colour scheme ───────────────────────────────────
+\lstdefinestyle{pycode}{
+  language     = Python,
+  basicstyle   = \ttfamily\small,
+  keywordstyle = \color{accent}\bfseries,
+  stringstyle  = \color{blue!70!black},
+  commentstyle = \color{green!60!black},
+  frame        = single,
+  frameround   = ffft,
+  numbers      = left,
+  numberstyle  = \tiny\color{gray},
+  showstringspaces = false,
+  tabsize      = 2,
+  breaklines   = true,
+}
+
+% ── Block theme ─────────────────────────────────────────────
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+% ── Title / Frame defaults ──────────────────────────────────
+\setbeamertemplate{itemize items}[circle]
+
+\title[AI 101 \textbar\ Module 1]{Deterministic Controls \& Structured Outputs}
+\subtitle{Module 1 — Fundamentals of Reproducible AI Inference}
+\author{}
+\date{\today}
+
+\begin{document}
+
+% ────────────────────────────────────────────────────────────
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% ────────────────────────────────────────────────────────────
+\section{Deterministic Controls \& Structured Outputs}
+
+\begin{frame}[fragile]{Deterministic Sampling vs.\ Stochastic Generation}
+ \begin{itemize}
+ \item \textbf{Temperature ($T$):} Scales the logits before softmax.
+ \begin{itemize}
+ \item $T \to 0$: Argmax sampling / greedy decoding (reproducible classification, code, data extraction).
+ \item $T \ge 0.7$: High variance and exploratory token distributions.
+ \end{itemize}
+ \item \textbf{Top-$P$ (Nucleus Sampling):} Dynamically pools smallest token set whose cumulative probability exceeds $P$.
+ \item \textbf{Seed Calibration:} Fixes pseudo-random sampling seeds across deterministic API requests.
+ \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{JSON Mode vs.\ Constrained Grammars}
+ \begin{itemize}
+ \item \textbf{Prompt-Coaxed JSON (Unreliable):}
+ \begin{itemize}
+ \item Relies solely on system prompt instructions (e.g., \textit{"Respond only in valid JSON"}).
+ \item Prone to syntax breakage, preamble comments, and schema hallucinations.
+ \end{itemize}
+ \item \textbf{Constrained Grammar Decoding (Reliable):}
+ \begin{itemize}
+ \item Decoders enforce regular expressions or context-free grammars (GBNF, JSON Schema) directly against logits.
+ \item Tokens that violate the schema receive $-\infty$ logits and cannot be sampled.
+ \end{itemize}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Enforcing Schemas via Pydantic \& Tool Calling}
+\begin{lstlisting}[style=pycode]
+from pydantic import BaseModel, Field
+
+class TelemetryAlert(BaseModel):
+    hostname: str = Field(..., description="Target node identifier")
+    severity: str = Field(..., regex="^(INFO|WARN|CRIT)$")
+    error_code: int = Field(..., ge=100, le=999)
+    resolved: bool
+
+# OpenAI / Ollama Structured Outputs Payload
+response = client.beta.chat.completions.parse(
+    model="qwen3.6",
+    messages=[{"role": "user", "content": log_entry}],
+    response_format=TelemetryAlert,
+    temperature=0.0
+)
+event: TelemetryAlert = response.choices[0].message.parsed
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Hands-On Micro-Lab: Structured Log Extraction}
+ \begin{block}{Objective}
+ Extract structured alerts from unstructured kernel trace lines using strict schema enforcement.
+ \end{block}
+ \begin{enumerate}
+ \item Define a Pydantic schema extracting: \texttt{timestamp}, \texttt{service}, and \texttt{failure\_reason}.
+ \item Configure client inference with \texttt{temperature=0.0} and strict JSON schema decoding.
+ \item Ingest raw dmesg snippets and verify $100\%$ valid JSON parse rates across 50 iterations.
+ \end{enumerate}
+\end{frame}
+
+% ────────────────────────────────────────────────────────────
+\begin{frame}{Summary}
+ \begin{block}{Key Take-Aways}
+ \begin{itemize}
+ \item Deterministic sampling ($T=0$) enables reproducible, pipeline-safe outputs.
+ \item Constrained grammar decoding is the only reliable path to schema-compliant JSON.
+ \item Pydantic + structured-output APIs combine type-hint validation with LLM reasoning.
+ \item Every production workflow should validate against $100\%$ parse-success targets.
+ \end{itemize}
+ \end{block}
+\end{frame}
+
+\begin{frame}
+ \Huge \centering Questions?
+\end{frame}
+
+\end{document}

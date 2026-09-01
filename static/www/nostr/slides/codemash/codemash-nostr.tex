@@ -1,0 +1,36 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\tiny,breaklines=true,frame=single,showstringspaces=false}
+
+\title{Keys, Relays, and JSON: Building on Nostr}
+\subtitle{CodeMash Conference}
+\author{Franklin Diaz}
+\date{2027}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{Protocol Architecture}
+  \begin{itemize}
+    \item \textbf{Clients:} Cryptographic keyholders (Schnorr / secp256k1).
+    \item \textbf{Relays:} Simple WebSocket servers for routing signed JSON.
+    \item \textbf{Events:} Immutable, cryptographically signed atomic payloads.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Publishing Signed Events}
+\begin{lstlisting}
+{
+  "kind": 1,
+  "pubkey": "<hex-key>",
+  "created_at": 1724068800,
+  "tags": [],
+  "content": "Hello CodeMash!",
+  "sig": "<schnorr-signature>"
+}
+\end{lstlisting}
+\end{frame}
+\end{document}

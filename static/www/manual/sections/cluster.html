@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cluster</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Cluster section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Cluster_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/cluster.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Cluster</h1>
+<span class="meta"><em>Pages 6-8 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Ansible Workspace</h2>
+<div class="latex-content">
+<p class="latex-para">All Ansible source code, playbooks, roles, and testing are centralized on &lt;strong&gt;stargate.research.bitsmasher.net&lt;/strong&gt;:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Primary workspace&lt;/strong&gt;: \texttt{~/workspace/lab-franklin/ansible/} on stargate</li>
+<li class="latex-list-item">&lt;strong&gt;Secondary (chonk)&lt;/strong&gt;: \texttt{/mnt/backup1/workspace/lab-franklin/ansible/} (mirror for local builds)</li>
+<li class="latex-list-item">&lt;strong&gt;Interpreter&lt;/strong&gt;: \texttt{/home/franklin/.local/bin/ansible} on stargate</li>
+<li class="latex-list-item">&lt;strong&gt;Testing standard&lt;/strong&gt;: Native \texttt{ansible-test} (sanity + integration) -- Molecule deprecated as of August 2026</li>
+</ul>
+</div>
+<h2 class="latex-section">Cluster Architecture</h2>
+<div class="latex-content">
+<p class="latex-para">The lab uses cluster-wide automation via ansible-playbook targeting inventory groups defined in ansible/hosts}. Cluster management is handled through role-based provisioning rather than a dedicated orchestration layer.</p>
+<h3 class="latex-subsection">k3s Clustershell (Historical)</h3>
+<p class="latex-para">Previous cluster shell groupings remain documented for reference:</p>
+<pre class="latex-code"><code>
+<p class="latex-para">all     -- all managed nodes</p>
+<p class="latex-para">head    -- control plane nodes</p>
+<p class="latex-para">compute -- worker nodes</p>
+<p class="latex-para">gpu     -- GPU-enabled Jetson nodes</p>
+</code></pre>
+<p class="latex-para">These groupings are now managed through Ansible inventory patterns rather than clustershell.</p>
+<h3 class="latex-subsection">Centralized Ansible Workflow</h3>
+<ol class="latex-list">
+<li class="latex-list-item">Role changes committed to stargate workspace</li>
+<li class="latex-list-item">Native ansible-test runs on stargate (zero external cost)</li>
+<li class="latex-list-item">Playbook execution targets remote hosts via SSH batch probes</li>
+<li class="latex-list-item">Changes verified via dynamic reachability: \texttt{ssh -o BatchMode=yes -o ConnectTimeout=3 franklin@\textless host\textgreater}</li>
+</ol>
+
+<nav class="footer-nav">
+ <div><a href="ansible.html" class="nav-prev">&#8592; Previous: Ansible </a>  <a href="database.html" class="nav-next">Next: Database &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

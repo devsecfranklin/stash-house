@@ -35,42 +35,37 @@
 	</head>
 	<body>
 
-		<!-- Navigation Bar -->
-		<nav class="w3-container w3-margin-top">
-			<div class="w3-bar w3-border custom-nav-bar">
-				<a href="https://nostter.app/thedevilsvoice@bitsmasher.net" class="w3-bar-item w3-button">social</a>
-				<a href="https://g.dev/franklin" class="w3-bar-item w3-button">work</a>
-				<a href="/minecraft" class="w3-bar-item w3-button">minecraft</a>
-				<a href="/teaching" class="w3-bar-item w3-button">teaching</a>
-				<a href="/research" class="w3-bar-item w3-button">research</a>
-			</div>
-		</nav>
+<body>
+	<nav class="w3-container w3-margin-top" id="site-nav"></nav><script src="/js/nav.js" defer></script>
+  <div class="container">
+    <div>
+      <h2>WIZARD HQ</h2>
+      <div class="wizard-links-portal">
+        <a href="https://nostr.watch/" target="_blank" rel="noopener noreferrer" class="link-card">
+          <span class="link-icon">&#x1f50e;</span>
+          <span class="link-label">nostr.watch relay list</span>
+          <span class="link-arrow">&rarr;</span>
+        </a>
+        <a href="https://yakitofu.org/" target="_blank" rel="noopener noreferrer" class="link-card">
+          <span class="link-icon">&#x1f3b5;</span>
+          <span class="link-label">NIP-58 Badge Creation &amp; Award Application</span>
+          <span class="link-arrow">&rarr;</span>
+        </a>
+        <a href="https://discord.gg/mdJGV73Ub" target="_blank" rel="noopener noreferrer" class="link-card">
+          <span class="link-icon">&#x1f4ac;</span>
+          <span class="link-label">discord</span>
+          <span class="link-arrow">&rarr;</span>
+        </a>
+      </div>
+      Nostr public key:
+      {
+        "thedevilsvoice": "fedebe118f3815b88b47220923cd5ff3c4504233c6ee49fe5dc87c650f2012c0"
+      }
+    </div>
+    <div>
+      <img height=512 width=512 src="images/wizard-small.png">
+    </div>
+  </div>
+</body>
 
-		<main role="main" class="w3-container w3-margin-top">
-			<div class="w3-row-padding w3-card-4 custom-main-card">
-				
-				<div class="w3-col m6 w3-padding-16">
-
-					<h2>WIZARD HQ</h2>
-					<p>
-					<a href="https://nostr.watch/">nostr.watch relay list</a><br />
-					<a href="https://yakitofu.org/">NIP-58 Badge Creation & Award Application</a><br />
-					<a href="https://discord.gg/mdJGV73Ub">discord</a><br />
-					&nbsp;<br />
-
-					<strong>Nostr public key:</strong>
-					</p>
-					<pre class="key-box"><code>{
-  "thedevilsvoice": "fedebe118f3815b88b47220923cd5ff3c4504233c6ee49fe5dc87c650f2012c0"
-}</code></pre>
-				</div>
-
-				<div class="w3-col m6 w3-padding-16 w3-center">
-					<img class="w3-image w3-round" height="512" width="512" alt="the wizzahd" src="/images/wizard-small.png">
-				</div>
-
-			</div>
-		</main>
-
-	</body>
 </html>

@@ -1,0 +1,22 @@
+{
+  "tag": "edge-computing",
+  "count": 1,
+  "canonical": "https://www.bitsmasher.net/research/tags/edge-computing.json",
+  "posts": [
+    {
+      "id": "2026-08-20-jetson-tegra-gpu-inaccessibility",
+      "title": "Tegra on the Edge: Why node90x Jetson Nanos Can't Talk to Their Own GPUs",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-jetson-tegra-gpu-inaccessibility.html",
+      "summary": "Three Jetson Nano 2GB Developer Kits with Tegra T210 SoCs have inaccessible integrated GPUs \u2014 no nvidia-smi, no OpenCL, no CUDA runtime. Root cause analysis and remediation.",
+      "tags": [
+        "jetson",
+        "tegra",
+        "gpu",
+        "edge-computing",
+        "hardware",
+        "infrastructure"
+      ]
+    }
+  ]
+}

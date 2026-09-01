@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kubernetes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Kubernetes section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Kubernetes_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/kubernetes.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Kubernetes</h1>
+<span class="meta"><em>Pages 29-31 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Kubernetes (k3s) Cluster</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">Architecture</h3>
+<p class="latex-para">The lab uses k3s (Lightweight Kubernetes from Rancher) for container orchestration across the infrastructure:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;k3s\_server&lt;/strong&gt;: Master node running k3s control plane (host: head2, referenced but unreachable in current audit)</li>
+<li class="latex-list-item">&lt;strong&gt;k3s\_agent&lt;/strong&gt;: Worker nodes that register with the server and receive workloads</li>
+<li class="latex-list-item">&lt;strong&gt;GPU nodes&lt;/strong&gt;: Specialized workers for NVIDIA container runtime and compute workloads</li>
+</ul>
+<h3 class="latex-subsection">Version Pinning</h3>
+<p class="latex-para">k3s version is pinned to the 2.1.x series (specifically 2.1.5 as of the latest network\_update.sh). This prevents surprise breakage from upstream k3s releases. The pinning policy follows:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">K3S_VERSION=&quot;2.1.5&quot;</p>
+<p class="latex-para">curl -sfL https://get.k3s.io | sh -s - \</p>
+<p class="latex-para">    --write-kubeconfig-mode 644</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<h3 class="latex-subsection">Container Runtime</h3>
+<p class="latex-para">k3s uses containerd as the default runtime, with NVIDIA Container Toolkit for GPU workloads:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;nvidia-container-toolkit&lt;/strong&gt;: Installed on GPU nodes via the network\_update.sh automation</li>
+<li class="latex-list-item">&lt;strong&gt;containerd config&lt;/strong&gt;: Located at \texttt{/var/lib/rancher/k3s/agent/etc/containerd/config.toml}</li>
+<li class="latex-list-item">NVIDIA runtime configured in containerd to expose GPU devices to containers</li>
+</ul>
+<h3 class="latex-subsection">Cluster Topology</h3>
+<p class="latex-para">tabularx}{}{l l X}</p>
+<p class="latex-para">&lt;strong&gt;Node Role&lt;/strong&gt; &amp; &lt;strong&gt;Target Hosts&lt;/strong&gt; &amp; &lt;strong&gt;Notes&lt;/strong&gt; \\</p>
+<hr class="latex-hline">
+<p class="latex-para">k3s\_server &amp; head2 (planned) &amp; Control plane; not yet online\\</p>
+<p class="latex-para">k3s\_agent &amp; node900, node901, node903 &amp; Jetson nodes as workers\\</p>
+<p class="latex-para">nvidia\_nodes &amp; GPU-equipped hosts &amp; Container Toolkit + k3s agent</p>
+<p class="latex-para">tabularx}</p>
+<h3 class="latex-subsection">kubeconfig Access</h3>
+<p class="latex-para">After installation, kubeconfig is written to /etc/rancher/k3s/k3s.yaml} with mode 644. Cluster access requires:</p>
+<ul class="latex-list">
+<li class="latex-list-item">SSH key auth to the k3s\_server host</li>
+<li class="latex-list-item">Reading the kubeconfig file (or copying it securely)</li>
+<li class="latex-list-item">\texttt{kubectl --kubeconfig /etc/rancher/k3s/k3s.yaml cluster-info} to verify connectivity</li>
+</ul>
+<p class="latex-para">The k3s_server role and k3s_agent role in lab-franklin handle the installation and configuration of these nodes via Ansible.</p>
+
+<nav class="footer-nav">
+ <div><a href="kerberos.html" class="nav-prev">&#8592; Previous: Kerberos </a>  <a href="ldap.html" class="nav-next">Next: Ldap &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

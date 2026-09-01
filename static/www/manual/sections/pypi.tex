@@ -1,0 +1,65 @@
+\section{Internal PyPI Repository}
+
+The lab runs an internal PyPI package repository to provide Python packages to development machines without depending on external PyPI servers. This avoids network bottlenecks, supports offline development, and enables use of proprietary or lab-specific packages not available on PyPI.org.
+
+\subsection{Architecture}
+
+The PyPI directory lives at \texttt{/mnt/storage1/LAB/pypi}. A symlink is created from the web server's document root (\texttt{/var/www/html/pypi}) pointing to this directory, making packages accessible via HTTP.
+
+Access URL pattern:
+\begin{lstlisting}[style=mystyle]
+http://<storage-host>/pypi/simple/
+    \end{lstlisting}
+
+This follows the PEP 503 simple repository API structure expected by pip.
+
+\subsection{Configuration via Ansible}
+
+The \texttt{pypi\_internal} role in the lab/franklin collection automates this setup:
+
+\begin{itemize}
+    \item \textbf{Role path}: \texttt{roles/pypi\_internal/}
+    
+    \item \textbf{Variables}:
+    \begin{itemize}
+        \item \texttt{html\_dir}: web root (\texttt{/var/www/html})
+        \item \texttt{pypi\_dir}: package directory (\texttt{/mnt/storage1/LAB/pypi})
+    \end{itemize}
+    
+    \item \textbf{Task}: Creates a symbolic link from \texttt{\$html\_dir/pypi} $\rightarrow$ \texttt{\$pypi\_dir}
+    
+    \item \textbf{Playbook integration}: Included in the cluster/storage playbook alongside NFS, LDAP, Kerberos, DNS, and ntp roles
+\end{itemize}
+
+\subsection{Usage from Client Machines}
+
+Configure pip to use the internal PyPI server:
+\begin{lstlisting}[style=mystyle]
+# In ~/.pip/pip.conf or /etc/pip.conf:
+[global]
+index-url = http://<storage-host>/pypi/simple/
+
+# Optionally trust host if not using HTTPS
+trusted-host = <storage-host>
+    \end{lstlisting}
+
+Or use pip's \texttt{\-\-index\-url} flag directly:
+\begin{lstlisting}[style=mystyle]
+pip install --index-url http://<storage-host>/pypi/simple/ some-package
+    \end{lstlisting}
+
+\subsection{Package Maintenance}
+
+To add packages to the internal PyPI, place them in the pypi directory with PEP 503-compliant directory structure:
+\begin{itemize}
+    \item Package directories (lowercase names)
+    
+    \item File links inside each package directory pointing to the actual wheel/sdist files
+    
+    \item The web server must have read access to /mnt/storage1/LAB/pypi
+\end{itemize}
+
+Packages can be built and added using standard pip tools:
+\begin{lstlisting}[style=mystyle]
+pip install --no-index --find-links=/mnt/storage1/LAB/pypi/simple/ <package>
+    \end{lstlisting}

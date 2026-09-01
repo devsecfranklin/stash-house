@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Database</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Database section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Database_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/database.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Database</h1>
+<span class="meta"><em>Pages 9-11 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Blowfish -- Database Host</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">Host Identity</h3>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Hostname&lt;/strong&gt;: blowfish.lab.bitsmasher.net (alias: blowfish)</li>
+<li class="latex-list-item">&lt;strong&gt;IP&lt;/strong&gt;: 10.10.12.15</li>
+<li class="latex-list-item">&lt;strong&gt;MAC&lt;/strong&gt;: 98:b7:85:21:ad:77 (from DHCP reservation)</li>
+<li class="latex-list-item">&lt;strong&gt;OS&lt;/strong&gt;: OpenBSD (planned; current DNS/DHCP entry references it as an OpenBSD host)</li>
+</ul>
+<h3 class="latex-subsection">Role in the Lab</h3>
+<p class="latex-para">Blowfish is provisioned as a &lt;strong&gt;database host&lt;/strong&gt; within the lab infrastructure. It was intended to serve as a dedicated database server, separate from the primary infrastructure hosts (chonk, stargate, skynet).</p>
+<p class="latex-para">The OpenBSD role in the lab-franklin Ansible collection includes configuration references specific to blowfish:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Login configuration uses \texttt{blowfish} password hashing algorithm (\texttt{localcipher=blowfish,a}) in \texttt{/etc/login.conf}.</li>
+<li class="latex-list-item">The bootstrap.sh for OpenBSD hosts includes a direct \texttt{/etc/hosts} entry for blowfish (10.10.12.15).</li>
+<li class="latex-list-item">DHCP reservation is configured in the lab's dhcpd.conf role.</li>
+</ul>
+<h3 class="latex-subsection">Current Status</h3>
+<p class="latex-para">Blowfish has been &lt;strong&gt;unreachable&lt;/strong&gt; from chonk since the initial infrastructure audit. The IP 10.10.12.15 resolved from DNS (stargate's /etc/hosts), but authentication was denied -- no matching SSH key was authorized on that host.</p>
+<p class="latex-para">Key references:</p>
+<ul class="latex-list">
+<li class="latex-list-item">network\_update.sh: blowfish is the default target for the \texttt{openbsd\_bootstrap()} function.</li>
+<li class="latex-list-item">OpenBSD role tasks: includes commented-out ansible setup command for blowfish (indicating the host was expected to be online).</li>
+</ul>
+<p class="latex-para">The host may need network investigation -- it resolved from DNS, had a DHCP reservation, and MAC address on file, suggesting it was once part of the lab but has since gone offline or been decommissioned.</p>
+<h3 class="latex-subsection">Planned Configuration (OpenBSD)</h3>
+<p class="latex-para">When brought online, the expected setup for blowfish is:</p>
+<ul class="latex-list">
+<li class="latex-list-item">SSH key-based authentication via \texttt{~/.ssh/authorized\_keys}</li>
+<li class="latex-list-item">OpenBSD's built-in \texttt{pf} firewall with custom rules</li>
+<li class="latex-list-item">Database software stack (likely PostgreSQL or MariaDB on OpenBSD)</li>
+<li class="latex-list-item">Ansible-managed configuration via the lab-franklin collection, using the openbsd role as the base profile.</li>
+</ul>
+
+<nav class="footer-nav">
+ <div><a href="cluster.html" class="nav-prev">&#8592; Previous: Cluster </a>  <a href="direnv.html" class="nav-next">Next: Direnv &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

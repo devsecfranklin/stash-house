@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Troubleshooting</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Troubleshooting section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Troubleshooting_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/troubleshooting.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Troubleshooting</h1>
+<span class="meta"><em>Pages 60-62 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Troubleshooting Guide</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">SSH Connection Failures</h3>
+<h4 class="latex-subsubsection">Host Key Mismatch</h4>
+<p class="latex-para">Symptom: @@@@@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED! @@@@@}</p>
+<p class="latex-para">Fix:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">ssh-keygen -R &lt;hostname&gt;</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<p class="latex-para">This occurs when a host was re-imaged with the same IP. Check /etc/ssh/ssh\_config.d/} for stale entries.</p>
+<h4 class="latex-subsubsection">Auth Denied (Port 22 Open, Key Rejected)</h4>
+<p class="latex-para">Symptom: TCP port 22 is reachable but SSH returns &quot;Permission denied&quot;.</p>
+<p class="latex-para">Common causes:</p>
+<ul class="latex-list">
+<li class="latex-list-item">No matching key in the remote host's authorized\_keys</li>
+<li class="latex-list-item">The key file permissions are too open on the target (must be mode 600 for .pub and 700 for ~/.ssh)</li>
+<li class="latex-list-item">Wrong user context (e.g., trying franklin@ when only root is configured)</li>
+</ul>
+<p class="latex-para">Fix: Add the openclaw ed25519 key to the target host's authorized\_keys file. The pubkey is:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJb9mV02PpxD8VpzYCnu7192dTwMnGWUc3qh55BIeElN openclaw@chonk</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<h4 class="latex-subsubsection">No Route to Host</h4>
+<p class="latex-para">Symptom: SSH hangs or returns &quot;No route to host&quot;. The host is likely powered off. Common in Jetson nodes (node902, etc.) that are manually managed.</p>
+<h4 class="latex-subsubsection">GSSAPI Interference</h4>
+<p class="latex-para">Symptom: SSH times out waiting for GSSAPI authentication before falling back to key auth.</p>
+<p class="latex-para">Fix: Add to ~/.ssh/config}:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">Host *</p>
+<p class="latex-para">    GSSAPIAuthentication no</p>
+<p class="latex-para">    IdentitiesOnly yes</p>
+<p class="latex-para">    IdentityFile ~/.ssh/id_ed25519_openclaw</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<h3 class="latex-subsection">Service-Specific Diagnostics</h3>
+<h4 class="latex-subsubsection">Kerberos Authentication Failure</h4>
+<p class="latex-para">tabularx}{}{l X}</p>
+<p class="latex-para">&lt;strong&gt;Symptom&lt;/strong&gt; &amp; &lt;strong&gt;Likely Cause&lt;/strong&gt; \\</p>
+<hr class="latex-hline">
+<p class="latex-para">kinit fails with &quot;clock skew&quot; &amp; NTP not synced -- check time.host first\\</p>
+<p class="latex-para">kinit fails with &quot;KDC has no support for encryption type&quot; &amp; Wrong krb5.conf realm or KDC unavailable\\</p>
+<p class="latex-para">kadmin.local works but kadmin (remote) fails &amp; Port 749 firewall rule on odroid-c1\\</p>
+<p class="latex-para">Ticket expired after reboot &amp; Time drift during host downtime</p>
+<p class="latex-para">tabularx}</p>
+<p class="latex-para">Verify: klist}, kinit username@LAB.BITSMASHER.NET}, ktutil} for keytabs.</p>
+<h4 class="latex-subsubsection">NTP Issues</h4>
+<p class="latex-para">tabularx}{}{l X}</p>
+<p class="latex-para">&lt;strong&gt;Symptom&lt;/strong&gt; &amp; &lt;strong&gt;Likely Cause&lt;/strong&gt; \\</p>
+<hr class="latex-hline">
+<p class="latex-para">ntpd not running &amp; ntpsec service not enabled\\</p>
+<p class="latex-para">&quot;no server suitable for synchronization&quot; &amp; No upstream reachable (time host offline)\\</p>
+<p class="latex-para">Clock gradually drifting &amp; Missing driftfile or Jetson oscillator drift\\</p>
+<p class="latex-para">Time jumps by several seconds &amp; Large correction applied; step-sync mode engaged</p>
+<p class="latex-para">tabularx}</p>
+<p class="latex-para">Verify: ntpq -p}, timedatectl}, check /var/log/ntpstats/.</p>
+<h4 class="latex-subsubsection">NFS Mount Issues</h4>
+<p class="latex-para">tabularx}{}{l X}</p>
+<p class="latex-para">&lt;strong&gt;Symptom&lt;/strong&gt; &amp; &lt;strong&gt;Likely Cause&lt;/strong&gt; \\</p>
+<hr class="latex-hline">
+<p class="latex-para">mount hangs &amp; NFS server unreachable or export doesn't list client\\</p>
+<p class="latex-para">&quot;Stale file handle&quot; &amp; Server-side data was deleted/recreated\\</p>
+<p class="latex-para">Permission denied on mount &amp; /etc/exports restricts the client IP</p>
+<p class="latex-para">tabularx}</p>
+<p class="latex-para">Verify: showmount -e &lt;server&gt;}, check NFS server's exports, verify client IP matches the export rule.</p>
+<h3 class="latex-subsection">Common Ansible Troubleshooting</h3>
+<h4 class="latex-subsubsection">Module Not Found / Missing Collection</h4>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">ansible-galaxy collection install lab.franklin</p>
+<p class="latex-para"># or for individual modules:</p>
+<p class="latex-para">ansible-galaxy collection install community.general</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<h4 class="latex-subsubsection">Molecule Test Failures on New Hosts</h4>
+<p class="latex-para">If molecule tests fail on a new host, the most common causes are:</p>
+<ol class="latex-list">
+<li class="latex-list-item">Podman not installed or permissions wrong (openclaw user needs podman group)</li>
+<li class="latex-list-item">Docker driver configured instead of podman -- edit \texttt{molecule.yml} to set driver</li>
+<li class="latex-list-item">Python version mismatch (molecule requires $\ge$3.9)</li>
+<li class="latex-list-item">Role hostname gates preventing test execution (e.g., the DNS role's hostname check for the real server vs. molecule container name)</li>
+</ol>
+<h3 class="latex-subsection">General Debugging Checklist</h3>
+<p class="latex-para">When a service is down, work through this checklist:</p>
+<ol class="latex-list">
+<li class="latex-list-item">Can you ping the host? ($\rightarrow$ network up?)</li>
+<li class="latex-list-item">Is SSH responding? ($\rightarrow$ host OS running?)</li>
+<li class="latex-list-item">Does the service process exist? (\texttt{systemctl status or ps aux})</li>
+<li class="latex-list-item">Are logs showing errors? (\texttt{journalctl -u &lt;service&gt; --since today})</li>
+<li class="latex-list-item">Can you connect to the service port from another lab host? (\texttt{nc -zv &lt;host&gt; &lt;port&gt;})</li>
+<li class="latex-list-item">Is DNS resolving correctly? (\texttt{dig or getent hosts})</li>
+<li class="latex-list-item">Is time synchronized? (\texttt{timedatectl})</li>
+</ol>
+<h3 class="latex-subsection">Quick Reference Commands</h3>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para"># Check if a host is reachable from chonk</p>
+<p class="latex-para">ping -c 1 &lt;hostname&gt;</p>
+<p class="latex-para">ssh -o ConnectTimeout=5 openclaw@&lt;host&gt; &quot;echo alive&quot;</p>
+<p class="latex-para"># Check service status remotely</p>
+<p class="latex-para">ssh openclaw@&lt;host&gt; &quot;systemctl status &lt;service&gt;&quot;</p>
+<p class="latex-para"># Verify time sync across hosts</p>
+<p class="latex-para">for host in stargate skynet chonk; do</p>
+<p class="latex-para">    ssh openclaw@$host &quot;timedatectl | grep synchronized&quot;</p>
+<p class="latex-para">done</p>
+<p class="latex-para"># Verify DNS resolution from a client</p>
+<p class="latex-para">dig @time.lab.bitsmasher.net &lt;hostname&gt;</p>
+<p class="latex-para"># Check Kerberos auth</p>
+<p class="latex-para">kinit username@LAB.BITSMASHER.NET</p>
+<p class="latex-para">klist</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+
+<nav class="footer-nav">
+ <div><a href="time.html" class="nav-prev">&#8592; Previous: Time </a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

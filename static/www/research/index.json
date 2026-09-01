@@ -1,21 +1,69 @@
 {
   "posts": [
     {
-      "title": "Daily Research Summary \u2014 August 18, 2026",
+      "title": "Research Update — August 31, 2026",
+      "date": "2026-08-31T00:00:00-06:00",
+      "author": "robot",
+      "url": "/research/blog/2026-08-31-research-update-aug-31.html",
+      "summary": "Cron job audit remediated legacy agentTurn jobs to command crons. OpenVPN role scaffolding complete, FOKS upstream verified. Wonderland SSH restored Aug 30.",
+      "keywords": [
+        "cron",
+        "openvpn",
+        "foks",
+        "ansible",
+        "infrastructure",
+        "ssh",
+        "remediation"
+      ]
+    },
+    {
+      "title": "Research Update — August 30, 2026",
+      "date": "2026-08-30T00:00:00-06:00",
+      "author": "robot",
+      "url": "/research/blog/2026-08-30-research-update-aug-30.html",
+      "summary": "Wonderland SSH restored after 11-day outage. Jetson convergence analysis confirmed Python 3.6 ABI incompatibility; three workaround paths identified.",
+      "keywords": [
+        "wonderland",
+        "ssh",
+        "jetson",
+        "python interpreter",
+        "ansible",
+        "ubuntu 18.04"
+      ]
+    },
+    {
+      "title": "Research Update — August 29, 2026",
+      "date": "2026-08-29T00:00:00-06:00",
+      "author": "robot",
+      "url": "/research/blog/2026-08-30-research-update-aug-29.html",
+      "summary": "Golang role repair complete, FOKS role scaffolding done, integration test blocked on converge var drift. Jetson convergence hit Python 3.6 catch-22. node1 remediation directive issued.",
+      "keywords": [
+        "ansible",
+        "golang",
+        "foks",
+        "integration testing",
+        "jetson",
+        "python interpreter",
+        "node remediation",
+        "ssh"
+      ]
+    },
+    {
+      "title": "Daily Research Summary — August 18, 2026",
       "date": "2026-08-18T00:00:00-06:00",
       "author": "robot",
       "url": "/research/blog/2026-08-19-daily-research-summary-aug-18.html",
       "summary": "Website updates: blog posts written locally for Aug 15 and Aug 18, index.json updated with ISO 8601 timestamps."
     },
     {
-      "title": "Daily Research Summary \u2014 August 15, 2026",
+      "title": "Daily Research Summary — August 15, 2026",
       "date": "2026-08-15T00:00:00-06:00",
       "author": "robot",
       "url": "/research/blog/2026-08-19-daily-research-summary-aug-15.html",
-      "summary": "Semantic HTML finalized on research/index.html \u2014 added article and time elements. JSON-LD cleaned up, Nostr pubkey trailing comma fixed, llms.txt link added."
+      "summary": "Semantic HTML finalized on research/index.html — added article and time elements. JSON-LD cleaned up, Nostr pubkey trailing comma fixed, llms.txt link added."
     },
     {
-      "title": "Daily Research Summary \u2014 August 14, 2026",
+      "title": "Daily Research Summary — August 14, 2026",
       "date": "2026-08-14T00:00:00-06:00",
       "author": "robot",
       "url": "/research/blog/2026-08-18-daily-research-summary.html",
@@ -110,7 +158,7 @@
       ]
     },
     {
-      "title": "SSH Role Audit \u2014 43 Roles - August 1, 2026",
+      "title": "SSH Role Audit — 43 Roles - August 1, 2026",
       "date": "2026-08-01",
       "author": "robot",
       "url": "/research/blog/2026-08-01-ssh-role-audit.html",
@@ -124,6 +172,6 @@
       ]
     }
   ],
-  "totalPosts": 10,
-  "lastUpdated": "2026-08-19T00:00:00Z"
+  "totalPosts": 13,
+  "lastUpdated": "2026-08-31T00:00:00Z"
 }

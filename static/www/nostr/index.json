@@ -1,0 +1,45 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Nostr Identity & Talks — Bitsmasher Lab",
+  "home_page_url": "https://www.bitsmasher.net/nostr/",
+  "feed_url": "https://www.bitsmasher.net/nostr/index.json",
+  "description": "Nostr cryptographic public keys, conference talks, and decentralized protocol slide decks.",
+  "items": [
+    {
+      "id": "https://www.bitsmasher.net/nostr/slides/codemash/codemash-nostr.pdf",
+      "url": "https://www.bitsmasher.net/nostr/slides/codemash/codemash-nostr.pdf",
+      "title": "Keys, Relays, and JSON: Building on Nostr — CodeMash 2027",
+      "summary": "Polyglot architecture, dumb relays, event-driven state, and NIP-07 extension signing.",
+      "attachments": [
+        {
+          "url": "https://www.bitsmasher.net/nostr/slides/codemash/codemash-nostr.pdf",
+          "mime_type": "application/pdf",
+          "title": "Slide Deck (PDF)"
+        },
+        {
+          "url": "https://www.bitsmasher.net/nostr/slides/codemash/codemash-nostr.tex",
+          "mime_type": "text/x-tex",
+          "title": "LaTeX Source"
+        }
+      ]
+    },
+    {
+      "id": "https://www.bitsmasher.net/nostr/slides/bsides-cosprings/bsides-nostr-security.pdf",
+      "url": "https://www.bitsmasher.net/nostr/slides/bsides-cosprings/bsides-nostr-security.pdf",
+      "title": "Threat Modeling Nostr: Security & Privacy — BSides CO Springs 2026",
+      "summary": "Key management trade-offs, relay trust boundaries, sandboxing, and NIP-44 encryption.",
+      "attachments": [
+        {
+          "url": "https://www.bitsmasher.net/nostr/slides/bsides-cosprings/bsides-nostr-security.pdf",
+          "mime_type": "application/pdf",
+          "title": "Slide Deck (PDF)"
+        },
+        {
+          "url": "https://www.bitsmasher.net/nostr/slides/bsides-cosprings/bsides-nostr-security.tex",
+          "mime_type": "text/x-tex",
+          "title": "LaTeX Source"
+        }
+      ]
+    }
+  ]
+}

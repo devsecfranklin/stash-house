@@ -1,0 +1,19 @@
+{
+  "tag": "storage",
+  "count": 1,
+  "canonical": "https://www.bitsmasher.net/research/tags/storage.json",
+  "posts": [
+    {
+      "id": "2026-08-19-daily-research-summary-aug-15",
+      "title": ">Daily Research Summary - Aug 15",
+      "date": "2026-08-19",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-19-daily-research-summary-aug-15.html",
+      "summary": "Storage pipeline optimization and repository reorganization summary.",
+      "tags": [
+        "storage",
+        "git",
+        "operations"
+      ]
+    }
+  ]
+}

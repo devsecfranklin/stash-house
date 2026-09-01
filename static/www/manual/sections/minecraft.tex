@@ -1,0 +1,47 @@
+\section{Minecraft Server}
+
+\subsection{Host and Location}
+
+The Minecraft server (Dreamland) runs on \textbf{chonk.lab.bitsmasher.net} (10.10.8.60), a primary compute host with RX 9070 / Navi 48 GPU. Server files are at /home/minecraft.
+
+Previous host was skynet.lab.bitsmasher.net (10.10.16.10) during the CraftBukkit/early Paper era.
+
+\subsection{Current Configuration}
+
+The server runs \textbf{Paper 1.21.11} on Java 21 (Debian Bookworm). Key settings:
+\begin{itemize}
+    \item Gamemode: Survival
+    \item Difficulty: Normal
+    \item Max players: 69
+    \item PvP: Disabled
+    \item View distance: 10 (simulation distance: 12)
+    \item Server port: 25565
+\end{itemize}
+
+The server name is \textit{Dreamland} (MOTD: \texttt{\&aDreamland\&7 | \&fEst. 2012}).
+
+\subsection{Core Plugins}
+
+\begin{itemize}
+    \item \textbf{EssentialsX} -- Core, Chat, AntiBuild
+    \item \textbf{LuckPerms} -- Permissions (backed by MariaDB)
+    \item \textbf{CoreProtect} -- Audit/log (backed by MySQL)
+\end{itemize}
+
+\subsection{Interactive Map}
+
+BlueMap provides an interactive 3D web map: \url{https://chonk.lab.bitsmasher.net:8100}
+
+\subsection{Storage}
+
+World data is approximately 13 GB. BlueMap assets are ~6.5 GB. All files on local disk (no NFS dependency for world data).
+
+\textbf{NO GIT-LFS}: Chunk files and world data must not use git-lfs. Use bare git repos for any versioned world metadata.
+
+\subsection{Administrative Access}
+
+Operations automation via start.sh with a custom rcon-based controller. Management infrastructure ports: server 25565, BlueMap 8100, Plan analytics 8804.
+
+\textbf{Ops team}: theDevilsVoice (level 4), Perryman (level 4).
+
+\textbf{Whitelist}: slyborg4realz, UnvaluedShoe79, BeefyGamer76y, some_garlic, KindredFiori, secove_, DrewPellino, NotPebl3, VibyCat, CallMeTesla.

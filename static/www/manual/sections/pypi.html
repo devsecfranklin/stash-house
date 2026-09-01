@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pypi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Pypi section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Pypi_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/pypi.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Pypi</h1>
+<span class="meta"><em>Pages 43-45 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Internal PyPI Repository</h2>
+<div class="latex-content">
+<p class="latex-para">The lab runs an internal PyPI package repository to provide Python packages to development machines without depending on external PyPI servers. This avoids network bottlenecks, supports offline development, and enables use of proprietary or lab-specific packages not available on PyPI.org.</p>
+<h3 class="latex-subsection">Architecture</h3>
+<p class="latex-para">The PyPI directory lives at /mnt/storage1/LAB/pypi}. A symlink is created from the web server's document root (/var/www/html/pypi}) pointing to this directory, making packages accessible via HTTP.</p>
+<p class="latex-para">Access URL pattern:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">http://&lt;storage-host&gt;/pypi/simple/</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<p class="latex-para">This follows the P45 503 simple repository API structure expected by pip.</p>
+<h3 class="latex-subsection">Configuration via Ansible</h3>
+<p class="latex-para">The pypi\_internal} role in the lab/franklin collection automates this setup:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Role path&lt;/strong&gt;: \texttt{roles/pypi\_internal/}</li>
+<li class="latex-list-item">&lt;strong&gt;Variables&lt;/strong&gt;:</li>
+<ul class="latex-list">
+<li class="latex-list-item">\texttt{html\_dir}: web root (\texttt{/var/www/html})</li>
+<li class="latex-list-item">\texttt{pypi\_dir}: package directory (\texttt{/mnt/storage1/LAB/pypi})</li>
+</ul>
+<li class="latex-list-item">&lt;strong&gt;Task&lt;/strong&gt;: Creates a symbolic link from \texttt{\$html\_dir/pypi} $\rightarrow$ \texttt{\$pypi\_dir}</li>
+<li class="latex-list-item">&lt;strong&gt;Playbook integration&lt;/strong&gt;: Included in the cluster/storage playbook alongside NFS, LDAP, Kerberos, DNS, and ntp roles</li>
+</ul>
+<h3 class="latex-subsection">Usage from Client Machines</h3>
+<p class="latex-para">Configure pip to use the internal PyPI server:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para"># In ~/.pip/pip.conf or /etc/pip.conf:</p>
+<p class="latex-para">[global]</p>
+<p class="latex-para">index-url = http://&lt;storage-host&gt;/pypi/simple/</p>
+<p class="latex-para"># Optionally trust host if not using HTTPS</p>
+<p class="latex-para">trusted-host = &lt;storage-host&gt;</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<p class="latex-para">Or use pip's \-\-index\-url} flag directly:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">pip install --index-url http://&lt;storage-host&gt;/pypi/simple/ some-package</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<h3 class="latex-subsection">Package Maintenance</h3>
+<p class="latex-para">To add packages to the internal PyPI, place them in the pypi directory with P45 503-compliant directory structure:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Package directories (lowercase names)</li>
+<li class="latex-list-item">File links inside each package directory pointing to the actual wheel/sdist files</li>
+<li class="latex-list-item">The web server must have read access to /mnt/storage1/LAB/pypi</li>
+</ul>
+<p class="latex-para">Packages can be built and added using standard pip tools:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">pip install --no-index --find-links=/mnt/storage1/LAB/pypi/simple/ &lt;package&gt;</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+
+<nav class="footer-nav">
+ <div><a href="nfs-testing.html" class="nav-prev">&#8592; Previous: Nfs Testing </a>  <a href="revision-control.html" class="nav-next">Next: Revision Control &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

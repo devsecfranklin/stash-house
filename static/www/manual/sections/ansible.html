@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ansible</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ansible section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Ansible_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/ansible.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Ansible</h1>
+<span class="meta"><em>Pages 3-5 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Ansible Automation</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">Current Landscape (August 2026)</h3>
+<p class="latex-para">As of August 2026, the Ansible ecosystem is split between two distribution paths:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Ansible community package&lt;/strong&gt; -- the traditional monolithic install (pip install ansible). Current version is 13.x (built on ansible-core 2.20). This includes 85+ collections with thousands of modules and plugins bundled together. Follows semantic versioning, releases two major versions per year plus monthly minor releases.</li>
+<li class="latex-list-item">&lt;strong&gt;ansible-core&lt;/strong&gt; -- the minimal core engine. Maintains three versions at a time (current + two older). Versioned independently from the community package (2.19, 2.20, 2.21). Releases every four weeks for minor updates.</li>
+</ul>
+<p class="latex-para">&lt;strong&gt;EOL versions as of August 2026&lt;/strong&gt;: Ansible 10--12 and ansible-core 2.15--2.18 are EOL. Do not use these in new work. Only Ansible 13.x / ansible-core 2.20 is current; 14.0.0/2.21 is in development.</p>
+<h3 class="latex-subsection">Molecule Testing -- Deprecated (August 2026)</h3>
+<p class="latex-para">&lt;strong&gt;Molecule has been removed from the active workflow as of August 2026.&lt;/strong&gt; It no longer serves as a testing target or standard. All role validation now uses:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;ansible-test --sanity&lt;/strong&gt; -- built-in collection sanity checks, run natively on stargate.research.bitsmasher.net with zero external overhead</li>
+<li class="latex-list-item">&lt;strong&gt;ansible-test --integration&lt;/strong&gt; -- integration tests targeting real hosts or containerized environments via ansible-test's native docker driver</li>
+<li class="latex-list-item">&lt;strong&gt;ansible-playbook --syntax-check&lt;/strong&gt; -- YAML structure validation for all playbooks and role task files</li>
+</ul>
+<p class="latex-para">Existing Molecule test harnesses (in ansible/collections/ansible\_collections/lab/franklin/roles/ role /molecule/}) remain as historical artifacts but are no longer invoked or maintained. New roles must use native ansible-test exclusively.</p>
+<p class="latex-para">The lab/franklin Ansible collection lives at:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">/mnt/clusterfs2/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin/</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<p class="latex-para">It is the central automation artifact for the entire lab.bitsmasher.net infrastructure, managing provisioning, configuration, and testing across all hosts.</p>
+</div>
+<h2 class="latex-section">Collection Manifest (galaxy.yml)</h2>
+<div class="latex-content">
+<p class="latex-para">The collection follows standard Ansible Galaxy conventions with namespace lab} and name franklin}:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Version&lt;/strong&gt;: 1.0.0</li>
+<li class="latex-list-item">&lt;strong&gt;License&lt;/strong&gt;: MIT</li>
+<li class="latex-list-item">&lt;strong&gt;Author&lt;/strong&gt;: franklin &lt;franklin@bitsmasher.net&gt;</li>
+<li class="latex-list-item">&lt;strong&gt;Repository&lt;/strong&gt;: &lt;a href=&quot;https://github.com/devsecfranklin/lab-franklin&quot; class=&quot;latex-url&quot;&gt;https://github.com/devsecfranklin/lab-franklin&lt;/a&gt;</li>
+<li class="latex-list-item">&lt;strong&gt;Documentation&lt;/strong&gt;: &lt;a href=&quot;https://github.com/devsecfranklin/lab-franklin/docs&quot; class=&quot;latex-url&quot;&gt;https://github.com/devsecfranklin/lab-franklin/docs&lt;/a&gt;</li>
+</ul>
+</div>
+<h2 class="latex-section">Role Inventory</h2>
+<div class="latex-content">
+<p class="latex-para">The collection contains roles organized under the roles/ directory. As of August 2026, the following roles are maintained with native ansible-test harnesses:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">roles/</p>
+<p class="latex-para">├── apt_mirror/          # APT mirror configuration</p>
+<p class="latex-para">├── beagleboard/         # BeagleBoard device provisioning</p>
+<p class="latex-para">├── common/              # Shared base configuration (bootstrap.sh, common utils)</p>
+<p class="latex-para">├── container_registry/  # Docker/container registry setup</p>
+<p class="latex-para">├── ctfd/                # CTFd platform deployment</p>
+<p class="latex-para">├── desktop/             # Desktop environment provisioning</p>
+<p class="latex-para">├── docker/              # Docker engine installation</p>
+<p class="latex-para">├── documentation/       # Documentation generation roles</p>
+<p class="latex-para">├── dhcp/                # DHCP server configuration (dhcpd.conf)</p>
+<p class="latex-para">├── dns/                 # BIND/named DNS server</p>
+<p class="latex-para">├── golang/              # Go language toolchain</p>
+<p class="latex-para">├── jetson-nano/         # NVIDIA Jetson Nano provisioning</p>
+<p class="latex-para">├── k3s_agent/           # k3s worker node</p>
+<p class="latex-para">├── k3s_server/          # k3s control plane server</p>
+<p class="latex-para">├── k8s/                 # Kubernetes generic setup</p>
+<p class="latex-para">├── latex/               # LaTeX environment</p>
+<p class="latex-para">├── logging/             # Centralized logging</p>
+<p class="latex-para">├── music/               # Music service configuration</p>
+<p class="latex-para">├── nfs/                 # NFS server/client</p>
+<p class="latex-para">├── nix/                 # Nix package manager</p>
+<p class="latex-para">├── openbsd/             # OpenBSD host bootstrap (blowfish target)</p>
+<p class="latex-para">│   ├── tasks/main.yml   # Includes files.yml, timezone setup</p>
+<p class="latex-para">│   └── files/           # bootstrap.sh, login.conf, hosts entries</p>
+<p class="latex-para">├── paloalto/            # Palo Alto firewall config</p>
+<p class="latex-para">├── prereq/              # Prerequisite packages</p>
+<p class="latex-para">├── pypi_internal/       # Internal PyPI repository setup</p>
+<p class="latex-para">│   ├── tasks/main.yml   # Symlink pypi_dir -&gt; html_dir/pypi</p>
+<p class="latex-para">│   └── vars/main.yml    # html_dir=/var/www/html, pypi_dir=/mnt/storage1/LAB/pypi</p>
+<p class="latex-para">├── python/              # Python environment</p>
+<p class="latex-para">├── raspberrypi/         # Raspberry Pi provisioning</p>
+<p class="latex-para">├── samba/               # Samba file sharing</p>
+<p class="latex-para">├── security/            # Hardening and security baselines</p>
+<p class="latex-para">├── shell/               # Shell configuration</p>
+<p class="latex-para">├── ssh/                 # SSH server hardening</p>
+<p class="latex-para">├── tls/                 # TLS certificate management</p>
+<p class="latex-para">├── chonk/               # chonk-specific configuration</p>
+<p class="latex-para">├── cluster/             # Cluster-wide settings</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+</div>
+<h2 class="latex-section">Workspace Structure</h2>
+<div class="latex-content">
+<p class="latex-para">The full project layout:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">/workspace/lab-franklin/</p>
+<p class="latex-para">├── Makefile.am                  # Top-level autotools target (Python, Docker, dev)</p>
+<p class="latex-para">├── configure.ac                 # Autotools config (autoconf)</p>
+<p class="latex-para">├── bootstrap.sh                 # Cross-platform bootstrapper</p>
+<p class="latex-para">├── network_update.sh            # One-shot maintenance script (hardened 2026-08-02)</p>
+<p class="latex-para">├── ansible/                     # ANSIBLE_HOME root</p>
+<p class="latex-para">│   ├── playbook.yml             # Main playbook</p>
+<p class="latex-para">│   ├── hosts                    # Inventory file</p>
+<p class="latex-para">│   └── collections/             # Collections path</p>
+<p class="latex-para">│       ├── ansible_collections/ # Galaxy namespace</p>
+<p class="latex-para">│           └── lab/franklin/    # The lab/franklin collection</p>
+<p class="latex-para">│               ├── galaxy.yml</p>
+<p class="latex-para">│               ├── roles/       # All role modules (37 total)</p>
+<p class="latex-para">│               └── docs/latex/  # LaTeX docs build (autotools)</p>
+<p class="latex-para">├── container/                   # Docker/Podman configs</p>
+<p class="latex-para">├── terraform/                   # Terraform infrastructure definitions</p>
+<p class="latex-para">├── bin/                         # Shared utility scripts (common.sh)</p>
+<p class="latex-para">└── docs/manual/                 # Lab manual documentation (this document)</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+</div>
+<h2 class="latex-section">Build System (Autotools)</h2>
+<div class="latex-content">
+<p class="latex-para">The project uses GNU Autotools for the root-level build:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;configure.ac&lt;/strong&gt;: Defines package (lab-franklin v0.2), libtool support, Python $\ge$ 3.9 requirement, podman/ansible/gpg checks, git version tagging</li>
+<li class="latex-list-item">&lt;strong&gt;Makefile.am&lt;/strong&gt;: Top-level targets include test (ansible-lint + ansible-test sanity/integration), security (venv bootstrap), dev (Python venv in BUILDDIR)</li>
+<li class="latex-list-item">&lt;strong&gt;bootstrap.sh&lt;/strong&gt;: Cross-platform bootstrapper that detects OS (Debian/RedHat/OpenBSD/macOS/Linux) and installs platform-specific packages, then runs aclocal $\rightarrow$ autoreconf $\rightarrow$ automake $\rightarrow$ configure</li>
+<li class="latex-list-item">&lt;strong&gt;docs/manual/Makefile.am&lt;/strong&gt;: Standalone autotools stub for LaTeX docs build (clean target removes *.aux files)</li>
+</ul>
+<p class="latex-para">The network\_update.sh} script was hardened on 2026-08-02 with: set -euo pipefail, auto-resolved paths, pinned K3s version validation, ANSIBLE_HOME environment checks, removed dangerous clush/apt-get blast radius, and dead code removal. It runs the main playbook at ansible/playbook.yml} as its primary action.</p>
+</div>
+<h2 class="latex-section">Native ansible-test on stargate.research.bitsmasher.net</h2>
+<div class="latex-content">
+<p class="latex-para">The stargate host (10.10.16.66, Debian 12 bookworm) serves as the exclusive testing platform for the lab/franklin Ansible collection. All test execution runs with zero external billing -- direct shell access to the gateway sandbox eliminates API token overhead.</p>
+<h3 class="latex-subsection">Testing Standard: ansible-test (August 2026)</h3>
+<p class="latex-para">Native ansible-test} has replaced Molecule as the canonical testing framework:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;sanity checks&lt;/strong&gt;: Built into ansible-core; validates module/plugin imports, YAML structure, and collection metadata without any container dependency</li>
+<li class="latex-list-item">&lt;strong&gt;integration tests&lt;/strong&gt;: Run via \texttt{ansible-test integration} targeting real hosts or the native docker driver (preferred over podman for consistency)</li>
+<li class="latex-list-item">&lt;strong&gt;syntax validation&lt;/strong&gt;: \texttt{ansible-playbook --syntax-check} validates all playbooks and role task files before execution</li>
+</ul>
+<p class="latex-para">The legacy Molecule directory structure at each role's molecule/} subdirectory has been deprecated. It remains in-place as historical reference but is excluded from CI pipelines and the Makefile.am test target.</p>
+<h3 class="latex-subsection">Test Execution Flow (ansible-test)</h3>
+<p class="latex-para">For a given role, the native test cycle is:</p>
+<ol class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;syntax-check&lt;/strong&gt;: \texttt{ansible-playbook --syntax-check playbook.yml} validates YAML structure</li>
+<li class="latex-list-item">&lt;strong&gt;sanity&lt;/strong&gt;: \texttt{ansible-test sanity} runs built-in linting against the collection -- no container, no overhead</li>
+<li class="latex-list-item">&lt;strong&gt;integration&lt;/strong&gt;: \texttt{ansible-test integration &lt;role&gt;} runs target-specific tests using docker driver containers</li>
+</ol>
+<h3 class="latex-subsection">Running Tests from Stargate</h3>
+<p class="latex-para">From stargate's workspace:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">cd ~/workspace/lab-franklin/ansible/collections/ansible_collections/lab/franklin</p>
+<p class="latex-para">ansible-test sanity</p>
+<p class="latex-para">ansible-test integration dns --python 3.12</p>
+<p class="latex-para">ansible-playbook --syntax-check playbook.yml</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+</div>
+<h2 class="latex-section">Dynamic Scoping and Pathing Convention</h2>
+<div class="latex-content">
+<p class="latex-para">Roles use dynamic file inclusion via templated variables to avoid hardcoded paths:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Roles include task fragments using: \texttt{{\_role\_name\_files}} and \texttt{{\_role\_name\_templates}} for dynamically scoped file/paths</li>
+<li class="latex-list-item">Template references follow the pattern: \texttt{\{include\_task &quot;tasks/\_role\_name.yml&quot;\} } scoped within dynamically included tasks</li>
+</ul>
+<p class="latex-para">This convention eliminates static path dependencies across role invocations and supports multi-target deployment without playbook-level path overrides.</p>
+</div>
+<h2 class="latex-section">Package Standards -- Deprecated Utilities</h2>
+<div class="latex-content">
+<p class="latex-para">The following deprecated utilities have been removed from baseline role manifests:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;neofetch&lt;/strong&gt;: Removed from common role; replaced by standard Linux tools (lsb\_release, uname -r)</li>
+<li class="latex-list-item">&lt;strong&gt;tripwire&lt;/strong&gt;: Removed from security role; no longer maintained and superseded by native file integrity monitoring</li>
+<li class="latex-list-item">Other legacy packages audited during August 2026 cleanup -- verify role manifests before adding new dependencies</li>
+</ul>
+</div>
+<h2 class="latex-section">Dynamic Probing Standard</h2>
+<div class="latex-content">
+<p class="latex-para">Static inventory reachability assumptions have been replaced with non-interactive batch probes:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">ssh -o BatchMode=yes -o ConnectTimeout=3 -i ~/.ssh/id_ed25519_openclaw franklin@&lt;host&gt; &quot;hostname &amp;&amp; whoami&quot;</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<p class="latex-para">This approach eliminates stale host entries, prevents password prompts in automation pipelines, and provides deterministic connectivity feedback with a 3-second timeout. Never assume reachability from static notes -- always probe on demand.</p>
+
+<nav class="footer-nav">
+ <div><a href="ansible-lint.html" class="nav-prev">&#8592; Previous: Ansible Lint </a>  <a href="cluster.html" class="nav-next">Next: Cluster &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

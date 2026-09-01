@@ -1,0 +1,23 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\tiny,breaklines=true,frame=single,showstringspaces=false}
+
+\title{Threat Modeling Nostr: Security \& Privacy}
+\subtitle{BSides Colorado Springs}
+\author{Franklin Diaz}
+\date{2026}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{Nostr Threat Landscape}
+  \begin{itemize}
+    \item \textbf{Key Isolation:} NIP-07 browser extension signing vs. raw nsec exposure.
+    \item \textbf{Relay Trust Boundaries:} Metadata leakage, IP tracking, censorship vectors.
+    \item \textbf{Payload Encryption:} Deprecating NIP-04 in favor of NIP-44 (XChaCha20-Poly1305).
+  \end{itemize}
+\end{frame}
+\end{document}

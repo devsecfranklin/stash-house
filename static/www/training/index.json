@@ -1,0 +1,105 @@
+{
+ "version": "https://jsonfeed.org/version/1.1",
+ "title": "Bitsmasher Lab — Training & Technical Curriculum",
+ "home_page_url": "https://www.bitsmasher.net/training/",
+ "feed_url": "https://www.bitsmasher.net/training/index.json",
+ "description": "Technical slide decks, architecture guides, and curriculum tracking for AI engineering, systems development, and defensive security operations.",
+ "user_comment": "Machine-readable training manifest and syllabus catalog for Bitsmasher Lab.",
+ "author": {
+  "name": "robot 🤖",
+  "url": "https://www.bitsmasher.net/training"
+ },
+ "items": [
+  {
+   "id": "https://www.bitsmasher.net/training/slides/ai-intro/ai-slides.pdf",
+   "url": "https://www.bitsmasher.net/training/slides/ai-intro/ai-slides.pdf",
+   "title": "Module 1: Introduction to LLMs and Prompt Engineering",
+   "date_published": "2025-08-15T00:00:00Z",
+   "tags": ["/foundations/", "/llm/", "/prompting/"],
+   "summary": "Foundational mechanics of large language models, core architecture, prompting paradigms, and deterministic parameter tuning.",
+   "attachments": [
+    {
+     "url": "https://www.bitsmasher.net/training/slides/ai-intro/ai-slides.pdf",
+     "mime_type": "application/pdf",
+     "title": "Slide Deck (PDF)"
+    },
+    {
+     "url": "https://www.bitsmasher.net/training/slides/ai-intro/ai-slides.tex",
+     "mime_type": "text/x-tex",
+     "title": "LaTeX Source"
+    }
+   ]
+  },
+  {
+   "id": "https://www.bitsmasher.net/training/slides/ai-tokens/ai-tokens.pdf",
+   "url": "https://www.bitsmasher.net/training/slides/ai-tokens/ai-tokens.pdf",
+   "title": "Module 2: AI Tokens, Geometry, and Context Engineering",
+   "date_published": "2025-08-20T00:00:00Z",
+   "tags": ["/architecture/", "/tokens/", "/context-window/"],
+   "summary": "Tokenization algorithms, vocabulary geometry, KV-cache mechanics, context degradation curves, and token lifecycle management.",
+   "attachments": [
+    {
+     "url": "https://www.bitsmasher.net/training/slides/ai-tokens/ai-tokens.pdf",
+     "mime_type": "application/pdf",
+     "title": "Slide Deck (PDF)"
+    },
+    {
+     "url": "https://www.bitsmasher.net/training/slides/ai-tokens/ai-tokens.tex",
+     "mime_type": "text/x-tex",
+     "title": "LaTeX Source"
+    }
+   ]
+  },
+  {
+   "id": "https://www.bitsmasher.net/training/slides/ai-mcp-rag/ai-mcp-rag.pdf",
+   "url": "https://www.bitsmasher.net/training/slides/ai-mcp-rag/ai-mcp-rag.pdf",
+   "title": "Module 3: MCP & RAG Systems Architecture",
+   "date_published": "2026-07-15T00:00:00Z",
+   "tags": ["/architecture/", "/mcp/", "/rag/", "/tool-use/"],
+   "summary": "Model Context Protocol architecture, bidirectional client-server sampling, vector embeddings, and defensive tool boundaries.",
+   "attachments": [
+    {
+     "url": "https://www.bitsmasher.net/training/slides/ai-mcp-rag/ai-mcp-rag.pdf",
+     "mime_type": "application/pdf",
+     "title": "Slide Deck (PDF)"
+    },
+    {
+     "url": "https://www.bitsmasher.net/training/slides/ai-mcp-rag/ai-mcp-rag.tex",
+     "mime_type": "text/x-tex",
+     "title": "LaTeX Source"
+    }
+   ]
+  },
+  {
+   "id": "https://www.bitsmasher.net/training/slides/ai-prisma-airs/ai-prisma-airs.pdf",
+   "url": "https://www.bitsmasher.net/training/slides/ai-prisma-airs/ai-prisma-airs.pdf",
+   "title": "Module 4: Enterprise AI Security & Prisma AIRS",
+   "date_published": "2026-08-25T00:00:00Z",
+   "tags": ["/security/", "/airs/", "/mlops/", "/runtime-defense/"],
+   "summary": "Inline runtime proxy interception, policy-driven DLP data masking, prompt injection defense, and automated CI/CD AI security testing.",
+   "attachments": [
+    {
+     "url": "https://www.bitsmasher.net/training/slides/ai-prisma-airs/ai-prisma-airs.pdf",
+     "mime_type": "application/pdf",
+     "title": "Slide Deck (PDF)"
+    }
+   ]
+  },
+  {
+   "id": "https://www.bitsmasher.net/training/docs/ai-security.html",
+   "url": "https://www.bitsmasher.net/training/docs/ai-security.html",
+   "title": "Curriculum Tracker: AI Security & Defensive Operations",
+   "date_published": "2026-08-10T00:00:00Z",
+   "tags": ["/security/", "/curriculum/", "/red-team/"],
+   "summary": "Comprehensive training syllabus covering OWASP Top 10 for LLMs, Gandalf prompt injection CTFs, DEF CON AI Village, and enterprise AIRS deployment."
+  },
+  {
+   "id": "https://www.bitsmasher.net/training/docs/coding-foundations.html",
+   "url": "https://www.bitsmasher.net/training/docs/coding-foundations.html",
+   "title": "Curriculum Tracker: Systems & Software Engineering Foundations",
+   "date_published": "2026-08-10T00:00:00Z",
+   "tags": ["/foundations/", "/curriculum/", "/software-engineering/"],
+   "summary": "Track progression for command-line tool harnesses, git workflow, Claude Code integration, and test automation pipeline design."
+  }
+ ]
+}

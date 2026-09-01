@@ -1,0 +1,56 @@
+\section{Kubernetes (k3s) Cluster}
+
+\subsection{Architecture}
+
+The lab uses k3s (Lightweight Kubernetes from Rancher) for container orchestration across the infrastructure:
+
+\begin{itemize}
+    \item \textbf{k3s\_server}: Master node running k3s control plane (host: head2, referenced but unreachable in current audit)
+    
+    \item \textbf{k3s\_agent}: Worker nodes that register with the server and receive workloads
+    
+    \item \textbf{GPU nodes}: Specialized workers for NVIDIA container runtime and compute workloads
+\end{itemize}
+
+\subsection{Version Pinning}
+
+k3s version is pinned to the 2.1.x series (specifically 2.1.5 as of the latest network\_update.sh). This prevents surprise breakage from upstream k3s releases. The pinning policy follows:
+\begin{lstlisting}[style=mystyle]
+K3S_VERSION="2.1.5"
+curl -sfL https://get.k3s.io | sh -s - \
+    --write-kubeconfig-mode 644
+    \end{lstlisting}
+
+\subsection{Container Runtime}
+
+k3s uses containerd as the default runtime, with NVIDIA Container Toolkit for GPU workloads:
+\begin{itemize}
+    \item \textbf{nvidia-container-toolkit}: Installed on GPU nodes via the network\_update.sh automation
+    
+    \item \textbf{containerd config}: Located at \texttt{/var/lib/rancher/k3s/agent/etc/containerd/config.toml}
+    
+    \item NVIDIA runtime configured in containerd to expose GPU devices to containers
+\end{itemize}
+
+\subsection{Cluster Topology}
+
+\begin{tabularx}{\textwidth}{l l X}
+\textbf{Node Role} & \textbf{Target Hosts} & \textbf{Notes} \\
+\hline
+k3s\_server & head2 (planned) & Control plane; not yet online\\
+k3s\_agent & node900, node901, node903 & Jetson nodes as workers\\
+nvidia\_nodes & GPU-equipped hosts & Container Toolkit + k3s agent
+\end{tabularx}
+
+\subsection{kubeconfig Access}
+
+After installation, kubeconfig is written to \texttt{/etc/rancher/k3s/k3s.yaml} with mode 644. Cluster access requires:
+\begin{itemize}
+    \item SSH key auth to the k3s\_server host
+    
+    \item Reading the kubeconfig file (or copying it securely)
+    
+    \item \texttt{kubectl --kubeconfig /etc/rancher/k3s/k3s.yaml cluster-info} to verify connectivity
+\end{itemize}
+
+The k3s_server role and k3s_agent role in lab-franklin handle the installation and configuration of these nodes via Ansible.

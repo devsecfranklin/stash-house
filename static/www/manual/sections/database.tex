@@ -1,0 +1,53 @@
+\section{Blowfish -- Database Host}
+
+\subsection{Host Identity}
+
+\begin{itemize}
+    \item \textbf{Hostname}: blowfish.lab.bitsmasher.net (alias: blowfish)
+    
+    \item \textbf{IP}: 10.10.12.15
+    
+    \item \textbf{MAC}: 98:b7:85:21:ad:77 (from DHCP reservation)
+    
+    \item \textbf{OS}: OpenBSD (planned; current DNS/DHCP entry references it as an OpenBSD host)
+\end{itemize}
+
+\subsection{Role in the Lab}
+
+Blowfish is provisioned as a \textbf{database host} within the lab infrastructure. It was intended to serve as a dedicated database server, separate from the primary infrastructure hosts (chonk, stargate, skynet).
+
+The OpenBSD role in the lab-franklin Ansible collection includes configuration references specific to blowfish:
+\begin{itemize}
+    \item Login configuration uses \texttt{blowfish} password hashing algorithm (\texttt{localcipher=blowfish,a}) in \texttt{/etc/login.conf}.
+    
+    \item The bootstrap.sh for OpenBSD hosts includes a direct \texttt{/etc/hosts} entry for blowfish (10.10.12.15).
+    
+    \item DHCP reservation is configured in the lab's dhcpd.conf role.
+\end{itemize}
+
+\subsection{Current Status}
+
+Blowfish has been \textbf{unreachable} from chonk since the initial infrastructure audit. The IP 10.10.12.15 resolved from DNS (stargate's /etc/hosts), but authentication was denied -- no matching SSH key was authorized on that host.
+
+Key references:
+\begin{itemize}
+    \item network\_update.sh: blowfish is the default target for the \texttt{openbsd\_bootstrap()} function.
+    
+    \item OpenBSD role tasks: includes commented-out ansible setup command for blowfish (indicating the host was expected to be online).
+\end{itemize}
+
+The host may need network investigation -- it resolved from DNS, had a DHCP reservation, and MAC address on file, suggesting it was once part of the lab but has since gone offline or been decommissioned.
+
+\subsection{Planned Configuration (OpenBSD)}
+
+When brought online, the expected setup for blowfish is:
+
+\begin{itemize}
+    \item SSH key-based authentication via \texttt{~/.ssh/authorized\_keys}
+    
+    \item OpenBSD's built-in \texttt{pf} firewall with custom rules
+    
+    \item Database software stack (likely PostgreSQL or MariaDB on OpenBSD)
+    
+    \item Ansible-managed configuration via the lab-franklin collection, using the openbsd role as the base profile.
+\end{itemize}

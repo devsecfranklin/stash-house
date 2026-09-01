@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 1–2 Assignment: Worksheet Mechanics & Charting — ISMG 2050</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<style>
+ .header-meta { color: #9e9e9e; font-size: 0.9rem; }
+</style>
+</head>
+<body class="w3-black">
+<nav class="w3-container w3-margin-top" id="site-nav"></nav>
+<script src="/js/nav.js" defer></script>
+
+<main class="w3-container research-content" style="max-width: 860px; margin: 2rem auto; padding: 0 1.5rem;">
+<p><a href="/teaching/ISMG-2050/">← Back to ISMG-2050 Course Hub</a></p>
+
+<header class="page-header">
+<h1 class="page-title">Module 1 Assignment: Worksheet Mechanics & Dynamic Charting</h1>
+<p class="header-meta">Due: Sunday, September 6, 2026 at 11:59 PM MT — 100 Points</p>
+</header>
+
+<article class="body-content">
+<div class="info-block" style="background:#1a1a1a; border-left:4px solid #CFB87C; padding:1rem; margin-bottom:1.5rem;">
+<h3 style="margin-top:0; color:#CFB87C;">Starter Dataset Download</h3>
+<p>Download the raw workbook before starting your analysis:</p>
+<p><a href="starter_data.xlsx" class="w3-button w3-dark-grey" download>📥 Download starter_data.xlsx</a></p>
+</div>
+
+<h2>Assignment Overview</h2>
+<p>This assignment reinforces core spreadsheet mechanics from Module 1 and aligns with <strong>Coursera Module 1 (Excel Fundamentals)</strong>. You will structure a multi-month operating budget for Blue Lake Properties and build a proportional visual breakdown of Q1 revenue.</p>
+
+<h2>Step-by-Step Instructions</h2>
+<h3>Part 1: Expense Aggregation &amp; Formulas (40 pts)</h3>
+<ol>
+<li>Open <code>starter_data.xlsx</code> in desktop Microsoft 365 Excel.</li>
+<li>In row 10 (<strong>Total Expenses</strong>), compute the monthly column totals for January, February, and March using the <code>SUM</code> function.</li>
+<li>In column E (<strong>Q1 Total</strong>), compute row totals for each expense category using <code>SUM</code>.</li>
+<li>In column F (<strong>Monthly Avg</strong>), calculate the three-month average per category using <code>AVERAGE</code>.</li>
+<li>In rows 11–13, compute the overall <strong>Average</strong>, <strong>Minimum</strong> (<code>MIN</code>), and <strong>Maximum</strong> (<code>MAX</code>) across the monthly data ranges (B4:D9).</li>
+</ol>
+
+<h3>Part 2: Proportional Revenue Analysis &amp; Charting (40 pts)</h3>
+<ol>
+<li>In cell B22 and C22, calculate the total units sold and total revenue across all property categories using <code>SUM</code>.</li>
+<li>In column D (<strong>% of Total Revenue</strong>), write a formula computing each property type's revenue share: <code>=C18/$C$22</code>. Format as <strong>Percentage (1 decimal place)</strong>.</li>
+<li>Insert a <strong>3-D Pie Chart</strong> or <strong>Doughnut Chart</strong> displaying Property Type vs. % of Total Revenue.</li>
+<li>Apply a distinct chart title (e.g., <em>"Q1 Revenue Distribution by Property Type"</em>), enable Data Callouts (showing percentages), and apply the <strong>Style 3</strong> theme gallery layout.</li>
+</ol>
+
+<h3>Part 3: Professional Formatting &amp; Page Layout (20 pts)</h3>
+<ol>
+<li>Apply the <strong>Currency format ($#,##0.00)</strong> to all revenue/expense numbers.</li>
+<li>Apply a <strong>Total Cell Style</strong> (single top border, double bottom border) to row 10 and row 22.</li>
+<li>Set the print orientation to <strong>Landscape</strong>, configured to <strong>Fit All Columns on One Page</strong>.</li>
+</ol>
+
+<h2>Submission Criteria</h2>
+<p>Save your completed file as <code>LastName_FirstName_ISMG2050_HW01.xlsx</code> and submit via the Canvas assignment drop box by the deadline.</p>
+
+<h2>AI Collaboration Disclosure</h2>
+<p>If you consulted AI (e.g., ChatGPT, Claude, Gemini) to deconstruct function syntax or debug formula errors, include an inline note in cell A25:</p>
+<blockquote>
+<em>AI Disclosure: Used [Tool Name] to [debug / explain formula / brainstorm formatting].</em>
+</blockquote>
+</article>
+
+<footer class="page-footer" style="margin-top: 3rem; border-top: 1px solid #333; padding-top: 1rem;">
+Bitsmasher Lab &copy; 2026 — <a href="/teaching/ISMG-2050/">ISMG 2050 Hub</a>
+</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Time</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Time section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Time_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/time.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Time</h1>
+<span class="meta"><em>Pages 57-59 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Network Time (NTP)</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">Overview</h3>
+<p class="latex-para">Time synchronization is one of the most critical and least-visible aspects of network management. All lab services -- Kerberos authentication, TLS certificate validation, log correlation, distributed databases, and filesystem consistency -- depend on time accuracy. The lab uses a two-tier NTP architecture:</p>
+<ol class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Stratum 1 source&lt;/strong&gt;: GPS-referenced clock on the \texttt{time} host (10.10.12.2) provides the lab's authoritative time reference.</li>
+<li class="latex-list-item">&lt;strong&gt;Stratum 2+ clients&lt;/strong&gt;: All other hosts sync to \texttt{time.lab.bitsmasher.net}.</li>
+</ol>
+<h3 class="latex-subsection">The Time Host</h3>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Hostname&lt;/strong&gt;: time.lab.bitsmasher.net (alias: time)</li>
+<li class="latex-list-item">&lt;strong&gt;IP&lt;/strong&gt;: 10.10.12.2</li>
+<li class="latex-list-item">&lt;strong&gt;User&lt;/strong&gt;: openclaw</li>
+<li class="latex-list-item">&lt;strong&gt;OS&lt;/strong&gt;: Debian 12 bookworm</li>
+<li class="latex-list-item">&lt;strong&gt;Role&lt;/strong&gt;: Stratum-1 NTP server / reference clock source for the lab</li>
+</ul>
+<p class="latex-para">The time host has a GPS unit connected (serial/tty interface) providing UTC discipline. Its ntpd is configured via ntpsec to serve the lab subnet and use the GPS PPS signal as the primary time reference.</p>
+<h3 class="latex-subsection">Configuration on Client Hosts</h3>
+<p class="latex-para">The NTP configuration is managed by Ansible via the ntp} role in the lab-franklin collection. Here is what a typical client configuration looks like (as seen on stargate):</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para"># /etc/ntpsec/ntp.conf -- managed by Ansible</p>
+<p class="latex-para">driftfile /var/lib/ntp/ntp.drift</p>
+<p class="latex-para">leapfile /usr/share/zoneinfo/leap-seconds.list</p>
+<p class="latex-para">statsdir /var/log/ntpstats/</p>
+<p class="latex-para">statistics loopstats peerstats clockstats</p>
+<p class="latex-para">filegen loopstats file loopstats type day enable</p>
+<p class="latex-para">filegen peerstats file peerstats type day enable</p>
+<p class="latex-para">filegen clockstats file clockstats type day enable</p>
+<p class="latex-para">server time.lab.bitsmasher.net</p>
+<p class="latex-para">restrict 10.10.8.0/21</p>
+<p class="latex-para">restrict -4 default</p>
+<pre class="latex-code"><code>\end{lstlisting}</code></pre>
+<p class="latex-para">Key points:</p>
+<ul class="latex-list">
+<li class="latex-list-item">\texttt{driftfile}: Tracks oscillator drift between NTP restarts. Critical for stability on hosts that reboot frequently (Jetson devices, test VMs).</li>
+<li class="latex-list-item">\texttt{statistics}: Logs loop/peer/clock stats daily in /var/log/ntpstats/. Use these to verify sync health.</li>
+<li class="latex-list-item">\texttt{server}: Points to the lab's time host -- never pool.ntp.org for infrastructure hosts that need deterministic time sources.</li>
+<li class="latex-list-item">\texttt{restrict}:</li>
+<ul class="latex-list">
+<li class="latex-list-item">\texttt{10.10.8.0/21} grants query access to the main lab subnet (used by other internal clients or monitoring tools).</li>
+<li class="latex-list-item">\texttt{-4 default} blocks all IPv4 queries not explicitly allowed, providing a deny-by-default posture.</li>
+</ul>
+</ul>
+<h3 class="latex-subsection">Installation and Setup Steps</h3>
+<p class="latex-para">For a new host that needs NTP:</p>
+<ol class="latex-list">
+<li class="latex-list-item">Install ntpsec packages:</li>
+<pre class="latex-code"><code>    \begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">apt update &amp;&amp; apt install -y ntpsec</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<li class="latex-list-item">Configure /etc/ntpsec/ntp.conf (either manually or via Ansible ntp role):</li>
+<ol class="latex-list">
+<li class="latex-list-item">Set \texttt{server time.lab.bitsmasher.net} as the upstream reference.</li>
+<li class="latex-list-item">Set timezone: \texttt{timedatectl set-timezone America/Denver} (or appropriate TZ).</li>
+<li class="latex-list-item">Create the log directory if it doesn't exist: \texttt{mkdir -p /var/log/ntpstats}.</li>
+</ol>
+<li class="latex-list-item">Start and enable the service:</li>
+<pre class="latex-code"><code>    \begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">systemctl enable --now ntpsec.service</p>
+<p class="latex-para">timedatectl  # verify &quot;System clock synchronized: yes&quot;</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+</ol>
+<h3 class="latex-subsection">Verification on Clients</h3>
+<p class="latex-para">Check synchronization status with these commands:</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para"># Check if the system clock is synchronized</p>
+<p class="latex-para">timedatectl | grep &quot;System clock synchronized&quot;</p>
+<p class="latex-para"># Check NTP peer status (if ntpq is available)</p>
+<p class="latex-para">ntpq -p</p>
+<p class="latex-para"># View recent sync logs</p>
+<p class="latex-para">journalctl -u ntpsec --since today</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<h3 class="latex-subsection">Notes for Deployment</h3>
+<ul class="latex-list">
+<li class="latex-list-item">The Ansible \texttt{ntp} role handles all of the above automatically across lab hosts. It installs packages, copies configuration, sets timezone, and creates log directories.</li>
+<li class="latex-list-item">For Jetson devices (node900--node903), drift compensation is especially important -- they boot frequently and have less stable oscillators than desktop/server hardware.</li>
+<li class="latex-list-item">The GPS unit on the time host should be verified periodically: confirm it's locking to satellites, not using its internal oscillator as a holdover source. Check this by running \texttt{ntptime} on the time host itself.</li>
+<li class="latex-list-item">If the time host goes offline and all clients lose sync beyond their maximum correction threshold (typically 128 seconds), systems may need manual time correction before Kerberos/TLS will function again.</li>
+</ul>
+
+<nav class="footer-nav">
+ <div><a href="terraform-infra.html" class="nav-prev">&#8592; Previous: Terraform Infra </a>  <a href="troubleshooting.html" class="nav-next">Next: Troubleshooting &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

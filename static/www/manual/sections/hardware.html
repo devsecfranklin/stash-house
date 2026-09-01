@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hardware</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Hardware section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Hardware_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/hardware.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Hardware</h1>
+<span class="meta"><em>Pages 20-22 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Hardware Inventory</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">Desk Setup</h3>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Franklin's desk&lt;/strong&gt;: chonk (10.10.8.60) -- GAMING Windows PC, primary workstation, Gateway host running OpenClaw</li>
+<li class="latex-list-item">&lt;strong&gt;Sly's desk&lt;/strong&gt;: GAMING Windows computer (Twitch: &lt;a href=&quot;https://www.twitch.tv/s1y_b0rg&quot; class=&quot;latex-url&quot;&gt;https://www.twitch.tv/s1y_b0rg&lt;/a&gt;) -- at main office near music.lan monitor</li>
+<li class="latex-list-item">Both sit at the main office where music.lan's monitor is displayed</li>
+</ul>
+<h3 class="latex-subsection">Server and Compute Hosts</h3>
+<p class="latex-para">*{Core Infrastructure (Debian 12)}</p>
+<p class="latex-para">tabularx}{}{l l l X}</p>
+<p class="latex-para">&lt;strong&gt;Host&lt;/strong&gt; &amp; &lt;strong&gt;IP&lt;/strong&gt; &amp; &lt;strong&gt;User&lt;/strong&gt; &amp; &lt;strong&gt;Role&lt;/strong&gt; \\</p>
+<hr class="latex-hline">
+<p class="latex-para">chonk &amp; 10.10.8.60 &amp; franklin/openclaw &amp; Gateway host, primary workstation + inference \\</p>
+<p class="latex-para">stargate &amp; 10.10.16.66 &amp; openclaw &amp; Ansible workspace, build host, DNS master (node3), NFS server \\</p>
+<p class="latex-para">skynet &amp; 10.10.16.10 &amp; openclaw/franklin &amp; Minecraft server, IP-direct login \\</p>
+<p class="latex-para">time &amp; 10.10.12.2 &amp; openclaw/franklin &amp; Stratum-1 NTP server with GPS reference \\</p>
+<p class="latex-para">wonderland &amp; 178.62.60.55 &amp; franklin/openclaw &amp; Public cloud VM (Debian 12, 6.1 kernel), web host \\</p>
+<p class="latex-para">music.lan &amp; 192.168.86.38 &amp; root &amp; Desktop machine via skynet route \\</p>
+<p class="latex-para">node3 &amp; 10.10.12.3 &amp; openclaw &amp; &lt;strong&gt;Authoritative BIND9 DNS master&lt;/strong&gt; (post-server1 migration) \\</p>
+<hr class="latex-hline">
+<p class="latex-para">tabularx}</p>
+<p class="latex-para">*{Jetson Cluster ( 87 days uptime)}</p>
+<p class="latex-para">All Jetsons run Ubuntu 18.04 with ed25519 key auth (openclaw permanent, franklin has password 123} as fallback -- pending key-only migration):</p>
+<p class="latex-para">tabularx}{}{l l X}</p>
+<p class="latex-para">&lt;strong&gt;Host&lt;/strong&gt; &amp; &lt;strong&gt;IP&lt;/strong&gt; &amp; &lt;strong&gt;Status&lt;/strong&gt; \\</p>
+<hr class="latex-hline">
+<p class="latex-para">node900 &amp; 10.10.12.90 &amp; Online, key auth; home dir from stargate:/mnt/clusterfs2 \\</p>
+<p class="latex-para">node901 &amp; 10.10.12.91 &amp; Online, key auth; home dir from stargate:/mnt/clusterfs2 \\</p>
+<p class="latex-para">node903 &amp; 10.10.12.93 &amp; Online, key auth; home dir from stargate:/mnt/clusterfs2 \\</p>
+<p class="latex-para">node902 &amp; 10.10.12.92 &amp; Off / no route to host (likely powered down) \\</p>
+<hr class="latex-hline">
+<p class="latex-para">tabularx}</p>
+<p class="latex-para">&lt;strong&gt;NFS note&lt;/strong&gt;: Jetson home directories are NFS-mounted from stargate:/mnt/clusterfs2. StrictModes permissions apply (home 0750, .ssh 0700, authorized\_keys 0600).</p>
+<p class="latex-para">*{KDC and Directory Services}</p>
+<p class="latex-para">tabularx}{}{l l X}</p>
+<p class="latex-para">&lt;strong&gt;Host&lt;/strong&gt; &amp; &lt;strong&gt;IP&lt;/strong&gt; &amp; &lt;strong&gt;Status&lt;/strong&gt; \\</p>
+<hr class="latex-hline">
+<p class="latex-para">odroid-c1 / kdc1 &amp; 10.10.12.254 &amp; Online (~242d uptime), root key auth, KDC for lab.bitsmasher.net Kerberos realm \\</p>
+<p class="latex-para">ldap/bbb1 &amp; 10.10.13.1 &amp; SSH reachable as root; slapd failed Dec 2025 (TLS cert issue) \\</p>
+<hr class="latex-hline">
+<p class="latex-para">tabularx}</p>
+<h3 class="latex-subsection">Historical / Decommissioned Hosts</h3>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;server1 (10.10.12.12)&lt;/strong&gt;: Former DNS master -- decommissioned August 2026; role replaced by node3</li>
+<li class="latex-list-item">&lt;strong&gt;snowy&lt;/strong&gt;: Hard disk physically removed; /mnt/snowy now just a raw mounted drive (not SSH-accessible)</li>
+<li class="latex-list-item">&lt;strong&gt;blowfish&lt;/strong&gt;: Previously at 10.10.12.15, reassigned to 10.10.14.85. Key not authorized yet -- unreachable from chonk but port 22 is open. Expected role: database host with OpenBSD</li>
+<li class="latex-list-item">&lt;strong&gt;node902&lt;/strong&gt;: Powered off; no route to host from any known peer</li>
+</ul>
+<h3 class="latex-subsection">Planned Hardware Expansion</h3>
+<ul class="latex-list">
+<li class="latex-list-item">blowfish as the primary database server (OpenBSD planned)</li>
+<li class="latex-list-item">Full ed25519 key rollout for node900--node903 to remove password fallback</li>
+<li class="latex-list-item">k3s\_server and k3s\_agent roles for Kubernetes across node infrastructure</li>
+</ul>
+
+<nav class="footer-nav">
+ <div><a href="dns.html" class="nav-prev">&#8592; Previous: Dns </a>  <a href="history.html" class="nav-next">Next: History &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+\section{Network Infrastructure}
+
+\subsection{Addressing Scheme}
+
+The lab uses private IPv4 addressing across multiple subnets, organized by function:
+
+\begin{tabularx}{\textwidth}{l l X}
+\textbf{Subnet} & \textbf{Allocation} & \textbf{Purpose} \\
+\hline
+10.10.8.0/21 & chonk, chonk-wifi, music.lan (via skynet) & Main office / desk area\\
+10.10.12.0/& time, node90x, odroid-c1, blowfish, ns1 & Core infrastructure\\
+10.10.13.0/ & ldap/bbb1 & Directory services (moved to working hosts)\\
+10.10.14.0/ & blowfish (reassigned) & New allocation for blowfish\\
+10.10.15.0/ & femputer & Guest / temporary hosts\\
+10.10.16.0/& stargate, skynet, edge-t & Lab backbone / staging
+\end{tabularx}
+
+Note: The full subnet masks vary by role and DHCP scope configuration on the Dream Machine (DHCP server).
+
+\subsection{DHCP}
+
+The \texttt{dhcp} Ansible role manages the DHCP server configuration stored at \texttt{roles/dhcp/files/dhcpd.conf}. Key reserved hosts include:
+
+\begin{itemize}
+    \item \textbf{chonk}: 10.10.8.60, MAC fc:9d:05:01:27:02 -- Franklin's desk
+    \item \textbf{chonk-wifi}: 10.10.8.61 -- wireless client
+    \item \textbf{chonk-ten-gig-1}: 10.10.8.?? -- dedicated ten-gig link
+    \item \textbf{blowfish}: 10.10.8.15 / 10.10.12.15, MAC 98:b7:85:21:ad:77 -- database host
+    \item \textbf{femputer}: 10.10.15.1, MAC d8:bb:c1:af:21:17 -- temporary/guest
+\end{itemize}
+
+\subsection{DNS}
+
+The DNS infrastructure is managed by the \texttt{dns} Ansible role (BIND/named). Zones maintained include:
+\begin{itemize}
+    \item Forward zone: db.home.lab
+    \item Reverse zones for each subnet
+    \item A records and PTR records for all lab hosts
+\end{itemize}
+
+DNS role molecule testing confirms BIND packages install correctly and named.conf.options are written. The DNS server (ns1) has been offline during recent audits, which explains why many hosts in the 10.10.x.0/24 range cannot resolve -- ns1 is a single point of failure for lab DNS resolution.
+
+\subsection{Firewall and Access Control}
+
+\begin{itemize}
+    \item The Dream Machine provides built-in DHCP and handles basic routing between subnets
+    \item odroid-c1 serves as the KDC and likely has pf firewall rules managing cross-subnet Kerberos traffic
+    \item OpenBSD hosts (blowfish planned) use pf for host-level firewalls
+    \item stargate has configured SSH access from chonk via openclaw key pair
+\end{itemize}
+
+\subsection{Physical Topology}
+
+The lab spans multiple physical locations and subnets:
+\begin{itemize}
+    \item Main office where Franklin and Sly have their desks monitors (music.lan)
+    \item Server racks hosting core infrastructure (time, odroid-c1/KDC)
+    \item Jetson cluster (node900--node903) for GPU compute
+    \item Public cloud (wonderland/178.62.60.55) for external-facing services
+\end{itemize}
+
+Routing between the 192.168.86.x subnet (music) and the rest of the lab requires hopping through skynet due to the non-standard routing configuration.

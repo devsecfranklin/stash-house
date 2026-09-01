@@ -1,0 +1,18 @@
+{
+  "tag": "networking",
+  "count": 1,
+  "canonical": "https://www.bitsmasher.net/research/tags/networking.json",
+  "posts": [
+    {
+      "id": "2026-08-03-infrastructure-deep-dive",
+      "title": ">Infrastructure Deep Dive: Cluster Networking",
+      "date": "2026-08-03",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-03-infrastructure-deep-dive.html",
+      "summary": "Analysis of internal routing, MTU sizing, and DNS discovery across the private lab subnet.",
+      "tags": [
+        "networking",
+        "infrastructure"
+      ]
+    }
+  ]
+}

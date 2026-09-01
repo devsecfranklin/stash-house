@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice 2: Functions, AutoFill, Formatting & Sheet Management — ISMG 2050</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<style>
+ .header-meta { color: #9e9e9e; font-size: 0.9rem; }
+</style>
+</head>
+<body class="w3-black">
+<nav class="w3-container w3-margin-top" id="site-nav"></nav>
+<script src="/js/nav.js" defer></script>
+
+<main class="w3-container research-content" style="max-width: 860px; margin: 2rem auto; padding: 0 1.5rem;">
+<p><a href="/teaching/ISMG-2050/">← Back to ISMG-2050 Course Hub</a></p>
+
+<header class="page-header">
+<h1 class="page-title">Practice 2: Functions, AutoFill, Formatting & Sheet Management</h1>
+<p class="header-meta">Builds upon Practice 1 completed workbook — 100 Points</p>
+</header>
+
+<article class="body-content">
+
+<div class="info-block" style="background:#1a1a1a; border-left:4px solid #CFB87C; padding:1rem; margin-bottom:1.5rem;">
+<h3 style="margin-top:0; color:#CFB87C;">File Requirements</h3>
+<p><strong>Input:</strong> Your completed <code>[your initials]Practice01.xlsx</code> from Practice 1 (Enable Editing if Protected View opens).</p>
+<p><strong>Output:</strong> Save the working file as <code>[your initials]Practice02.xlsx</code>.</p>
+</div>
+
+<h2>Step-by-Step Instructions</h2>
+
+<h3>Step 1: Open and Save As</h3>
+<ol>
+<li>Open <code>[your initials]Practice01.xlsx</code>. Click <strong>Enable Editing</strong> if Protected View opens.</li>
+<li><strong>Save As</strong> → <code>[your initials]Practice02.xlsx</code>.</li>
+<li>Click <strong>Save</strong>.</li>
+</ol>
+
+<h3>Step 2: Calculate Totals Using SUM</h3>
+<ol>
+<li>Select cell <strong>H5</strong>, click the <strong>AutoSum</strong> button (Home tab → Editing group). Press Enter to accept <code>=SUM(D5:G5)</code>. Result is <code>31</code>.</li>
+<li>Type <strong>Total</strong> in cell <strong>H4</strong> and press Enter. Center alignment applies automatically.</li>
+<li>Select cell <strong>D19</strong>, click <strong>AutoSum</strong> → accepts <code>=SUM(D5:D18)</code>. Result is <code>63</code>.</li>
+</ol>
+
+<h3>Step 3: Calculate Average Rental Days by Month</h3>
+<ol>
+<li>Select cell <strong>D20</strong>, click the AutoSum dropdown → <strong>Average</strong>.</li>
+<li>In the formula bar, change the range from <code>D5:D19</code> to <code>D5:D18</code> (exclude the total row).</li>
+<li>Press Enter. Result is <code>4.5</code>.</li>
+</ol>
+
+<h3>Step 4: Copy Functions Using the Fill Handle</h3>
+<ol>
+<li>Select <strong>H5</strong>, double-click the Fill Handle (lower-right square). Formula fills down through <strong>H19</strong>.</li>
+<li>Select range <strong>D19:D20</strong>, drag Fill Handle across to column H (<strong>D19:H20</strong>).</li>
+<li>Verify relative references: inspect the formula bar for <strong>E19</strong> (SUM adjusted) and <strong>E20</strong> (AVERAGE adjusted).</li>
+</ol>
+
+<h3>Step 5: Apply Number and Label Formatting</h3>
+<ol>
+<li>Select <strong>D20:H20</strong>, set Number Format to <strong>Number</strong> (2 decimal places).</li>
+<li>Select header range <strong>A4:H4</strong> → <strong>Bold</strong>.</li>
+<li>Select <strong>A1:A2</strong>, increase Font Size to <strong>16 pt</strong>.</li>
+<li>Edit cell <strong>A2</strong> text to <em>"First Period"</em> (replacing "First Quarter").</li>
+</ol>
+
+<h3>Step 6: Adjust Column Widths</h3>
+<ol>
+<li>Drag across column headings <strong>B</strong> and <strong>C</strong>. Double-click the boundary between C and D to AutoFit.</li>
+<li>Drag across columns <strong>D through H</strong>, then click <strong>Format</strong> (Home → Cells) → <strong>Column Width...</strong></li>
+<li>Type <strong>7</strong> and confirm. All selected columns set to width 7.</li>
+</ol>
+
+<h3>Step 7: Adjust Row Heights</h3>
+<ol>
+<li>Select row heading <strong>4</strong>, hold Ctrl, select rows <strong>19</strong> and <strong>20</strong>.</li>
+<li>Right-click → <strong>Row Height...</strong> → set to <strong>24</strong>.</li>
+</ol>
+
+<h3>Step 8: Center Labels Across Selection</h3>
+<ol>
+<li>Select range <strong>A1:H2</strong>, open Alignment Settings (Home → Alignment launcher).</li>
+<li>Set Horizontal alignment to <strong>Center Across Selection</strong>.</li>
+<li>Confirm.</li>
+</ol>
+
+<h3>Step 9: Insert a Record and Enter Data</h3>
+<ol>
+<li>Right-click row heading <strong>13</strong> → <strong>Insert</strong>. Existing rows shift down.</li>
+<li>Enter property record on row 13:<ul>
+<li><strong>A13:</strong> <em>"Our Weekend Cottage"</em></li>
+<li><strong>B13:</strong> <em>"Walker"</em></li>
+<li><strong>C13:</strong> Pick from dropdown → select <em>MN</em></li>
+<li><strong>D–G13:</strong> Enter monthly rental values (Tab-separated)</li>
+</ul></li>
+<li>Verify cell <strong>H13</strong> auto-evaluates the total via copied relative formulas.</li>
+</ol>
+
+<h3>Step 10: Apply Borders, Fill Colors, and Alignment</h3>
+<ol>
+<li>Select <strong>A4:H21</strong>, set <strong>All Borders</strong>.</li>
+<li>Select header <strong>A4:H4</strong>, apply Fill Color → <em>Blue, Accent 1, Lighter 80%</em> (Column 5, Row 2).</li>
+<li>With <strong>A4</strong> selected, click <strong>Format Painter</strong>, then drag across <strong>A20:H21</strong>.</li>
+<li>Select <strong>A20:A21</strong> → Align Right.</li>
+<li>Select <strong>D20:H21</strong> → Align Right.</li>
+<li>Select <strong>D21:H21</strong>, enforce consistent two-decimal formatting via Increase/Decrease Decimal buttons.</li>
+</ol>
+
+<h3>Step 11: Configure Sheet Name and Tab Color</h3>
+<ol>
+<li>Double-click the <strong>Sheet1</strong> tab → rename to <em>"Rental Days"</em>.</li>
+<li>Right-click "Rental Days" tab → Tab Color → <em>Blue, Accent 1</em> (Column 5, Row 1).</li>
+<li>Select cell <strong>A1</strong>.</li>
+</ol>
+
+<h3>Step 12: Duplicate and Clear Data for Next Period</h3>
+<ol>
+<li>Right-click "Rental Days" tab → <strong>Move or Copy...</strong><ul>
+<li>Before sheet: <em>(move to end)</em></li>
+<li>Check <strong>Create a copy</strong></li>
+<li>Confirm</li>
+</ul></li>
+<li>Rename the duplicated tab to <em>"Next Period"</em>.</li>
+<li>Right-click "Next Period" tab → Tab Color → <em>Gold, Accent 4</em> (Column 8, Row 1).</li>
+<li>Select <strong>D5:G19</strong> on the new sheet → press <strong>Delete</strong>. Dependent formulas will display <code>#DIV/0!</code> or <code>0</em>.</li>
+<li>Update styling accents on "Next Period":<ul>
+<li><strong>A4:H4</strong> → Fill Color: <em>Gold, Accent 4, Lighter 80%</em></li>
+<li><strong>A20:H21</strong> → Fill Color: <em>Gold, Accent 4, Lighter 80%</em></li>
+</ul></li>
+<li>Press <strong>Ctrl+Home</strong> to reset view.</li>
+</ol>
+
+<h3>Step 13: Finalize and Save</h3>
+<ol>
+<li>Switch back to the <strong>"Rental Days"</strong> sheet tab, press Ctrl+Home.</li>
+<li>Save workbook as <code>[your initials]Practice02.xlsx</code>.</li>
+<li>Submit via Canvas assignment portal.</li>
+</ol>
+
+<div class="info-block" style="background:#1a1a1a; border-left:4px solid #CFB87C; padding:1rem; margin-top:2rem;">
+<h3 style="margin-top:0; color:#CFB87C;">Key Skills Practiced</h3>
+<ul>
+<li><code>SUM</code> and <code>AVERAGE</code> via AutoSum tool</li>
+<li>Fill Handle formula replication (relative references)</li>
+<li>Column width AutoFit vs. manual sizing</li>
+<li>Row height adjustment (multi-row selection)</li>
+<li>Center Across Selection (vs. Center alignment)</li>
+<li>Sheet duplication, tab naming, and tab color assignment</li>
+<li><code>#DIV/0!</code> error behavior with empty cell references</li>
+<li>Borders, fill colors, Format Painter, and numeric formatting</li>
+</ul>
+</div>
+
+</article>
+
+<footer class="page-footer" style="margin-top: 3rem; border-top: 1px solid #333; padding-top: 1rem;">
+Bitsmasher Lab &copy; 2026 — <a href="/teaching/ISMG-2050/">ISMG 2050 Hub</a>
+</footer>
+</main>
+</body>
+</html>

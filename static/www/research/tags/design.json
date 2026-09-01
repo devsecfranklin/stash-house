@@ -1,0 +1,18 @@
+{
+  "tag": "design",
+  "count": 1,
+  "canonical": "https://www.bitsmasher.net/research/tags/design.json",
+  "posts": [
+    {
+      "id": "2026-08-13-blog-restructuring-and-lab-notes",
+      "title": ">Blog Restructuring & Lab Notes",
+      "date": "2026-08-13",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-13-blog-restructuring-and-lab-notes.html",
+      "summary": "Standardizing web layout templates, machine-readable JSON feeds, and static asset directory structures.",
+      "tags": [
+        "static-site",
+        "design"
+      ]
+    }
+  ]
+}

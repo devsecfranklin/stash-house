@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kerberos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Kerberos section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Kerberos_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/kerberos.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Kerberos</h1>
+<span class="meta"><em>Pages 26-28 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Kerberos Authentication</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">Realm Configuration</h3>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;Realm name&lt;/strong&gt;: lab.bitsmasher.net</li>
+<li class="latex-list-item">&lt;strong&gt;KDC host&lt;/strong&gt;: odroid-c1.lab.bitsmasher.net (10.10.12.254)</li>
+<li class="latex-list-item">&lt;strong&gt;KDC software&lt;/strong&gt;: MIT Kerberos KDC running on odroid-c1</li>
+<li class="latex-list-item">&lt;strong&gt;Uptime&lt;/strong&gt;: ~242 days (stable, rarely rebooted)</li>
+</ul>
+<h3 class="latex-subsection">Access and Key Management</h3>
+<p class="latex-para">The KDC only has SSH key auth configured for the root} user. The franklin} user has been rejected by the KDC's SSH configuration -- direct root access is required for any management tasks.</p>
+<p class="latex-para">Key file: /.ssh/id\_ed25519\_openclaw} (the standard openclaw key).</p>
+<h3 class="latex-subsection">Principal Conventions</h3>
+<p class="latex-para">Kerberos principals in the lab.bitsmasher.net realm should follow these conventions:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Service principals: \texttt{service/FQDN@lab.BITSMASHER.NET}</li>
+<li class="latex-list-item">User principals: \texttt{username@lab.BITSMASHER.NET}</li>
+<li class="latex-list-item">Host principals: \texttt{host/FQDN@lab.BITSMASHER.NET}</li>
+</ul>
+<h3 class="latex-subsection">DNS/Kerberos Integration -- RFC Compliant (August 2026)</h3>
+<p class="latex-para">Kerberos relies on DNS SRV records for KDC discovery. The following records point directly to FQDN A records (no CNAME indirection):</p>
+<pre class="latex-code"><code>\begin{lstlisting}[style=mystyle]</code></pre>
+<p class="latex-para">_kerberos-adm._tcp.lab.bitsmasher.net IN SRV 0 100 749 kdc1.lab.bitsmasher.net.</p>
+<p class="latex-para">_kerberos._tcp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.</p>
+<p class="latex-para">_kerberos._udp.lab.bitsmasher.net     IN SRV 0 0 88  kdc1.lab.bitsmasher.net.</p>
+<p class="latex-para">_kdc._tcp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.</p>
+<p class="latex-para">_kdc._udp.lab.bitsmasher.net          IN SRV 0 0 88  kdc1.lab.bitsmasher.net.</p>
+<pre class="latex-code"><code>    \end{lstlisting}</code></pre>
+<p class="latex-para">The _kerberos-adm.\_tcp} record now points directly to the A record for kdc1.lab.bitsmasher.net}, per RFC 2782 compliance.</p>
+<p class="latex-para">These records are authoritative on node3 (10.10.12.3), the new DNS master following the server1 decommissioning. If DNS is unavailable, clients fall back to manual kdc = kdc1.lab.bitsmasher.net} in /etc/krb5.conf}.</p>
+<h3 class="latex-subsection">Keytab Management</h3>
+<p class="latex-para">Keytabs for service principals should be:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Generated on the KDC host (odroid-c1) using \texttt{kadmin.local} or \texttt{kadmin -q}</li>
+<li class="latex-list-item">Transferred securely to target hosts (via scp with SSH keys)</li>
+<li class="latex-list-item">Set to mode 600 and owned by the appropriate service user</li>
+</ul>
+<p class="latex-para">&lt;strong&gt;Note&lt;/strong&gt;: Kerberos keytabs have not been deployed across the infrastructure. NFS exports with sec=krb5i} are currently non-functional pending keytab deployment. The Ansible ssh role handles the StrictModes requirements for SSH-based keytab transfer.</p>
+
+<nav class="footer-nav">
+ <div><a href="history.html" class="nav-prev">&#8592; Previous: History </a>  <a href="kubernetes.html" class="nav-next">Next: Kubernetes &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

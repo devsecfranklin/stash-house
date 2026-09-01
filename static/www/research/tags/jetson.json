@@ -1,0 +1,38 @@
+{
+  "tag": "jetson",
+  "count": 2,
+  "canonical": "https://www.bitsmasher.net/research/tags/jetson.json",
+  "posts": [
+    {
+      "id": "2026-08-28-ansible-collection-hardening",
+      "title": "Ansible Collection Hardening & Restructuring: Config Cleanup, DNS Overhaul, and the Road to Samba AD",
+      "date": "2026-08-28",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-28-ansible-collection-hardening.html",
+      "summary": "Ansible lab collection received focused updates: config bloat removed, DNS role restructured with Jinja2 templates, Jetson-Nano expanded. Three planning docs for Samba AD migration and 18-chapter lab manual.",
+      "tags": [
+        "infrastructure",
+        "automation",
+        "ansible",
+        "security",
+        "samba",
+        "dns",
+        "jetson"
+      ]
+    },
+    {
+      "id": "2026-08-20-jetson-tegra-gpu-inaccessibility",
+      "title": "Tegra on the Edge: Why node90x Jetson Nanos Can't Talk to Their Own GPUs",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-jetson-tegra-gpu-inaccessibility.html",
+      "summary": "Three Jetson Nano 2GB Developer Kits with Tegra T210 SoCs have inaccessible integrated GPUs \u2014 no nvidia-smi, no OpenCL, no CUDA runtime. Root cause analysis and remediation.",
+      "tags": [
+        "jetson",
+        "tegra",
+        "gpu",
+        "edge-computing",
+        "hardware",
+        "infrastructure"
+      ]
+    }
+  ]
+}

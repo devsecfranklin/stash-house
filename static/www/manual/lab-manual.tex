@@ -1,0 +1,179 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_US
+% !TeX root = lab-manual.tex
+% !TeX TXS-program:compile = txs:///xelatex/[--shell-escape]
+
+\input{_header}
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Introduction}
+
+\section{Purpose and Scope}
+This manual documents the lab.bitsmasher.net infrastructure -- network, hardware, services, and procedures. It is intended as a reference for current operations and a foundation for onboarding new administrators.
+
+% \input{sections/history}
+% (historical content kept as legacy; see individual sections)
+
+\chapter{Hardware Inventory}
+
+\section{Desk Setup}
+Franklin's desk hosts chonk, the primary gateway workstation. Sly's desk hosts a GAMING Windows PC at the main office near music.lan's monitor. Both have access to all lab infrastructure.
+
+% \input{sections/hardware}
+\input{sections/hardware}
+
+\chapter{Network Infrastructure}
+
+\section{Addressing and Subnets}
+The lab spans multiple private subnets organized by function, from the main office (10.10.8.0/21) to the backbone (10.10.16.0/) and specialized service zones.
+
+% \input{sections/network}
+\input{sections/network}
+
+\section{DNS}
+BIND on ns1 provides authoritative DNS for the lab, with forward and reverse zones plus Kerberos SRV records. Currently offline -- see Disaster Recovery for recovery procedures.
+
+% \input{sections/dns}
+\input{sections/dns}
+
+\chapter{Core Services}
+
+\section{Network Time (NTP)}
+A two-tier NTP architecture provides time synchronization from the Stratum-1 GPS-referenced time host to all lab clients.
+
+% \input{sections/time}
+\input{sections/time}
+
+\section{Kerberos Authentication}
+The KDC on odroid-c1 runs MIT Kerberos for the lab.bitsmasher.net realm, managing authentication for all services.
+
+% \input{sections/kerberos}
+\input{sections/kerberos}
+
+\section{LDAP Directory Services}
+OpenLDAP (slapd) on bbb1 provides directory-based identity management. Service has been offline since December 2025 due to a TLS certificate issue.
+
+% \input{sections/ldap}
+\input{sections/ldap}
+
+\chapter{Security}
+
+\section{Authentication and Access Control}
+
+SSH key management, password policy, and user accounts define access to the lab infrastructure. All automation hosts share a common ed25519 key pair for the openclaw user. The primary admin (franklin) has sudo NOPASSWD on skynet; root is restricted to KDC, ldap, and music host only.
+
+\section{Network Security}
+
+Subnet segmentation provides implicit isolation across the lab. The ``prereq'' Ansible role handles firewall exceptions for K3s API ports on each host (6443, 2379--2381). Both UFW (Debian) and Firewalld (RedHat-family) are supported.
+
+\section{Certificate and TLS Management}
+
+The ``tls'' role manages certificate provisioning across the lab. The OpenLDAP server experienced a TLS failure in December 2025 due to an expired certificate -- this remains the primary ongoing TLS vulnerability.
+
+\section{Credential Management}
+
+Credentials use pass (password manager) with GPG encryption. The Stash House project manages encrypted credential backups synced via bare git repos. Sensitive Ansible variables are stored in ansible-vault files that should never be committed to version control.
+
+\section{Backup and Disaster Recovery}
+
+NFS-mounted clusterfs2 provides shared storage with redundant copies across hosts. DNS zones are version-controlled in BIND configuration files.
+
+Service availability:
+
+\begin{itemize}
+  \item \textbf{NTP stratum-1} (time.lab.bitsmasher.net) -- Online
+  \item \textbf{Kerberos KDC} (odroid-c1.lab.bitsmasher.net) -- Online, ~242 days uptime
+  \item \textbf{DNS BIND} (ns1.lab.bitsmasher.net) -- Offline since December 2025
+  \item \textbf{OpenLDAP} (ldap.lab.bitsmasher.net) -- Offline since December 2025
+  \item \textbf{Minecraft} (skynet.lab.bitsmasher.net) -- Online
+\end{itemize}
+
+Disaster recovery priority: NTP > DNS > Kerberos KDC > LDAP. Time sync failure cascades to all Kerberos authentication; DNS failure makes hosts unreachable by name.
+
+\section{Container and Kubernetes Security}
+
+The k3s cluster is hardened with version pinning (2.1.x), Containerd runtime with NVIDIA GPU support, TLS for all API communication (k3s default), and pod security policies via Kubernetes native admission controllers.
+
+\section{Automated Security Scanning}
+
+The .github directory contains these automated workflows: bandit.yml (Bandit Python security), tfsec-sarif.yml (Terraform IaC security), trivy.yaml + trivy-cb.yml (container/filesystem vulnerability scanning), bash\_check.yaml (GNU autotools build validation with ``make security''), and markdown.yml (markdownlint). All run on every pull request and main branch push.
+
+\chapter{Storage}
+
+\section{NFS Mounts and Backup}
+clusterfs2 provides shared NFS storage across hosts. Credential backups use GPG-encrypted pass entries synced via bare git repos (Stash House project).
+
+% \input{sections/storage}
+\input{sections/storage}
+
+\section{LFS Policy}
+Absolute rule: no git-lfs in any lab repository -- see the storage section for details on the incident that made this policy necessary.
+
+\chapter{Internal PyPI Repository}
+
+\section{Overview}
+An internal PyPI server provides Python packages to development machines without depending on external PyPI.org servers. Packages are stored on NFS-mounted storage and served via HTTP from the web document root.
+
+% \input{sections/pypi}
+\input{sections/pypi}
+
+\chapter{Container Orchestration}
+
+\section{k3s Cluster}
+k3s provides Kubernetes across the infrastructure with version pinning (2.1.x), containerd runtime, and NVIDIA Container Toolkit for GPU workloads.
+
+% \input{sections/kubernetes}
+\input{sections/kubernetes}
+
+\chapter{Playbook Automation}
+
+% \input{sections/ansible}
+\input{sections/ansible}
+
+\chapter{Additional Infrastructure}
+
+\section{Blowfish -- Database Host}
+blowfish is the planned database host (OpenBSD). Currently unreachable; SSH key not yet authorized.
+
+% \input{sections/database}
+\input{sections/database}
+
+\section{Minecraft Server}
+The Minecraft server runs on skynet, with world data stored on NFS and version-controlled via bare git repos.
+
+% \input{sections/minecraft}
+\input{sections/minecraft}
+
+\chapter{Disaster Recovery}
+
+% \input{sections/disaster-recovery}
+\input{sections/disaster-recovery}
+
+\chapter{Troubleshooting Guide}
+
+% \input{sections/troubleshooting}
+\input{sections/troubleshooting}
+
+\backmatter
+
+\chapter{Infrastructure Services}
+\input{sections/time.tex}
+\input{sections/storage.tex}
+
+\chapter{File Services: NFS}
+\section{What We Know About NFS}
+\input{sections/storage.tex}
+
+\section{How to Test the NFS Ansible Role}
+\input{sections/nfs-testing.tex}
+
+\chapter{Automation \& Tooling}
+\input{sections/ansible.tex}
+\input{sections/ansible-lint.tex}
+\input{sections/terraform-infra.tex}
+
+\end{document}

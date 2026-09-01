@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Storage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Storage section from the Bitsmasher Lab Operations Manual.">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Storage_ESC",
+  "url": "https://www.bitsmasher.net/manual/sections/storage.html",
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "TechArticle",
+    "headline": "Bitsmasher Lab Infrastructure Manual",
+    "url": "https://www.bitsmasher.net/manual/"
+  }
+}
+</script>
+<style>
+body{background:#1a1a2e;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.7;margin:0}
+.nav-bar{padding:.8rem 1rem;background:#16213e;border-bottom:1px solid #0f3460;display:flex;gap:1.5rem;flex-wrap:wrap}
+.nav-bar a{color:#53d8fb;text-decoration:none;font-size:.9rem}
+.nav-bar a:hover{text-decoration:underline}
+.container{max-width:800px;margin:0 auto;padding:2rem 1rem}
+.latex-section{color:#53d8fb;border-bottom:2px solid #0f3460;padding-bottom:.5rem;margin-top:2rem;font-size:1.6rem}
+.latex-subsection{color:#e94560;margin-top:1.5rem;font-size:1.3rem}
+.latex-subsubsection{color:#f0a500;margin-top:1rem;font-size:1.1rem}
+.latex-para{margin:.5rem 0}
+.latex-code{background:#0f3460;border-radius:4px;padding:1rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.85rem;margin:.5rem 0}
+.latex-list,.latex-list-item{margin:.5rem 0}
+.latex-hline{border:none;border-top:1px dashed #0f3460;margin:1rem 0}
+.latex-url{color:#53d8fb;text-decoration:underline}
+.footer-nav{margin-top:3rem;padding-top:1rem;border-top:1px solid #0f3460;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-nav a{color:#53d8fb;text-decoration:none;padding:.5rem 1rem;border:1px solid #0f3460;border-radius:4px;font-size:.85rem}
+.footer-nav a:hover{background:#0f3460;text-decoration:none}
+meta.meta{font-size:.85rem;color:#888;margin-bottom:1.5rem;display:block}
+dl.latex-description dt{font-weight:bold;color:#e94560;margin-top:.5rem}
+dl.latex-description dd{margin-left:1.5rem;margin-bottom:.5rem}
+h1{color:#53d8fb;font-size:2rem;margin:0 0 .5rem}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+ <a href="../index.html">&#8592; Back to Manual Index</a>
+ <a href="../lab-manual.pdf" target="_blank">&#128196; Download PDF</a>
+ <a href="../manual.md" target="_blank">&#12344; Raw Markdown</a>
+</nav>
+
+<div class="container">
+<h1>Storage</h1>
+<span class="meta"><em>Pages 51-53 of the Bitsmasher Lab Operations Manual (62 pages)</em></span>
+</div>
+<h2 class="latex-section">Storage Infrastructure</h2>
+<div class="latex-content">
+<h3 class="latex-subsection">Active Disk Topology (chonk -- August 2026)</h3>
+<p class="latex-para">All compiled documents and web artifacts target wonderland; chonk serves as local scratch space. Physical topology on chok:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;/mnt/backup1&lt;/strong&gt;: Source directory for Ansible repos, workspace code, and build artifacts</li>
+<li class="latex-list-item">&lt;strong&gt;/mnt/clusterfs&lt;/strong&gt;: Scratch disk for temporary compilation, LaTeX builds, and intermediate files</li>
+<li class="latex-list-item">&lt;strong&gt;/mnt/snowy&lt;/strong&gt;: Bulk storage -- formerly a full NFS share; hard disk physically removed, now mounted as raw drive only</li>
+</ul>
+<p class="latex-para">The following mount points have been purged:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;/mnt/storage1&lt;/strong&gt;: Completely removed across all roles and /etc/exports on all hosts</li>
+<li class="latex-list-item">Legacy /mnt/storage2, /mnt/storage3: Purged from inventory references</li>
+</ul>
+<h3 class="latex-subsection">NFS Mounts -- Current State</h3>
+<p class="latex-para">The lab relies on NFS for shared storage. Active mounts as of August 2026:</p>
+<ul class="latex-list">
+<li class="latex-list-item">&lt;strong&gt;stargate:/mnt/clusterfs2&lt;/strong&gt;: Primary cluster workspace; mounted on stargate and accessible from wonderland via SSH-sync pipelines</li>
+<li class="latex-list-item">&lt;strong&gt;Jetson home directories&lt;/strong&gt;: Shared from stargate via \texttt{stargate:/mnt/clusterfs2} -- provides consistent \textasciitilde/home for node900--node903</li>
+</ul>
+<h3 class="latex-subsection">StrictModes and Permission Requirements</h3>
+<p class="latex-para">OpenSSH StrictModes enforces strict permission checks on home directories. Required permissions:</p>
+<ul class="latex-list">
+<li class="latex-list-item">Home directory: \texttt{0750} (rwxr-x---)</li>
+<li class="latex-list-item">\texttt{\textasciitilde/.ssh}: \texttt{0700} (rwx------)</li>
+<li class="latex-list-item">\texttt{\textasciitilde/.ssh/authorized\_keys}: \texttt{0600} (rw-------)</li>
+</ul>
+<p class="latex-para">All Jetson nodes must comply with these permissions or SSH authentication fails silently. NFS-mounted homes require uid/gid consistency between stargate and each Jetson host.</p>
+<h3 class="latex-subsection">Snapshot and Backup Strategy</h3>
+<p class="latex-para">The lab uses bare git repos for version control and backup:</p>
+<ul class="latex-list">
+<li class="latex-list-item">GPG-encrypted repositories synced across hosts for credential protection (Stash House project)</li>
+<li class="latex-list-item">Pass-based password store with GPG backend</li>
+<li class="latex-list-item">No LFS -- ABSOLUTE RULE: do not use git-lfs anywhere. Microsoft once held Minecraft chunk files hostage when a repo hit the 10GB GitHub limit with LFS enabled.</li>
+</ul>
+<h3 class="latex-subsection">LFS Policy Reminder</h3>
+<p class="latex-para">&lt;strong&gt;ABSOLUTE RULE: Do NOT use git-lfs anywhere in any lab-franklin repository.&lt;/strong&gt;</p>
+<p class="latex-para">This applies across all repos: training-ai, minecraft, Ansible collections, everything. The incident with Minecraft chunk files being held hostage by GitHub when the repo hit 10GB with LFS is a real precedent -- never risk it.</p>
+
+<nav class="footer-nav">
+ <div><a href="security.html" class="nav-prev">&#8592; Previous: Security </a>  <a href="terraform-infra.html" class="nav-next">Next: Terraform Infra &#8594;</a></div>
+ <div><a href="../index.html">&#8592; Back to Index</a></div>
+</nav>
+</div>
+
+</body>
+</html>

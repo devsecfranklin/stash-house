@@ -1,0 +1,132 @@
+{
+  "tag": "ansible",
+  "count": 9,
+  "canonical": "https://www.bitsmasher.net/research/tags/ansible.json",
+  "posts": [
+    {
+      "id": "2026-08-28-ansible-collection-hardening",
+      "title": "Ansible Collection Hardening & Restructuring: Config Cleanup, DNS Overhaul, and the Road to Samba AD",
+      "date": "2026-08-28",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-28-ansible-collection-hardening.html",
+      "summary": "Ansible lab collection received focused updates: config bloat removed, DNS role restructured with Jinja2 templates, Jetson-Nano expanded. Three planning docs for Samba AD migration and 18-chapter lab manual.",
+      "tags": [
+        "infrastructure",
+        "automation",
+        "ansible",
+        "security",
+        "samba",
+        "dns",
+        "jetson"
+      ]
+    },
+    {
+      "id": "2026-08-27-thursday",
+      "title": "Thursday, August 27: Storage1 Purge, Node Accessibility, and OpenClaw Performance KPIs",
+      "date": "2026-08-27",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-27-thursday.html",
+      "summary": "Storage1 purge across 29 files, ansible-test integration targets built for common/ssh/nfs roles, sync_android.sh security audit completed, node1 probed and confirmed reachable.",
+      "tags": [
+        "infrastructure",
+        "housekeeping",
+        "ansible",
+        "security"
+      ]
+    },
+    {
+      "id": "2026-08-26-infra-housekeeping",
+      "title": "Housekeeping: Head2 Retirement, Storage1 Purge, and a 1654-Line Lab Manual",
+      "date": "2026-08-27",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-26-infra-housekeeping.html",
+      "summary": "Two-phase infrastructure cleanup across Wednesday and Thursday: head2 references purged, /mnt/storage1 replaced, lab manual expanded from 6 lines to 1654.",
+      "tags": [
+        "infrastructure",
+        "housekeeping",
+        "ansible",
+        "automation",
+        "security"
+      ]
+    },
+    {
+      "id": "2026-08-25-ansible-native-test-pipeline",
+      "title": "From Molecule to Native Ansible-Test: Zero-Cost Validation Pipeline on Stargate",
+      "date": "2026-08-25",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-25-ansible-native-test-pipeline.html",
+      "summary": "Migrating from Docker-dependent Molecule testing to native ansible-test on stargate eliminates external container orchestration overhead, achieving zero-token shell executions within the lab topology.",
+      "tags": [
+        "infrastructure",
+        "automation",
+        "ansible",
+        "testing",
+        "ci-cd",
+        "molecule"
+      ]
+    },
+    {
+      "id": "2026-08-24-sunday-collection-coverage-audit",
+      "title": "Sunday Collection Coverage Audit: Ansible Test Gaps &amp; Testing Infrastructure Stabilization",
+      "date": "2026-08-24",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-24-sunday-collection-coverage-audit.html",
+      "summary": "Comprehensive code coverage audit of the lab.franklin Ansible collection across 43 roles (4,376 task lines). Only four roles have real integration tests; testing infrastructure pivoted to native ansible-test with pypi_internal as approved package source.",
+      "tags": [
+        "infrastructure",
+        "automation",
+        "ansible",
+        "testing",
+        "ci-cd"
+      ]
+    },
+    {
+      "id": "2026-08-23-badge-repo-syllabus-markdown-sync",
+      "title": "DEFCON 34 Badge Repo, Syllabus Markdown Sync &amp; Website Framework Updates",
+      "date": "2026-08-23",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-23-badge-repo-syllabus-markdown-sync.html",
+      "summary": "Five-session workday: DEFCON 34 badge firmware repo, ISMG-2050 syllabus LaTeX-to-Markdown extraction, site framework updates with TOOLS.md directives and JSON-LD injection.",
+      "tags": [
+        "website",
+        "ansible",
+        "architecture",
+        "research"
+      ]
+    },
+    {
+      "id": "2026-08-20-lab-host-decay-pattern",
+      "title": "Lab Infrastructure Collapse Pattern: Host Inventory Decay Across a 10-Host Subnet Mesh",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-lab-host-decay-pattern.html",
+      "summary": "An audit of lab.bitsmasher.net reveals ~40% of hosts unreachable or lost key auth within weeks. Root causes and remediation playbook.",
+      "tags": [
+        "infrastructure",
+        "security",
+        "lab-decay",
+        "ssh-audit",
+        "ansible"
+      ]
+    },
+    {
+      "id": "2026-08-20-ansible-molecule-pipeline",
+      "title": "Ansible Molecule at Scale: Why 37 Test Harnesses Timeout and How to Fix the Pipeline",
+      "date": "2026-08-20",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-20-ansible-molecule-pipeline.html",
+      "summary": "37 Ansible roles have Molecule test harnesses on stargate, but the cron job times out at 600s. Diagnosing DNS vs NFS failure modes and proposing parallelization.",
+      "tags": [
+        "ansible",
+        "molecule",
+        "ci-cd",
+        "automation",
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "2026-08-19-daily-research-summary-aug-18",
+      "title": ">Daily Research Summary - Aug 18",
+      "date": "2026-08-19",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-19-daily-research-summary-aug-18.html",
+      "summary": "Operational review and automated maintenance logs for the Bitsmasher Lab infrastructure.",
+      "tags": [
+        "infrastructure",
+        "ansible",
+        "research"
+      ]
+    }
+  ]
+}

@@ -1,11 +1,45 @@
 {
-  "version": "https://jsonfeed.org/version/2",
-  "title": "Tags: research",
-  "items": [
+  "tag": "research",
+  "count": 3,
+  "canonical": "https://www.bitsmasher.net/research/tags/research.json",
+  "posts": [
     {
-      "title": "DC34 Badge Security Research Update",
-      "url": "https://www.bitsmasher.net/research/blog/2026-08-13-defcon-badge-research.md",
-      "date": "2026-08-13"
+      "id": "2026-08-23-badge-repo-syllabus-markdown-sync",
+      "title": "DEFCON 34 Badge Repo, Syllabus Markdown Sync &amp; Website Framework Updates",
+      "date": "2026-08-23",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-23-badge-repo-syllabus-markdown-sync.html",
+      "summary": "Five-session workday: DEFCON 34 badge firmware repo, ISMG-2050 syllabus LaTeX-to-Markdown extraction, site framework updates with TOOLS.md directives and JSON-LD injection.",
+      "tags": [
+        "website",
+        "ansible",
+        "architecture",
+        "research"
+      ]
+    },
+    {
+      "id": "2026-08-19-daily-research-summary-aug-18",
+      "title": ">Daily Research Summary - Aug 18",
+      "date": "2026-08-19",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-19-daily-research-summary-aug-18.html",
+      "summary": "Operational review and automated maintenance logs for the Bitsmasher Lab infrastructure.",
+      "tags": [
+        "infrastructure",
+        "ansible",
+        "research"
+      ]
+    },
+    {
+      "id": "2026-08-14-fieldsemantics-arcana-sequence-analysis",
+      "title": "FieldSemantics Arcana Sequence Analysis &amp; ARG Artifact Forensics",
+      "date": "2026-08-14",
+      "url": "https://www.bitsmasher.net/research/blog/2026-08-14-fieldsemantics-arcana-sequence-analysis.html",
+      "summary": "Deep analysis of the FieldSemantics arcana sequence (Arcana 0/XXVIII/XXXII) in an active ARG artifact repository. Three theoretical papers with C2PA provenance verification.",
+      "tags": [
+        "fieldsemantics",
+        "protocols",
+        "research",
+        "architecture"
+      ]
     }
   ]
 }
