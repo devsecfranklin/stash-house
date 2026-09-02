@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice 6: Customer Tracking with Data Import &#x2014; ISMG 2050</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Practice 6: Customer Tracking with Data Import",
+  "educationalLevel": "Undergraduate",
+  "learningResourceType": "Assignment Instructions",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "ISMG 2050: Business Problem Solving Tools",
+    "url": "https://www.bitsmasher.net/teaching/ISMG-2050/"
+  }
+}</script>
+<style>.header-meta{color:#9e9e9e;font-size:0.9rem}</style>
+</head>
+<body class="w3-black">
+<nav class="w3-container w3-margin-top" id="site-nav"></nav>
+<script src="/js/nav.js" defer></script>
+<main class="w3-container research-content" style="max-width:860px;margin:2rem auto;padding:0 1.5rem;">
+<p><a href="/teaching/ISMG-2050/">&#x2190; Back to ISMG-2050 Course Hub</a></p>
+<header class="page-header">
+<h1 class="page-title">Practice 6: Customer Tracking with Data Import and Conditional Formatting</h1>
+<p class="header-meta">Module 2 &#x2014; Week 4 &bull; Due Sunday, September 21, 2026 at 11:59 PM MT &bull; 100 Points</p>
+</header>
+
+<div class="info-block" style="background:#1a1a1a;border-left:4px solid #CFB87C;padding:1.2rem;margin-bottom:1.5rem;">
+<h3 style="margin-top:0;color:#CFB87C">Assignment Metadata</h3>
+<ul style="list-style:none;padding-left:0;margin:0">
+<li><strong>Module:</strong> Module 2 (Weeks 3 &amp; 4)</li>
+<li><strong>Due Date:</strong> <time datetime="2026-09-21T23:59:00-06:00">Sunday, September 21, 2026 at 11:59 PM MT</time></li>
+<li><strong>Starter Input:</strong> <a href="customer_data.csv" download="customer_data.csv" type="text/csv"><code>customer_data.csv</code></a></li>
+<li><strong>Expected Submission:</strong> <code>[your initials]Practice06.xlsx</code></li>
+</ul>
+</div>
+
+<h2>Skills Covered</h2>
+<ul>
+<li>Importing and formatting CSV data (Data &gt; Get Data &gt; From Text/CSV)</li>
+<li>Icon sets: Arrow indicators for trend visualization</li>
+<li>Data bars: Horizontal bar visualization of magnitude</li>
+<li>Color scales: Heat-map conditional formatting</li>
+<li>Professional table styling and number formatting</li>
+</ul>
+
+<h2>Part 1: CSV Data Import (30 pts)</h2>
+<ol>
+<li>Open a new blank workbook. Save as <code>[your initials]Practice06.xlsx</code>.</li>
+<li>Go to <strong>Data &gt; Get Data &gt; From Text/CSV</strong>. Navigate to and select <code>customer_data.csv</code>.</li>
+<li>In the preview dialog, verify columns show: Customer ID, Name, Email, Region, Purchase Date, Product Category, Quantity, Unit Price, Total Revenue.</li>
+<li>Click <strong>Load</strong> to import. The data will appear in Sheet1 starting at A1.</li>
+<li>Rename the sheet tab to <strong>"CustomerData"</strong>.</li>
+<li>Select all imported data (click any cell), then <strong>Ctrl+T</strong> to convert to an Excel Table. Check <em>"My table has headers"</em>. Name the table <code>Customers</code> in the Table Design tab.</li>
+<li>Select column A (Customer ID). Format as <strong>Text</strong> (right-click &gt; Format Cells &gt; Number &gt; Text) to prevent Excel from dropping leading zeros.</li>
+</ol>
+
+<h2>Part 2: Icon Sets on Region Revenue (25 pts)</h2>
+<ol start="7">
+<li>In a new sheet named <strong>"Icons"</strong>, create a region summary:</li>
+<li><strong>A1:</strong> type <em>Region</em>, <strong>B1</strong> type <em>Total Revenue</em></li>
+<li>In cells <strong>A3:A7</strong>, enter regions: East, West, North, South, Central.</li>
+<li>In cell <strong>B3</strong>, use SUMIF to aggregate from the CustomerData table:
+<code>=SUMIF(Customers[Region],A3,Customers[Total Revenue])</code></li>
+<li>Copy B3 down through B7.</li>
+<li>Select range <strong>A2:B2</strong>. Apply a header style (e.g., Gray Fill with Dark Text).</li>
+<li>Select range <strong>B3:B7</strong>.</li>
+<li><strong>Home &gt; Conditional Formatting &gt; Icon Sets &gt; 3 Arrows (Colored)</em>:</li>
+<li>This assigns a Green Up Arrow for highest revenue, Yellow Sideways Arrow for mid-range, Red Down Arrow for lowest.</li>
+</ol>
+
+<h2>Part 3: Data Bars on Customer Transactions (25 pts)</h2>
+<ol start="16">
+<li>In a third sheet named <strong>"DataBars"</strong>:</li>
+<li><strong>A1:</strong> type <em>Customer ID</em>, <strong>B1</strong> type <em>Name</em>, <strong>C1</strong> type <em>Total Revenue</em>, <strong>D1</strong> type <em>Purchase Count</em></li>
+<li>Select the entire CustomerData table (Ctrl+T created a table), copy the data.</li>
+<li>Paste into A2:D2 of this sheet. Then use PivotTable or manual formulas to aggregate:</li>
+<li><strong>B2:B6:</strong> Enter customer names for 5 customers of your choice from the imported data.</li>
+<li><strong>C2:C6:</strong> For each selected customer, enter their Total Revenue (sum all rows matching that customer).</li>
+<li><strong>D2:D6:</strong> Enter Purchase Count (number of rows for each customer).</li>
+<li>Select range <strong>C2:C6</strong>.</li>
+<li><strong>Home &gt; Conditional Formatting &gt; Data Bars &gt; Gradient Fill - Blue</em>. The horizontal bars visually represent revenue magnitude.</li>
+<li>Select range <strong>D2:D6</strong>.</li>
+<li><strong>Home &gt; Conditional Formatting &gt; Data Bars &gt; Solid Fill - Green</em>.</li>
+</ol>
+
+<h2>Part 4: Color Scales on Revenue Distribution (20 pts)</h2>
+<ol start="22">
+<li>Select range <strong>A3:A7</strong> on the CustomerData sheet.</li>
+<li><strong>Home &gt; Conditional Formatting &gt; Color Scales &gt; Green-Yellow-Red</em>.</li>
+<li>This creates a heat-map across the Region revenue totals from Practice Part 2.</li>
+<li>All data ranges should display with consistent professional formatting: Currency for revenue ($#,##0.00), Number format for counts (#,##0).</li>
+</ol>
+
+<h2>Submission Criteria</h2>
+<ul>
+<li>File named exactly <code>[your initials]Practice06.xlsx</code></li>
+<li><strong>"CustomerData"</strong> sheet: CSV imported successfully via Data &gt; Get Data, converted to Excel Table</li>
+<li><strong>"Icons"</strong> sheet: Region summary with SUMIF and Icon Sets (3 Arrows)</li>
+<li><strong>"DataBars"</strong> sheet: Customer revenue aggregation with Blue data bars on revenue, Green data bars on purchase count</li>
+<li><strong>"CustomerData"</strong> sheet: Color scale (heat-map) applied to a numeric range</li>
+<li>All currency columns formatted as $#,##0.00; all counts formatted as integers</li>
+<li>AI Disclosure statement included</li>
+</ul>
+
+<p style="margin-top:2rem"><a href="/teaching/ISMG-2050/homework/week3-4/"><strong>&rarr; Back to Week 3\u20134 Homework Portal</strong></a></p>
+</main>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice 7: Page Setup and Multi-Sheet Print Optimization &#x2014; ISMG 2050</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Practice 7: Page Setup and Multi-Sheet Print Optimization",
+  "educationalLevel": "Undergraduate",
+  "learningResourceType": "Assignment Instructions",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "ISMG 2050: Business Problem Solving Tools",
+    "url": "https://www.bitsmasher.net/teaching/ISMG-2050/"
+  }
+}</script>
+<style>.header-meta{color:#9e9e9e;font-size:0.9rem}</style>
+</head>
+<body class="w3-black">
+<nav class="w3-container w3-margin-top" id="site-nav"></nav>
+<script src="/js/nav.js" defer></script>
+<main class="w3-container research-content" style="max-width:860px;margin:2rem auto;padding:0 1.5rem;">
+<p><a href="/teaching/ISMG-2050/">&#x2190; Back to ISMG-2050 Course Hub</a></p>
+<header class="page-header">
+<h1 class="page-title">Practice 7: Page Setup and Multi-Sheet Print Optimization</h1>
+<p class="header-meta">Module 2 &#x2014; Week 4 &bull; Due Sunday, September 21, 2026 at 11:59 PM MT &bull; 100 Points</p>
+</header>
+
+<div class="info-block" style="background:#1a1a1a;border-left:4px solid #CFB87C;padding:1.2rem;margin-bottom:1.5rem;">
+<h3 style="margin-top:0;color:#CFB87C">Assignment Metadata</h3>
+<ul style="list-style:none;padding-left:0;margin:0">
+<li><strong>Module:</strong> Module 2 (Weeks 3 &amp; 4)</li>
+<li><strong>Due Date:</strong> <time datetime="2026-09-21T23:59:00-06:00">Sunday, September 21, 2026 at 11:59 PM MT</time></li>
+<li><strong>Starter Input:</strong> Your completed <code>[your initials]Practice04.xlsx</code> from Practice 4 (open and save a new copy)</li>
+<li><strong>Expected Submission:</strong> <code>[your initials]Practice07.xlsx</code></li>
+</ul>
+</div>
+
+<h2>Skills Covered</h2>
+<ul>
+<li>Page orientation (Portrait vs. Landscape) per worksheet</li>
+<li>Setting and managing Print Area boundaries</li>
+<li>Scaling to fit on specific page counts</li>
+<li>Custom headers and footers (text, page numbers, dates)</li>
+<li>Page break preview and manual insertion of page breaks</li>
+<li>Multi-sheet print management with varying layouts</li>
+</ul>
+
+<h2>Part 1: Orientation and Print Area (30 pts)</h2>
+<ol>
+<li>Open <code>[your initials]Practice04.xlsx</code>. Save as <code>[your initials]Practice07.xlsx</code>.</li>
+<li>You will now configure each sheet for professional printing:</li>
+<li><strong>Sheet1 (Flash Fill Data):</strong></li>
+<li><em>Page Layout &gt; Orientation &gt; Portrait</em></li>
+<li><em>Print Area &gt; Set Print Area</em> for the range <strong>A1:D15</strong> (your Flash Fill output)</li>
+<li><em>Scale to Fit:</em> Width = 1 page, Height = Automatic</li>
+<li>Insert in the Center Header: <code>[Your Full Name] - ISMG 2050 Practice 4 Results</code></li>
+<li>In the Footer (right-aligned): <em>Last modified: </em> then use the Date &amp; Time field to insert the current date automatically.</li>
+<li><strong>"Conversion" sheet:</strong></li>
+<li><em>Page Layout &gt; Orientation &gt; Landscape</em></li>
+<li><em>Print Area &gt; Set Print Area</em> for <strong>A1:D9</strong></li>
+<li><em>Scale to Fit:</em> Width = 1 page, Height = 1 page (ensure everything fits on a single printed page)</li>
+<li>Insert in the Center Header: <code>Currency Conversion Report - Module 2</code></li>
+<li>In the Footer (left-aligned): <em>Page </em> then insert Page Number field.</li>
+</ol>
+
+<h2>Part 2: Page Breaks and Margins (30 pts)</h2>
+<ol start="9">
+<li><strong>"TaxTable" sheet:</strong></li>
+<li><em>View &gt; Page Break Preview</em> to see where Excel will split pages.</li>
+<li>If the table spans multiple pages, manually adjust page breaks: drag the blue dashed line to ensure all data fits on one page.</li>
+<li>If needed, insert a manual page break between rows 5 and 6: Select row 6, <em>Page Layout &gt; Breaks &gt; Insert Page Break</em>.</li>
+<li><em>Page Layout &gt; Margins &gt; Narrow</em> (0.5" top/bottom, 0.7" left/right) to maximize data visibility.</li>
+<li>Set the <strong>Top Repeating Rows</strong>: <code>$1:$1</code> so the header row prints at the top of every printed page.</li>
+</ol>
+
+<h2>Part 3: Headers, Footers, and Page Break Preview (25 pts)</h2>
+<ol start="14">
+<li>Return to <strong>Sheet1</strong>.</li>
+<li>In the header Left section, type: <em>ISMG 2050 &#x2014; Module 2 Practice</em></li>
+<li>In the header Center section, use the Page Number field (<code>&amp;P</code>) to insert current page.</li>
+<li>In the header Right section, type: <em>of &amp;P pages</em>.</li>
+<li>Insert a custom text watermark if available (Page Layout &gt; Watermark): type <em>"DRAFT"</em> in gray.</li>
+<li>Switch to Print Preview (<strong>Ctrl+P</strong>). Verify each sheet renders cleanly with no data clipped off the right edge.</li>
+</ol>
+
+<h2>Part 4: Multi-Sheet Print Setup (15 pts)</h2>
+<ol start="19">
+<li>Select <strong>all three sheets</strong> by Shift-clicking each tab at the bottom of the window.</li>
+<li><em>Page Layout &gt; Page Setup dialog launcher</em> (small arrow in corner):</li>
+<li>Navigate to the <em>Sheet</em> tab.</li>
+<li>Set <strong>Print area:</strong> leave blank for now (will print all cells with data).</li>
+<li>In <strong>Orientation:</strong> confirm your per-sheet settings are preserved.</li>
+<li>Unselect all sheets by clicking any single sheet tab.</li>
+<li>Save the file.</li>
+</ol>
+
+<h2>Submission Criteria</h2>
+<ul>
+<li>File named exactly <code>[your initials]Practice07.xlsx</code></li>
+<li><strong>Sheet1:</strong> Portrait orientation, print area A1:D15, left header + right-aligned date footer</li>
+<li><strong>"Conversion":</strong> Landscape orientation, print area A1:D9, fits on 1 page, center text header, left page number footer</li>
+<li><strong>"TaxTable":</strong> Page Break Preview used to verify single-page layout, narrow margins, top repeating rows ($1:$1)</li>
+<li>All three sheets have custom headers and footers with at least one dynamic field (page #, date, or filename)</li>
+<li>Print Preview verified on all sheets: no clipped columns, aligned data</li>
+<li>AI Disclosure statement included in a note below TaxTable data</li>
+</ul>
+
+<p style="margin-top:2rem"><a href="/teaching/ISMG-2050/homework/week3-4/"><strong>&rarr; Back to Week 3\u20134 Homework Portal</strong></a></p>
+</main>
+</body>
+</html>

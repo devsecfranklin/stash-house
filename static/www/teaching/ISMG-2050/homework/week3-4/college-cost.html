@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comprehensive Project: College Cost Calculator &#x2014; ISMG 2050</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "College Cost Calculator \u2014 Comprehensive Project",
+  "educationalLevel": "Undergraduate",
+  "learningResourceType": "Assignment Instructions",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "ISMG 2050: Business Problem Solving Tools",
+    "url": "https://www.bitsmasher.net/teaching/ISMG-2050/"
+  }
+}</script>
+<style>.header-meta{color:#9e9e9e;font-size:0.9rem}</style>
+</head>
+<body class="w3-black">
+<nav class="w3-container w3-margin-top" id="site-nav"></nav>
+<script src="/js/nav.js" defer></script>
+<main class="w3-container research-content" style="max-width:860px;margin:2rem auto;padding:0 1.5rem;">
+<p><a href="/teaching/ISMG-2050/">&#x2190; Back to ISMG-2050 Course Hub</a></p>
+<header class="page-header">
+<h1 class="page-title">Comprehensive Project: College Cost Calculator</h1>
+<p class="header-meta">Module 2 \u2014 Weeks 3 &amp; 4 &bull; Due Sunday, September 21, 2026 at 11:59 PM MT &bull; 200 Points</p>
+</header>
+
+<div class="info-block" style="background:#1a1a1a;border-left:4px solid #CFB87C;padding:1.2rem;margin-bottom:1.5rem;">
+<h3 style="margin-top:0;color:#CFB87C">Assignment Metadata</h3>
+<ul style="list-style:none;padding-left:0;margin:0">
+<li><strong>Module:</strong> Module 2 (Weeks 3 &amp; 4)</li>
+<li><strong>Due Date:</strong> <time datetime="2026-09-21T23:59:00-06:00">Sunday, September 21, 2026 at 11:59 PM MT</time></li>
+<li><strong>Starter Input:</strong> Begin with a <em>blank workbook</em></li>
+<li><strong>Expected Submission:</strong> <code>[your initials]CollegeCost.xlsx</code></li>
+</ul>
+</div>
+
+<h2>Project Overview</h2>
+<p>Build a four-year college cost projection model from scratch. This project integrates absolute cell referencing, multi-sheet formulas, conditional formatting with threshold alerts, and professional page setup for printing.</p>
+
+<h2>Sheet 1: Cost Breakdown (Tab named <strong>"Costs"</strong>)</h2>
+<ol>
+<li><strong>A1:</strong> type <em>Tuition per Year</em></li>
+<li><strong>B3:B6:</strong> Enter the following annual tuition figures:<ul>
+<li>B3: $12,500 (Freshman)</li>
+<li>B4: $13,100 (Sophomore)</li>
+<li>B5: $13,750 (Junior)</li>
+<li>B6: $14,400 (Senior)</li>
+</ul></li>
+<li><strong>A8:</strong> type <em>Room &amp; Board per Year</em></li>
+<li><strong>C3:C6:</strong> Enter the following annual room and board figures:<ul>
+<li>C3: $9,200</li>
+<li>C4: $9,500</li>
+<li>C5: $9,800</li>
+<li>C6: $10,100</li>
+</ul></li>
+<li><strong>A10:</strong> type <em>Books &amp; Supplies per Year</em></li>
+<li><strong>D3:D6:</strong> Enter the following annual book costs:<ul>
+<li>D3: $1,200</li>
+<li>D4: $1,350</li>
+<li>D5: $1,200</li>
+<li>D6: $1,100</li>
+</ul></li>
+<li><strong>A12:</strong> type <em>Total Annual Cost</em></li>
+<li><strong>B12:</strong> Enter formula: <code>=B3+C3+D3</code> (Freshman total)</li>
+<li>Copy the formula down to C12:D12. Then copy across to E12, F12, G12 for Sophomore through Senior totals.</li>
+<li><strong>A14:</strong> type <em>Total Four-Year Cost</em></li>
+<li><strong>B14:</strong> Enter: <code>=SUM(B12:E12)</code></li>
+</ol>
+
+<h2>Sheet 2: Tuition Growth Analysis (Tab named <strong>"Growth"</strong>)</h2>
+<ol start="13">
+<li><strong>A1:</strong> type <em>Year</em>, <strong>B1:</strong> type <em>Tuition</em>, <strong>C1:</strong> type <em>Change</em>, <strong>D1:</strong> type <em>% Change</em></li>
+<li><strong>A3:A6:</strong> Freshman, Sophomore, Junior, Senior</li>
+<li><strong>B3:B6:</strong> Reference Costs sheet: <code>=Costs!$B$3</code>, copy down to B4:B6 (absolute $ references)</li>
+<li><strong>C4:C6:</strong> Tuition change from prior year: <code>=B4-B3</code>, then copy down through C6</li>
+<li><strong>D4:D6:</strong> Percent change: <code>=C4/B3</code>. Format as Percentage (2 decimal places).</li>
+<li><strong>B8:</strong> type <em>Average Tuition</em>, <strong>C8:</strong> <code>=AVERAGE(B3:B6)</code></li>
+<li><strong>B9:</strong> type <em>Highest Tuition</em>, <strong>C9:</strong> <code>=MAX(B3:B6)</code></li>
+<li><strong>B10:</strong> type <em>Lowest Tuition</em>, <strong>C10:</strong> <code>=MIN(B3:B6)</code></li>
+</ol>
+
+<h2>Conditional Formatting \u2014 Threshold Alerts</h2>
+<ol start="19">
+<li>On the <strong>"Costs"</strong> sheet, select range <strong>B12:E12</strong>.</li>
+<li>Go to <strong>Home &gt; Conditional Formatting &gt; Highlight Cells Rules &gt; Greater Than</strong>.</li>
+<li>Enter <code>24000</code> and choose <em>Light Red Fill with Dark Red Text</em>.</li>
+<li>This highlights any year where total annual cost exceeds $24,000.</li>
+<li>On the <strong>"Growth"</strong> sheet, select range <strong>D4:D6</strong>.</li>
+<li>Apply a <strong>Data Bar</strong> conditional format (Gradual Green Fill) to visualize percent change visually.</li>
+</ol>
+
+<h2>Page Setup &amp; Printing</h2>
+<ol start="21">
+<li>Select the <strong>"Costs"</strong> sheet.</li>
+<li><strong>Page Layout &gt; Orientation &gt; Landscape</strong>.</li>
+<li><strong>Print Area &gt; Set Print Area</strong> for range <strong>A1:E14</strong>.</li>
+<li><strong>Scale to Fit:</strong> Width = 1 page, Height = Automatic.</li>
+<li>Insert the formula <code>=$A$1 &amp; " - College Cost Projection"</code> into the <strong>Center Header</strong> field on the Page Layout tab.</li>
+<li>Switch to the <strong>"Growth"</strong> sheet, set to <strong>Portrait</strong>, and set Print Area to <strong>A1:D10</strong>.</li>
+<li>Verify both sheets preview correctly before saving.</li>
+</ol>
+
+<h2>Submission Criteria</h2>
+<ul>
+<li>File named exactly <code>[your initials]CollegeCost.xlsx</code></li>
+<li>Two worksheets: "Costs" and "Growth"</li>
+<li>All formulas correct and producing expected numeric output</li>
+<li>Conditional formatting applied on both sheets (threshold alert + data bars)</li>
+<li>Both sheets configured with correct orientation, print area, and headers</li>
+<li>AI Disclosure statement included in a note below the Costs sheet: <em>"AI Disclosure: [Used/None]"</em></li>
+</ul>
+
+<p style="margin-top:2rem"><a href="/teaching/ISMG-2050/homework/week3-4/"><strong>&rarr; Back to Week 3\u20134 Homework Portal</strong></a></p>
+</main>
+</body>
+</html>

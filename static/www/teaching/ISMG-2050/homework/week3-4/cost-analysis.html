@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comprehensive Project: Cost Analysis Report &#x2014; ISMG 2050</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Cost Analysis Report \u2014 Comprehensive Project",
+  "educationalLevel": "Undergraduate",
+  "learningResourceType": "Assignment Instructions",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "ISMG 2050: Business Problem Solving Tools",
+    "url": "https://www.bitsmasher.net/teaching/ISMG-2050/"
+  }
+}</script>
+<style>.header-meta{color:#9e9e9e;font-size:0.9rem}</style>
+</head>
+<body class="w3-black">
+<nav class="w3-container w3-margin-top" id="site-nav"></nav>
+<script src="/js/nav.js" defer></script>
+<main class="w3-container research-content" style="max-width:860px;margin:2rem auto;padding:0 1.5rem;">
+<p><a href="/teaching/ISMG-2050/">&#x2190; Back to ISMG-2050 Course Hub</a></p>
+<header class="page-header">
+<h1 class="page-title">Comprehensive Project: Cost Analysis Report</h1>
+<p class="header-meta">Module 2 \u2014 Weeks 3 &amp; 4 &bull; Due Sunday, September 21, 2026 at 11:59 PM MT &bull; 200 Points</p>
+</header>
+
+<div class="info-block" style="background:#1a1a1a;border-left:4px solid #CFB87C;padding:1.2rem;margin-bottom:1.5rem;">
+<h3 style="margin-top:0;color:#CFB87C">Assignment Metadata</h3>
+<ul style="list-style:none;padding-left:0;margin:0">
+<li><strong>Module:</strong> Module 2 (Weeks 3 &amp; 4)</li>
+<li><strong>Due Date:</strong> <time datetime="2026-09-21T23:59:00-06:00">Sunday, September 21, 2026 at 11:59 PM MT</time></li>
+<li><strong>Starter Input:</strong> <a href="starter_data_wk3.xlsx" download="starter_data_wk3.xlsx" type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"><code>starter_data_wk3.xlsx</code></a></li>
+<li><strong>Expected Submission:</strong> <code>[your initials]CostAnalysis.xlsx</code></li>
+</ul>
+</div>
+
+<h2>Project Overview</h2>
+<p>Analyze multi-category operational costs using a real-world dataset. This project emphasizes absolute references for rate lookup tables, conditional formatting for variance flags, and professional page setup for executive summary reporting.</p>
+
+<h2>Sheet 1: Raw Data Import (Tab named <strong>"RawData"</strong>)</h2>
+<ol>
+<li><strong>Open starter_data_wk3.xlsx</strong> in Excel. You will find the following columns on the first sheet:</li>
+<li><strong>A1:</strong> <em>Department</em>, <strong>B1:</strong> <em>Category</em>, <strong>C1:</strong> <em>Month</em>, <strong>D1:</strong> <em>Budgeted ($)</em>, <strong>E1:</strong> <em>Actual ($)</em></li>
+<li><strong>A2:A30:</strong> Department names (Marketing, Engineering, HR, Finance, Operations)</li>
+<li><strong>B2:B30:</strong> Cost categories (Salaries, Supplies, Travel, Equipment, Software, Utilities)</li>
+<li><strong>C2:C30:</strong> Months (Jan through Dec, repeating per department)</li>
+<li><strong>D2:D30:</strong> Budgeted amounts (entered by you \u2014 see Table below)</li>
+<li><strong>E2:E30:</strong> Actual amounts (entered by you \u2014 use realistic variances of +/- 5\u201320%)</li>
+</ol>
+
+<h3>Budget Reference Table (use as your guide for D column):</h3>
+<table style="width:60%;border-collapse:collapse;margin-bottom:1rem;background:#1a1a1a">
+<tr><td style="padding:4px;border:1px solid #333;color:#64b5f6"><strong>Department</strong></td><td style="padding:4px;border:1px solid #333;color:#64b5f6"><strong>Monthly Budget</strong></td></tr>
+<tr><td style="padding:4px;border:1px solid #333">Marketing</td><td style="padding:4px;border:1px solid #333">$8,000</td></tr>
+<tr><td style="padding:4px;border:1px solid #333">Engineering</td><td style="padding:4px;border:1px solid #333">$25,000</td></tr>
+<tr><td style="padding:4px;border:1px solid #333">HR</td><td style="padding:4px;border:1px solid #333">$5,500</td></tr>
+<tr><td style="padding:4px;border:1px solid #333">Finance</td><td style="padding:4px;border:1px solid #333">$6,200</td></tr>
+<tr><td style="padding:4px;border:1px solid #333">Operations</td><td style="padding:4px;border:1px solid #333">$12,000</td></tr>
+</table>
+
+<h2>Sheet 2: Summary Analysis (Tab named <strong>"Summary"</strong>)</h2>
+<ol start="6">
+<li><strong>A1:</strong> type <em>Department</em>, <strong>B1:</strong> type <em>Total Budgeted</em>, <strong>C1:</strong> type <em>Total Actual</em>, <strong>D1:</strong> type <em>Variance ($)</em>, <strong>E1:</strong> type <em>Variance (%)</em></li>
+<li><strong>A3:A7:</strong> Marketing, Engineering, HR, Finance, Operations (one row per department)</li>
+<li><strong>B3:</strong> Enter: <code>=SUMIF(RawData!$A:$A,A3,RawData!$D:$D)</code> \u2014 copies down to B7</li>
+<li><strong>C3:</strong> Enter: <code>=SUMIF(RawData!$A:$A,A3,RawData!$E:$E)</code> \u2014 copies down to C7</li>
+<li><strong>D3:</strong> Enter: <code>=C3-B3</code> \u2014 copies down to D7 (positive = over budget)</li>
+<li><strong>E3:</strong> Enter: <code>=D3/B3</code> \u2014 copies down to E7. Format as Percentage (1 decimal place).</li>
+<li><strong>A9:</strong> type <em>Total Department Budget</em>, <strong>B9:</strong> <code>=SUM(B3:B7)</code></li>
+<li><strong>A10:</strong> type <em>Total Department Actual</em>, <strong>B10:</strong> <code>=SUM(C3:C7)</code></li>
+<li><strong>A11:</strong> type <em>Overall Variance</em>, <strong>C11:</strong> <code>=B10-B9</code></li>
+</ol>
+
+<h2>Conditional Formatting \u2014 Variance Flags</h2>
+<ol start="16">
+<li>Select range <strong>D3:D7</strong> on the Summary sheet.</li>
+<li><strong>Home &gt; Conditional Formatting &gt; Highlight Cells Rules &gt; Greater Than</strong>: Enter <code>0</code> and choose <em>Light Red Fill with Dark Red Text</em> (over-budget flag).</li>
+<li>Select range <strong>D3:D7</strong> again.</li>
+<li><strong>Home &gt; Conditional Formatting &gt; Highlight Cells Rules &gt; Less Than</strong>: Enter <code>0</code> and choose <em>Light Green Fill with Dark Green Text</em> (under-budget flag).</li>
+<li>Select range <strong>E3:E7</strong>.</li>
+<li><strong>Home &gt; Conditional Formatting &gt; Data Bars &gt; Gradient Fill - Blue</strong> to visualize variance magnitude.</li>
+</ol>
+
+<h2>Page Setup &amp; Printing</h2>
+<ol start="22">
+<li>Select the <strong>"Summary"</strong> sheet.</li>
+<li><strong>Page Layout &gt; Orientation &gt; Landscape</strong>.</li>
+<li><strong>Print Area &gt; Set Print Area</strong> for range <strong>A1:E11</strong>.</li>
+<li><strong>Scale to Fit:</strong> Width = 1 page, Height = Automatic.</li>
+<li>In the <strong>Center Header</strong>, type: <code>[Company Name] \u2014 Cost Analysis Report</code></li>
+<li>In the <strong>Footer</strong>, insert Page X of Y via the Page Layout footer dialog.</li>
+<li>Select the <strong>"RawData"</strong> sheet, set to <strong>Landscape</strong>, and set Print Area to <strong>A1:E30</strong>.</li>
+<li>Set scaling to <em>Fit All Columns on One Page</em>.</li>
+<li>Preview both sheets. Verify data fits without clipping.</li>
+</ol>
+
+<h2>Submission Criteria</h2>
+<ul>
+<li>File named exactly <code>[your initials]CostAnalysis.xlsx</code></li>
+<li>Two worksheets: "RawData" and "Summary"</li>
+<li><strong>SUMIF</strong> formulas correctly aggregating by department</li>
+<li>Variance calculations (both $ and %) accurate</li>
+<li>Conditional formatting applied: red over-budget, green under-budget, blue data bars on % variance</li>
+<li>Landscape orientation with print area and header/footer configured on both sheets</li>
+<li>AI Disclosure statement included in a note below the Summary sheet: <em>"AI Disclosure: [Used/None]"</em></li>
+</ul>
+
+<p style="margin-top:2rem"><a href="/teaching/ISMG-2050/homework/week3-4/"><strong>&rarr; Back to Week 3\u20134 Homework Portal</strong></a></p>
+</main>
+</body>
+</html>

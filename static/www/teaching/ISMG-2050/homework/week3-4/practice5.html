@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice 5: Math Operators and Conditional Formatting &#x2014; ISMG 2050</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Practice 5: Math Operators and Conditional Formatting",
+  "educationalLevel": "Undergraduate",
+  "learningResourceType": "Assignment Instructions",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "ISMG 2050: Business Problem Solving Tools",
+    "url": "https://www.bitsmasher.net/teaching/ISMG-2050/"
+  }
+}</script>
+<style>.header-meta{color:#9e9e9e;font-size:0.9rem}</style>
+</head>
+<body class="w3-black">
+<nav class="w3-container w3-margin-top" id="site-nav"></nav>
+<script src="/js/nav.js" defer></script>
+<main class="w3-container research-content" style="max-width:860px;margin:2rem auto;padding:0 1.5rem;">
+<p><a href="/teaching/ISMG-2050/">&#x2190; Back to ISMG-2050 Course Hub</a></p>
+<header class="page-header">
+<h1 class="page-title">Practice 5: Math Operators and Conditional Formatting</h1>
+<p class="header-meta">Module 2 &#x2014; Week 3 &bull; Due Sunday, September 14, 2026 at 11:59 PM MT &bull; 100 Points</p>
+</header>
+
+<div class="info-block" style="background:#1a1a1a;border-left:4px solid #CFB87C;padding:1.2rem;margin-bottom:1.5rem;">
+<h3 style="margin-top:0;color:#CFB87C">Assignment Metadata</h3>
+<ul style="list-style:none;padding-left:0;margin:0">
+<li><strong>Module:</strong> Module 2 (Weeks 3 &amp; 4)</li>
+<li><strong>Due Date:</strong> <time datetime="2026-09-14T23:59:00-06:00">Sunday, September 14, 2026 at 11:59 PM MT</time></li>
+<li><strong>Starter Input:</strong> Your completed <code>[your initials]Practice04.xlsx</code> from Practice 4 (open and save a new copy)</li>
+<li><strong>Expected Submission:</strong> <code>[your initials]Practice05.xlsx</code></li>
+</ul>
+</div>
+
+<h2>Skills Covered</h2>
+<ul>
+<li>Math operators: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code> (exponentiation)</li>
+<li>Order of operations (PEMDAS) in Excel formulas</li>
+<li>Conditional formatting: threshold-based cell highlighting</li>
+<li>Conditional formatting: icon sets and data bars</li>
+<li>File extension type awareness (.xlsx vs .xlsm vs .csv)</li>
+</ul>
+
+<h2>Part 1: Salary Report &#x2014; Math Operators (45 pts)</h2>
+<ol>
+<li>Open a new blank workbook and save as <code>[your initials]Practice05.xlsx</code>.</li>
+<li>In cell <strong>A1</strong>, type <em>Employee</em>, <strong>B1</strong> type <em>Base Salary</em>, <strong>C1</strong> type <em>Bonus %</em>, <strong>D1</strong> type <em>Overtime Hours</em>, <strong>E1</strong> type <em>Hourly Rate</em>, <strong>F1</strong> type <em>Total Compensation</em>.</li>
+<li>In cells <strong>A3:A8</strong>, enter employee names: Alice, Bob, Carol, Dave, Eve, Frank.</li>
+<li>In cells <strong>B3:B8</strong>, enter base salaries: 65000, 72000, 58000, 81000, 69000, 74000.</li>
+<li>In cells <strong>C3:C8</strong>, enter bonus percentages: 0.05, 0.07, 0.04, 0.06, 0.05, 0.08.</li>
+<li>In cells <strong>D3:D8</strong>, enter overtime hours: 12, 8, 0, 15, 20, 5.</li>
+<li>In cell <strong>E3</strong>, enter the hourly rate formula: <code>=B3/2080</code> (annual salary / 2080 standard work hours = hourly rate). Copy down to E4:E8.</li>
+<li>In cell <strong>F3</strong>, compute total compensation using math operators:
+<code>=B3+(B3*C3)+(D3*E3)</code></li>
+<li>Breakdown: Base + (Base * Bonus%) + (Overtime Hours * Hourly Rate).</li>
+<li>Copy F3 down to F4:F8.</li>
+</ol>
+
+<h2>Part 2: Conditional Formatting &#x2014; Salary Thresholds (25 pts)</h2>
+<ol start="11">
+<li>Select range <strong>F3:F8</strong> on the Salary sheet.</li>
+<li><strong>Home &gt; Conditional Formatting &gt; Highlight Cells Rules &gt; Greater Than</strong>: Enter <code>70000</code>, choose <em>Green Fill with Dark Green Text</em>. This highlights total compensation above $70,000.</li>
+<li>Select range <strong>B3:B8</strong>.</li>
+<li><strong>Home &gt; Conditional Formatting &gt; Data Bars &gt; Gradient Fill - Blue</em>.</li>
+<li>Select range <strong>C3:C8</strong>.</li>
+<li><strong>Home &gt; Conditional Formatting &gt; Color Scales &gt; Green-Yellow-Red</em>. This shows bonus rate distribution visually.</li>
+</ol>
+
+<h2>Part 3: Math Operator Challenges (30 pts)</h2>
+<ol start="15">
+<li>In a new sheet named <strong>"Operators"</strong>, create the following demonstration table:</li>
+<li><strong>A1:</strong> type <em>Expression</em>, <strong>B1</strong> type <em>Formula</em>, <strong>C1</strong> type <em>Result</em></li>
+<li>Row 2: <em>Addition</em> / <code>=50+30</code> / <code>80</code></li>
+<li>Row 3: <em>Subtraction</em> / <code>=100-47</code> / <code>53</code></li>
+<li>Row 4: <em>Multiplication</em> / <code>=12*8</code> / <code>96</code></li>
+<li>Row 5: <em>Division</em> / <code>=150/7</code> / <code>21.42857</code></li>
+<li>Row 6: <em>Exponentiation</em> / <code>=2^8</code> / <code>256</code></li>
+<li>Row 7: <em>Mixed Order (parentheses)</em> / <code>=(10+5)*3-4</code> / <code>41</code></li>
+<li>Row 8: <em>Complex formula with percentages</em> / <code>=1000*(1+0.05)^3</code> (compound growth) / <code>1157.625</code></li>
+<li>In cell <strong>A10</strong>, type: <em>File Extension Types</em>. Below this, document in column B the file extension types you have encountered and used so far this course:</li>
+<li>Rows 11\u201314: For each extension (.xlsx, .csv, .pdf, .xlsm), note its purpose (e.g., ".xlsx = standard workbook with formulas, .csv = plain-text tabular data, .pdf = final deliverable for submission").</li>
+</ol>
+
+<h2>Submission Criteria</h2>
+<ul>
+<li>File named exactly <code>[your initials]Practice05.xlsx</code></li>
+<li>Sheet1 (Salary): All math formulas correct, total compensation calculated accurately</li>
+<li>Conditional formatting: threshold highlight at $70K+, data bars on salary column, color scale on bonus %</li>
+<li><strong>"Operators"</strong> sheet: All 8 expressions produce correct results using operators <code>+ - * / ^</code></li>
+<li>Complex formula row demonstrates compound interest with exponentiation operator</li>
+<li>File extension type documentation completed (at least .xlsx, .csv, .pdf, .xlsm)</li>
+<li>AI Disclosure statement in a note below the Operators sheet</li>
+</ul>
+
+<p style="margin-top:2rem"><a href="/teaching/ISMG-2050/homework/week3-4/"><strong>&rarr; Back to Week 3\u20134 Homework Portal</strong></a></p>
+</main>
+</body>
+</html>

@@ -1,0 +1,21 @@
+Customer ID,Name,Email,Region,Purchase Date,Product Category,Quantity,Unit Price,Total Revenue
+CUST-1001,Alice Johnson,alice.johnson@email.com,East,2026-01-15,Laptop,1,899.00,899.00
+CUST-1002,Bob Smith,bob.smith@email.com,West,2026-01-18,Mouse,3,25.00,75.00
+CUST-1003,Carol Davis,carol.davis@email.com,North,2026-01-22,Keyboard,2,45.00,90.00
+CUST-1004,Dave Wilson,dave.wilson@email.com,South,2026-02-03,Monitor,1,350.00,350.00
+CUST-1005,Eve Martinez,eve.martinez@email.com,Central,2026-02-10,Headset,4,79.00,316.00
+CUST-1006,Frank Brown,frank.brown@email.com,East,2026-02-14,Webcam,2,49.00,98.00
+CUST-1007,Grace Lee,grace.lee@email.com,West,2026-03-01,Laptop,1,899.00,899.00
+CUST-1008,Hank Turner,hank.turner@email.com,North,2026-03-05,Mouse,5,25.00,125.00
+CUST-1009,Iris Patel,iris.patel@email.com,South,2026-03-12,Monitor,2,350.00,700.00
+CUST-1010,Jack Robinson,jack.robinson@email.com,Central,2026-03-20,Keyboard,1,45.00,45.00
+CUST-1011,Alice Johnson,alice.johnson@email.com,East,2026-04-02,Headset,2,79.00,158.00
+CUST-1012,Bob Smith,bob.smith@email.com,West,2026-04-08,Laptop,1,899.00,899.00
+CUST-1013,Carol Davis,carol.davis@email.com,North,2026-04-15,Webcam,3,49.00,147.00
+CUST-1014,Dave Wilson,dave.wilson@email.com,South,2026-05-01,Mouse,2,25.00,50.00
+CUST-1015,Eve Martinez,eve.martinez@email.com,Central,2026-05-10,Monitor,1,350.00,350.00
+CUST-1016,Frank Brown,frank.brown@email.com,East,2026-05-18,Laptop,2,899.00,1798.00
+CUST-1017,Grace Lee,grace.lee@email.com,West,2026-06-01,Headset,1,79.00,79.00
+CUST-1018,Hank Turner,hank.turner@email.com,North,2026-06-08,Keyboard,3,45.00,135.00
+CUST-1019,Iris Patel,iris.patel@email.com,South,2026-06-15,Webcam,2,49.00,98.00
+CUST-1020,Jack Robinson,jack.robinson@email.com,Central,2026-07-01,Laptop,1,899.00,899.00

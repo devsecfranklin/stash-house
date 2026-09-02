@@ -1,0 +1,48 @@
+#include target.mk
+
+check: DOCKER-exists
+PYTHON-exists: ; @which python > /dev/null
+mytarget: check
+.PHONY: check PYTHON-exists
+
+clean:
+if HAS_DOCKER
+	docker system prune -f
+endif
+	rm -rf *.egg-info
+	find . -name '*.pyc' | xargs rm -rf
+	find . -name '__pycache__' | xargs rm -rf
+	for trash in README AUTHORS ChangeLog aclocal.m4 autom4te.cache config config.log; \
+	do \
+		if [ -f $$trash ] || [ -d $$trash ]; then \
+			echo "Removing $$trash" ;\
+			rm -rf $$trash ;\
+		fi ; \
+	done
+
+dist-clean: clean
+	rm -rf _build
+
+latex:
+	mkdir -p ~/texmf/tex/latex
+	tlmgr init-usertree
+	tlmgr install pgf
+	tlmgr install lipsum
+	
+lint:
+	shfmt -i 2 -l -w demo/00_setup/gpg-tool.sh
+	shfmt -i 2 -l -w demo/00_setup/install-client.sh
+	shfmt -i 2 -l -w demo/01_locate/scan_local.sh
+	
+	pushd "${PWD}/docs/slides" &&  latexmk -c && popd
+	pushd "${PWD}/docs/slides" &&  lacheck stash.tex && popd
+
+.PHONY: slides
+slides: 
+	pushd "${PWD}/docs/slides-bsides-cos" && latexmk -pdf -bibtex -f -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash.tex && popd
+	pushd "${PWD}/docs/slides-ec" && latexmk -pdf -bibtex -f -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape stash.tex && \
+	latexmk -pdf -bibtex -f -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape slides2.tex && popd 
+
+.PHONY: paper
+paper: 
+	pushd "${PWD}/docs/paper" && latexmk -pdf -bibtex -f -interaction=nonstopmode -shell-escape stash.tex && popd

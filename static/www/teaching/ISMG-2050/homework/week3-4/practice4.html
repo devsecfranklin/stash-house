@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice 4: Flash Fill and Cell Referencing &#x2014; ISMG 2050</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Practice 4: Flash Fill and Cell Referencing",
+  "educationalLevel": "Undergraduate",
+  "learningResourceType": "Assignment Instructions",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "ISMG 2050: Business Problem Solving Tools",
+    "url": "https://www.bitsmasher.net/teaching/ISMG-2050/"
+  }
+}</script>
+<style>.header-meta{color:#9e9e9e;font-size:0.9rem}</style>
+</head>
+<body class="w3-black">
+<nav class="w3-container w3-margin-top" id="site-nav"></nav>
+<script src="/js/nav.js" defer></script>
+<main class="w3-container research-content" style="max-width:860px;margin:2rem auto;padding:0 1.5rem;">
+<p><a href="/teaching/ISMG-2050/">&#x2190; Back to ISMG-2050 Course Hub</a></p>
+<header class="page-header">
+<h1 class="page-title">Practice 4: Flash Fill and Absolute Cell Referencing</h1>
+<p class="header-meta">Module 2 &#x2014; Week 3 &bull; Due Sunday, September 14, 2026 at 11:59 PM MT &bull; 100 Points</p>
+</header>
+
+<div class="info-block" style="background:#1a1a1a;border-left:4px solid #CFB87C;padding:1.2rem;margin-bottom:1.5rem;">
+<h3 style="margin-top:0;color:#CFB87C">Assignment Metadata</h3>
+<ul style="list-style:none;padding-left:0;margin:0">
+<li><strong>Module:</strong> Module 2 (Weeks 3 &amp; 4)</li>
+<li><strong>Due Date:</strong> <time datetime="2026-09-14T23:59:00-06:00">Sunday, September 14, 2026 at 11:59 PM MT</time></li>
+<li><strong>Starter Input:</strong> <a href="starter_data_wk3.xlsx" download="starter_data_wk3.xlsx" type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"><code>starter_data_wk3.xlsx</code></a></li>
+<li><strong>Expected Submission:</strong> <code>[your initials]Practice04.xlsx</code></li>
+</ul>
+</div>
+
+<h2>Skills Covered</h2>
+<ul>
+<li>Flash Fill (<strong>Ctrl+E</strong>) for automatic pattern recognition and data extraction</li>
+<li>Relative cell references (default behavior)</li>
+<li>Absolute cell references using the <code>$</code> operator</li>
+<li>Mixed cell references ($A1 vs A$1)</li>
+<li>Toggle absolute reference mode with <strong>F4</strong></li>
+</ul>
+
+<h2>Part 1: Flash Fill &#x2014; Name Parsing (40 pts)</h2>
+<ol>
+<li>Open <code>starter_data_wk3.xlsx</code> in Excel. Sheet1 contains a column <strong>A</strong> with full names in the format <em>"FirstName LastName"</em> (rows 2\u201315).</li>
+<li>In cell <strong>B1</strong>, type the header <em>Last Name</em>.</li>
+<li>In cell <strong>B2</strong>, manually type the last name from A2 (e.g., if A2 is "John Smith", type "Smith"). Press Enter.</li>
+<li>Select cell <strong>B3</strong>. Press <strong>Ctrl+E</strong>. Excel will auto-detect the pattern and fill B3:B15 with all last names extracted from column A.</li>
+<li>Click the flash-filled cell if prompted: review the preview. If correct, confirm. If not, correct one example cell and press <strong>Ctrl+E</strong> again.</li>
+<li>In cell <strong>C1</strong>, type <em>Middle Initial</em>. In <strong>C2</strong>, manually type the middle initial from A2 (e.g., "M"). Select <strong>C3</strong>, press <strong>Ctrl+E</strong>.</li>
+<li>In cell <strong>D1</strong>, type <em>Email Address</em>. In <strong>D2</strong>, manually type a constructed email: <code>john.smith@university.edu</code> (first.last format). Select <strong>D3</strong>, press <strong>Ctrl+E</strong>. Verify the pattern applied consistently.</li>
+</ol>
+
+<h2>Part 2: Absolute vs. Relative References &#x2014; Currency Conversion (35 pts)</h2>
+<ol start="7">
+<li>In a new sheet, rename it <strong>"Conversion"</strong>.</li>
+<li><strong>A1:</strong> type <em>Currency</em>, <strong>B1:</strong> type <em>Amount (USD)</em>, <strong>C1:</strong> type <em>Converted (EUR)</em></li>
+<li>In cell <strong>D1</strong>, enter the exchange rate as a constant: <code>0.92</code> (label cell D1 above with "EUR/USD Rate" in C1).</li>
+<li>In cells <strong>A3:A8</strong>, enter these countries/currencies: Euro, British Pound, Japanese Yen, Canadian Dollar, Swiss Franc, Australian Dollar.</li>
+<li>In cells <strong>B3:B8</strong>, enter these USD amounts: 100, 250, 1000, 500, 750, 2000.</li>
+<li>In cell <strong>C3</strong>, type the formula: <code>=B3*$D$1</code>. Note the <code>$</code> locking row and column on D1. This ensures that when you copy this formula down, it always references the single exchange rate cell.</li>
+<li>Copy C3 down to C4:C8. Verify each uses the correct amount multiplied by 0.92.</li>
+<li>Now change the exchange rate in <strong>D1</strong> to <code>0.85</code>. Confirm all converted values update automatically (proving the absolute reference works).</li>
+</ol>
+
+<h2>Part 3: Mixed References &#x2014; Tax Rate Table (25 pts)</h2>
+<ol start="14">
+<li>In a third sheet, rename it <strong>"TaxTable"</strong>.</li>
+<li><strong>A1:</strong> type <em>Tax Rate</em>. In <strong>B1</strong>, enter the tax rate: <code>0.0825</code> (8.25% sales tax).</li>
+<li>In <strong>A3</strong>, type <em>Item</em>, <strong>B3</strong> type <em>Price</em>, <strong>C3</strong> type <em>Tax Amount</em>, <strong>D3</strong> type <em>Total with Tax</em></li>
+<li>In <strong>A4:A9</strong>, enter: Laptop, Mouse, Keyboard, Monitor, Headset, Webcam.</li>
+<li>In <strong>B4:B9</strong>, enter prices: 899, 25, 45, 350, 79, 49.</li>
+<li>In <strong>C4</strong>, type the mixed reference formula: <code>=B4*$B$1</code>. Copy down to C5:C9.</li>
+<li>In <strong>D4</strong>, type: <code>=B4+C4</code>. Copy down to D5:D9.</li>
+<li>Select range <strong>C4:C9</strong>. Apply <strong>Currency ($#,##0.00)</strong> format.</li>
+<li>Select range <strong>D4:D9</strong>. Apply <strong>Currency ($#,##0.00)</strong> format.</li>
+</ol>
+
+<h2>Submission Criteria</h2>
+<ul>
+<li>File named exactly <code>[your initials]Practice04.xlsx</code></li>
+<li>Sheet1: Name parsing with Flash Fill (columns for Last Name, Middle Initial, Email)</li>
+<li><strong>"Conversion"</strong> sheet: Currency conversion using absolute references ($D$1)</li>
+<li><strong>"TaxTable"</strong> sheet: Sales tax calculation using mixed/absolute references</li>
+<li>Changing D1 (exchange rate) must update all converted values automatically</li>
+<li>All number formatting applied correctly (currency, decimal places)</li>
+<li>AI Disclosure statement in a note below the TaxTable sheet</li>
+</ul>
+
+<p style="margin-top:2rem"><a href="/teaching/ISMG-2050/homework/week3-4/"><strong>&rarr; Back to Week 3\u20134 Homework Portal</strong></a></p>
+</main>
+</body>
+</html>
