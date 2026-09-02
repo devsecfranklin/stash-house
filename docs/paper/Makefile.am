@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 clean:
+	latexmk -c stash.tex
 if HAS_DOCKER
         docker system prune -f
 endif
