@@ -1,3 +1,6 @@
 [default]
-region = us-west-2
+region = us-east-1
 output = json
+
+; NOTE: This is a configuration template for demo purposes only.
+; Replace with your actual AWS profile configuration before use.
