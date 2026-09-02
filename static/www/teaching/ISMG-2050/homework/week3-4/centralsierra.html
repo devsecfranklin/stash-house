@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assignment 2.3.1: Central Sierra Insurance &#x2014; ISMG 2050</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="/css/www.bitsmasher.net.css">
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Central Sierra Insurance \u2014 Assignment 2.3.1",
+  "educationalLevel": "Undergraduate",
+  "learningResourceType": "Assignment Instructions",
+  "isPartOf": {
+    "@type": "Course",
+    "name": "ISMG 2050: Business Problem Solving Tools",
+    "url": "https://www.bitsmasher.net/teaching/ISMG-2050/"
+  }
+}</script>
+<style>.header-meta{color:#9e9e9e;font-size:0.9rem}</style>
+</head>
+<body class="w3-black">
+<nav class="w3-container w3-margin-top" id="site-nav"></nav>
+<script src="/js/nav.js" defer></script>
+<main class="w3-container research-content" style="max-width:860px;margin:2rem auto;padding:0 1.5rem;">
+<p><a href="/teaching/ISMG-2050/">&#x2190; Back to ISMG-2050 Course Hub</a></p>
+<header class="page-header">
+<h1 class="page-title">Assignment 2.3.1: Central Sierra Insurance Workbook</h1>
+<p class="header-meta">Module 2 &#x2014; Week 3 &bull; Due Sunday, September 13, 2026 at 11:59 PM MT &bull; 200 Points</p>
+</header>
+
+<div class="info-block" style="background:#1a1a1a;border-left:4px solid #CFB87C;padding:1.2rem;margin-bottom:1.5rem;">
+<h3 style="margin-top:0;color:#CFB87C">Assignment Metadata</h3>
+<ul style="list-style:none;padding-left:0;margin:0">
+<li><strong>Module:</strong> Module 2 (Weeks 3 &amp; 4)</li>
+<li><strong>Due Date:</strong> <time datetime="2026-09-13T23:59:00-06:00">Sunday, September 13, 2026 at 11:59 PM MT</time></li>
+<li><strong>Starter File:</strong> <a href="CentralSierra-02.xlsx" download="CentralSierra-02.xlsx" type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"><code>CentralSierra-02.xlsx</code></a></li>
+<li><strong>Target Submission:</strong> <code>[your initials] CentralSierraIns.xlsx</code></li>
+</ul>
+</div>
+
+<h2>Project Overview</h2>
+<p>You will complete an insurance commission workbook for Central Sierra Insurance. This assignment covers defined names from selection, XLOOKUP with approximate match, order-of-operations formulas, SUMIF branch aggregation, statistical distribution functions, logical IF classification, and CONCAT label assembly.</p>
+
+<h2>Step-by-Step Instructions</h2>
+
+<h3>Step 1: Open and Save</h3>
+<ol>
+<li>Open <code>CentralSierra-02.xlsx</code> in Excel Desktop (Microsoft 365).</li>
+<li><strong>Save As</strong> to <code>[your initials] CentralSierraIns.xlsx</code>. Keep the original file open as your reference.</li>
+</ol>
+
+<h3>Step 2: Define Names from Selection</h3>
+<ol start="2">
+<li>Navigate to the <strong>Tables</strong> sheet. You will see two tables:</li>
+<li><em>Commission Level</em> table in range A2:B6 (Level ranges in column A, Commission Rate in column B)</li>
+<li><em>Bonus Rate</em> table nearby (Sales threshold and corresponding bonus percentage)</li>
+<li>Select the full commission level table range (<strong>A2:B6</strong>) including headers.</li>
+<li>Go to <strong>Formulas &gt; Create from Selection</strong>.</li>
+<li>In the dialog, check only <em><strong>Top row</strong></em> (headers provide the name keys). Click OK.</li>
+<li>The names <code>Commission_Level</code> and <code>Bonus_Rate</code> are now defined names referencing these ranges. Verify in <strong>Formulas &gt; Name Manager</strong>.</li>
+</ol>
+
+<h3>Step 3: Build Approximate-Match Lookup (XLOOKUP)</h3>
+<ol start="4">
+<li>Navigate to the <strong>Commissions</strong> sheet.</li>
+<li>In cell <strong>F5</strong>, build an approximate-match lookup for the commission rate:</li>
+<li>Formula: <code>=XLOOKUP(E5, Commission_Level, Bonus_Rate, , -1)</code></li>
+<li>This uses XLOOKUP with <code>match_mode = -1</code> for an approximate match (finds the largest value that is less than or equal to the lookup value). It returns the corresponding commission rate from the Bonus_Rate named range.</li>
+<li>Copy cell F5 down through <strong>F14</strong>. Verify each sales figure gets the correct tier rate applied.</li>
+</ol>
+
+<h3>Step 4: Enforce Order of Operations in Commission Calculation</h3>
+<ol start="5">
+<li>In cell <strong>G5</strong>, compute total commission with proper order of operations:</li>
+<li>Formula: <code>=E5*(1+F5)</code></li>
+<li>This computes the gross sales amount multiplied by (1 + commission rate), giving total payout after commission is added to base. Note: parentheses ensure addition occurs before multiplication.</li>
+<li>Alternative formula: <code>=E5+(E5*F5)</code> -- equivalent result using explicit steps.</li>
+<li>Copy G5 down through <strong>G14</strong>. All 10 agents should now have their commission-adjusted total.</li>
+</ol>
+
+<h3>Step 5: Branch Earnings via SUMIF and Column Totals</h3>
+<ol start="6">
+<li>Scroll to the summary section starting at row <strong>17</strong>. Column C lists branch names (North, South, East, West).</li>
+<li>In cell <strong>E18</strong>, compute each branch's total earnings using SUMIF:</li>
+<li>Formula: <code>=SUMIF($D$5:$D$14, C18, $G$5:$G$14)</code></li>
+<li>This sums all values in G5:G14 where the corresponding D column matches the branch name in C18. The dollar signs create absolute references so the range stays fixed when copied.</li>
+<li>Copy E18 down to E19, E20, and E21 without applying any formatting (use <strong>Fill &gt; Fill Only</strong>). You will format after all formulas are in place.</li>
+<li>In row <strong>21</strong>, compute column totals: in cell <strong>E21</strong>, enter <code>=SUM(E18:E20)</code>. Verify it matches the grand total from Commissions sheet (G5:G14).</li>
+</ol>
+
+<h3>Step 6: Statistical Distribution Analysis</h3>
+<ol start="7">
+<li>In the same summary area, compute statistical distribution on the commission-adjusted totals:</li>
+<li><strong>Average:</strong> <code>=AVERAGE(G5:G14)</code> -- mean commission-adjusted total</li>
+<li><strong>Mode (most frequent value):</strong> <code>=MODE(G5:G14)</code></li>
+<li><strong>Median:</strong> <code>=MEDIAN(G5:G14)</code></li>
+<li>Format all three results as Currency with 2 decimal places.</li>
+<li>Note the relationship between Mean vs. Median -- this reveals whether the commission structure skews the distribution higher or lower.</li>
+</ol>
+
+<h3>Step 7: Logical Policy Classification on By Policy Sheet</h3>
+<ol start="8">
+<li>Navigate to the <strong>By Policy</strong> sheet.</li>
+<li>In cell <strong>F7</strong>, create an IF logical test to classify business policies:</li>
+<li>Formula: <code>=IF(E7="business policy", "No", "Yes")</code></li>
+<li>This tests if the text in E7 equals "business policy" -- if true, returns "No"; otherwise returns "Yes". This flag identifies non-business policy entries for filtering.</li>
+<li>Copy F7 down through all agent rows to classify each entry.</li>
+</ol>
+
+<h3>Step 8: Assemble Labels on Tables Sheet via CONCAT</h3>
+<ol start="9">
+<li>On the <strong>Tables</strong> sheet, in cell <strong>D2</strong>, assemble an agent label using CONCAT:</li>
+<li>Formula: <code>=CONCAT(Commissions!C5, " ", Commissions!B5, ", ")</code></li>
+<li>This concatenates the last name from column C and first name from column B of the Commissions sheet with a space separator and trailing comma.</li>
+<li>Test the result to confirm proper label formatting. Copy D2 down to create labels for all agents in your lookup table.</li>
+</ol>
+
+<h3>Step 9: Format and Finalize</h3>
+<ol start="10">
+<li>Select the branch summary range (E18:E20). Apply <strong>Currency ($#,##0.00)</strong> format.</li>
+<li>Apply <strong>Total Cell Style</strong> (double bottom border) to row 21 totals.</li>
+<li>Set print orientation to <strong>Landscape</strong>.</li>
+<li>Set print area to cover all relevant data on each sheet.</li>
+<li>Save your file and verify all formulas produce expected outputs.</li>
+</ol>
+
+<h2>Submission Criteria</h2>
+<ul>
+<li>File named exactly <code>[your initials] CentralSierraIns.xlsx</code></li>
+<li><strong>Tables</strong> sheet: Named ranges Commission_Level and Bonus_Race created via Create from Selection; CONCAT labels assembled in column D</li>
+<li><strong>Commissions</strong> sheet: XLOOKUP with match_mode=-1 for approximate tier lookup; commission totals computed as E5*(1+F5); copied through all 10 agents</li>
+<li><strong>Branch Summary:</strong> SUMIF formulas correctly aggregate by branch; AVERAGE, MODE, MEDIAN computed on commission-adjusted data</li>
+<li><strong>By Policy</strong> sheet: IF logical test classifies business policy entries (column F)</li>
+<li>All currency values formatted as $#,##0.00</li>
+<li>Landscape orientation with print area configured</li>
+<li>AI Disclosure statement in a note below branch summary: <em>"AI Disclosure: [Used/None]"</em></li>
+</ul>
+
+<p style="margin-top:2rem"><a href="/teaching/ISMG-2050/homework/week3-4/"><strong>&rarr; Back to Week 3– Homework Portal</strong></a></p>
+</main>
+</body>
+</html>
