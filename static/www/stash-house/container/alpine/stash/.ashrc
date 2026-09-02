@@ -1,0 +1,12 @@
+# ~/.ashrc: interactive shell configuration for BusyBox Ash
+
+# Custom Aliases
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+# You may want to put all your additions into a separate file like
+# ~/.ash_aliases, instead of adding them here directly.
+
+if [ -f ~/.ash_aliases ]; then
+    . ~/.ash_aliases
+fi

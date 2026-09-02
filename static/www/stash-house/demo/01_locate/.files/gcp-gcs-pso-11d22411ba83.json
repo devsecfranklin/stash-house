@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "gcp-gcs-pso",
+  "private_key_id": "qvaZYnkK41CORMVa+7HgsGh19Pkz1ILj7ksBRy9RQoi2ZY54N44444444a23ee9e1f2076651cf6429ggSkAgEAAoIBAQD5OkLdP7Rj34kv\nhUp/bUBT+fG+LzI\na3QCbd28IhbK1dgx+uvk4JAJQunHrotKHHBlOXOUqkCwp23x9AvRysx/N1fYfcqY\nVAA4vxoYH1J5hnzK5HC9tJGEPPiDdyeEOXvDpEpWa77sGewUzZCoGbLazlizOxmi\nTGWfTb3MnxrQg+U8OLnsz824lG3AzLmSAutvsiKO/VuqCGDHYhEUbjyETY+11aWT\nFMa4U3QBKwUQoymzw+fryDlAysrFV0TwgiuSn+cF2Zov7V9/RbhItLPnGRzrx5cG\ntBAdn16VAgMBAAECggEABNC7nH8/2sMlqSmj4hoZSCbnLE7ujkUlZAfjbLIz3n2U\neAwl2EYRJG3t693DevS03z04aVVUJtvE+AFdfTOGun0VICeoFPUibCprlgY5Mp68\nebrZcBc/VLLCa7dccDWVKeFHeLjGxXvOt4k99Nq6ZBds1kTDMf9eb0fnHN05tv6D\nXelrz5geDAEpPLwGSv0d9dW6CyPUTtUxguHFV+4PXDMlQj4LbLethknwoWaPL3da\n4nJx6CEbCBgs0NwRD6qDPD4OTh2XR/b7mWQ5voQjmW+PCvm/8gKiKV+vKI6FNwKI\nJfzV3xEh5Wf0AeQGsBLDRC2DTuBNwXrulDBowzidwQKBgQD9OqPL4PIClwQtrxVn\n9Ly9mks7zd9/4VSY2qtvQwv5OtIFPMn8b4UWR9cPyP2UTuKzpeOuRMaRo1UuIVjV\nZzRd9NhQ94d8DnuN8uDOs26vvf9BguZLjfZfaQTJykAE2CWy/22ENZ2UQinKEF+D\ncCj/IXtCVJUfpq6z4IXR4xmowQKBgQD79GmEnh/HPiy8rQS2dp0KdW6pA47GfZgx\naYLk7tnX7O3LQETeYqRTimSq3OaJyL0e4Uot8HCDFPWTxnkTPRY3mGzrkNaTHJvV\n8gRUdr1rvx7uJ4gEDYa9BgEKbfbUYC3zFNFb7CVbZkNqdmFQvhoTsAnI1PT6Bz7I\nVj/Xf7121QKBgQC0xuIcMFBU7P58pps/hYYgTUAcR5KgtnowTRtJ6LFpkUZRmt4P\nqoV2LH8ps7Dj6ZUJ7wmlZU/ktJegwQmr/2txD9RFqRA9zhECeztmFM6WA6twV0SU\n95nE7zIN5KbjTnNLX/INCkGej8VJjXrCWJXL3VkjN0LmP5ZEr6qY9elhgQKBgEKd\n7QhThrN3jPyWApj746nQQuINPsLcklD+RM2jGZYt3vHOnGbwTeKIxPUoUww7N0Xi\n62oaGKWP9R6Na5XaoPUyKBpgwVtERS/cPajXfF3wuozdhukLaoSwAbZwPMMKaxvK\ndVCIr5frAgg0JKbknKB3+x5OsDcrkz4FD/w6mi3BAoGBAK/Jp0Vs8DX3m0ZU4GO4\nXB+nEZxjqtyC5AOgWvAnBxhiSbsxlhlAnFhrrqeh7HIfIE685IuzYxejxjMTmyNy\nvSeCGBXh22mx3BX+tZf1f/OU32TACoALQFXxrpn6Yi5FniNo5FIvp+vXNV6JvWuA\nJkjwjXSxlQSSeW0rjSWVK8HD\n-----END PRIVATE KEY-----\n",
+  "client_email": "fdiaz-666-bot@gcp-666-666.iam.gserviceaccount.com",
+  "client_id": "11680517777777744468504027",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fdiaz-gke-bot%40gcp-gcs-pso.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

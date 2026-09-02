@@ -1,0 +1,34 @@
+# Gemini CLI Project-Specific Configuration
+
+# Project Identification
+project_name: franklin-resume
+project_type: latex
+
+# Common Commands
+commands:
+  build: "cd resume && latexmk -pdf -xelatex -interaction=nonstopmode resume"
+  clean: "cd resume && latexmk -c"
+  validate: "chktex resume/resume.tex"
+
+# Preferred Editor Settings
+editor:
+  tab_size: 2
+  insert_spaces: true
+
+# Search Filters
+search:
+  exclude_patterns:
+    - "**/_build/**"
+    - "**/*.aux"
+    - "**/*.log"
+    - "**/*.pdf"
+    - "**/*.synctex.gz"
+    - "**/*.toc"
+    - "**/*.bbl"
+    - "**/*.blg"
+
+# Custom Instructions
+instructions:
+  - "Always compile the PDF using xelatex as specified in the CI workflow."
+  - "When adding new experience or education entries, ensure they follow the format in existing section files."
+  - "The TLCresume.sty file is the source of truth for all styling."
